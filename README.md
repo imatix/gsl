@@ -91,7 +91,7 @@
 
 GSL is a code construction tool.  It will generate code in all languages and for all purposes.  If this sounds too good to be true, welcome to 1996, when we invented these techniques.  Magic is simply technology that is twenty years ahead of its time.
 
-This is the fourth major version of GSL, repackaged together with its dependencies for easy building from git.  For documentation, please see the 'gsldoc.txt' file which is part of this package.
+This is the fourth major version of GSL, repackaged together with its dependencies for easy building from git.  For documentation, please see the 'gsldoc.txt` file which is part of this package.
 
 <A name="toc3-20" title="Ownership and License" />
 ### Ownership and License
@@ -181,7 +181,7 @@ We will run the new interest calculation script using this command:
 
     gsl deposits.xml
 
-Note the change of command syntax. We first ran the GSL script. Now we're running the XML file. This is one of GSL's features - you can run XML files as if they were scripts. It's the 'script =' setting that does the trick, working much like the hash-bang #! command in Linux.
+Note the change of command syntax. We first ran the GSL script. Now we're running the XML file. This is one of GSL's features - you can run XML files as if they were scripts. It's the 'script =` setting that does the trick, working much like the hash-bang #! command in Linux.
 
 Any GSL script, no matter how simple, works with an XML document loaded into GSL's memory as a data tree. In our first interest.gsl script, the data tree contains just this:
 
@@ -351,7 +351,7 @@ To start with, we'll define the overall site like this:
     </section>
     </site>
 
-Note the first line, which defines the file as XML, and the 'script' tag, which tells GSL what script to run to process the data. We've defined three pages. Let's write very a simple version of each of these:
+Note the first line, which defines the file as XML, and the 'script` tag, which tells GSL what script to run to process the data. We've defined three pages. Let's write very a simple version of each of these:
 
 Next, we will write three more short XML files as shown below. First the index page:
 
@@ -421,9 +421,9 @@ Finally, here is the first draft of the web generation script. It does not produ
      save root
     .endtemplate
 
-Let's look at what this script does. First, it switches off template mode so we can write ordinary GSL without starting each line with a dot. GSL starts scripts in template mode if they are launched from the XML file. It's useful in many cases but not here. So, we wrap the whole script in '.template 0' and '.endtemplate'.
+Let's look at what this script does. First, it switches off template mode so we can write ordinary GSL without starting each line with a dot. GSL starts scripts in template mode if they are launched from the XML file. It's useful in many cases but not here. So, we wrap the whole script in '.template 0` and '.endtemplate'.
 
-Second, the script works through each section and page, and loads the XML data for that page. It does this using two commands, 'xml' and 'delete'. The first loads XML data from a file into the specified scope (&lt;section&gt;, in this case), and the second deletes the current page (since the loaded data also contains a &lt;page&gt; tag).
+Second, the script works through each section and page, and loads the XML data for that page. It does this using two commands, 'xml` and 'delete'. The first loads XML data from a file into the specified scope (&lt;section&gt;, in this case), and the second deletes the current page (since the loaded data also contains a &lt;page&gt; tag).
 
 Finally, the script saves the whole XML tree to a file. If you want to try the next steps you must have installed GSL, as I described in the last article. Run the script like this:
 
@@ -444,7 +444,7 @@ The &#36;(NAME) form outputs the same value in uppercase:
 
     #if defined (&#36;(FILENAME)_INCLUDED)
 
-And the &#36;(Name) form outputs the variable in 'title' case, i.e. the first letter is capitalised:
+And the &#36;(Name) form outputs the variable in 'title` case, i.e. the first letter is capitalised:
 
     ###################  &#36;(Filename)   #################
 
@@ -503,7 +503,7 @@ The HTML template looks like this:
 
 Most of it is fairly straight-forward, though you do need to understand how XHTML and CSS work (and I'm not going to explain that here).
 
-* The echo command tells the user what's going on. It's polite to do this, although in realistic cases we'll also let the user suppress such reports using a 'quiet' option.
+* The echo command tells the user what's going on. It's polite to do this, although in realistic cases we'll also let the user suppress such reports using a 'quiet` option.
 
 * The output command creates the HTML page.
 
@@ -870,7 +870,7 @@ To run GSL, use the following syntax
 
     gsl -<option> ... -<attr>[:<value>] ... filename ...
 
-If the filename has no extension, GSL tries to find an XML file with that name, or with the extension `.xml' (recognised by the &lt;?xml... tag on the first line).  If it finds no XML file it tries to find a file with that name or the extension `.gsl', which it interprets as a GSL file.
+If the filename has no extension, GSL tries to find an XML file with that name, or with the extension `.xml` (recognised by the &lt;?xml... tag on the first line).  If it finds no XML file it tries to find a file with that name or the extension `.gsl`, which it interprets as a GSL file.
 
 Options currently recognised by GSL are:
 
@@ -886,7 +886,7 @@ If GSL found an XML file, it loads it, then looks for an attribute named script 
 <A name="toc4-810" title="Scalar Data Types" />
 #### Scalar Data Types
 
-GSL recognises two scalar data types: numeric and string.  It generally makes no formal distinction between them; if a value looks numeric then it is treated as such, otherwise it is treated as a string.  If strict typing is required, the type conversion functions `conv.number' and `conv.string' can be used.
+GSL recognises two scalar data types: numeric and string.  It generally makes no formal distinction between them; if a value looks numeric then it is treated as such, otherwise it is treated as a string.  If strict typing is required, the type conversion functions `conv.number` and `conv.string` can be used.
 
 <A name="toc4-815" title="Structured Data Types" />
 #### Structured Data Types
@@ -921,25 +921,25 @@ In addition, GSL predefines a number of scopes; these are considered to have bee
 
 In general, scopes may be referred to in a variety of ways: by alias, by number or implicitly.  When referring to a scope by its alias name, open scopes are searched, from innermost to outermost, for a scope with the specified name.  If there is more than one scope with the same name, only the innermost can be referred to by name.  In addition, scopes may be declared with no alias, in which case they cannot be referred to by name.
 
-When referring to a scope by number, 1 refers to the outermost scope, 2 to the second outermost scope and so on.   Alternatively 0 refers to the innermost scope (this is very useful), -1 refers to the second innermost scope and so on.  In fact the situation is slightly more complicated than this. Scopes may be declared as 'unstacked', meaning that they do not appear in the sequence of numbers, either positive or negative.
+When referring to a scope by number, 1 refers to the outermost scope, 2 to the second outermost scope and so on.   Alternatively 0 refers to the innermost scope (this is very useful), -1 refers to the second innermost scope and so on.  In fact the situation is slightly more complicated than this. Scopes may be declared as 'unstacked`, meaning that they do not appear in the sequence of numbers, either positive or negative.
 
 A unstacked scope with no alias could not be referred to at all and is thus disallowed.
 
-A scope may be recast with a new alias, stacked or unstacked, with the `.scope' instruction.
+A scope may be recast with a new alias, stacked or unstacked, with the `.scope` instruction.
 
 **Predefined Scopes**
 
 Before processing a script, GSL defines several scopes.  These need to be taken into account when referring to a scope with a positive number.
 
-The first predefined scope is called `global' and can be used to hold global data.  Its underlying data structure is a symbol table; it may have attributes with any name and any type (scalar or structured), but no children.
+The first predefined scope is called `global` and can be used to hold global data.  Its underlying data structure is a symbol table; it may have attributes with any name and any type (scalar or structured), but no children.
 
-The second predefined scope is called 'gsl' and holds GSL internal data.
+The second predefined scope is called 'gsl` and holds GSL internal data.
 
-NB At the current moment there is a namespace clash between the scope 'gsl' and the instruction 'gsl'.  This can be avoided by the use of square brackets [gsl] to reference the scope.  The problem will disappear when the gsl instruction is deprecated.
+NB At the current moment there is a namespace clash between the scope 'gsl` and the instruction 'gsl'.  This can be avoided by the use of square brackets [gsl] to reference the scope.  The problem will disappear when the gsl instruction is deprecated.
 
-The third predefined scope is called 'class' and holds the classes registered with GSL.  These are typically: file, string, env, conv, math, sock, thread, xml, time, regexp, proc and diag.  They should be documented below.
+The third predefined scope is called 'class` and holds the classes registered with GSL.  These are typically: file, string, env, conv, math, sock, thread, xml, time, regexp, proc and diag.  They should be documented below.
 
-The fourth predefined scope is called 'root'.  It refers to an XML item also called 'root', which is typically used as a parent for all other XML structures.
+The fourth predefined scope is called 'root'.  It refers to an XML item also called 'root`, which is typically used as a parent for all other XML structures.
 
 The fifth and final predefined scope is the top-level XML item from the XML source file, if one was specified.
 
@@ -954,31 +954,31 @@ As mentioned above, all data begins with a scope.  The underlying data of a scop
 
     global.foo = root
 
-assigns the XML structure referred to by the scope 'root' to the attribute 'foo' of the scope 'global'.  Recall that the underlying data of this scope is a symbol table whose attributes can hold structured data.
+assigns the XML structure referred to by the scope 'root` to the attribute 'foo` of the scope 'global'.  Recall that the underlying data of this scope is a symbol table whose attributes can hold structured data.
 
 **Attributes**
 
-Attributes are referenced by the use of the period ('.')  For instance to display the value of the attribute 'name' of the XML structure referred to my the scope 'root' you could use:
+Attributes are referenced by the use of the period ('.')  For instance to display the value of the attribute 'name` of the XML structure referred to my the scope 'root` you could use:
 
     echo root.name
 
 **Implicit Scope Referencing**
 
-If, instead of explicitly specifying the scope 'root' in the above example, you used:
+If, instead of explicitly specifying the scope 'root` in the above example, you used:
 
     echo name
 
-GSL would search stacked scopes, from the innermost to the outermost, for one that defines the attribute 'name'.  Assuming the scope 'root' does not define an attribute 'name' but the scope 'global' does (we understand that neither the scope 'gsl' nor the scope 'class' defines an attribute 'name'), this code would output the value of the attribute 'name' of the scope 'global'.
+GSL would search stacked scopes, from the innermost to the outermost, for one that defines the attribute 'name'.  Assuming the scope 'root` does not define an attribute 'name` but the scope 'global` does (we understand that neither the scope 'gsl` nor the scope 'class` defines an attribute 'name'), this code would output the value of the attribute 'name` of the scope 'global'.
 
-This form of GSL is useful for two reasons.  Firstly it makes for shorter and easier-to-read code, when the location of the attribute is not in question. Secondly it allows the value to be 'inherited' from outer to inner scopes.
+This form of GSL is useful for two reasons.  Firstly it makes for shorter and easier-to-read code, when the location of the attribute is not in question. Secondly it allows the value to be 'inherited` from outer to inner scopes.
 
-Notice that the above example contains some ambiguity: does 'name' refer to an attribute 'name' or a scope 'name'?  GSL searches first scopes then attributes within scopes to find a match.  If you wish to match only an attribute then use the alternative form:
+Notice that the above example contains some ambiguity: does 'name` refer to an attribute 'name` or a scope 'name'?  GSL searches first scopes then attributes within scopes to find a match.  If you wish to match only an attribute then use the alternative form:
 
     echo .name
 
 **Structure Flattening**
 
-What if, in the above example, the scope 'global' defined an attribute 'name', but this attribute were not a scalar value but an XML structure.  Since the instruction 'echo' can only deal with scalar values, it requests a 'flattened' value of the structure.  The meaning of a flattened value depends on the structure in question; for an XML item it refers to the value of the item.
+What if, in the above example, the scope 'global` defined an attribute 'name`, but this attribute were not a scalar value but an XML structure.  Since the instruction 'echo` can only deal with scalar values, it requests a 'flattened` value of the structure.  The meaning of a flattened value depends on the structure in question; for an XML item it refers to the value of the item.
 
 Look at the example:
 
@@ -986,7 +986,7 @@ Look at the example:
     echo name
     echo global.name.value
 
-The first line loads the XML string &lt;A name = "2">Hello&lt;/A> (note the backslashes preceeding the quotation marks inside the string) into the attribute 'name' of the global scope.  The second line prints the flattened value of the XML, while the third line outputs the attribute 'value' of the attribute 'name' of the scope 'global'.  Note that the use or non-use of the scope 'global' makes no difference in this case because no innermore scopes defined an attribute 'name'.  The output of this GSL script is:
+The first line loads the XML string &lt;A name = "2">Hello&lt;/A> (note the backslashes preceeding the quotation marks inside the string) into the attribute 'name` of the global scope.  The second line prints the flattened value of the XML, while the third line outputs the attribute 'value` of the attribute 'name` of the scope 'global'.  Note that the use or non-use of the scope 'global` makes no difference in this case because no innermore scopes defined an attribute 'name'.  The output of this GSL script is:
 
     2004/09/20 16:36:25: gsl/4 M: Hello
     2004/09/20 16:36:25: gsl/4 M: 2
@@ -1003,21 +1003,21 @@ Just as the period ('.') accesses an attribute of a structure, the member ('->')
 
     global.parent->child
 
-accesses the (first) child called 'child' of the structure referred to by the attribute 'parent' of the global scope.
+accesses the (first) child called 'child` of the structure referred to by the attribute 'parent` of the global scope.
 
 A more sophisticated version of this structure exists:
 
     global.parent-> child (value = "2")
 
-accesses the (first) child called 'child' for which the condition 'value = "2"' is TRUE.
+accesses the (first) child called 'child` for which the condition 'value = "2"` is TRUE.
 
-The detail of how this works is that a scope called 'child' is opened for the duration of the evaluation of the condition.  This underlying data for this scope is the child (called 'child') of global.parent. The typical use for such a structure is when the child defines an attrbute 'value' so that the expression is used to locate the particular child we want, the one whose attribute 'value' is 2.
+The detail of how this works is that a scope called 'child` is opened for the duration of the evaluation of the condition.  This underlying data for this scope is the child (called 'child') of global.parent. The typical use for such a structure is when the child defines an attrbute 'value` so that the expression is used to locate the particular child we want, the one whose attribute 'value` is 2.
 
 As a final detail, the scope opened during the evaluation of this expression may clash with other scopes called 'child'.  For this reason, the following expression may be used:
 
     global.parent-> child (baby.value = child.value, baby)
 
-The second argument 'baby' indicates that the name of the scope created to evaluate the condition should be 'baby'.
+The second argument 'baby` indicates that the name of the scope created to evaluate the condition should be 'baby'.
 
 **Identifiers**
 
@@ -1029,7 +1029,7 @@ As the underlying data may not have the same restrictions on its name space, and
 
 GSL has two modes of handling the case of identifiers.  In the default mode, GSL matches names without regard to the case (upper or lower) used to specify them.  In certain substitutions  GSL modifies the case of the value of the identifier to match the case used to specify the attribute name.  In case-sensitive mode, GSL matches names taking into account the case, and does not modify the case of the result.  See the description of subsitutions for details.
 
-To change modes, set the value of the identifier `ignorecase' in the gsl scope to 0 or 1.  Eg: `[gsl].ignorecase = 0'
+To change modes, set the value of the identifier `ignorecase` in the gsl scope to 0 or 1.  Eg: `[gsl].ignorecase = 0'
 
 <A name="toc4-958" title="Expressions" />
 #### Expressions
@@ -1047,7 +1047,7 @@ Operator precedence is standard (multiplicative, additive, if/default, comparati
 
 Logical operators treat zero as FALSE and non-zero as TRUE.
 
-GSL optimises expression evaluation to the extent that the second operand of a binary logical operator (`|', `&') is not evaluated if the result of the expression is determined by the first operand.  This allows you to use expressions such as
+GSL optimises expression evaluation to the extent that the second operand of a binary logical operator (`|`, `&') is not evaluated if the result of the expression is determined by the first operand.  This allows you to use expressions such as
 
     defined (X) & X
 
@@ -1057,9 +1057,9 @@ The default operator allows undefined expressions to be replaced by another expr
 
     <expr1> ? [<expr2>]
 
-is equal to the value of &lt;expr1>, if defined; otherwise it is equal to the value of &lt;expr2>, whether or not the latter is defined.  If the second operand &lt;expr2> is omitted then the evaluation of the expression is `safe', that is, GSL does not object (when this is feasible) to the result of the expression being undefined.  This feature can be used in symbol definitions and substitutions to make GSL accept an undefined expression.  See the description of these instructions for details.
+is equal to the value of &lt;expr1>, if defined; otherwise it is equal to the value of &lt;expr2>, whether or not the latter is defined.  If the second operand &lt;expr2> is omitted then the evaluation of the expression is `safe`, that is, GSL does not object (when this is feasible) to the result of the expression being undefined.  This feature can be used in symbol definitions and substitutions to make GSL accept an undefined expression.  See the description of these instructions for details.
 
-The safe comparative operators return the same result as their equivalent comparative operators when both operands are defined.  If one or both operator is undefined, the safe operators return FALSE while the normal operators produce an error.  Notice that `a ?&lt;> b' returns TRUE if both a and b are defined and they are not equal and FALSE otherwise.
+The safe comparative operators return the same result as their equivalent comparative operators when both operands are defined.  If one or both operator is undefined, the safe operators return FALSE while the normal operators produce an error.  Notice that `a ?&lt;> b` returns TRUE if both a and b are defined and they are not equal and FALSE otherwise.
 
 The if operator returns the second operand if the first operand evaluates to a non-zero number.  Otherwise the result is undefined.  Thus an expression such as
 
@@ -1089,7 +1089,7 @@ The construct is replaced by the value of the expression, output according to th
 
 If the expression ends with a default operator that has no second operand, and the value of the expressions result is undefined then the substitution resolves to an empty string.
 
-If a format string is provided, it is used to format the result before continuing.  The format string is similar to that used by the printf function in C.  It must contain exactly one conversion specification, consisting of zero or more of the flags `#', `0', `-', ` ' and `+', an optional minimum field width, an optional precision consisting of a point (`.') followed by an optional number, and a mandatory conversion specifier among the following: `d', `i', `o', `u', `x', `X', `e', `E', `f', `g', `c' and `s'.  The data are always converted to the appropriate type (one of long int, double, char or char *) for the conversion string. Note that not all legal C format strings are allowed in GSL.  See details of the C printf function for more details. :)
+If a format string is provided, it is used to format the result before continuing.  The format string is similar to that used by the printf function in C.  It must contain exactly one conversion specification, consisting of zero or more of the flags `#`, `0`, `-`, ` ` and `+`, an optional minimum field width, an optional precision consisting of a point (`.') followed by an optional number, and a mandatory conversion specifier among the following: `d`, `i`, `o`, `u`, `x`, `X`, `e`, `E`, `f`, `g`, `c` and `s'.  The data are always converted to the appropriate type (one of long int, double, char or char *) for the conversion string. Note that not all legal C format strings are allowed in GSL.  See details of the C printf function for more details. :)
 
 The pretty-print modifier specifies how case modification and replacement of certain characters takes place.  The valid pretty-print modifiers (not case-sensitive) are:
 
@@ -1127,7 +1127,7 @@ More than one pretty-print modifier may be specified; they should be separated b
 
 If GSL is in ignore-case mode (see below), and a substition expression consists of a single identifier and no case-modifier is specified (c or cobol may still be specified), the case in which the identifier name is specified is used as an example to determine whether the case of the result should be modified to UPPER, lower or Neat.  To over-ride this, either disable ignore-case mode or provide an empty pretty-print string.
 
-Some examples:  Assume the identifier IDENT has the value `A few words from our sponsors' and identifer XXX is undefined.
+Some examples:  Assume the identifier IDENT has the value `A few words from our sponsors` and identifer XXX is undefined.
 
 &#36;(XXX)
 : produces a run-time GSL error: Undefined expression.
@@ -1170,13 +1170,13 @@ Some examples:  Assume the identifier IDENT has the value `A few words from our 
 
 A substitution can appear at any place in a literal string (template line or string constant) or as an operand in an expression.  It can also replace part or all of a single identifier in a data specification, but not a point (`.') or member construct (`->').
 
-Some examples:  Assume the identifier IDENT has the value `NUM' and identifer NUM has the value `1'.
+Some examples:  Assume the identifier IDENT has the value `NUM` and identifer NUM has the value `1'.
 
 &#36;(&#36;(ident))
 : `1'
 
 &#36;(&#36;(ident)).NAME
-: `1.NAME'  This may used in another expression as an identifer.
+: `1.NAME`  This may used in another expression as an identifer.
 
 &#36;(ident)+1
 : `NUM1'
@@ -1190,7 +1190,7 @@ Some examples:  Assume the identifier IDENT has the value `NUM' and identifer NU
 <A name="toc4-1114" title="Internal Variables" />
 #### Internal Variables
 
-GSL has a series of internal variables, described below, that influence its behaviour in various ways.  These variables are held in the scope `gsl' and can be modified by an instruction of the form:
+GSL has a series of internal variables, described below, that influence its behaviour in various ways.  These variables are held in the scope `gsl` and can be modified by an instruction of the form:
 
     [gsl].xxxxx = yyyy
 
@@ -1205,14 +1205,14 @@ Lines of GSL may be either script lines or template lines.  GSL has two differen
 
 GSL starts in one of these modes, depending on the manner in which is was invoked.  If it was invoked using an XML file as an argument, it begins in template mode as it is assumed that the XML file is to be used as data for creating an output file.  If GSL was invoked using a GSL gile as an argument, it begins in script mode.
 
-You can change between template and script mode with the `template' and `endtemplate' commands.  See the description of these commands below for details.
+You can change between template and script mode with the `template` and `endtemplate` commands.  See the description of these commands below for details.
 
 <A name="toc4-1134" title="Template Lines" />
 #### Template Lines
 
 The simplest template line is just text, which is copied verbatim to the current output file.  If no output file has been opened, or if the last output file has been closed, the output is copied to the standard output.
 
-The backslash ('\') serves several special functions in a template line.  Firstly, if the last character of an template line is a backslash then the line is output with no line terminator; otherwise a line terminator follows the template line.  Secondly, a backslash introduces one of three special character sequences: '\n', '\r' and '\t' which are replaced by a line feed, carriage return and a tabulation character (TAB) respectively.  Thirdly, a backslash followed by and other character is replaced by that character; this allows characters which would normally be interpreted as script commands to be output literally.
+The backslash ('\') serves several special functions in a template line.  Firstly, if the last character of an template line is a backslash then the line is output with no line terminator; otherwise a line terminator follows the template line.  Secondly, a backslash introduces one of three special character sequences: '\n`, '\r` and '\t` which are replaced by a line feed, carriage return and a tabulation character (TAB) respectively.  Thirdly, a backslash followed by and other character is replaced by that character; this allows characters which would normally be interpreted as script commands to be output literally.
 
 <A name="toc4-1141" title="Script Lines" />
 #### Script Lines
@@ -1224,7 +1224,7 @@ If a script command line ends with a backslash (`\') then the following script l
 <A name="toc4-1148" title="Comments" />
 #### Comments
 
-There are three ways to include comments in GSL scripts.  The first is to place a hyphen (`-') as the first character of a script line, or following the point (`.') in a template line.  The second way is to place a hash (`#') after a GSL command.  Any characters following the hyphen are ignored by GSL.  The third way is to enclose comment text (which may continue over more than one line) inside comment markers (`/*' and `*/') just as in C.  However if GSL finds these characters in a template line (but not inside a substitution) it assumes that they are destined for output, so does not treat them as a comment.
+There are three ways to include comments in GSL scripts.  The first is to place a hyphen (`-') as the first character of a script line, or following the point (`.') in a template line.  The second way is to place a hash (`#') after a GSL command.  Any characters following the hyphen are ignored by GSL.  The third way is to enclose comment text (which may continue over more than one line) inside comment markers (`/*` and `*/') just as in C.  However if GSL finds these characters in a template line (but not inside a substitution) it assumes that they are destined for output, so does not treat them as a comment.
 
 Examples:
 
@@ -1242,7 +1242,7 @@ Examples:
 <A name="toc4-1166" title="Ignorecase" />
 #### Ignorecase
 
-GSL has two modes which influence case-sensitivity of identifier names. In the first mode (ignore-case), GSL is case-insensitive regarding identifier names and instead as a guide to modifying the output string, as described above ('Case Sensitivity').  In the second mode (case-sensitive), GSL treats the case of identifier names as significant.  You can change the behaviour by setting the value of the attribute 'ignorecase' in the scope 'gsl' to 1 for ignore case and 0 for case sensitivity.
+GSL has two modes which influence case-sensitivity of identifier names. In the first mode (ignore-case), GSL is case-insensitive regarding identifier names and instead as a guide to modifying the output string, as described above ('Case Sensitivity').  In the second mode (case-sensitive), GSL treats the case of identifier names as significant.  You can change the behaviour by setting the value of the attribute 'ignorecase` in the scope 'gsl` to 1 for ignore case and 0 for case sensitivity.
 
 <A name="toc4-1171" title="Shuffle" />
 #### Shuffle
@@ -1263,7 +1263,7 @@ evaluates to
 
     ABCDEF .
 
-The shuffle algorithm uses the value of the attribute `shuffle' of the gsl scope).  It expands a block of white space no shorter than `shuffle' as much as necessary so that the text following the white space is output in the same column.  It also shrinks white space down to a minimum of `shuffle' to make space for text preceeding the white space.  If `shuffle' is zero, then shuffle is disabled.  The default value of `shuffle' is 2; this is the value which produces the results shown above.
+The shuffle algorithm uses the value of the attribute `shuffle` of the gsl scope).  It expands a block of white space no shorter than `shuffle` as much as necessary so that the text following the white space is output in the same column.  It also shrinks white space down to a minimum of `shuffle` to make space for text preceeding the white space.  If `shuffle` is zero, then shuffle is disabled.  The default value of `shuffle` is 2; this is the value which produces the results shown above.
 
 If the current output ends with a backslash, then the shuffle continues on the following line.  Thus
 
@@ -1283,16 +1283,16 @@ GSL helps you make neat COBOL code by automatically filling the first six charac
 <A name="toc4-1207" title="Line Terminators" />
 #### Line Terminators
 
-GSL uses as its line terminator the value of of the attribute 'terminator' of the gsl scope.  The default value is "\n" but it could also be set to "\r\n", for example.
+GSL uses as its line terminator the value of of the attribute 'terminator` of the gsl scope.  The default value is "\n" but it could also be set to "\r\n", for example.
 
 <A name="toc4-1212" title="Arguments" />
 #### Arguments
 
-If GSL is invoked with a `-a' switch, all arguments following the first are treated as arguments to the first script, rather than as further arguments to GSL, as would otherwise be the case.  So if you type:
+If GSL is invoked with a `-a` switch, all arguments following the first are treated as arguments to the first script, rather than as further arguments to GSL, as would otherwise be the case.  So if you type:
 
     gsl -a myscript.gsl localhost 80
 
-GSL defines attributes 'arg1' in the symbol table 'switches' in scope `gsl' with value `localhost' and attribute `arg2' with value `80'.  A GSL script can access these values with an instruction of the form:
+GSL defines attributes 'arg1` in the symbol table 'switches` in scope `gsl` with value `localhost` and attribute `arg2` with value `80'.  A GSL script can access these values with an instruction of the form:
 
     echo switches.arg1
 
@@ -1304,7 +1304,7 @@ or in a loop:
 <A name="toc4-1228" title="Predefined Identifiers" />
 #### Predefined Identifiers
 
-There are some identifiers whose value is maintained by GSL in the global space referred to by the predefined scopes `gsl' and `global'.  They are defined as attributes of the global item.
+There are some identifiers whose value is maintained by GSL in the global space referred to by the predefined scopes `gsl` and `global'.  They are defined as attributes of the global item.
 
 script
 : The name of the GSL script file currently being processed.
@@ -1523,7 +1523,7 @@ switches
         Function: thread . parse (command,[error])
             Parses the command, placing any error message in the parameter 'error'.
                 Errors can also be recovered via thread class attributes.
-                If successful, returns an object of type 'parsed item' which can
+                If successful, returns an object of type 'parsed item` which can
                 then be run as many times as necessary, saving the need to re-parse
                 each time.
         Function: thread . new (command,[error])
@@ -1573,7 +1573,7 @@ switches
 
     Class: XML
         Function: XML . new ([name])
-            Creates a free 'unattached' XML item.  In reality it is attached to the
+            Creates a free 'unattached` XML item.  In reality it is attached to the
                 global variable ancestor, but only so that GSL can de-allocate it on
                 termination.
 
@@ -1584,13 +1584,13 @@ switches
             Loads the supplied string as an XML item.
                 Returns a pointer to the (first) resulting XML item or undefined if there
                 was an error.  In the latter case, an error message is placed in the
-                parameter 'error' and in the XML thread context.
+                parameter 'error` and in the XML thread context.
 
         Function: XML . load_file (filename,[error])
             Loads the file with the supplied name as an XML item.
                 Returns a pointer to the (first) resulting XML item or undefined if there
                 was an error.  In the latter case, an error message is placed in the
-                parameter 'error' and in the XML thread context.
+                parameter 'error` and in the XML thread context.
 
     Class: XML item
         Function: <XML item> . deleted ()
@@ -1603,15 +1603,15 @@ switches
             Loads the supplied string as a child of the item.
                 Returns a pointer to the (first) resulting XML item or undefined if there
                 was an error.  In the latter case, an error messa   ge is placed in the
-                parameter 'error' and in the XML thread context.
+                parameter 'error` and in the XML thread context.
         Function: <XML item> . load_file (filename,[error])
             Loads the file with the supplied name as a child of the item.
                 Returns a pointer to the (first) resulting XML item or undefined if there
                 was an error.  In the latter case, an error message is placed in the
-                parameter 'error' and in the XML thread context.
+                parameter 'error` and in the XML thread context.
         Function: <XML item> . save (filename,[error])
             Saves the XML item to a file with the given name.  Any file errors are
-                places in the parameter 'error' and in the XML thread context.  Returns
+                places in the parameter 'error` and in the XML thread context.  Returns
                 zero if no error occurred, errno otherwise.
 
     Class: XML value
@@ -1682,9 +1682,9 @@ The by clause allows you to sort the items according to the result of evaluating
 
 The expressions in the where and by clauses are evaluated within the new scope.  This means that they can access attributes of the iterating item.
 
-During the evaluation of the `by' and `where' expressions, as well as during the processing of the code, the function `item (name)' returns the number of the child (1, 2, ...) of the current item.  This number is associated with the XML item itself and is not affected by a `by' or `where' clause.
+During the evaluation of the `by` and `where` expressions, as well as during the processing of the code, the function `item (name)` returns the number of the child (1, 2, ...) of the current item.  This number is associated with the XML item itself and is not affected by a `by` or `where` clause.
 
-Within the loop, but not within `by' and `where' expressions, the function `index (name)' returns the index of the current iteration.  This is associated with the loop, so that it always takes consecutive values.
+Within the loop, but not within `by` and `where` expressions, the function `index (name)` returns the index of the current iteration.  This is associated with the loop, so that it always takes consecutive values.
 
 If there are no items to iterate, an optional .else clause is executed.
 
@@ -1720,13 +1720,13 @@ Starts conditional processing of the following block of code if the result of ev
 
     .elsif <expr>
 
-May follow an `if' construct.  Any number of `elsif' constructs may be used.
+May follow an `if` construct.  Any number of `elsif` constructs may be used.
 
 **.else**
 
     .else
 
-May follow an `if' or `elsif' or a `for' construct.  The following block of code is processed if the logical value of all the expressions is FALSE.
+May follow an `if` or `elsif` or a `for` construct.  The following block of code is processed if the logical value of all the expressions is FALSE.
 
 **.endif**
 
@@ -1754,7 +1754,7 @@ Introduces a loop.  The following block of code is processed repeatedly as long 
 
     .endwhile
 
-Terminates a `while' loop.
+Terminates a `while` loop.
 
 Examples:
 
@@ -1767,13 +1767,13 @@ Examples:
 
     .next [<scope>]
 
-Inside a `for' or `while' loop causes immediate iteration, skipping execution of any code between the `next' command and the `endfor' or `endwhile' statement.  If the scope is specified then the `for' loop corresponding to that scope is iterated.
+Inside a `for` or `while` loop causes immediate iteration, skipping execution of any code between the `next` command and the `endfor` or `endwhile` statement.  If the scope is specified then the `for` loop corresponding to that scope is iterated.
 
 **.last**
 
     .last [<scope>]
 
-Inside a `for' or `while' loop causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor' or `endwhile' statement.  If the scope is specified then the `for' loop corresponding to that scope is terminated.
+Inside a `for` or `while` loop causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor` or `endwhile` statement.  If the scope is specified then the `for` loop corresponding to that scope is terminated.
 
 <A name="toc4-1702" title="Scope Manipulation" />
 #### Scope Manipulation
@@ -1799,7 +1799,7 @@ Defines or undefines an XML attribute or item value.  There are several differen
 
 If the scope is omitted from the data specification, GSL searches stacked scopes, from inner to outer, for one in which an attribute of the specified name exists.  If none is found, it uses the outermost stacked scope, which effectively makes the identifier a global variable.
 
-If the expression is left empty then the symbol becomes undefined.  If the expression ends with a default operator `?' but no default expression then an undefined expression causes the symbol to becume undefined rather than producing a runtime error.
+If the expression is left empty then the symbol becomes undefined.  If the expression ends with a default operator `?` but no default expression then an undefined expression causes the symbol to becume undefined rather than producing a runtime error.
 
 If an arithmetic or default operator is specified then the value assigned to the symbol is the result of that operator and the supplied expression to the former value of the operator.
 
@@ -1811,7 +1811,7 @@ Assigns the value 1 to the identifier x in the most recently opened open scope w
 
     .->child. = "Value"
 
-Assigns the string `Value' to the value of the first child of the innermost stacked scope.
+Assigns the string `Value` to the value of the first child of the innermost stacked scope.
 
     .x *= 2
 
@@ -1829,13 +1829,13 @@ Does nothing if x is already defined; otherwise assigns it the value of y, or if
     .new [[<data-specifier>] . <name>] [before <before-scope> | after <after-scope>] [as <alias> | noalias] [nostack]
     .new <name> [to <data-specifier> | before <before-scope> | after <after-scope>] [as <alias> | noalias] [nostack]
 
-Creates a new XML item.  This allows you to build new items in the data tree.  The new item has the specified name and is a child of the XML item corresponding to th specified scope, or the most recently opened scope if none is specified.  If a `before-scope' or `after-scope' is specified, then then it must be the name of an open scope corresponding to a child of &lt;data-specifier>, and the new item is inserted just before &lt;before-scope> or just after &lt;after-scope>; otherwise the  new item is inserted after any existing children.  The construct creates a new scope with the name specified by the alias or the item name if there is no alias.  The following block of code is processed exactly once within this new scope.  It would typically done some attributes of the new XML item.  These values can then be retrieved during a future iteration of a `for' construct through the new item.
+Creates a new XML item.  This allows you to build new items in the data tree.  The new item has the specified name and is a child of the XML item corresponding to th specified scope, or the most recently opened scope if none is specified.  If a `before-scope` or `after-scope` is specified, then then it must be the name of an open scope corresponding to a child of &lt;data-specifier>, and the new item is inserted just before &lt;before-scope> or just after &lt;after-scope>; otherwise the  new item is inserted after any existing children.  The construct creates a new scope with the name specified by the alias or the item name if there is no alias.  The following block of code is processed exactly once within this new scope.  It would typically done some attributes of the new XML item.  These values can then be retrieved during a future iteration of a `for` construct through the new item.
 
 **.endnew**
 
     .endnew [<scope>]
 
-Terminates a `new' construct. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .new blocks for you.
+Terminates a `new` construct. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .new blocks for you.
 
 Examples:
 
@@ -1865,7 +1865,7 @@ Examples:
 
     .copy [<from-scope>] [ to <parent-data> | after <after-scope> | before <before-scope> ] [as <name>]
 
-Makes a copy the XML item associated with <from-scope> (or the most recently opened scope if not specified) at the point specified by either the new parent (`to') or new sibling (`after' or `before'), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as' clause allows you to the new item to have a different name from the old item.
+Makes a copy the XML item associated with <from-scope> (or the most recently opened scope if not specified) at the point specified by either the new parent (`to') or new sibling (`after` or `before'), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as` clause allows you to the new item to have a different name from the old item.
 
 Examples:
 
@@ -1879,11 +1879,11 @@ Examples:
 
     .move [<from-data>] [ to <parent-data> | after <after-data> | before <before-data> ] [as <name>]
 
-Re-attaches a data item at the point specified by  a `to', `after' or `before' clause, renaming it to the name specified in the `as' clause, if specified.
+Re-attaches a data item at the point specified by  a `to`, `after` or `before` clause, renaming it to the name specified in the `as` clause, if specified.
 
 GSL detects any attempt to make an item its own descendent.
 
-Note that moving an item does not invalidate any scope associated with it. If the moved item is associated with a future iteration of a `for' loop, the iteration will still take place even if the item is no longer a child of the extended scope from the `for' instruction.
+Note that moving an item does not invalidate any scope associated with it. If the moved item is associated with a future iteration of a `for` loop, the iteration will still take place even if the item is no longer a child of the extended scope from the `for` instruction.
 
 Examples:
 
@@ -1897,7 +1897,7 @@ Examples:
 
     .sort [[<data-specifier>] .] [<name>] [as <alias>] by <expr>
 
-Sorts the specified items.  A scope is created with each item in turn and is used to evaluate the expression.  The result is then used to sort the items.  The `as' clause allows you to give the created scope a different name.  After execution, the specified items are in order and after any other children of the same parent.
+Sorts the specified items.  A scope is created with each item in turn and is used to evaluate the expression.  The result is then used to sort the items.  The `as` clause allows you to give the created scope a different name.  After execution, the specified items are in order and after any other children of the same parent.
 
 <A name="toc4-1826" title="Script Manipulation" />
 #### Script Manipulation
@@ -1927,7 +1927,7 @@ Turns template mode on or off.
 
 **.endtemplate**
 
-Terminates the block introduced by a `template' instruction.
+Terminates the block introduced by a `template` instruction.
 
 <A name="toc4-1856" title="Macros and Functions" />
 #### Macros and Functions
@@ -1936,7 +1936,7 @@ Macros and functions are pieces of GSL which can be invoked with parameters. The
 
 Just like other data, macros and functions are attached to scopes, and can only be used within that scope.
 
-When a macro or function executes, an unstacked scope is opened with the same name as the macro or function.  An unstacked alias to this scope called `my' is also created.  This scope holds the parameter values, and can also be used for local variables.  Full recursion can thus be achieved.
+When a macro or function executes, an unstacked scope is opened with the same name as the macro or function.  An unstacked alias to this scope called `my` is also created.  This scope holds the parameter values, and can also be used for local variables.  Full recursion can thus be achieved.
 
 **.macro**
 
@@ -1970,7 +1970,7 @@ Terminates a function definition.
 
     .[<scope> .] <function-name> [([<expr>] [, [<expr>]])] ...)]
 
-A macro or function can also be invoked as an expression.  In this case, the value of is that returned, or is undefined if there is no `.return' statement.
+A macro or function can also be invoked as an expression.  In this case, the value of is that returned, or is undefined if there is no `.return` statement.
 
 This creates a special scope with the name of the macro or function, and attributes corresponding to the parameters value of the parameters.  This scope does not count in numeric scope specifications and cannot have children.  It can be used to define local variables, but must in this case be specified by name.
 
