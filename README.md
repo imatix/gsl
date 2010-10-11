@@ -150,7 +150,7 @@ Initially, GSL looks like any other scripting language. I can write little scrip
 
     amount = 1000
     year = 2006
-    while year < 2026
+    while year &lt; 2026
         amount = amount * 1.05
         year = year + 1
     endwhile
@@ -167,12 +167,12 @@ To run the above program, assuming it was saved in a file called interest.gsl, I
 
 This executes the script and tells me that if I am really patient, I'll be rich one day. Now I'm going to change this little program to make the same kind of calculation for different amounts, rates, and years. Where do I put these different terms and rates? The answer is, in an XML file. The file is called deposits.xml:
 
-    <?xml version="1.0"?>
-    <deposits script = "interest.gsl" >
-        <deposit amount = "1000000" rate = "5" years = "20" />
-        <deposit amount = "500000" rate = "4" years = "10" />
-        <deposit amount = "2500000" rate = "6" years = "15" />
-    </deposits>
+    &lt;?xml version="1.0"?&gt;
+    &lt;deposits script = "interest.gsl" &gt;
+        &lt;deposit amount = "1000000" rate = "5" years = "20" /&gt;
+        &lt;deposit amount = "500000" rate = "4" years = "10" /&gt;
+        &lt;deposit amount = "2500000" rate = "6" years = "15" /&gt;
+    &lt;/deposits&gt;
 
 We change our script to give the result below.
 
@@ -180,7 +180,7 @@ We change our script to give the result below.
      for deposit
         year = 1
         accumulated = amount
-        while year < years
+        while year &lt; years
             accumulated = accumulated * (rate / 100 + 1)
             year = year + 1
         endwhile
@@ -200,7 +200,7 @@ Note the change of command syntax. We first ran the GSL script. Now we're runnin
 
 Any GSL script, no matter how simple, works with an XML document loaded into GSL's memory as a data tree. In our first interest.gsl script, the data tree contains just this:
 
-    <root script = "interest" />
+    &lt;root script = "interest" /&gt;
 
 GSL automatically creates this data tree when we ask it to execute a GSL script.
 
@@ -215,14 +215,14 @@ All variables that we define and use are stored in the data tree, somewhere. Thi
 
 GSL uses the term "template" to describe text that is output as generated code. GSL works in two modes - script mode, and template mode. When you execute a GSL script directly, as we did in the first example, GSL starts in script mode. When you execute a GSL script indirectly, through an XML file, as we did in the second example, GSL starts in template mode. Try removing the .template 0 and .endtemplate lines and you'll see what I mean. The script just gets copied to the output stream, the console, by default.
 
-In template mode, GSL commands start with a dot in the first column. In script mode, all lines are assumed to be GSL commands unless they start with ">" (output) in the first column, in which case they are handled as template lines.
+In template mode, GSL commands start with a dot in the first column. In script mode, all lines are assumed to be GSL commands unless they start with "&gt;" (output) in the first column, in which case they are handled as template lines.
 
 Script mode is useful when you are doing a lot of GSL scripting work. Often you need to prepare data, check the XML tree, and so on, before you can start to generate code. Template mode is useful when you want to output a lot of data, or actually want to generate code.
 
 You can mix GSL commands and template code by putting a dot at the start of
 lines with GSL commands. Like this:
 
-    .while year < years
+    .while year &lt; years
     .   accumulated = accumulated * (rate / 100 + 1)
     .   year = year + 1
     .endwhile
@@ -230,34 +230,34 @@ lines with GSL commands. Like this:
 I'm now going to generate a little HTML report of how the different calculations. The listing below shows the third version of interest.gsl:
 
     .output "deposits.html"
-    <html>
-    <head>
-    <title>So You Want To Be A Millionaire?</title>
-    </head>
-    <body>
-    <h1>So You Want To Be A Millionaire?</h1>
-    <table>
-    <tr><th>Original amount</th>
-    <th>Interest rate</th>
-    <th>Term, years</th>
-    <th>Final amount</th>
-    </tr>
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;title&gt;So You Want To Be A Millionaire?&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;h1&gt;So You Want To Be A Millionaire?&lt;/h1&gt;
+    &lt;table&gt;
+    &lt;tr&gt;&lt;th&gt;Original amount&lt;/th&gt;
+    &lt;th&gt;Interest rate&lt;/th&gt;
+    &lt;th&gt;Term, years&lt;/th&gt;
+    &lt;th&gt;Final amount&lt;/th&gt;
+    &lt;/tr&gt;
     .for deposit
     .   year = 1
     .   accumulated = amount
-    .   while year < years
+    .   while year &lt; years
     .       accumulated = accumulated * (rate / 100 + 1)
     .       year = year + 1
     .   endwhile
-    <tr><td>&#36;(amount)</td>
-    <td>&#36;(rate)%</td>
-    <td>&#36;(years)</td>
-    <td>&#36;(accumulated)</td>
-    </tr>
+    &lt;tr&gt;&lt;td&gt;&#36;(amount)&lt;/td&gt;
+    &lt;td&gt;&#36;(rate)%&lt;/td&gt;
+    &lt;td&gt;&#36;(years)&lt;/td&gt;
+    &lt;td&gt;&#36;(accumulated)&lt;/td&gt;
+    &lt;/tr&gt;
     .endfor
-    </table>
-    </body>
-    </html>
+    &lt;/table&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
 
 Note these syntax aspects:
 
@@ -323,27 +323,27 @@ When we mass produce something, we're clearly aiming for low cost and consistent
 
 The next step is to sketch a model that can hold this information in a useful way. Remember that we use XML as a modeling language. So, we invent an XML syntax for our model. For each page, I'd like to write something like this:
 
-    <page
+    &lt;page
         name = "name of page"
         title = "Title text goes here"
         subtitle = "Subtitle text goes here"
-        >
-    <content>
+        &gt;
+    &lt;content&gt;
     Content HTML goes here
-    </content>
-    </page>
+    &lt;/content&gt;
+    &lt;/page&gt;
 
 When I design new XML languages like the above, I use entity attributes to hold single-line properties, and child entities to hold multi-line properties or properties that can occur more than once. It just seems more elegant than putting properties in child entities, since this implies those properties can occur many times. It does not make sense for a page to have more than one name, title, subtitle, or image in our model, so we define these as attributes of the page entity. The iMatix MOP tools use this style very heavily.
 
 Once we've defined a set of pages, how do we tie these together into a web site? Let's use a second model for the overall web site:
 
-    <site copyright = "copyright statement goes here">
-    <section name = "name of section">
-        <page name = "name of page" /> ...
-    </section>...
-    </site>
+    &lt;site copyright = "copyright statement goes here"&gt;
+    &lt;section name = "name of section"&gt;
+        &lt;page name = "name of page" /&gt; ...
+    &lt;/section&gt;...
+    &lt;/site&gt;
 
-I've defined a <section> tag that breaks the pages into groups. Now let's jump right in and make ourselves a web site. There's no better way to test a model than to try using it. As an example, I'll make a new web site for my local grocer, who has decided, finally, to go on-line.
+I've defined a &lt;section&gt; tag that breaks the pages into groups. Now let's jump right in and make ourselves a web site. There's no better way to test a model than to try using it. As an example, I'll make a new web site for my local grocer, who has decided, finally, to go on-line.
 
 <A name="toc3-272" title="First Draft" />
 ### First Draft
@@ -352,73 +352,73 @@ We'll make the web site as several XML files. This is a design choice. We could 
 
 To start with, we'll define the overall site like this:
 
-    <?xml version = "1.0" ?>
-    <site
+    &lt;?xml version = "1.0" ?&gt;
+    &lt;site
         copyright = "Copyright &#169; Local Grocer"
         script = "sitegen_1.gsl"
-        >
-    <section name = "Welcome">
-        <page name = "index" />
-    </section>
-    <section name = "Products">
-        <page name = "fruit" />
-        <page name = "vegetables" />
-    </section>
-    </site>
+        &gt;
+    &lt;section name = "Welcome"&gt;
+        &lt;page name = "index" /&gt;
+    &lt;/section&gt;
+    &lt;section name = "Products"&gt;
+        &lt;page name = "fruit" /&gt;
+        &lt;page name = "vegetables" /&gt;
+    &lt;/section&gt;
+    &lt;/site&gt;
 
 Note the first line, which defines the file as XML, and the 'script' tag, which tells GSL what script to run to process the data. We've defined three pages. Let's write very a simple version of each of these:
 
 Next, we will write three more short XML files as shown below. First the index page:
 
-    <page
+    &lt;page
         name = "index"
         title = "Local Grocer"
         subtitle = "Visit the Local Grocer"
-        >
-    <content>
-    <h3>Close to you</h3>
-    <p>We're just around the corner, if you live near by.</p>
-    <h3>Always open</h3>
-    <p>And if we're closed, just come back tomorrow.</p>
-    <h3>Cheap and convenient</h3>
-    <p>Much cheaper and easier than growing your own vegetables and fruit.</p>
-    </content>
-    </page>
+        &gt;
+    &lt;content&gt;
+    &lt;h3&gt;Close to you&lt;/h3&gt;
+    &lt;p&gt;We're just around the corner, if you live near by.&lt;/p&gt;
+    &lt;h3&gt;Always open&lt;/h3&gt;
+    &lt;p&gt;And if we're closed, just come back tomorrow.&lt;/p&gt;
+    &lt;h3&gt;Cheap and convenient&lt;/h3&gt;
+    &lt;p&gt;Much cheaper and easier than growing your own vegetables and fruit.&lt;/p&gt;
+    &lt;/content&gt;
+    &lt;/page&gt;
 
 Next, the fruit page:
 
-    <page
+    &lt;page
         name = "fruit"
         title = "Our Fruit Stand"
         subtitle = "Lucious Tropical Fruits"
-        >
-    <content>
-    <h3>Always fresh</h3>
-    <p>Just like it was plucked from the tree last month.</p>
-    <h3>Special deal</h3>
-    <p>Any five pieces of fruit, for the price of ten!</p>
-    <h3>Money back if not satisfied</h3>
-    <p>We'll give you your money back if we're not satisfied with it!</p>
-    </content>
-    </page>
+        &gt;
+    &lt;content&gt;
+    &lt;h3&gt;Always fresh&lt;/h3&gt;
+    &lt;p&gt;Just like it was plucked from the tree last month.&lt;/p&gt;
+    &lt;h3&gt;Special deal&lt;/h3&gt;
+    &lt;p&gt;Any five pieces of fruit, for the price of ten!&lt;/p&gt;
+    &lt;h3&gt;Money back if not satisfied&lt;/h3&gt;
+    &lt;p&gt;We'll give you your money back if we're not satisfied with it!&lt;/p&gt;
+    &lt;/content&gt;
+    &lt;/page&gt;
 
 and last the vegetable page:
 
-    <page
+    &lt;page
         name = "vegetables"
         title = "Our Vegetables"
         subtitle = "Healthy Organic Vegetables"
-    >
-    <content>
-    <h3>100% organic vegetables</h3>
-    <p>All vegetables made from cardon, oxygen, and hydrogen molecules
-    with trace elements.</p>
-    <h3>Country fresh style</h3>
-    <p>We don't know what that means, but it sounded nice!</p>
-    <h3>Unique take-away concept</h3>
-    <p>Now you can consume your vegetables in the comfort of your own home.</p>
-    </content>
-    </page>
+    &gt;
+    &lt;content&gt;
+    &lt;h3&gt;100% organic vegetables&lt;/h3&gt;
+    &lt;p&gt;All vegetables made from cardon, oxygen, and hydrogen molecules
+    with trace elements.&lt;/p&gt;
+    &lt;h3&gt;Country fresh style&lt;/h3&gt;
+    &lt;p&gt;We don't know what that means, but it sounded nice!&lt;/p&gt;
+    &lt;h3&gt;Unique take-away concept&lt;/h3&gt;
+    &lt;p&gt;Now you can consume your vegetables in the comfort of your own home.&lt;/p&gt;
+    &lt;/content&gt;
+    &lt;/page&gt;
 
 Finally, here is the first draft of the web generation script. It does not produce anything, it simply loads the web site data into an XML tree and then saves this (in a file called root.xml) that we can look at to see what live data the script is actually working with:
 
@@ -427,9 +427,9 @@ Finally, here is the first draft of the web generation script. It does not produ
     .template 0
      for section
         for page
-            ###  Load XML <page> data
+            ###  Load XML &lt;page&gt; data
             xml to section from "&#36;(page.name).xml"
-            ###  Delete old <page> tag
+            ###  Delete old &lt;page&gt; tag
             delete page
         endfor
      endfor
@@ -438,7 +438,7 @@ Finally, here is the first draft of the web generation script. It does not produ
 
 Let's look at what this script does. First, it switches off template mode so we can write ordinary GSL without starting each line with a dot. GSL starts scripts in template mode if they are launched from the XML file. It's useful in many cases but not here. So, we wrap the whole script in '.template 0' and '.endtemplate'.
 
-Second, the script works through each section and page, and loads the XML data for that page. It does this using two commands, 'xml' and 'delete'. The first loads XML data from a file into the specified scope (<section>, in this case), and the second deletes the current page (since the loaded data also contains a <page> tag).
+Second, the script works through each section and page, and loads the XML data for that page. It does this using two commands, 'xml' and 'delete'. The first loads XML data from a file into the specified scope (&lt;section&gt;, in this case), and the second deletes the current page (since the loaded data also contains a &lt;page&gt; tag).
 
 Finally, the script saves the whole XML tree to a file. If you want to try the next steps you must have installed GSL, as I described in the last article. Run the script like this:
 
@@ -486,7 +486,7 @@ In our first draft we loaded each page into the XML tree and deleted the origina
         endfor
     endfor
 
-To generate output for each page, we're going to iterate through the sections one more time. Since we're deleting old <page> entities and loading new ones from the XML definitions, we need to iterate through the sections and pages over again. This is the code that generates the output for each page:
+To generate output for each page, we're going to iterate through the sections one more time. Since we're deleting old &lt;page&gt; entities and loading new ones from the XML definitions, we need to iterate through the sections and pages over again. This is the code that generates the output for each page:
 
     for section
         for page
@@ -510,10 +510,10 @@ The HTML template looks like this:
     .template 1
     .echo "Generating &#36;(page.name) page..."
     .output "&#36;(page.name).html"
-    <!DOCTYPE...>
-    <html>
+    &lt;!DOCTYPE...&gt;
+    &lt;html&gt;
        ...
-    </html>
+    &lt;/html&gt;
     .endtemplate
 
 Most of it is fairly straight-forward, though you do need to understand how XHTML and CSS work (and I'm not going to explain that here).
@@ -522,20 +522,20 @@ Most of it is fairly straight-forward, though you do need to understand how XHTM
 
 * The output command creates the HTML page.
 
-* The text <!DOCTYPE...> to </html> is the body of the page, which I'll explain below.
+* The text &lt;!DOCTYPE...&gt; to &lt;/html&gt; is the body of the page, which I'll explain below.
 
 The template starts by setting template mode on. This means that any GSL commands we want to use here must start with a dot. It makes the HTML easy to read and to maintain.
 
 Let's look at the chunk of code that produces the site index. This is - in our version of the web site generator - a menu that is embedded into each page. The CSS stylesheet can place this menu anywhere on the page. Here is the GSL code that generates it:
 
     .for site.section
-    <h3 class="menu_heading">&#36;(section.name)</h3>
-    <ul class="menu_item">
+    &lt;h3 class="menu_heading"&gt;&#36;(section.name)&lt;/h3&gt;
+    &lt;ul class="menu_item"&gt;
     .   for page
-    <li><a class="menu_item"
-        href="&#36;(page.name).html">&#36;(page.title)</a></li>
+    &lt;li&gt;&lt;a class="menu_item"
+        href="&#36;(page.name).html"&gt;&#36;(page.title)&lt;/a&gt;&lt;/li&gt;
     .   endfor
-    </ul>
+    &lt;/ul&gt;
     .endfor
 
 The interesting thing here is that we say for site.section in order to iterate through the sections. The site. prefix is a parent scope name, it tells GSL "look for all sections in the current site". If we don't use the scope name, GSL would look for all sections in the current scope (the page) and find nothing. This is a common beginner's error.
@@ -562,11 +562,11 @@ Near the end of the template you see this construction:
     &#36;(content.string ())
     .endfor
 
-What is going on here? The answer is, we're grabbing the whole <content> block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
+What is going on here? The answer is, we're grabbing the whole &lt;content&gt; block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
 
 The scope string() function returns a string that holds the XML value of the specified entity. For the index page, it returns this value (as a single string):
 
-    <content><h3>Close to you</h3><p>We're just around the corner, if you live near by.</p><h3>Always open</h3><p>And if we're closed, just come back tomorrow.</p><h3>Cheap and convenient</h3><p>Much cheaper and easier than growing your own vegetables and fruit.</p></content>
+    &lt;content&gt;&lt;h3&gt;Close to you&lt;/h3&gt;&lt;p&gt;We're just around the corner, if you live near by.&lt;/p&gt;&lt;h3&gt;Always open&lt;/h3&gt;&lt;p&gt;And if we're closed, just come back tomorrow.&lt;/p&gt;&lt;h3&gt;Cheap and convenient&lt;/h3&gt;&lt;p&gt;Much cheaper and easier than growing your own vegetables and fruit.&lt;/p&gt;&lt;/content&gt;
 
 When we enclose this in &#36;( and ), it writes the string to the current output file. Thus we generate the body of the web page.
 
@@ -602,57 +602,57 @@ Here is the template for the HTML output.
     .###  This whole script runs in template mode.
     .#
     .template 1
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-    <html>
-    <head>
-      <title>&#36;(page.title)</title>
-      <link rel="stylesheet" href="default.css" type="text/css"/>
-    </head>
-    <body>
-      <div id="left_container">
-        <div id="logo_container">
-          <a href="index.html"><img id="logo" src="&#36;(page.name).jpg"/></a>
-        </div>
-        <div id="menu_container">
+    &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;&#36;(page.title)&lt;/title&gt;
+      &lt;link rel="stylesheet" href="default.css" type="text/css"/&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;div id="left_container"&gt;
+        &lt;div id="logo_container"&gt;
+          &lt;a href="index.html"&gt;&lt;img id="logo" src="&#36;(page.name).jpg"/&gt;&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div id="menu_container"&gt;
     .for site.section
-          <h3 class="menu_heading">&#36;(section.name)</h3>
-          <ul class="menu_item">
+          &lt;h3 class="menu_heading"&gt;&#36;(section.name)&lt;/h3&gt;
+          &lt;ul class="menu_item"&gt;
     .   for page
-            <li><a class="menu_item" href="&#36;(page.name).html">&#36;(page.title)</a></li>
+            &lt;li&gt;&lt;a class="menu_item" href="&#36;(page.name).html"&gt;&#36;(page.title)&lt;/a&gt;&lt;/li&gt;
     .   endfor
-          </ul>
+          &lt;/ul&gt;
     .endfor
-          <h3 class="menu_heading">Copyright</h3>
-        </div>
-        <div id="copyright">
-          <p>&#36;(copyright)</p>
-        </div>
-        <h3 class="menu_heading"> </h3>
-      </div>
-      <div id="right_container">
-        <div id="title_container">
-          <h1 id="title">&#36;(page.title)</h1>
-          <h2 id="title">&#36;(page.subtitle)</h2>
-        </div>
-        <div id="content_container">
-        <!-- Page content -->
+          &lt;h3 class="menu_heading"&gt;Copyright&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;div id="copyright"&gt;
+          &lt;p&gt;&#36;(copyright)&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;h3 class="menu_heading"&gt; &lt;/h3&gt;
+      &lt;/div&gt;
+      &lt;div id="right_container"&gt;
+        &lt;div id="title_container"&gt;
+          &lt;h1 id="title"&gt;&#36;(page.title)&lt;/h1&gt;
+          &lt;h2 id="title"&gt;&#36;(page.subtitle)&lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div id="content_container"&gt;
+        &lt;!-- Page content --&gt;
     .for content
         &#36;(content.string ())
     .endfor
-        <!-- End page content -->
-        </div>
-      </div>
-    </body>
-    </html>
+        &lt;!-- End page content --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
     .endtemplate
 
 To build the final web site, make sure the site.xml specifies the correct script:
 
-    <site
+    &lt;site
         copyright = "Copyright &#169; Local Grocer"
         script = "sitegen.gsl"
-        >
+        &gt;
 
 And then build the web site using the same command as previously:
 
@@ -883,9 +883,9 @@ Since we use the MOP approach to build the code generators themselves, we get ve
 
 To run GSL, use the following syntax
 
-    gsl -<option> ... -<attr>[:<value>] ... filename ...
+    gsl -&lt;option&gt; ... -&lt;attr&gt;[:&lt;value&gt;] ... filename ...
 
-If the filename has no extension, GSL tries to find an XML file with that name, or with the extension `.xml' (recognised by the <?xml... tag on the first line).  If it finds no XML file it tries to find a file with that name or the extension `.gsl', which it interprets as a GSL file.
+If the filename has no extension, GSL tries to find an XML file with that name, or with the extension `.xml' (recognised by the &lt;?xml... tag on the first line).  If it finds no XML file it tries to find a file with that name or the extension `.gsl', which it interprets as a GSL file.
 
 Options currently recognised by GSL are:
 
@@ -920,7 +920,7 @@ Constants express a constant value of one of the two scalar types. A string cons
 
 According to The Free On-line Dictionary of Computing, &copy; 1993-2004 Denis Howe:
 
-> The scope of an identifier is the region of a program source within which it represents a certain thing. This usually extends from the place where it is declared to the end of the smallest enclosing block (begin/end or procedure/function body). An inner block may contain a redeclaration of the same identifier in which case the scope of the outer declaration does not include (is "shadowed" or "occluded" by) the scope of the inner.
+&gt; The scope of an identifier is the region of a program source within which it represents a certain thing. This usually extends from the place where it is declared to the end of the smallest enclosing block (begin/end or procedure/function body). An inner block may contain a redeclaration of the same identifier in which case the scope of the outer declaration does not include (is "shadowed" or "occluded" by) the scope of the inner.
 
 GSL extends this usage so that a scope also has an alias, or name.  When we refer to a scope, we generally do so by its alias rather than by the region in the script where it is defined.
 
@@ -997,11 +997,11 @@ What if, in the above example, the scope 'global' defined an attribute 'name', b
 
 Look at the example:
 
-    global.name = xml.load_string ("<A value = \"2\">Hello</A>")
+    global.name = xml.load_string ("&lt;A value = \"2\"&gt;Hello&lt;/A&gt;")
     echo name
     echo global.name.value
 
-The first line loads the XML string <A name = "2">Hello</A> (note the backslashes preceeding the quotation marks inside the string) into the attribute 'name' of the global scope.  The second line prints the flattened value of the XML, while the third line outputs the attribute 'value' of the attribute 'name' of the scope 'global'.  Note that the use or non-use of the scope 'global' makes no difference in this case because no innermore scopes defined an attribute 'name'.  The output of this GSL script is:
+The first line loads the XML string &lt;A name = "2"&gt;Hello&lt;/A&gt; (note the backslashes preceeding the quotation marks inside the string) into the attribute 'name' of the global scope.  The second line prints the flattened value of the XML, while the third line outputs the attribute 'value' of the attribute 'name' of the scope 'global'.  Note that the use or non-use of the scope 'global' makes no difference in this case because no innermore scopes defined an attribute 'name'.  The output of this GSL script is:
 
     2004/09/20 16:36:25: gsl/4 M: Hello
     2004/09/20 16:36:25: gsl/4 M: 2
@@ -1014,15 +1014,15 @@ Notice that this form resembles a request for an attribute with no name; this is
 
 **Navigating Children**
 
-Just as the period ('.') accesses an attribute of a structure, the member ('->') construct accesses a child.  For instance
+Just as the period ('.') accesses an attribute of a structure, the member ('-&gt;') construct accesses a child.  For instance
 
-    global.parent->child
+    global.parent-&gt;child
 
 accesses the (first) child called 'child' of the structure referred to by the attribute 'parent' of the global scope.
 
 A more sophisticated version of this structure exists:
 
-    global.parent-> child (value = "2")
+    global.parent-&gt; child (value = "2")
 
 accesses the (first) child called 'child' for which the condition 'value = "2"' is TRUE.
 
@@ -1030,7 +1030,7 @@ The detail of how this works is that a scope called 'child' is opened for the du
 
 As a final detail, the scope opened during the evaluation of this expression may clash with other scopes called 'child'.  For this reason, the following expression may be used:
 
-    global.parent-> child (baby.value = child.value, baby)
+    global.parent-&gt; child (baby.value = child.value, baby)
 
 The second argument 'baby' indicates that the name of the scope created to evaluate the condition should be 'baby'.
 
@@ -1054,8 +1054,8 @@ GSL expressions are much the same as expressions in other high-level programming
 * Multiplicative: *, /
 * Additive: +, -
 * If/Default: ??, ?
-* Comparative: =, <>, >, >=, <, <=
-* Safe comparative: ?=, ?<>, ?>, ?>=, ?<, ?<=
+* Comparative: =, &lt;&gt;, &gt;, &gt;=, &lt;, &lt;=
+* Safe comparative: ?=, ?&lt;&gt;, ?&gt;, ?&gt;=, ?&lt;, ?&lt;=
 * Logical: |, &, !
 
 Operator precedence is standard (multiplicative, additive, if/default, comparative, logical) and brackets are treated as you would expect.
@@ -1070,11 +1070,11 @@ since the second operator is not evaluated when X is undefined.
 
 The default operator allows undefined expressions to be replaced by another expression.  The value of
 
-    <expr1> ? [<expr2>]
+    &lt;expr1&gt; ? [&lt;expr2&gt;]
 
-is equal to the value of <expr1>, if defined; otherwise it is equal to the value of <expr2>, whether or not the latter is defined.  If the second operand <expr2> is omitted then the evaluation of the expression is `safe', that is, GSL does not object (when this is feasible) to the result of the expression being undefined.  This feature can be used in symbol definitions and substitutions to make GSL accept an undefined expression.  See the description of these instructions for details.
+is equal to the value of &lt;expr1&gt;, if defined; otherwise it is equal to the value of &lt;expr2&gt;, whether or not the latter is defined.  If the second operand &lt;expr2&gt; is omitted then the evaluation of the expression is `safe', that is, GSL does not object (when this is feasible) to the result of the expression being undefined.  This feature can be used in symbol definitions and substitutions to make GSL accept an undefined expression.  See the description of these instructions for details.
 
-The safe comparative operators return the same result as their equivalent comparative operators when both operands are defined.  If one or both operator is undefined, the safe operators return FALSE while the normal operators produce an error.  Notice that `a ?<> b' returns TRUE if both a and b are defined and they are not equal and FALSE otherwise.
+The safe comparative operators return the same result as their equivalent comparative operators when both operands are defined.  If one or both operator is undefined, the safe operators return FALSE while the normal operators produce an error.  Notice that `a ?&lt;&gt; b' returns TRUE if both a and b are defined and they are not equal and FALSE otherwise.
 
 The if operator returns the second operand if the first operand evaluates to a non-zero number.  Otherwise the result is undefined.  Thus an expression such as
 
@@ -1098,7 +1098,7 @@ Generally, additive, multiplicative and logical operators only apply to numeric 
 
 At almost any place in a GSL script, you may use a substitute construct in the place of literal text.  The format of a substitute construct is:
 
-    &#36;( <expression> [% format] [: pretty-print] )
+    &#36;( &lt;expression&gt; [% format] [: pretty-print] )
 
 The construct is replaced by the value of the expression, output according to the format and pretty-print modifiers, if they exist.  The order of the format and pretty-print modifiers is not important.
 
@@ -1183,7 +1183,7 @@ Some examples:  Assume the identifier IDENT has the value `A few words from our 
 
 **What You Can Substitute**
 
-A substitution can appear at any place in a literal string (template line or string constant) or as an operand in an expression.  It can also replace part or all of a single identifier in a data specification, but not a point (`.') or member construct (`->').
+A substitution can appear at any place in a literal string (template line or string constant) or as an operand in an expression.  It can also replace part or all of a single identifier in a data specification, but not a point (`.') or member construct (`-&gt;').
 
 Some examples:  Assume the identifier IDENT has the value `NUM' and identifer NUM has the value `1'.
 
@@ -1216,7 +1216,7 @@ You can also set the initial value of these variables when starting GSL by using
 <A name="toc4-1140" title="Template and Script Modes" />
 #### Template and Script Modes
 
-Lines of GSL may be either script lines or template lines.  GSL has two different modes for distinguishing script from template lines.  In template mode, lines are assumed to be template lines unless they begin with a period (`.').  In script mode, lines are assumed to be script lines unless they begin with a greater-than symbol (`>').
+Lines of GSL may be either script lines or template lines.  GSL has two different modes for distinguishing script from template lines.  In template mode, lines are assumed to be template lines unless they begin with a period (`.').  In script mode, lines are assumed to be script lines unless they begin with a greater-than symbol (`&gt;').
 
 GSL starts in one of these modes, depending on the manner in which is was invoked.  If it was invoked using an XML file as an argument, it begins in template mode as it is assumed that the XML file is to be used as data for creating an output file.  If GSL was invoked using a GSL gile as an argument, it begins in script mode.
 
@@ -1404,12 +1404,12 @@ switches
     Class: Directory
 
     Class: File
-        Function: <file entry> . open ([mode],[error])
-        Function: <file entry> . read ([error])
-        Function: <file entry> . write (string,[error])
-        Function: <file entry> . close ([error])
-        Function: <file entry> . tell ([error])
-        Function: <file entry> . seek ([offset],[error])
+        Function: &lt;file entry&gt; . open ([mode],[error])
+        Function: &lt;file entry&gt; . read ([error])
+        Function: &lt;file entry&gt; . write (string,[error])
+        Function: &lt;file entry&gt; . close ([error])
+        Function: &lt;file entry&gt; . tell ([error])
+        Function: &lt;file entry&gt; . seek ([offset],[error])
 
 
 <A name="toc4-1339" title="gsl control" />
@@ -1471,14 +1471,14 @@ switches
                 Returns the process object.
 
     Class: Process handle
-        Function: <proc handle> . setenv (name,[value])
+        Function: &lt;proc handle&gt; . setenv (name,[value])
             Sets an environment variable for the process.  Can only be called before
                 the process is started with proc_handle.run ()
 
-        Function: <proc handle> . getenv (name)
+        Function: &lt;proc handle&gt; . getenv (name)
             Gets an environment variable from the process.
 
-        Function: <proc handle> . run ([error])
+        Function: &lt;proc handle&gt; . run ([error])
             Runs a process created with proc.create ()
                 Returns -1 if there was an error creating the object.  Also places an
                 error message into the parameter error.
@@ -1496,10 +1496,10 @@ switches
         Function: sock . connect ([host],service,[timeout],[error])
 
     Class: Socket handle
-        Function: <sock handle> . accept ([timeout],[error])
-        Function: <sock handle> . close ([timeout],[error])
-        Function: <sock handle> . read (buffer,[minimum],[timeout],[error])
-        Function: <sock handle> . write (buffer,[timeout],[error])
+        Function: &lt;sock handle&gt; . accept ([timeout],[error])
+        Function: &lt;sock handle&gt; . close ([timeout],[error])
+        Function: &lt;sock handle&gt; . read (buffer,[minimum],[timeout],[error])
+        Function: &lt;sock handle&gt; . write (buffer,[timeout],[error])
 
 <A name="toc4-1428" title="string" />
 #### string
@@ -1556,17 +1556,17 @@ switches
                 arbitrary values from the message into successive parameters.
 
     Class: Thread
-        Function: <remote thread> . send ()
+        Function: &lt;remote thread&gt; . send ()
             Sends a message with an arbitrary number of arguments to the thread.
 
     Class: Thread
-        Function: <child thread> . interrupt ()
+        Function: &lt;child thread&gt; . interrupt ()
             Shuts down the thread.
-        Function: <child thread> . send ()
+        Function: &lt;child thread&gt; . send ()
             Sends a message with an arbitrary number of arguments to the thread.
 
     Class: Thread
-        Function: <parsed item> . run ([error])
+        Function: &lt;parsed item&gt; . run ([error])
 
 <A name="toc4-1495" title="time" />
 #### time
@@ -1608,23 +1608,23 @@ switches
                 parameter 'error' and in the XML thread context.
 
     Class: XML item
-        Function: <XML item> . deleted ()
+        Function: &lt;XML item&gt; . deleted ()
             Returns TRUE if the XML item has been deleted.
-        Function: <XML item> . prev ()
+        Function: &lt;XML item&gt; . prev ()
             Returns the previous XML item.
-        Function: <XML item> . string ()
+        Function: &lt;XML item&gt; . string ()
             Returns the XML item formatted as a string.
-        Function: <XML item> . load_string (string,[error])
+        Function: &lt;XML item&gt; . load_string (string,[error])
             Loads the supplied string as a child of the item.
                 Returns a pointer to the (first) resulting XML item or undefined if there
                 was an error.  In the latter case, an error messa   ge is placed in the
                 parameter 'error' and in the XML thread context.
-        Function: <XML item> . load_file (filename,[error])
+        Function: &lt;XML item&gt; . load_file (filename,[error])
             Loads the file with the supplied name as a child of the item.
                 Returns a pointer to the (first) resulting XML item or undefined if there
                 was an error.  In the latter case, an error message is placed in the
                 parameter 'error' and in the XML thread context.
-        Function: <XML item> . save (filename,[error])
+        Function: &lt;XML item&gt; . save (filename,[error])
             Saves the XML item to a file with the given name.  Any file errors are
                 places in the parameter 'error' and in the XML thread context.  Returns
                 zero if no error occurred, errno otherwise.
@@ -1639,7 +1639,7 @@ switches
 
 **.output**
 
-    .output <filename>
+    .output &lt;filename&gt;
 
 Closes the current output file, if one is open, and opens a new one.
 
@@ -1652,7 +1652,7 @@ Where FILENAME is an identifier whose value is the desired file name.
 
 **.append**
 
-    .append <filename>
+    .append &lt;filename&gt;
 
 Closes the current output file, if one is open, and opens a previously existing one and prepares to extend it. See the description of the output command for examples.
 
@@ -1664,7 +1664,7 @@ Closes the current output file, if one is open.
 
 **.literal**
 
-    .literal [ from <filename> | " <text> " | << <terminator> ]
+    .literal [ from &lt;filename&gt; | " &lt;text&gt; " | &lt;&lt; &lt;terminator&gt; ]
 
 Copies text directly to the output file, without substition.  The text can come from another file, a GSL expression, or from lines in the script, ending with a line beginning with the specified terminator.
 
@@ -1674,7 +1674,7 @@ Examples:
 
     .literal "whatever you want"
 
-    .literal << .endliteral
+    .literal &lt;&lt; .endliteral
     Lines are now copied without substitution of
     things like &#36;(abc).
     .endliteral
@@ -1684,8 +1684,8 @@ Examples:
 
 **.for**
 
-    .for [[<data-specifier>] .] <name> [as <alias> | noalias] [nostack] [where <expr>] [by <expr>]
-    .for  [<data-specifier>] .         [as <alias> | noalias] [nostack] [where <expr>] [by <expr>]
+    .for [[&lt;data-specifier&gt;] .] &lt;name&gt; [as &lt;alias&gt; | noalias] [nostack] [where &lt;expr&gt;] [by &lt;expr&gt;]
+    .for  [&lt;data-specifier&gt;] .         [as &lt;alias&gt; | noalias] [nostack] [where &lt;expr&gt;] [by &lt;expr&gt;]
 
 Opens a scope and introduces a loop.  The following block of code is processed once for each item specified.  If no scope if specified, the most recently opened scope is assumed.  The items processed are those children of the XML item corresponding to this scope.  If the first form is used only children with the specified name are processed; if the second form is used, all children are processed.
 
@@ -1705,7 +1705,7 @@ If there are no items to iterate, an optional .else clause is executed.
 
 **.endfor**
 
-    .endfor [<scope>]
+    .endfor [&lt;scope&gt;]
 
 Terminates a .for loop, closing the scope.  The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .for loops for you.
 
@@ -1727,13 +1727,13 @@ Processes only the second item named FIELD, and executes an .else clause if ther
 
 **.if**
 
-    .if <expr>
+    .if &lt;expr&gt;
 
 Starts conditional processing of the following block of code if the result of evaluating the expression is non-zero.
 
 **.elsif**
 
-    .elsif <expr>
+    .elsif &lt;expr&gt;
 
 May follow an `if' construct.  Any number of `elsif' constructs may be used.
 
@@ -1761,7 +1761,7 @@ Examples:
 
 **.while**
 
-    .while <expr>
+    .while &lt;expr&gt;
 
 Introduces a loop.  The following block of code is processed repeatedly as long as the expression evaluates to a logical value of TRUE, that is not equal to zero.  Expression evaluation takes place before the code is processed, so that the code will never be processed if the expression evaluates to FALSE the first time.
 
@@ -1774,19 +1774,19 @@ Terminates a `while' loop.
 Examples:
 
     .define I = 0
-    .while I < 5
+    .while I &lt; 5
     loop iteration number &#36;(I)
     .endwhile
 
 **.next**
 
-    .next [<scope>]
+    .next [&lt;scope&gt;]
 
 Inside a `for' or `while' loop causes immediate iteration, skipping execution of any code between the `next' command and the `endfor' or `endwhile' statement.  If the scope is specified then the `for' loop corresponding to that scope is iterated.
 
 **.last**
 
-    .last [<scope>]
+    .last [&lt;scope&gt;]
 
 Inside a `for' or `while' loop causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor' or `endwhile' statement.  If the scope is specified then the `for' loop corresponding to that scope is terminated.
 
@@ -1795,20 +1795,20 @@ Inside a `for' or `while' loop causes the loop to terminate iteration immediatel
 
 **.scope**
 
-    .scope <data-specifier> [as <alias> | noalias] [nostack]
+    .scope &lt;data-specifier&gt; [as &lt;alias&gt; | noalias] [nostack]
 
 Opens a new scope corresponding to the specified data.
 
 **.endscope**
 
-    .endscope [<scope>]
+    .endscope [&lt;scope&gt;]
 
 Terminates a block opened with a .scope command, closing the scope. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .scope blocks for you.
 
 <A name="toc4-1732" title="Symbol Definition" />
 #### Symbol Definition
 
-    .<data-specifier> [<operator>]= [ <expr> ]
+    .&lt;data-specifier&gt; [&lt;operator&gt;]= [ &lt;expr&gt; ]
 
 Defines or undefines an XML attribute or item value.  There are several different forms, described below:
 
@@ -1824,7 +1824,7 @@ Examples:
 
 Assigns the value 1 to the identifier x in the most recently opened open scope where x is already defined, or in the global scope if x is undefined.
 
-    .->child. = "Value"
+    .-&gt;child. = "Value"
 
 Assigns the string `Value' to the value of the first child of the innermost stacked scope.
 
@@ -1841,14 +1841,14 @@ Does nothing if x is already defined; otherwise assigns it the value of y, or if
 
 **.new**
 
-    .new [[<data-specifier>] . <name>] [before <before-scope> | after <after-scope>] [as <alias> | noalias] [nostack]
-    .new <name> [to <data-specifier> | before <before-scope> | after <after-scope>] [as <alias> | noalias] [nostack]
+    .new [[&lt;data-specifier&gt;] . &lt;name&gt;] [before &lt;before-scope&gt; | after &lt;after-scope&gt;] [as &lt;alias&gt; | noalias] [nostack]
+    .new &lt;name&gt; [to &lt;data-specifier&gt; | before &lt;before-scope&gt; | after &lt;after-scope&gt;] [as &lt;alias&gt; | noalias] [nostack]
 
-Creates a new XML item.  This allows you to build new items in the data tree.  The new item has the specified name and is a child of the XML item corresponding to th specified scope, or the most recently opened scope if none is specified.  If a `before-scope' or `after-scope' is specified, then then it must be the name of an open scope corresponding to a child of <data-specifier>, and the new item is inserted just before <before-scope> or just after <after-scope>; otherwise the  new item is inserted after any existing children.  The construct creates a new scope with the name specified by the alias or the item name if there is no alias.  The following block of code is processed exactly once within this new scope.  It would typically done some attributes of the new XML item.  These values can then be retrieved during a future iteration of a `for' construct through the new item.
+Creates a new XML item.  This allows you to build new items in the data tree.  The new item has the specified name and is a child of the XML item corresponding to th specified scope, or the most recently opened scope if none is specified.  If a `before-scope' or `after-scope' is specified, then then it must be the name of an open scope corresponding to a child of &lt;data-specifier&gt;, and the new item is inserted just before &lt;before-scope&gt; or just after &lt;after-scope&gt;; otherwise the  new item is inserted after any existing children.  The construct creates a new scope with the name specified by the alias or the item name if there is no alias.  The following block of code is processed exactly once within this new scope.  It would typically done some attributes of the new XML item.  These values can then be retrieved during a future iteration of a `for' construct through the new item.
 
 **.endnew**
 
-    .endnew [<scope>]
+    .endnew [&lt;scope&gt;]
 
 Terminates a `new' construct. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .new blocks for you.
 
@@ -1866,7 +1866,7 @@ Examples:
 
 **.delete**
 
-    .delete <data-specifier>
+    .delete &lt;data-specifier&gt;
 
 Deletes the data item corresponding to the specified scope.  Once the item has been deleted, any attempt to reference it produces an error.
 
@@ -1878,9 +1878,9 @@ Examples:
 
 **.copy**
 
-    .copy [<from-scope>] [ to <parent-data> | after <after-scope> | before <before-scope> ] [as <name>]
+    .copy [&lt;from-scope&gt;] [ to &lt;parent-data&gt; | after &lt;after-scope&gt; | before &lt;before-scope&gt; ] [as &lt;name&gt;]
 
-Makes a copy the XML item associated with <from-scope> (or the most recently opened scope if not specified) at the point specified by either the new parent (`to') or new sibling (`after' or `before'), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as' clause allows you to the new item to have a different name from the old item.
+Makes a copy the XML item associated with &lt;from-scope&gt; (or the most recently opened scope if not specified) at the point specified by either the new parent (`to') or new sibling (`after' or `before'), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as' clause allows you to the new item to have a different name from the old item.
 
 Examples:
 
@@ -1892,7 +1892,7 @@ Examples:
 
 **.move**
 
-    .move [<from-data>] [ to <parent-data> | after <after-data> | before <before-data> ] [as <name>]
+    .move [&lt;from-data&gt;] [ to &lt;parent-data&gt; | after &lt;after-data&gt; | before &lt;before-data&gt; ] [as &lt;name&gt;]
 
 Re-attaches a data item at the point specified by  a `to', `after' or `before' clause, renaming it to the name specified in the `as' clause, if specified.
 
@@ -1910,7 +1910,7 @@ Examples:
 
 **.sort**
 
-    .sort [[<data-specifier>] .] [<name>] [as <alias>] by <expr>
+    .sort [[&lt;data-specifier&gt;] .] [&lt;name&gt;] [as &lt;alias&gt;] by &lt;expr&gt;
 
 Sorts the specified items.  A scope is created with each item in turn and is used to evaluate the expression.  The result is then used to sort the items.  The `as' clause allows you to give the created scope a different name.  After execution, the specified items are in order and after any other children of the same parent.
 
@@ -1919,13 +1919,13 @@ Sorts the specified items.  A scope is created with each item in turn and is use
 
 **.include**
 
-    .include <filename>
+    .include &lt;filename&gt;
 
 Includes another script file.  Deprecated - see `gsl'
 
 **.gsl**
 
-    .gsl [ from <filename> | <expr> ]
+    .gsl [ from &lt;filename&gt; | &lt;expr&gt; ]
 
 Interprets the contents of the specified file or expression as GSL, just as though it were part of the script.
 
@@ -1955,7 +1955,7 @@ When a macro or function executes, an unstacked scope is opened with the same na
 
 **.macro**
 
-    .macro [global .] <name> [(<param> [, <param>] ...)]
+    .macro [global .] &lt;name&gt; [(&lt;param&gt; [, &lt;param&gt;] ...)]
 
 introduces a macro definition with the specified name.
 
@@ -1967,23 +1967,23 @@ Terminates a macro definition.
 
 **.function**
 
-    .function [global .] <name> [([<param>] [, <param>] ...)]
+    .function [global .] &lt;name&gt; [([&lt;param&gt;] [, &lt;param&gt;] ...)]
 
 Introduces a function definition with the specified name.
 
 **.endfunction**
 
-    .endfunction <name>
+    .endfunction &lt;name&gt;
 
 Terminates a function definition.
 
 **.return**
 
-    .return [<expression>]
+    .return [&lt;expression&gt;]
 
 **Calling a function**
 
-    .[<scope> .] <function-name> [([<expr>] [, [<expr>]])] ...)]
+    .[&lt;scope&gt; .] &lt;function-name&gt; [([&lt;expr&gt;] [, [&lt;expr&gt;]])] ...)]
 
 A macro or function can also be invoked as an expression.  In this case, the value of is that returned, or is undefined if there is no `.return' statement.
 
@@ -2014,12 +2014,12 @@ Examples:
 
 **.echo**
 
-    .echo <expr>
+    .echo &lt;expr&gt;
 
 Outputs the given expression to the standard output.
 
 **.abort**
 
-    .abort <expr>
+    .abort &lt;expr&gt;
 
 Outputs the given expression to the standard output and halts GSL operation.
