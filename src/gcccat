@@ -1,0 +1,118 @@
+#! /usr/bin/perl -w
+#
+#   Copyright (c) 1996-2009 iMatix Corporation
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or (at
+#   your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   General Public License for more details.
+#
+#   For information on alternative licensing for OEMs, please contact
+#   iMatix Corporation.
+
+#   Perl tool to improve gcc error output.  I wrote this tool because I was
+#   tired of wading through pages of error reports to find the interesting
+#   material.  The idea for this filter came from a COBOL compiler (pcc) I
+#   once wrote, which was very fast and produced lovely error reports but
+#   sadly never actually generated any code.
+#
+#   To use, save the output from gcc into a file with extension ".lst" in
+#   place of the ".c", and then use this command in place of "cat".
+#
+#   This script is really designed to work with the iMatix boom c script.
+#   I have only tested it with gcc 3.3.2.  YMMV.
+#
+#   To use with boom c: set CCCAT=gcccat; export CCCAT
+#   Then use 'c' or 'boomake' as usual
+#
+#   gcccat uses these heuristics:
+#
+#   1. Only the first few errors are interesting
+#   2. Only the first message for a specific error is interesting
+#   3. An error reported on line N will often be caused by a fault in line N-1
+#   4. An error in line N will often provoke follow-on errors in lines N+1, N+@,...
+#   5. These follow-on errors are not interesting
+#   6. Blank lines are not interesting
+#
+#   Pieter Hintjens, 26 August, 2005.
+
+#   Let's prepare our heuristics
+$interest = 7;                          #   Number of errors we care about
+$focus = 1;                             #   Size of our focus area
+
+#   Now report interesting errors
+$last_report = 0;
+$last_file = "";
+
+while (<>) {
+    if ($interest) {
+        if (/^([^: ]+):([0-9]+):/) {
+            $reported_file = $1;
+            $reported_line = $2;
+            $error_message = $';
+            if ($reported_line == $last_report
+            ||  $reported_line == $last_report + 1) {
+                $last_report = $reported_line;
+                next;                       #   Follow-on errors, ignore them
+            }
+            else {
+                #   Mangle 'warning' and 'error' to single letters
+                if ($error_message =~ /^\s*error: /) {
+                    $error_message = "E: $'";
+                }
+                elsif ($error_message =~ /^\s*warning: /) {
+                    $error_message = "W: $'";
+                }
+                #   Now print the lines we guess had the syntax error
+                if ($reported_file ne $last_file) {
+                    print "**** $reported_file:\n";
+                    $last_file = $reported_file;
+                }
+                print "----+-------------------------------------------------------------------------------\n";
+                print "    : $error_message";
+                for ($offset = 0; $offset < $focus; $offset++) {
+                    print_line ($reported_file, $reported_line - $focus + $offset + 1);
+                }
+                #   Now check for matches in the icl file, if any
+                $icl_file = $reported_file;
+                $icl_file =~ s/\.c/.icl/;
+                if (-f $icl_file) {
+                    s/"/\\"/g;
+                    chop;
+                    $icl_lines = `grep -FHn -m 1 \"$_\" $icl_file`;
+                    if ($icl_lines =~ /([\S]+:[0-9]+):/) {
+                        print "    : $1\n";
+                    }
+                }
+                $last_report = $reported_line;
+                $interest--;
+            }
+        }
+    }
+    else {
+        print "----o-------------------------------------------------------------------------------\n";
+        print "    :                                        ... remaining error messages discarded.\n";
+        last;
+    }
+}
+
+#   Print a specific line from a specific file
+#
+sub print_line {
+    local ($file, $line) = @_;
+
+    open (SOURCE, $file) or die "No source found ($file)";
+    @lines = <SOURCE>;
+    close (SOURCE);
+
+    #   Lines are numbered from 1, but our array from 0
+    if ($lines [$line - 1] !~ /^\s*$/) {
+        $_ = $lines [$line - 1];
+        printf ("%4d: %s", $line, $_);
+    }
+}
