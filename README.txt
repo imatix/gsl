@@ -1,6 +1,6 @@
 .set GIT=http://github.com/imatix/gsl
 
-# GSL - a Universal Code Generator
+# GSL/4.1 - a Universal Code Generator
 
 ## Contents
 
@@ -10,13 +10,13 @@
 
 ### Scope and Goals
 
-GSL is a code construction tool.  It will generate code in all languages and for all purposes.  If this sounds too good to be true, welcome to 1996, when we invented these techniques.  Magic is simply technology that is twenty years ahead of its time.
+GSL/4.1 is a code construction tool.  It will generate code in all languages and for all purposes.  If this sounds too good to be true, welcome to 1996, when we invented these techniques.  Magic is simply technology that is twenty years ahead of its time.
 
 This is the fourth major version of GSL, now considered a stable product, repackaged together with its dependencies for easy building from git.
 
 ### Ownership and License
 
-GSL was developed by [iMatix Corporation](http://www.imatix.com).
+GSL/4.1 was actively developed by [iMatix Corporation](http://www.imatix.com) from 1995-2005 and is copyright &copy; 1991-2010 iMatix Corporation.
 
 The authors grant you free use of this software under the terms of the GNU General Public License version 3 or, at your choice, any later version. (GPLv3+). For details see the files `COPYING` in this directory.
 
