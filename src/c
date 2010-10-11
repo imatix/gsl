@@ -17,7 +17,6 @@
 #   For information on alternative licensing for OEMs, please contact
 #   iMatix Corporation.
 #
-
 #   Syntax:     c filename...     Compile ANSI C program(s)
 #               c -c filename...  (Backwards compatible: compile C programs)
 #               c -l main...      Compile and link main program(s)
