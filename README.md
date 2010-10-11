@@ -1,0 +1,829 @@
+
+<A name="toc1-2" title="GSL - a Universal Code Generator" />
+# GSL - a Universal Code Generator
+
+<A name="toc2-5" title="Contents" />
+## Contents
+
+
+**<a href="#toc2-10">Overview</a>**
+&emsp;<a href="#toc3-13">Scope and Goals</a>
+&emsp;<a href="#toc3-20">Ownership and License</a>
+&emsp;<a href="#toc3-27">Building and installing</a>
+&emsp;<a href="#toc3-37">This Document</a>
+
+**<a href="#toc2-57">Model-Oriented Programming</a>**
+&emsp;<a href="#toc3-68">Becoming a Very Good Programmer</a>
+&emsp;<a href="#toc3-82">Tools that Write Software</a>
+&emsp;<a href="#toc3-97">Abstractions and Modeling Languages</a>
+&emsp;<a href="#toc3-116">Leverage to Move Mountains</a>
+&emsp;<a href="#toc3-135">Case Study - OpenAMQ</a>
+&emsp;<a href="#toc3-165">Other Model-Driven Architectures</a>
+&emsp;<a href="#toc3-178">Why use MOP?</a>
+&emsp;<a href="#toc3-203">A Short History of Code Generation</a>
+&emsp;<a href="#toc3-218">Myths about Code Generation</a>
+&emsp;<a href="#toc3-235">The Correctness of Generated Code</a>
+
+**<a href="#toc2-252">Starting with GSL</a>**
+&emsp;<a href="#toc3-255">Hello World</a>
+&emsp;<a href="#toc3-332">Templates and Scripts</a>
+&emsp;<a href="#toc3-409">Modeling a Web Site</a>
+&emsp;<a href="#toc3-467">First Draft</a>
+&emsp;<a href="#toc3-568">Inserting Variables</a>
+&emsp;<a href="#toc3-596">Looping through Trees</a>
+&emsp;<a href="#toc3-624">Building the Output</a>
+&emsp;<a href="#toc3-692">Putting it All Together</a>
+&emsp;<a href="#toc3-786">Exercise for the Reader</a>
+&emsp;<a href="#toc3-791">Extending the Model</a>
+
+<A name="toc2-10" title="Overview" />
+## Overview
+
+<A name="toc3-13" title="Scope and Goals" />
+### Scope and Goals
+
+GSL is a code construction tool.  It will generate code in all languages and for all purposes.  If this sounds too good to be true, welcome to 1996, when we invented these techniques.  Magic is simply technology that is twenty years ahead of its time.
+
+This is the fourth major version of GSL, repackaged together with its dependencies for easy building from git.  For documentation, please see the 'gsldoc.txt' file which is part of this package.
+
+<A name="toc3-20" title="Ownership and License" />
+### Ownership and License
+
+GSL is developed by [iMatix Corporation] (http://www.imatix.com).
+
+The authors grant you free use of this software under the terms of the GNU General Public License version 3 or, at your choice, any later version. (GPLv3+). For details see the files `COPYING` in this directory.
+
+<A name="toc3-27" title="Building and installing" />
+### Building and installing
+
+To build from git on a UNIX-like box:
+
+    git clone git://github.com/imatix/gsl
+    cd gsl
+    make
+    sudo make install
+
+<A name="toc3-37" title="This Document" />
+### This Document
+
+This document is originally at README.txt and is built using [gitdown](http://github.com/imatix/gitdown).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A name="toc2-57" title="Model-Oriented Programming" />
+## Model-Oriented Programming
+
+This is article is aimed at the professional programmer. I'm going to attack a complex subject, something that few people know about. It's a new way of programming called "model-oriented programming". I'm not going to ask you to throw out your programming languages or tools. MOP works as a layer on top of everything you know today. I am going to ask you to rethink what it means to "write a program", and to see that most of the code you write could be better written by robots, meaning other programs. And I'm going to teach you how to design and make such robots.
+
+MOP works for every kind of area you write code for. Whether you write games, Linux drivers, servers, applications, plug-ins, whether you use Java, C, Perl, Ruby, Python, Gnome or KDE... once you start to see the world as models you'll find yourself writing more code, faster, than you ever thought possible.
+
+In this article you will learn what MOP is, and why we invented it. I'll also explain some of the underlying technologies.
+
+Be warned. This might hurt a little. All I can promise is that if you learn to use MOP you will use for the rest of your life, and wonder how you ever worked without it.
+
+<A name="toc3-68" title="Becoming a Very Good Programmer" />
+### Becoming a Very Good Programmer
+
+My name is Pieter Hintjens, and I am a programmer. My team and I build infrastructure software - frameworks, middleware, servers, etc. I've learned a few things about software since I wrote my first small program in 1981 or so. First: if it's not impossible, it's not worth doing. Second: software design is about overcoming human limitations, not technical ones. Third: very few people can actually design good, useful, large-scale software systems, which for me is the goal of programming.
+
+In my experience there are at least four main aspects to becoming a very good programmer:
+
+* Never throw out anything that works until it is really worn out. This mainly means writing portable code.
+* Never solve the same problem more than once in parallel. This mainly means building tools.
+* Solve the same problem often in serial. This means being willing to throw out code and rewrite it when you find better ways.
+* Write code, write code, write code, until it is as natural as speaking.
+
+Of course you also need talent, opportunity, and guidance, but a focus on portability, obsessive tool building, and years of practice can turn talent into real skill.
+
+<A name="toc3-82" title="Tools that Write Software" />
+### Tools that Write Software
+
+In this article I'll focus on the second part, making tools. There are quite a few metaphors for software tools. For example, the Unix metaphor consists of tools as filters: read some data, do some work, produce some output. It's a simple model that lets you chain together tools. Linux has many tools that work as filters.
+
+A more subtle but much more powerful metaphor is to build tools as languages. That is, when you come across a new class of problem, you create a new language that lets you express solutions to those problems in a simple and clear way.
+
+Programming languages are one example of tools that work like this. Most programming languages have their strong and weak points, but basically they are all equivalent: they solve the general problem of "programming", not specific problems like "constructing a firewall" or "building a static web site".
+
+Now consider HTML. This is a language that takes a different approach. You don't use HTML to write programs: you use it to define structured documents, and then you give these documents to programs that can do useful things with the definitions, like show them on a screen.
+
+It's worth comparing HTML to a language like PostScript, also used to get documents looking pretty on paper or screen. PostScript is a programming language (a threaded stack-based interpreter descended from Forth, in fact). People have written, for example, web servers in PostScript. No writer or designer actually sits down and writes PostScript, though people did this before HTML existed.
+
+I sometimes use a tool that turns HTML pages into PostScript documents. Now, as a writer, I can use HTML to write my documents and then push a button to turn this HTML into PostScript. What I am actually doing is converting a descriptive language into a programming language. A HTML-to-PostScript converter lets millions of non-technical people suddenly produce perfect programs at will. Millions of people who never think of themselves as "programmers" can write PostScript, via higher-level abstractions like HTML. And the PostScript programs they produce are much better than an average PostScript programmer can write in a reasonable time.
+
+<A name="toc3-97" title="Abstractions and Modeling Languages" />
+### Abstractions and Modeling Languages
+
+HTML is in fact a "modeling language", a language used to describe some system or entity. Modeling languages are very interesting because they provide levels of abstraction that programming languages cannot even conceive of. Abstraction lets you define and use high-level concepts like, "this is a document title", without having to specify what that actually means, on paper or on the screen. Abstraction relies on concepts that have enough meaning to be useful, without being too detailed. For example, "the web" is a useful abstraction for "various URL formats, protocols for transferring such resources, clients and servers that implement such protocols, and collections of resources that are thus interconnected".
+
+Abstraction is an important concept. It is one of the keys to solving complex problems. Let me give you another example of abstraction. We can build an application using a shell script that does each step. This is not abstract, it is a literal set of steps. A makefile is more abstract: it adds the abstractions of "file type" (based on extension) and "target" and specifies how we transform one type of file into another in order to build a specific target. There are more abstract descriptions of projects too. Each time we make a good abstraction - a simple view that hides complex details - we eliminate a layer of manual work.
+
+Now imagine you could use modeling languages as a way of writing programs. Instead of writing Perl, or Java, or C++, or Ruby, you would describe some kind of model and then press a button. In fact this is not a new idea: I've worked with systems that have done this, more or less successfully, for twenty years.
+
+Historically, computer scientists have tried to make programming languages more powerful by adding functionality and by adding programming abstractions. The underlying assumption is that since programming languages are general purpose, they must be the best tools for building software. Adding general purpose programming capacity gets more and more complex as we reach for more abstraction. Thus we get languages that are so complex that to master them is a full career.
+
+This is, I believe, a mistaken approach. Complexity is difficult to control, and complex languages (like Perl and C++) have a reputation for producing complex and hard-to-maintain code. As a programmer, I have quite a problem investing so much in any single language.
+
+The trick that I've found (since I'm lazy and don't have the patience to read 500-page guides to programming languages) is to create simple abstractions - models - that solve useful problems, and to use these models to generate code, just as we produce documents on screen and on paper by generating code from abstractions like HTML.
+
+For naive users, a model is a visual thing, but for us programmers, a textual modeling language is much more useful. There exist many modeling languages, and as I said, it is not a new concept. For example, in 1991 I wrote a tool, [Libero](http://legacy.imatix.com/html/libero/), that turns finite state machine models into code. Libero was extremely useful, and it is still part of our toolbox today. What it does is take a state machine model (a text file), and turn that into code in arbitrary languages (we made code generators for twenty or so programming languages). State machines are a very useful model for writing programs, but that's a different story.
+
+Libero took me about three months to build, time that I've won back on many projects. In a general sense, Libero is like the HTML-to-PostScript convertor. It takes a definition written in an abstract modeling language and turns that into code that makes the model come to life. The generated code is always perfect, and as invisible as the PostScript code.
+
+<A name="toc3-116" title="Leverage to Move Mountains" />
+### Leverage to Move Mountains
+
+I'm coming to the point of this article. This kind of model-to-code tool is very useful. It gives you leverage. That is, the ability to move mountains. It is much easier, faster, cheaper to change an abstract model than it is to change the code that makes it work. Look again at a PostScript program and now imagine the work needed to change a H1 item to H2.
+
+Good models let you work 10 to 100 times faster than any programming language. As long as you stick to the problems the model was meant for, there is really no downside, no reason to prefer PostScript over HTML for writing texts.
+
+I've said that part of being a world-class programmer is the ability to make useful tools. But how do you, as a programmer, make a tool that compiles a modeling language into code? You need to solve four main problems:
+
+* You need to learn, borrow, adapt, or invent useful models. This is not easy. Good models like finite state machines and hierarchical documents took many clever people many years to invent and refine.
+
+* You need to define a language that lets people make such models. Again, getting this right is delicate. There are hundreds of ways to write state machines, just as there were hundreds of document markup languages before HTML, most being far too complex and thus useless.
+
+* You need to build a parser that can read this language, check it, turn it into internal structures, optimise those structures, etc. Needless to say, writing parsers is not easy, there exist whole sets of tools just to solve this problem.
+
+* You need to build a code generator that can take these internal structures and spit out the final code in whatever target languages you want to produce. Writing code generators is a black art. There are almost no books on the subject, no standard technologies.
+
+If you've ever studied how compilers work, it's much the same problem. What I'm talking about is building compilers for modeling languages.
+
+<A name="toc3-135" title="Case Study - OpenAMQ" />
+### Case Study - OpenAMQ
+
+Modeling languages and programming languages can overlap. For example, objects are a type of model. The biggest problem with putting models into the programming language is that for real, large problems, we need many different types of model, and these cannot be expressed a single language. Languages that attempt this become too complex to work with. Imagine attempting to describe a hierarchical document using objects, and compare this to writing some HTML by hand.
+
+I'll explain with a large case taken from a real project, [OpenAMQ](http://www.openamq.org). This is an AMQP messaging server. We used C as the target language for portability and performance, but we actually designed the software as lots of high-level models. Each modeling language was part of a code generation process that produced real code. We used modeling languages for:
+
+* Classes to encapsulating functions.
+* Finite state machines for building protocol handlers.
+* Project definitions for building and packaging sources.
+* Grammar definitions for building parsers and code generators.
+* Grammar definitions for communication protocols.
+* Test scripting language.
+
+The key to making these different modeling tools was cost. If it was cheap to design, test, and use modeling languages, we could cut the research and learning time dramatically.
+
+Since I wrote Libero almost twenty years ago, I'd been working with Jonathan Schultz to make better technologies for building modeling languages and the code generators that bring them to life. We finished the last of the main tools in 2005, and we then had technology that let us design and deploy new modeling languages in a matter of weeks. The process was so fast, and so efficient, that we were able to generate almost 100% of the middleware server, a half-million lines of C code, from about sixty thousand lines of modeling code.
+
+The downside is that anyone wanting to understand the code had to learn the five or six models we use. The upside is that they only had sixty thousand lines of code to read, not half a million.
+
+Let me take you through the main parts of our architecture:
+
+* The basic technology is GSL, the programming language that we use to build code generators. Yes, you can write a web server in GSL, but that would be pointless. GSL is aimed very much at spitting out huge volumes of perfect code. GSL is an interpreter, it runs as a command, just like Perl or another scripting language.
+
+* The second main technology is XML, which we did not invent of course, but which we happily adopted in 1997, having spent several years designing our own very similar meta-languages. We use XML in a simplistic way, to model data, not to do any kind of complex document manipulation. No stylesheets or namespaces, thus.
+
+* The third main technology is XNF, which is a tool for building model-driven code generators. We start to get meta here. XNF (for "XML Normal Form") lets you define the grammar of an XML-based modeling language. From that grammar XNF produces parsers and a framework into which you plug hand-written back-end code generators. XNF is a modeling language for code generators. XNF is the basis for all our complex modeling tools, including XNF itself.
+
+These tools - which are included in the OpenAMQ distribution's `base2` project - are somewhat unusual. The techniques of code generation are not well understood, and no teams have ever pushed these techniques as far as we have. I don't promise that it will be easy to understand - abstraction can be hard to grasp - but once you "get it", you'll be able to produce tools that solve your programming problems ten times faster than using any other technique.
+
+<A name="toc3-165" title="Other Model-Driven Architectures" />
+### Other Model-Driven Architectures
+
+Using models as the basis for designing applications is not new. I've worked with many tools that promised "an end to programming" through the magic of point and click modeling. Some of these - such as UML (Universal Modeling Language) - have become industry standards. In my experience, these tools do not work except as expensive and slow documentation tools.
+
+Perhaps my opinion of classic modeling tools such as UML have been influenced by watching them being abused on large projects. The typical scenario is that a big team of analysts work for a year to produce a "model", which is then thrown out as a second team of developers write the actual code.
+
+The fundamental problem is that no single modeling language can cover the variety needed to solve real world programming challenges. Just imagine someone suggesting that UML could be used to write a Linux device driver, or a high-performance game. That's a joke! Yet my team uses models to design and build very technical, very high-performance software. You just need the right models.
+
+Classic MDA tools attempt to do everything with a single modeling language. This is doomed to failure except within a very narrow niche of work. Indeed, it is more expensive to "not write code" using a language like UML than to simply write the code in Java. Just as a single programming language cannot cover all abstractions, neither can a single modeling language.
+
+To succeed with a model-driven architecture, you need a way to build, test, and improve a variety of different models, each solving one specific domain. What you need is not a single, do-it-all modeling language, but a technology that lets you build arbitrary modeling languages.
+
+<A name="toc3-178" title="Why use MOP?" />
+### Why use MOP?
+
+Despite the trendy name, MOP is really about solving real problems in the most efficient possible way. Let's look at the main advantages my team gets from using MOP:
+
+* We have to write much less code to get the same results. I call this "leverage". One line of modeling code can be worth ten or twenty lines of a programming language. Using less code has many knock-on advantages: we work faster, better, and cheaper.
+
+* We get high-level models of important aspects of the system. All systems have key models, but they are usually hidden in the code and impossible to verify, formalise, or exploit fully. When the model is turned into a concrete language, it makes the software much better.
+
+* We can produce extremely high-quality code. This is an effect of doing code generation: the generated code we produce has no errors, and is as good as a human programmer can write, consistently.
+
+* We write less internal documentation, and often none at all, since each model is documentation.
+
+* We are immune to technological changes since MOP is entirely abstract from specific programming languages, operating systems, and trends. It can take years to develop really good models but they work for decades.
+
+There are also disadvantages:
+
+* People do not rapidly understand or trust the approach. I've been accused of over-investing in tools (sometimes more than half the cost of a project goes into modeling tools). The look on the client's face when we deliver version after version of impeccable software in impossibly short deadlines is worth it.
+
+* Programmers do not rapidly understand the models. It takes time to learn each one, sometimes weeks or months.
+
+So, MOP is best used in small, skilled, and long-lasting teams (like iMatix) that solve highly complex and critical problems. Before you can use MOP in a project you need complete confidence of the people paying for the work. If you're writing software for yourself, it's easy. If you're writing software for other people, this can be a hard sell. MOP can also be used to give structure to larger development teams, but it is a lot of work to train mediocre people to use sophisticated models.
+
+The sad thing in the software business is that few people actually understand that better techniques save money. Still, there is no pleasure, as a programmer, in writing bad code using bad tools. So, learn to use MOP, then convince your bosses that they will save money, right away, by using this. Everyone wins.
+
+<A name="toc3-203" title="A Short History of Code Generation" />
+### A Short History of Code Generation
+
+To understand and use MOP you need to appreciate code generation as a technology. I first started writing code generators in 1985, and I've seen these tools evolve through several stages (in my own work, but also in the general domain):
+
+* *Hard-coded code generators* that take some meta-data (a model) and output code using print statements. This is the most common, and the most limited form. Typical examples are all the classic "code generators" built into products.
+
+* *Template-driven code generators* that use symbolic insertion to inject meta- data into a template. This technology makes it much easier to write new ad-hoc templates. Typical examples are any technology that produces dynamic web page.
+
+* *Scripted code generators* that use a high-level language to manipulate meta- data and then inject it into templates. This technology makes it much easier to write new ad-hoc code generators. Typical examples are XSLT, GSL and some other scripted code generation languages.
+
+* *Meta code generators* that build code generators. This technology makes it possible to construct code generators for very complex modeling languages. The only examples we know are iMatix tools such as XNF and ASL.
+
+Our first versions of GSL were born in 1995. We moved onto XML in 1997. The problem of writing the code generator scripting language (GSL) is largely solved, and at iMatix we don't consider this a priority task. At some point we want to rewrite GSL to be a lot faster, but what interests us now is using MOP techniques to solve difficult problems.
+
+<A name="toc3-218" title="Myths about Code Generation" />
+### Myths about Code Generation
+
+Code generators are often seen as a technological burden, rather than useful tools. I suspect that this is because primitive code generators (which covers most code generators) are so painful to use. Some of the common myths about code generation are:
+
+* *Code generators only work for simplistic cases*. This is often true, but only because most code generators are simplistic.
+
+* *Generated code is unreadable, and generated code is low quality*. This is often true because their authors focus on the application-specific problem, rather than on making the template easy to modify and improve. In a template-based code generator the code can be as good as or better than hand-written code.
+
+* *Code generators are expensive to make*. This is typical of hard-coded code generators where the slightest change to the template means modifying, compiling, linking, and distributing a new release of the code generator.
+
+* *Code generators are too much effort to use*. This says more about tool designers than about the problems that the tools solve.
+
+* *Code generators are complex*. This is true: all abstractions are internally complex - look at the work required to write a good web browser or web server.
+
+GSL solves most of these problems, and even a beginner can make useful code generators for interfaces, database management, XNF solves the last problem - it applies MOP to MOP itself, letting us make sophisticated code generators much more rapidly than by hand.
+
+<A name="toc3-235" title="The Correctness of Generated Code" />
+### The Correctness of Generated Code
+
+When you use a tool that produces large amounts of code for you, you will naturally ask, "how do I know the code is correct". You need to be able to trust your tools.
+
+A code generator, luckily, is not random. It is like a simple compiler: take high-level construct, translate into target code. If there is a bug in this translation step, you will get target code that has bugs.  Luckily, it's easier, not harder, to get correct code from a machine than by hand. I'll explain how we do this:
+
+* Overall, we are quite strict about how we build our code generators. That makes bugs in the code generators rarer, and easier to find.
+
+* When we start a new code generator, we build it gradually, and of course we inspect the code that it produces as we develop it.
+
+* As we make the code generator more sophisticated we build a regression test suite that lets us catch any new errors in old code very rapidly.
+
+In any programming environment, the key to producing good code is to test heavily, and to use appropriate automation, i.e. tools. When we say the "correctness of generated code", we really mean, "how to avoid bugs in the code generator".
+
+Since we use the MOP approach to build the code generators themselves, we get very good code generators, cheaply. It is the same concept as a "self-hosting" compiler. On many projects where we've used MOP, I'm able to deliver hundreds of thousands of lines of code, and say, with confidence, "there is not a single bug in this code".
+
+<A name="toc2-252" title="Starting with GSL" />
+## Starting with GSL
+
+<A name="toc3-255" title="Hello World" />
+### Hello World
+
+Our first step is to make a "hello world" program in GSL. It's quite simple. Make a file called hello.gsl that contains one line:
+
+    echo "hello world"
+
+To run this, use the following command:
+
+    gsl hello
+
+GSL is a simple language and you'll not have any difficulty understanding its syntax, except in a few places where it does specialised work. It will take you a little longer to understand what you can do with GSL, but that is the real point of these articles. GSL is not as rich as other scripting languages. It is a code generator scripting language, not a programming tool. It lacks some control structures, and it runs a little slowly.
+
+Initially, GSL looks like any other scripting language. I can write little scripts like this:
+
+    amount = 1000
+    year = 2006
+    while year < 2026
+        amount = amount * 1.05
+        year = year + 1
+    endwhile
+    echo amount
+
+Which calculates the value of my savings account if I were to leave it untouched for twenty years, and the interest rate were steady at five percent. Note these syntax aspects:
+
+* variable = expression - Assign a value to a variable
+* while condition... endwhile - Repeat a block while the condition is true
+
+To run the above program, assuming it was saved in a file called interest.gsl, I type this command:
+
+    gsl interest
+
+This executes the script and tells me that if I am really patient, I'll be rich one day. Now I'm going to change this little program to make the same kind of calculation for different amounts, rates, and years. Where do I put these different terms and rates? The answer is, in an XML file. The file is called deposits.xml:
+
+    <?xml version="1.0"?>
+    <deposits script = "interest.gsl" >
+        <deposit amount = "1000000" rate = "5" years = "20" />
+        <deposit amount = "500000" rate = "4" years = "10" />
+        <deposit amount = "2500000" rate = "6" years = "15" />
+    </deposits>
+
+We change our script to give the result below.
+
+    .template 0
+     for deposit
+        year = 1
+        accumulated = amount
+        while year < years
+            accumulated = accumulated * (rate / 100 + 1)
+            year = year + 1
+        endwhile
+        echo "Original amount:" + amount + " becomes: " + accumulated
+     endfor
+    .endtemplate
+
+Note these syntax aspects:
+
+* .template 0 - Start script (non-template) block * for childname - Repeat block for all instances of child item called childname
+
+We will run the new interest calculation script using this command:
+
+    gsl deposits.xml
+
+Note the change of command syntax. We first ran the GSL script. Now we're running the XML file. This is one of GSL's features - you can run XML files as if they were scripts. It's the 'script =' setting that does the trick, working much like the hash-bang #! command in Linux.
+
+Any GSL script, no matter how simple, works with an XML document loaded into GSL's memory as a data tree. In our first interest.gsl script, the data tree contains just this:
+
+    <root script = "interest" />
+
+GSL automatically creates this data tree when we ask it to execute a GSL script.
+
+If, on the other hand, we ask GSL to execute an XML file, it loads this XML file into its data tree. Assuming we also asked for it, it will then execute a GSL script against that XML tree. Technically speaking, GSL searches the root item - which can have any name - for an attribute called "script". We can put attributes into the root item in several ways. One is to simply add them to the XML file, as we did. The other is to place them on the command line, like this:
+
+    gsl -script:interest deposits.xml
+
+All variables that we define and use are stored in the data tree, somewhere. This is the only data structure that GSL scripts work with, and it can get very complex. For many people, understanding this complexity is the most difficult thing about using GSL - hierarchies of data are one of those things most human brains do not handle very well. We use abstractions like XNF to make this simpler, but that is something I'll discuss later.
+
+<A name="toc3-332" title="Templates and Scripts" />
+### Templates and Scripts
+
+GSL uses the term "template" to describe text that is output as generated code. GSL works in two modes - script mode, and template mode. When you execute a GSL script directly, as we did in the first example, GSL starts in script mode. When you execute a GSL script indirectly, through an XML file, as we did in the second example, GSL starts in template mode. Try removing the .template 0 and .endtemplate lines and you'll see what I mean. The script just gets copied to the output stream, the console, by default.
+
+In template mode, GSL commands start with a dot in the first column. In script mode, all lines are assumed to be GSL commands unless they start with ">" (output) in the first column, in which case they are handled as template lines.
+
+Script mode is useful when you are doing a lot of GSL scripting work. Often you need to prepare data, check the XML tree, and so on, before you can start to generate code. Template mode is useful when you want to output a lot of data, or actually want to generate code.
+
+You can mix GSL commands and template code by putting a dot at the start of
+lines with GSL commands. Like this:
+
+    .while year < years
+    .   accumulated = accumulated * (rate / 100 + 1)
+    .   year = year + 1
+    .endwhile
+
+I'm now going to generate a little HTML report of how the different calculations. The listing below shows the third version of interest.gsl:
+
+    .output "deposits.html"
+    <html>
+    <head>
+    <title>So You Want To Be A Millionaire?</title>
+    </head>
+    <body>
+    <h1>So You Want To Be A Millionaire?</h1>
+    <table>
+    <tr><th>Original amount</th>
+    <th>Interest rate</th>
+    <th>Term, years</th>
+    <th>Final amount</th>
+    </tr>
+    .for deposit
+    .   year = 1
+    .   accumulated = amount
+    .   while year < years
+    .       accumulated = accumulated * (rate / 100 + 1)
+    .       year = year + 1
+    .   endwhile
+    <tr><td>&#36;(amount)</td>
+    <td>&#36;(rate)%</td>
+    <td>&#36;(years)</td>
+    <td>&#36;(accumulated)</td>
+    </tr>
+    .endfor
+    </table>
+    </body>
+    </html>
+
+Note these syntax aspects:
+
+* output expression - Start sending output to the filename specified
+* &#36;(name) - Insert value of attribute in output text
+
+To produce the HTML report run the same command as before:
+
+    gsl deposits.xml
+
+And then load deposits.html into your browser to see what it looks like.
+
+If you're a web developer with any experience, you will see right away what's
+happening. We're generating a web page dynamically, just like a hundred other
+web tools. But there are significant differences:
+
+Unlike a dynamic web page, here we explicitly specify the output file
+ourselves, using the "output" command. We can output zero, one, or a hundred
+different files if we want to.
+
+We're working off a data tree that can be as complex as we want. Each "for"
+loop opens a new scope, acting on a set of child entities. A dynamic web page
+works off some flat data, coming from the browser or a database. You can make
+web pages that work on a hierarchical data set, but it's extra work.
+
+GSL lets you load and navigate XML data so easily that you don't even realize
+you're busy. The combination of an explicit script language like GSL plus a
+hierarchical XML data tree works well.
+
+<A name="toc3-409" title="Modeling a Web Site" />
+### Modeling a Web Site
+
+I'm going to propose a simple abstract model for a web site, as an example. When you understand this example, you'll have a much better idea of how we design new models, so that you can design your own.
+
+To start with, I'll explain how I design a new model, and then I'll take you through the steps of building a code generator that brings it to life.
+
+Our model lets us build simple web sites. A web site is a mixture of different types of document, for instance:
+
+  * HTML pages for the content.
+  * JavaScript for menus.
+  * CSS style sheets for look and feel.
+  * Images for icons and for cosmetics.
+
+And so on. When we make a new model, it's worth asking the question, "how would I make a thousand of these?" I.E., a thousand web sites. Well, we'd have lots of content, which would be different for each web site, possibly with some common parts. The content could definitely be based on standard templates - it's unlikely we'd make each of a thousand sites entirely from scratch.
+
+If we used JavaScript menus, we'd presumably use the same code in each site, changing only the menu content to match the structure of the site.
+
+Most likely we'd use a unique CSS stylesheet for each site, to give each site a unique look and feel, but they could also be based on a standard template.
+
+Finally, the images and icons would be a mixture of standard graphics and customised graphics, depending on how pretty we want each site to look.
+
+Our model is going to be the basis for code generation, that is, the mass production of as much of the above as is reasonable. To do this, we need to make a compact and efficient statement of exactly what is needed to produce each web site.
+
+It's like constructing a thousand houses. It's expensive to design and build each house as a unique thing. It's much cheaper to make a single common plan, and then for each house, state the differences. So one house might have a different roof shape, while another has larger windows, but all houses share the same materials, wall and floor construction, and so on.
+
+When we mass produce something, we're clearly aiming for low cost and consistent , and hopefully high, quality. It's the same with code generation. So, let's get to our web site model. What information do we actually need to specify?
+
+* First, we need to know all the pages in the web site, so that we can build menus.
+
+* Second, we need basic information for each page. Typically, I like to define a title and subtitle, an image (for pretty marketing purposes), and a block of content (which can be raw HTML).
+
+* Third, we some information for all pages - for example, a logo and a copyright statement.
+
+The next step is to sketch a model that can hold this information in a useful way. Remember that we use XML as a modeling language. So, we invent an XML syntax for our model. For each page, I'd like to write something like this:
+
+    <page
+        name = "name of page"
+        title = "Title text goes here"
+        subtitle = "Subtitle text goes here"
+        >
+    <content>
+    Content HTML goes here
+    </content>
+    </page>
+
+When I design new XML languages like the above, I use entity attributes to hold single-line properties, and child entities to hold multi-line properties or properties that can occur more than once. It just seems more elegant than putting properties in child entities, since this implies those properties can occur many times. It does not make sense for a page to have more than one name, title, subtitle, or image in our model, so we define these as attributes of the page entity. The iMatix MOP tools use this style very heavily.
+
+Once we've defined a set of pages, how do we tie these together into a web site? Let's use a second model for the overall web site:
+
+    <site copyright = "copyright statement goes here">
+    <section name = "name of section">
+        <page name = "name of page" /> ...
+    </section>...
+    </site>
+
+I've defined a <section> tag that breaks the pages into groups. Now let's jump right in and make ourselves a web site. There's no better way to test a model than to try using it. As an example, I'll make a new web site for my local grocer, who has decided, finally, to go on-line.
+
+<A name="toc3-467" title="First Draft" />
+### First Draft
+
+We'll make the web site as several XML files. This is a design choice. We could also make the site as a single large XML file. It's a trade-off between ease of use (a single file is easier in smaller cases) and scalability (it's not practical to edit a large site with hundreds of pages as a single file).
+
+To start with, we'll define the overall site like this:
+
+    <?xml version = "1.0" ?>
+    <site
+        copyright = "Copyright &#169; Local Grocer"
+        script = "sitegen_1.gsl"
+        >
+    <section name = "Welcome">
+        <page name = "index" />
+    </section>
+    <section name = "Products">
+        <page name = "fruit" />
+        <page name = "vegetables" />
+    </section>
+    </site>
+
+Note the first line, which defines the file as XML, and the 'script' tag, which tells GSL what script to run to process the data. We've defined three pages. Let's write very a simple version of each of these:
+
+Next, we will write three more short XML files as shown below. First the index page:
+
+    <page
+        name = "index"
+        title = "Local Grocer"
+        subtitle = "Visit the Local Grocer"
+        >
+    <content>
+    <h3>Close to you</h3>
+    <p>We're just around the corner, if you live near by.</p>
+    <h3>Always open</h3>
+    <p>And if we're closed, just come back tomorrow.</p>
+    <h3>Cheap and convenient</h3>
+    <p>Much cheaper and easier than growing your own vegetables and fruit.</p>
+    </content>
+    </page>
+
+Next, the fruit page:
+
+    <page
+        name = "fruit"
+        title = "Our Fruit Stand"
+        subtitle = "Lucious Tropical Fruits"
+        >
+    <content>
+    <h3>Always fresh</h3>
+    <p>Just like it was plucked from the tree last month.</p>
+    <h3>Special deal</h3>
+    <p>Any five pieces of fruit, for the price of ten!</p>
+    <h3>Money back if not satisfied</h3>
+    <p>We'll give you your money back if we're not satisfied with it!</p>
+    </content>
+    </page>
+
+and last the vegetable page:
+
+    <page
+        name = "vegetables"
+        title = "Our Vegetables"
+        subtitle = "Healthy Organic Vegetables"
+    >
+    <content>
+    <h3>100% organic vegetables</h3>
+    <p>All vegetables made from cardon, oxygen, and hydrogen molecules
+    with trace elements.</p>
+    <h3>Country fresh style</h3>
+    <p>We don't know what that means, but it sounded nice!</p>
+    <h3>Unique take-away concept</h3>
+    <p>Now you can consume your vegetables in the comfort of your own home.</p>
+    </content>
+    </page>
+
+Finally, here is the first draft of the web generation script. It does not produce anything, it simply loads the web site data into an XML tree and then saves this (in a file called root.xml) that we can look at to see what live data the script is actually working with:
+
+    .###  Since we run the script off the XML file, it starts in
+    .###  template mode.
+    .template 0
+     for section
+        for page
+            ###  Load XML <page> data
+            xml to section from "&#36;(page.name).xml"
+            ###  Delete old <page> tag
+            delete page
+        endfor
+     endfor
+     save root
+    .endtemplate
+
+Let's look at what this script does. First, it switches off template mode so we can write ordinary GSL without starting each line with a dot. GSL starts scripts in template mode if they are launched from the XML file. It's useful in many cases but not here. So, we wrap the whole script in '.template 0' and '.endtemplate'.
+
+Second, the script works through each section and page, and loads the XML data for that page. It does this using two commands, 'xml' and 'delete'. The first loads XML data from a file into the specified scope (<section>, in this case), and the second deletes the current page (since the loaded data also contains a <page> tag).
+
+Finally, the script saves the whole XML tree to a file. If you want to try the next steps you must have installed GSL, as I described in the last article. Run the script like this:
+
+    gsl site
+
+GSL looks for the file called 'site.xml'. When the script has run, take a look at root.xml. This shows you what we're going to work with to generate the real HTML.
+
+<A name="toc3-568" title="Inserting Variables" />
+### Inserting Variables
+
+When we generate output, we insert variable values into the generated text. This is very much like using shell variables.
+
+GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the &#36;(name) form outputs a variable in lower case:
+
+    output "&#36;(filename).c"
+
+The &#36;(NAME) form outputs the same value in uppercase:
+
+    #if defined (&#36;(FILENAME)_INCLUDED)
+
+And the &#36;(Name) form outputs the variable in 'title' case, i.e. the first letter is capitalised:
+
+    ###################  &#36;(Filename)   #################
+
+One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the &#36;(name) form. If we don't want a variable to be automatically case converted, we use this form: &#36;(name:). This is also called the 'empty modifier'.
+
+A second side-effect of automatic case conversion is that variable names are not case sensitive. By default GSL ignores the case of variable names so that &#36;(me) and &#36;(ME) refer to the same variable.
+
+But putting empty modifiers in every variable expansion gets tiresome, and GSL
+lets us switch off automatic case conversion, using this instruction:
+
+    ignorecase = 0
+
+This tells GSL, "variable names are case-sensitive, and do not convert variable values on output".
+
+<A name="toc3-596" title="Looping through Trees" />
+### Looping through Trees
+
+In our first draft we loaded each page into the XML tree and deleted the original page definition. That was this text:
+
+    for section
+        for page
+            xml to section from "&#36;(page.name).xml"
+            delete page
+        endfor
+    endfor
+
+To generate output for each page, we're going to iterate through the sections one more time. Since we're deleting old <page> entities and loading new ones from the XML definitions, we need to iterate through the sections and pages over again. This is the code that generates the output for each page:
+
+    for section
+        for page
+            include "template.gsl"
+        endfor
+    endfor
+
+The include command executes GSL code in another file. We're going to do all the hard work in a separate file, which I've called template.gsl, so that it's easy to change the HTML generation independently from the top-level GSL code. This is good practice for several reasons:
+
+It's nice, in larger projects, that each big code generation task sits in its own file where it can be owned by a single person.
+
+We can add more templates - to produce other types of output - for the same model very easily and safely.
+
+And you'll see in later examples that we tend to write a single GSL file for each output we want to produce. In XNF - the tool we use for larger-scale code generation projects - these scripts are called "targets".
+
+<A name="toc3-624" title="Building the Output" />
+### Building the Output
+
+The HTML template looks like this:
+
+    .template 1
+    .echo "Generating &#36;(page.name) page..."
+    .output "&#36;(page.name).html"
+    <!DOCTYPE...>
+    <html>
+       ...
+    </html>
+    .endtemplate
+
+Most of it is fairly straight-forward, though you do need to understand how XHTML and CSS work (and I'm not going to explain that here).
+
+* The echo command tells the user what's going on. It's polite to do this, although in realistic cases we'll also let the user suppress such reports using a 'quiet' option.
+
+* The output command creates the HTML page.
+
+* The text <!DOCTYPE...> to </html> is the body of the page, which I'll explain below.
+
+The template starts by setting template mode on. This means that any GSL commands we want to use here must start with a dot. It makes the HTML easy to read and to maintain.
+
+Let's look at the chunk of code that produces the site index. This is - in our version of the web site generator - a menu that is embedded into each page. The CSS stylesheet can place this menu anywhere on the page. Here is the GSL code that generates it:
+
+    .for site.section
+    <h3 class="menu_heading">&#36;(section.name)</h3>
+    <ul class="menu_item">
+    .   for page
+    <li><a class="menu_item"
+        href="&#36;(page.name).html">&#36;(page.title)</a></li>
+    .   endfor
+    </ul>
+    .endfor
+
+The interesting thing here is that we say for site.section in order to iterate through the sections. The site. prefix is a parent scope name, it tells GSL "look for all sections in the current site". If we don't use the scope name, GSL would look for all sections in the current scope (the page) and find nothing. This is a common beginner's error.
+
+Note that the parent scope is not always needed. These two blocks do exactly the same thing:
+
+    .for site.section
+    .   for page
+    .   endfor
+    .endfor
+
+and:
+
+    .for site.section
+    .   for section.page
+    .   endfor
+    .endfor
+
+But the first form is simpler and I recommend you drop explicit parent scope names when you are "tunneling into" the XML data tree.
+
+Near the end of the template you see this construction:
+
+    .for content
+    &#36;(content.string ())
+    .endfor
+
+What is going on here? The answer is, we're grabbing the whole <content> block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
+
+The scope string() function returns a string that holds the XML value of the specified entity. For the index page, it returns this value (as a single string):
+
+    <content><h3>Close to you</h3><p>We're just around the corner, if you live near by.</p><h3>Always open</h3><p>And if we're closed, just come back tomorrow.</p><h3>Cheap and convenient</h3><p>Much cheaper and easier than growing your own vegetables and fruit.</p></content>
+
+When we enclose this in &#36;( and ), it writes the string to the current output file. Thus we generate the body of the web page.
+
+<A name="toc3-692" title="Putting it All Together" />
+### Putting it All Together
+
+In our first draft we read the XML data from several files and we constructed a single tree with all the data we needed to generate code. This two-pass approach is the way I recommend you construct all GSL code generators:
+
+* First, load all data into a single memory tree, denormalise and validate.
+* Second, generate code from that single memory tree.
+
+The final web site generator consists of three pieces. Here is the revised web site generator.
+
+    .### Since we run the script off the XML file, it starts in
+    .### template mode.
+    .template 0
+     ignorecase = 0
+     for section
+        for page
+            xml to section from "&#36;(page.name).xml"
+            delete page
+        endfor
+     endfor
+     for section
+        for page
+            include "template.gsl"
+        endfor
+     endfor
+    .endtemplate
+
+Here is the template for the HTML output.
+
+    .###  This whole script runs in template mode.
+    .#
+    .template 1
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <html>
+    <head>
+      <title>&#36;(page.title)</title>
+      <link rel="stylesheet" href="default.css" type="text/css"/>
+    </head>
+    <body>
+      <div id="left_container">
+        <div id="logo_container">
+          <a href="index.html"><img id="logo" src="&#36;(page.name).jpg"/></a>
+        </div>
+        <div id="menu_container">
+    .for site.section
+          <h3 class="menu_heading">&#36;(section.name)</h3>
+          <ul class="menu_item">
+    .   for page
+            <li><a class="menu_item" href="&#36;(page.name).html">&#36;(page.title)</a></li>
+    .   endfor
+          </ul>
+    .endfor
+          <h3 class="menu_heading">Copyright</h3>
+        </div>
+        <div id="copyright">
+          <p>&#36;(copyright)</p>
+        </div>
+        <h3 class="menu_heading"> </h3>
+      </div>
+      <div id="right_container">
+        <div id="title_container">
+          <h1 id="title">&#36;(page.title)</h1>
+          <h2 id="title">&#36;(page.subtitle)</h2>
+        </div>
+        <div id="content_container">
+        <!-- Page content -->
+    .for content
+        &#36;(content.string ())
+    .endfor
+        <!-- End page content -->
+        </div>
+      </div>
+    </body>
+    </html>
+    .endtemplate
+
+To build the final web site, make sure the site.xml specifies the correct script:
+
+    <site
+        copyright = "Copyright &#169; Local Grocer"
+        script = "sitegen.gsl"
+        >
+
+And then build the web site using the same command as previously:
+
+    gsl site
+
+The HTML template and the CSS file are made for each other. Note that:
+
+* The HTML template assumes that each page has an image file with the name of the page, and extension "jpg".
+* The colors and layout of the pages is defined in the CSS stylesheet.
+* The menu is generated into each page.
+
+<A name="toc3-786" title="Exercise for the Reader" />
+### Exercise for the Reader
+
+It's an interesting exercise to re-implement our code generator using other code generation tools. For example, if you're familiar with XSLT, try building the web site generator using that. You may find you need to cheat, for example putting the whole web site model into a single file.
+
+<A name="toc3-791" title="Extending the Model" />
+### Extending the Model
+
+I've shown you how to design a simple model, and bring it to life using GSL. This web site generator is actually based on one that I use for some of my own web sites. You can extend this model in many directions, for instance:
+
+* You can change the type of menu, using a JavaScript drop-down menu instead of static HTML links.
+* You can define your own modeling language for the HTML content.
+* You can add other concepts and idioms to the model, depending on what you need in your web site.
+
+But most of all, the point of this example is to teach you how to use GSL in your daily work. As you've seen, it's easy to create models, and it's easy to change them. This is the secret of code generation - you don't need to get it right the first time. Models are hard to get right. So go ahead and experiment, since GSL makes it cheap to change your mind.
