@@ -1,0 +1,687 @@
+.------------------------------------------------------------------------------
+.-
+.-  ggobjt.gsl - Object module generator
+.-
+.-
+.-  Copyright (c) 1996-2010 iMatix Corporation
+.-
+.-  This program is free software; you can redistribute it and/or modify
+.-  it under the terms of the GNU General Public License as published by
+.-  the Free Software Foundation; either version 2 of the License, or (at
+.-  your option) any later version.
+.-
+.-  This program is distributed in the hope that it will be useful, but
+.-  WITHOUT ANY WARRANTY; without even the implied warranty of
+.-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.-  General Public License for more details.
+.-
+.-  For information on alternative licensing for OEMs, please contact
+.-  iMatix Corporation.
+.-
+.------------------------------------------------------------------------------
+.-
+.template 0
+
+.------------------------------------------------------------------------------
+
+parmv = "PARM_VALUE"
+parmr = "PARM_REFERENCE"
+parms = "PARM_SIMPLE_SCOPE"
+parmx = "PARM_EXTENDED_SCOPE"
+parme = "PARM_EXPRESSION"
+
+xml to root << END
+<operation_type
+    name="item_name"
+    return="const char *"
+    parms="void *item"
+    immediate="1" >
+    <function name="name" >
+        <body>
+  {
+    char
+        *item_name;
+
+    item_name = mem_strdup ((char *) $(operation.cname?operation.type:c)
+                                         (item));
+
+    if (item_name)
+        assign_string (& result-&gt; value, item_name);
+
+    return 0;
+  }
+        </body>
+    </function>
+</operation_type>
+<operation_type
+    name="get_attr"
+    return="VALUE *"
+    parms="void *item, const char *name, Bool ignorecase"
+    immediate="1" >
+    <script>
+.if count (operation.attr)
+$(operation-&gt; start ?)
+.    for operation.attr
+.        if defined (attr.name)
+    if (matches (name, "$(attr.name)"))
+.        else
+    if (name == NULL || name [0] == 0)
+.        endif
+      {
+$(attr.)
+      }
+.        if index () &lt; total ()
+    else
+.        endif
+.    endfor
+$(operation-&gt; finish ?)
+.else
+$(operation.)
+.endif
+    </script>
+</operation_type>
+<operation_type
+    name="put_attr"
+    return="int"
+    parms="void *item, const char *name, VALUE *value, Bool ignorecase"
+    immediate="1" >
+    <script>
+.if count (operation.attr)
+$(operation-&gt; start ?)
+.    for operation.attr
+.        if defined (attr.name)
+    if (matches (name, "$(attr.name)"))
+.        else
+    if (name == NULL)
+.        endif
+      {
+$(attr.)
+      }
+.        if index () &lt; total ()
+    else
+.        endif
+.    endfor
+$(operation-&gt; finish ?)
+.else
+$(operation.)
+.endif
+    </script>
+</operation_type>
+<operation_type
+    name="first_child"
+    return="int"
+    parms="void *olditem, const char *name, Bool ignorecase, CLASS_DESCRIPTOR **class, void **item"
+    immediate="1" >
+    <function name="first" >
+        <parameter name = "name"  pass = "value"  compulsory = "0" />
+        <body>
+  {
+    int
+        rc;
+    CLASS_DESCRIPTOR
+        *returnclass;
+    void
+        *returnitem;
+
+    rc = $(operation.cname?operation.type:c)
+             (item,
+              name ? string_value (& name-&gt; value) : NULL,
+              ((GGCODE_TCB *) gsl_thread-> tcb)-&gt; gsl-&gt; ignorecase,
+              & returnclass,
+              & returnitem);
+
+    if ((! rc)
+    &&  returnitem)
+        assign_pointer (& result-&gt; value, returnclass, returnitem);
+
+    return rc;
+  }
+        </body>
+    </function>
+</operation_type>
+<operation_type
+    name="next_sibling"
+    return="int"
+    parms="void *olditem, const char *name, Bool ignorecase, CLASS_DESCRIPTOR **class, void **item"
+    immediate="1" >
+    <function name="next" >
+        <parameter name = "name"  pass = "value"  compulsory = "0" />
+        <body>
+  {
+    int
+        rc;
+    CLASS_DESCRIPTOR
+        *returnclass;
+    void
+        *returnitem;
+
+    rc = $(operation.cname?operation.type:c)
+             (item,
+              name ? string_value (& name-&gt; value) : NULL,
+              ((GGCODE_TCB *) gsl_thread-> tcb)-&gt; gsl-&gt; ignorecase,
+              & returnclass,
+              & returnitem);
+
+    if ((! rc)
+    &&  item)
+        assign_pointer (& result-&gt; value, returnclass, returnitem);
+
+    return rc;
+}
+        </body>
+    </function>
+</operation_type>
+<operation_type
+    name="parent"
+    return="int"
+    parms="void *olditem, CLASS_DESCRIPTOR **class, void **item, THREAD *gsl_thread"
+    immediate="1" >
+    <function name="parent" cname="parent_function">
+        <body>
+  {
+    int
+        rc;
+    CLASS_DESCRIPTOR
+        *returnclass;
+    void
+        *returnitem;
+
+    rc = $(operation.cname?operation.type:c)
+             (item,
+              & returnclass,
+              & returnitem,
+              gsl_thread);
+
+    if ((! rc)
+    &&  item)
+        assign_pointer (& result-&gt; value, returnclass, returnitem);
+
+    return rc;
+  }
+        </body>
+    </function>
+</operation_type>
+<operation_type
+    name="create"
+    return="int"
+    parms="const char *name, void *parent, void *sibling, CLASS_DESCRIPTOR **class, void **item"
+    immediate="1" >
+    <function name="new" >
+        <parameter name = "name"  pass = "value"  compulsory = "0" />
+        <body>
+  {
+    int
+        rc;
+    CLASS_DESCRIPTOR
+        *returnclass;
+    void
+        *returnitem;
+
+    rc = $(operation.cname?operation.type:c)
+             (name ? string_value (& name-&gt; value) : NULL,
+              item,
+              NULL,
+              & returnclass,
+              & returnitem);
+
+    if ((! rc)
+    &&  item)
+        assign_pointer (& result-&gt; value, returnclass, returnitem);
+
+    return rc;
+  }
+        </body>
+    </function>
+</operation_type>
+<operation_type
+    name="destroy"
+    return="int"
+    parms="void *item"
+    immediate="1" />
+<operation_type
+    name="link"
+    return="int"
+    parms="void *item"
+    immediate="1" />
+<operation_type
+    name="delete"
+    return="int"
+    parms="void *item"
+    immediate="1" >
+    <function name="delete" cname="delete_function" >
+        <body>
+  {
+    int
+        rc;
+
+    rc = $(operation.cname?operation.type:c)
+             (item);
+
+    return rc;
+  }
+        </body>
+    </function>
+</operation_type>
+<operation_type
+    name="copy"
+    return="void *"
+    parms="void *item, CLASS_DESCRIPTOR *to_class, const char *name, void *parent, void *sibling"
+    immediate="1" />
+<operation_type
+    name="move"
+    return="void *"
+    parms="void *item, CLASS_DESCRIPTOR *to_class, const char *name, void *parent, void *sibling"
+    immediate="1" />
+<operation_type
+    name="remove"
+    return="void"
+    parms="void *item, void *remove"
+    immediate="1" />
+END
+
+.------------------------------------------------------------------------------
+
+.- process_function: Build the parameter list for the function defined in
+.-                   the topmost scope.
+
+function process_function ()
+    templist = ""
+
+    min_parms = 0
+    tot_parms = 0
+
+    for parameter
+        tot_parms += 1
+        if parameter.compulsory ? 0 & min_parms + 1 = index ()
+            min_parms += 1
+        endif
+        if pass = "value"
+            templist += "v"
+        elsif pass = "reference"
+            templist += "r"
+        elsif pass = "simple scope"
+            templist += "s"
+        elsif pass = "extended scope"
+            templist += "x"
+        elsif pass = "expression"
+            templist += "e"
+        else
+            abort "Unknown parameter pass type: $(pass)"
+        endif
+    endfor
+
+.-  Check whether min_parms/max_parms explicitly defined for this function
+    if ! defined ([function].min_parms)
+        [function].min_parms = min_parms
+    endif
+    [function].cnt_parmt = tot_parms
+    if ! defined ([function].max_parms)
+        [function].max_parms = tot_parms
+        
+.-      If no parms and no explicity max_parms = 0 then we are done
+        if [function].max_parms = 0
+            return
+        endif
+
+    endif
+    
+.-  If final parms are of same type then we can reduce the parm list
+    while cnt_parmt > 1
+        if string.substr (templist, cnt_parmt - 1, , 1)                       \
+         = string.substr (templist, cnt_parmt - 2, , 1)
+            cnt_parmt -= 1
+            templist = string.substr (templist, , cnt_parmt - 1)
+        else
+            last
+        endif
+    endwhile
+
+.-      Now see whether a list exists which will do
+    for root.parmlist where string.locate (name, templist) ?= 0
+        [function].parmlist = name
+    endfor
+
+.-  Now see if a list exists that can be extended to make do.
+    if ! defined ([function].parmlist)
+        for root.parmlist where string.locate (templist, name) ?= 0
+            for gxl.function where [function].parmlist ?= parmlist.name
+                [function].parmlist = templist
+            endfor
+            parmlist.name = templist
+            [function].parmlist = name
+        endfor
+    endif
+
+.-  Only if all the above fails do we make a new list
+    if ! defined ([function].parmlist)
+        new parmlist to root
+            parmlist.name = templist
+            [function].parmlist = name
+        endnew
+    endif
+endfunction
+
+.------------------------------------------------------------------------------
+
+for class
+
+.-  Move class operations to top level
+    for operation
+.-      Give the function a unique name
+        operation.cname   ?= class.name + "_" + operation.type
+        operation.cmethod ?= class.name + "_" + operation.method ?
+        copy operation to gxl
+
+.-  Make function definition from operation
+        operation_type = root-> operation_type (name = operation.type)
+        if count (operation_type. function)
+            for operation_type. function
+                new class.function as classfunction
+                    classfunction. name  = function. name      ?
+                    classfunction. cname = class.name + "_"                   \
+                                         + (function.cname ? function.name)
+                    classfunction. immediate = function. immediate ?
+                    for function. parameter
+                        copy parameter to classfunction
+                    endfor
+                    body = classfunction.new ("body")
+                    body. = gsl.exec (function-> body, 1)
+                endnew
+            endfor
+        endif
+    endfor
+
+.-  Move function definitions to top level
+    for function where defined (function-> body)
+.-      Give the function a unique name
+        [function].cname ?= class.name + "_" + [function].name
+        copy function to gxl
+    endfor
+endfor
+
+for function
+    process_function ()
+endfor
+
+.------------------------------------------------------------------------------
+
+.endtemplate
+.-
+.- Header file ---------------------------------------------------------------
+.-
+.output "$(filename:).h"
+/*---------------------------------------------------------------------------
+ *  $(filename).h - $(title?:) header
+ *
+ *  Generated from $(filename) by $(script) using GSL/4.
+ *  DO NOT MODIFY THIS FILE.
+ *
+ *  For documentation and updates see http://www.imatix.com.
+ *---------------------------------------------------------------------------*/
+
+#ifndef $(FILENAME)_INCLUDED
+#define $(FILENAME)_INCLUDED
+.for public
+/*- Public definitions ------------------------------------------------------*/
+$(.?)
+.endfor
+
+/*- Global variables --------------------------------------------------------*/
+
+.for class
+extern CLASS_DESCRIPTOR
+    $(name:c,no)_class;
+
+.endfor
+/*- Function prototypes -----------------------------------------------------*/
+
+int register_$(gxl.name?gxl->class.name:c)_classes (void);
+
+.if count (gxl.shutdown)
+int shutdown_$(gxl.name?gxl->class.name:c)_classes (void);
+.endif
+
+#endif
+.close
+.-
+.- Dialog file ---------------------------------------------------------------
+.-
+.if count (gxl.dialog)
+.    output "$(filename:).l"
+!----------------------------------------------------------------------------
+!   $(filename).l - $(title?:) dialog
+!
+!   Generated from $(filename) by $(script) using GSL/4.
+!   DO NOT MODIFY THIS FILE.
+!
+!   For documentation and updates see http://www.imatix.com.
+!----------------------------------------------------------------------------
+
+-schema=smtschm.c
+-nostubs
+
+$(gxl-> dialog.)
+.    close
+.endif
+.-
+.- C file --------------------------------------------------------------------
+.-
+.output "$(filename:).c"
+/*---------------------------------------------------------------------------
+ *  $(filename).c - $(title?:)
+ *
+ *  Generated from $(filename) by $(script) using GSL/4.
+ *  DO NOT MODIFY THIS FILE.
+ *
+ *  For documentation and updates see http://www.imatix.com.
+ *---------------------------------------------------------------------------*/
+
+#include "sfl.h"
+#include "smt3.h"
+#include "gsl.h"                        /*  Project header file              */
+#include "$(filename:).h"               /*  Include header file              */
+.if count (gxl.dialog)
+#include "$(filename:).d"               /*  Include dialog data              */
+
+#define AGENT_NAME "$(gxl.FILENAME:c)"
+.endif
+
+/*- Macros ------------------------------------------------------------------*/
+
+.for class
+#define $(NAME:c)_NAME "$(name)"        /*  $(title?:)                       */
+.endfor
+
+#define matches(s,t)    (s ? (ignorecase ? lexcmp (s, t) == 0 : streq (s, t)) \
+                           : t == NULL)
+
+/*- Function prototypes -----------------------------------------------------*/
+
+.for function
+static int
+$(cname ? name:c) (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, THREAD *gsl_thread);
+.endfor
+.for operation
+.    operation_type = root-> operation_type (name = operation.type)
+static $(operation_type.return:) $(cname?type:c) ($(operation_type.parms:));
+.endfor
+
+/*- Global variables --------------------------------------------------------*/
+.-
+.[gsl].shuffle = 1
+.for root.parmlist
+static PARM_LIST parm_list_$(name)      = {\
+.    i = 0
+.    while i < string.length (name)
+.        c = string.substr (name, i, , 1)
+                                            $(PARM$(C))\
+.        i += 1
+.        if i < string.length (name)
+,
+.        endif
+.    endwhile
+ };
+.endfor
+
+.for class
+.    if count (function)
+.        [gsl].shuffle = 2
+static GSL_FUNCTION $(name:c,no)_functions [] =
+.            [gsl].shuffle = 1
+{
+.        for function by name
+.            for gxl.function as gxlfunction where cname = [function].cname
+    {"$(name:c,no)",   $(min_parms),\
+                       $(max_parms),\
+                          $(cnt_parmt),\
+.                if defined (parmlist)
+                             (void *) &parm_list_$(parmlist),\
+.                else
+                             NULL,\
+.                endif
+                                                 $(immediate? 1),\
+                                                 $(cname ? name:c)}\
+.            endfor
+.            if index () < total ()
+,
+.            endif
+.        endfor
+};
+
+.    [gsl].shuffle = 2
+.    endif
+CLASS_DESCRIPTOR
+    $(name:c,no)_class = {
+        "$(name:)",
+.    for root.operation_type
+        $(class-> operation (type = operation_type.name). cname ? "NULL":c),
+.    endfor
+.    if count (function)
+        $(name:c,no)_functions, tblsize ($(name:c,no)_functions) };
+.    else
+        NULL, 0 };
+.    endif
+
+.endfor
+.for extra
+$(.?)
+.endfor
+.-
+.[gsl].shuffle = 2
+.for operation
+.    operation_type = root-> operation_type (name = operation.type)
+static $(operation_type.return:) $(cname?type:c) ($(operation_type.parms:))
+{
+.    if defined (operation_type-> script)
+.        gsl string.trim (operation_type-> script.)
+.    else
+    $(.)
+.    endif
+}
+
+.endfor
+.for function
+
+static int
+$(cname ? name:c) (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, THREAD *gsl_thread)
+{
+.    [gsl].shuffle = 1
+.    for parameter where defined (parameter.name)
+.        global.i = item () - 1
+    RESULT_NODE *$(name:c,no)\
+                         = argc > $(i)\
+                         ? argv [$(i)]\
+                         : NULL;
+.    endfor
+.    [gsl].shuffle = 2
+
+.    for parameter
+.        if parameter.compulsory ? 0
+    if (! $(name:c,no))
+      {
+        strcpy (object_error, "Missing argument: $(name:)");
+        return -1;
+      }
+.        endif
+.        if pass = "value"
+.            if compulsory ? 0
+    if ($(name:c,no)-> value. type == TYPE_UNDEFINED)
+      {
+        result-> culprit = $(name:c,no)-> culprit;
+        $(name:c,no)-> culprit = NULL;
+.            if ! (immediate ? 1)
+        lsend_ggcode_call_ok (& gsl_thread-> queue-> qid, NULL,
+                             NULL, NULL, NULL, 0);
+.            endif
+        return 0;
+      }
+.            endif
+.        endif
+.    endfor
+$(-> body)
+    return 0;  /*  Just in case  */
+}
+
+.endfor
+.-
+.-----------------------------------------------------------------------------
+.-
+.if count (gxl.shutdown)
+int shutdown_$(gxl.name?gxl->class.name:c)_classes (void)
+{
+$(gxl-> shutdown)
+
+    return 0;
+}
+
+.endif
+.-
+.for class where class.register ? 1
+static int $(name:c,no)_class_init (CLASS_DESCRIPTOR **class, void **item, THREAD *gsl_thread)
+{
+.    if class.public ? 1 = 1
+     *class = & $(name:c,no)_class;
+
+.    endif
+.    if count (class.initialise)
+$(class-> initialise)
+.    endif
+.-
+    return 0;
+}
+
+.    if count (class.shutdown)
+static void $(name:c,no)_class_shutdown (void)
+{
+$(class-> shutdown)
+}
+
+.    endif
+.endfor
+.-
+int register_$(gxl.name?gxl->class.name:c)_classes (void)
+{
+    int
+        rc = 0;
+.if count (gxl.dialog)
+    AGENT   *agent;                     /*  Handle for our agent             */
+#include "$(filename:).i"               /*  Include dialog interpreter       */
+
+.endif
+.-
+.if count (gxl.startup)
+$(gxl-> startup)
+.endif
+.-
+.for class where class.register ? 1
+    rc |= object_register ($(name:c,no)_class_init,
+.    if count (class.shutdown)
+                           $(name:c,no)_class_shutdown);
+.    else
+                           NULL);
+.    endif
+.endfor
+    return rc;
+}
+.-
+.close

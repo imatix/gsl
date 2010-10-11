@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<!--
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<application        title  = "ggpars messages"
+                    script = "smtmesg.gsl"
+                    module = "ggparsm" >
+
+    <!-- ------------------------------------------------------------------
+         Messages for gslgen parser agent
+         ------------------------------------------------------------------ -->
+    <agent          name   = "ggpars"           title = "gslgen parser agent" >
+
+        <message    name   = "parse" >
+            <field  name   = "job"              title = "job id"
+                    type   = "pointer" />
+
+            <method name   = "template"         title = "parse template line"
+                    type   = "internal" />
+            <method name   = "gsl"              title = "parse gsl line"
+                    type   = "internal" />
+            <method name   = "expression"       title = "parse expression"
+                    type   = "internal" />
+        </message>
+        <message    name   = "ok" >
+            <field  name   = "job"              title = "job id"
+                    type   = "pointer" />
+            <field  name   = "parse_root"       title = "parse tree root"
+                    type   = "pointer" />
+            <field  name   = "parse_memtrn"     title = "Memory transaction"
+                    type   = "pointer" />
+            <field  name   = "size"             title = "Data size"
+                    type   = "long" />
+
+            <method name   = "ok"               title = "ok reply"
+                    type   = "reply" />
+        </message>
+        <message    name   = "eof" >
+            <field  name   = "job"              title = "job id"
+                    type   = "pointer" />
+
+            <method name   = "eof"              title = "eof reply"
+                    type   = "reply" />
+        </message>
+        <message    name   = "error" >
+            <field  name   = "job"              title = "job id"
+                    type   = "pointer" />
+            <field  name   = "error_text"       title = "error message text"
+                    type   = "string" />
+
+            <method name   = "error"            title = "error reply"
+                    type   = "reply" />
+        </message>
+
+    </agent>
+
+</application>

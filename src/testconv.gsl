@@ -1,0 +1,9 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  testconv.gsl - Test conversion GSL functions
+.-                                                                            
+.------------------------------------------------------------------------------
+
+echo "Conv.ord function result (should be 64): " + conv.ord ('@')
+echo "Conv.chr function result (should be ]): " + conv.chr (93)
+

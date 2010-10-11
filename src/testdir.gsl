@@ -1,0 +1,31 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  testdir.gsl - Test directory GSL functions
+.-                                                                            
+.------------------------------------------------------------------------------
+
+echo "current working directory: " + directory.cwd
+
+dir = directory.open (".", error_text) ? 
+if defined (dir)
+    for dir.file by name
+        echo "File name: $(name:)                size: $(size)"
+    endfor
+else
+    abort "ERROR: " + error_text
+endif
+
+echo "***************************"
+
+dir = directory.open (".", error_text) ? 
+for dir.file by path
+    echo "$(path:%-30s) $(name)"
+endfor
+
+rc = directory.create ("dummy")
+output ("dummy/dummy.txt")
+>directory.create has returned value $(rc)
+close
+file.delete ("dummy/dummy.txt")
+rc = directory.delete ("dummy/dummy.txt")
+echo "directory.delete has returned value $(rc)"

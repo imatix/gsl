@@ -1,0 +1,44 @@
+.------------------------------------------------------------------------------
+.-
+.-  testfile.gsl - Test file GSL functions
+.-
+.------------------------------------------------------------------------------
+
+in  = file.open ("testfile.gsl", "r")
+s = ""
+line = file.read (in)
+while defined (line)
+    s += line + "\n"
+    line = file.read (in)?
+endwhile
+ret = file.close (in)
+
+out = file.open ("testfile.out", "w")
+ret = file.write (out, s)
+ret = file.close (out)
+
+echo "Expect YES:"
+if file.locate ("testfile.gsl") <> ""
+    echo "YES"
+else
+    echo "NO"
+endif
+
+echo "Expect NO:"
+if file.locate ("testfile.xxx") ?<> ""
+    echo "YES"
+else
+    echo "NO"
+endif
+
+echo "Expect file not found error:"
+in = file.open ("testfile.xxx") ?
+echo file.error
+
+echo "Expect YES:"
+if file.basename ("testfile.gsl") = "testfile"
+    echo "YES"
+else
+    echo "NO"
+endif
+

@@ -1,0 +1,234 @@
+<?xml?>
+<!--
+    GSL/time - Time conversion functions
+
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<gxl script = "ggobjt.gsl" filename = "ggtime" title = "GSL/time package" >
+
+<extra>
+</extra>
+
+<!--------------------------- Time Class ----------------------------------->
+
+<class name = "time" title = "Time Functions" >
+
+    <operation type = "get_attr">
+        <start>
+    static VALUE
+        value;
+        </start>
+        <attr>
+    assign_string (& value, conv_time_pict (time_now (), "hh:mm:ss"));
+        </attr>
+        <finish>
+    return & value;
+        </finish>
+    </operation>
+
+<!-------------------------------------------------------------------------->
+
+    <function name = "picture" immediate = "1" >
+        <parameter name = "time"     pass = "value" />
+        <parameter name = "picture"  pass = "value" />
+        <body>
+  {
+    char
+        *strptr;
+
+    if (! arguments_are_defined (argc, argv, result))
+        return 0;
+
+    strptr = conv_time_pict (
+                 time    ? (long) number_value (&time-> value)    : time_now (),
+                 picture ?        string_value (&picture-> value) : "hh:mm:ss");
+
+    if (strptr)
+        assign_string (& result-> value, mem_strdup (strptr));
+  }
+        </body>
+    </function>
+
+<!-------------------------------------------------------------------------->
+
+    <function name = "number" >
+        <parameter name = "time" pass = "value" compulsory = "1" />
+        <body>
+  {
+    long
+        ltime;
+
+    if (! arguments_are_defined (argc, argv, result))
+        return 0;
+
+    ltime = conv_str_time (string_value (&time-> value));
+    assign_number (& result-> value, ltime);
+  }
+        </body>
+    </function>
+
+<!-------------------------------------------------------------------------->
+
+    <function name = "now" cname = "gsl_now" >
+        <description>
+    Assigns date and time to the passed parameters.  Also returns the time.
+        </description>
+        <parameter name = "date"   pass = "reference"  compulsory = "0" />
+        <parameter name = "time"   pass = "reference"  compulsory = "0" />
+        <body>
+  {
+    GGCODE_TCB
+        *gsl_tcb = gsl_thread-> tcb;
+    long
+        cur_date,
+        cur_time;
+    VALUE
+        value;
+    int
+        rc = 0;
+    char
+        *error_text;
+
+    get_date_time_now (& cur_date, & cur_time);
+
+    if (date)
+      {
+        init_value (& value);
+        assign_number (& value, cur_date);
+        rc = ! store_symbol_definition (& gsl_tcb-> scope_stack,
+                                        gsl_tcb-> gsl-> ignorecase,
+                                        date,
+                                        &value,
+                                        &error_text);
+        destroy_value (& value);
+      }
+    if (time && (! rc))
+      {
+        init_value (& value);
+        assign_number (& value, cur_time);
+        rc = ! store_symbol_definition (& gsl_tcb-> scope_stack,
+                                        gsl_tcb-> gsl-> ignorecase,
+                                        time,
+                                        &value,
+                                        &error_text);
+        destroy_value (& value);
+      }
+
+    if (rc)
+      {
+        strncpy (object_error, error_text, LINE_MAX);
+        return rc;
+      }
+    else
+        assign_number (& result-> value, cur_time);
+  }
+        </body>
+    </function>
+
+<!-------------------------------------------------------------------------->
+
+    <function name = "diff" >
+        <description>
+    Returns the difference (in csecs) between two date/times.
+        </description>
+        <parameter name = "date1"   pass = "value"  compulsory = "1" />
+        <parameter name = "time1"   pass = "value"  compulsory = "1" />
+        <parameter name = "date2"   pass = "value"  compulsory = "1" />
+        <parameter name = "time2"   pass = "value"  compulsory = "1" />
+        <body>
+  {
+    long
+        days,
+        csecs;
+
+    if (! arguments_are_defined (argc, argv, result))
+        return 0;
+
+    date_diff ((long) number_value (& date1-> value),
+               (long) number_value (& time1-> value),
+               (long) number_value (& date2-> value),
+               (long) number_value (& time2-> value),
+               & days, &csecs);
+
+    assign_number (& result-> value, days * INTERVAL_DAY + csecs);
+  }
+        </body>
+    </function>
+
+</class>
+
+<!--------------------------- Date Class ----------------------------------->
+
+<class name = "date" title = "Date Functions" >
+
+    <operation type = "get_attr">
+        <start>
+    static VALUE
+        value;
+        </start>
+        <attr>
+    assign_string (& value, conv_date_pict (date_now (), "yyyy/mm/dd"));
+        </attr>
+        <finish>
+    return & value;
+        </finish>
+    </operation>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "picture" >
+    <parameter name = "date"     pass = "value" />
+    <parameter name = "picture"  pass = "value" />
+    <body>
+  {
+    char
+        *strptr;
+
+    if (! arguments_are_defined (argc, argv, result))
+        return 0;
+
+    strptr = conv_date_pict (
+                 date    ? (long) number_value (&date-> value)    : date_now (),
+                 picture ?        string_value (&picture-> value) : "yyyy/mm/dd");
+    if (strptr)
+        assign_string (& result-> value, mem_strdup (strptr));
+  }
+    </body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "number" >
+    <parameter name = "date" pass = "value" compulsory = "1" />
+    <body>
+  {
+    long
+        ldate;
+
+    if (! arguments_are_defined (argc, argv, result))
+        return 0;
+
+    ldate = conv_str_date (string_value (&date-> value),
+                           FLAG_D_ORDER_YMD, DATE_YMD_COMPACT, DATE_ORDER_YMD);
+    assign_number (& result-> value, ldate);
+  }
+    </body>
+</function>
+
+</class>
+
+</gxl>

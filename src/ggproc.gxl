@@ -1,0 +1,512 @@
+<?xml?>
+<!--
+    GSL/proc - Process control functions
+
+    Provides GSL applications with the ability to start and stop
+    system processes.
+
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<gxl script = "ggobjt.gsl" filename = "ggproc" title = "GSL/process management
+package" >
+<extra>
+
+#define POLL_INTERVAL        (10)        /*  Poll interval in csecs           */
+
+#define PROCESS_NOT_STARTED  (-1)        /*  Extends macros  in sflproc.h     */
+
+#define PROC_ERROR           (-1)
+
+typedef struct {
+    int
+        links;
+    char
+        *error_msg;
+} PROC_CONTEXT;
+
+typedef struct _PROC_HANDLE_ITEM {
+    struct _PROC_HANDLE_ITEM
+        *next,
+        *prev;
+    int
+        links;
+    char
+        *command,
+        *workdir,
+        *inname,
+        *outname,
+        *errname;
+    SYMTAB
+        *envt;
+    PROCESS
+        handle;
+    int
+        status;
+    Bool
+        waiting;                        /*  Is GSL script waiting?            */
+    RESULT_NODE
+        *error,                         /*  For GSL error parameter           */
+        *result;                        /*  For GSL function return code      */
+    THREAD
+        *gsl_thread;
+    char
+        *error_msg;
+} PROC_HANDLE_ITEM;
+
+static LIST
+    handle_list = { & handle_list, & handle_list };
+
+static int
+    running_count = 0;
+
+
+static int
+store_proc_error (PROC_HANDLE_ITEM *proc_handle,
+                  THREAD           *gsl_thread,
+                  RESULT_NODE      *error,
+                  const char       *error_msg,
+                        char      **error_text)
+{
+    GGCODE_TCB
+        *gsl_tcb = gsl_thread-> tcb;
+    PROC_CONTEXT
+        *context;
+    VALUE
+        value;
+
+    if (error_msg)
+      {
+        mem_free (proc_handle-> error_msg);
+        proc_handle-> error_msg = memt_strdup (NULL, error_msg);
+
+        context = get_class_item (gsl_thread, PROC_NAME);
+        mem_free (context-> error_msg);
+        context-> error_msg = memt_strdup (NULL, error_msg);
+
+        if (error)
+          {
+            init_value (& value);
+            assign_string (& value, context-> error_msg);
+
+            if (! store_symbol_definition (& gsl_tcb-> scope_stack,
+                                           gsl_tcb-> gsl-> ignorecase,
+                                           error,
+                                           &value,
+                                           error_text))
+                return -1;
+          }
+      }
+    return 0;
+}
+
+static void
+return_process_status (PROC_HANDLE_ITEM *process)
+{
+    assign_number (& process-> result-> value, process-> status);
+    lsend_ggcode_call_ok (
+        & process-> gsl_thread-> queue-> qid, NULL,
+        NULL, NULL, NULL, 0);
+}
+
+static void
+schedule_check_processes_status (void);
+
+static int
+check_processes_status (long dummy_date, long dummy_time, void *dummy_arg)
+{
+    PROC_HANDLE_ITEM
+        *process;
+    int
+        status,
+        rc = 0;
+
+    FORLIST (process, handle_list)
+      {
+        if (process-> handle)
+          {
+            status = process_status (process-> handle);
+            if (status != process-> status)
+              {
+                ASSERT (process-> status == PROCESS_RUNNING);
+                running_count--;
+                process-> status = status;
+                if (process-> waiting)
+                  {
+                    return_process_status (process);
+                    process_kill (process-> handle);
+                    process-> handle = 0;
+                    rc = 1;
+                  }
+              }
+          }
+      }
+    if (running_count > 0)
+        schedule_check_processes_status ();
+
+    return rc;
+}
+
+static void
+schedule_check_processes_status (void)
+{
+    long
+        date = 0,
+        time = 0;
+
+    future_date (& date, & time, 0, POLL_INTERVAL);
+    schedule_async_nonblock (check_processes_status, NULL,
+                             SMT_PRIORITY_NORMAL, date, time);
+}
+
+static void
+return_with_error (PROC_HANDLE_ITEM *process,
+                   const char       *error_msg)
+{
+    char
+        *error_text;
+
+    assign_number (& process-> result-> value, PROC_ERROR);
+
+    if (store_proc_error (process,
+                          process-> gsl_thread,
+                          process-> error,
+                          error_msg,
+                          &error_text))
+        lsend_ggcode_call_error (& process-> gsl_thread-> queue-> qid, NULL,
+                                 NULL, NULL, NULL, 0,
+                                 NULL,
+                                 0,
+                                 error_text);
+    else
+        lsend_ggcode_call_ok (& process-> gsl_thread-> queue-> qid, NULL,
+                              NULL, NULL, NULL, 0);
+}
+
+</extra>
+
+
+<class name = "proc" title = "Process" register = "1" >
+
+    <initialise>
+  {
+    PROC_CONTEXT
+        *context;
+
+    context = memt_alloc (NULL, sizeof (PROC_CONTEXT));
+    context-> links     = 0;
+    context-> error_msg = NULL;
+
+    *item = context;
+
+    /*  Ensure that timer agent is running, else start it up                 */
+    if (smttime_init ())
+        return (-1);
+}
+    </initialise>
+
+    <operation type="link">
+((PROC_CONTEXT *) item)-> links++;
+return 0;
+    </operation>
+
+    <operation type="destroy">
+  {
+    PROC_CONTEXT
+        *context = item;
+
+    if (--context-> links == 0)
+      {
+        mem_free (context-> error_msg);
+        mem_free (context);
+      }
+    return 0;
+  }
+    </operation>
+
+    <operation type="get_attr">
+        <start>
+    PROC_CONTEXT
+        *context = item;
+    static VALUE
+        value;
+
+    init_value (& value);
+        </start>
+        <attr name="error" >
+        if (context-> error_msg)
+            assign_string (& value, context-> error_msg);
+        </attr>
+        <finish>
+    return & value;
+        </finish>
+    </operation>
+
+
+<!-------------------------------------------------------------------------->
+    <function name = "new" >
+        <description>
+    Creates a process object.  The command is a native system command.  Does
+    not execute the command.
+
+    Returns the process object.
+        </description>
+
+        <parameter name = "command" pass = "value"     compulsory = "1" />
+        <parameter name = "workdir" pass = "value"                      />
+        <parameter name = "inname"  pass = "value"                      />
+        <parameter name = "outname" pass = "value"                      />
+        <parameter name = "errname" pass = "value"                      />
+        <body>
+  {
+    PROC_HANDLE_ITEM
+        *process;
+
+    list_create (process, sizeof (PROC_HANDLE_ITEM));
+    list_relink_before (process, & handle_list);
+
+    process-> links      = 0;
+    process-> command    = memt_strdup (NULL, string_result (command));
+    process-> workdir    = memt_strdup (NULL, string_result (workdir));
+    process-> inname     = memt_strdup (NULL, string_result (inname));
+    process-> outname    = memt_strdup (NULL, string_result (outname));
+    process-> errname    = memt_strdup (NULL, string_result (errname));
+    process-> envt       = sym_create_table ();
+    process-> handle     = 0;
+    process-> status     = PROCESS_NOT_STARTED;
+    process-> waiting    = TRUE;
+    process-> error      = NULL;
+    process-> result     = NULL;
+    process-> gsl_thread = NULL;
+    process-> error_msg  = NULL;
+
+    assign_pointer (& result-> value, & proc_handle_class, process);
+
+    return 0;
+  }
+        </body>
+    </function>
+
+</class>
+
+<!-------------------------------------------------------------------------->
+
+<class name = "proc handle" title = "Process handle" register = "0" >
+
+    <operation type="link">
+    if (item)
+        ((PROC_HANDLE_ITEM *) item)-> links++;
+    return 0;
+    </operation>
+
+    <operation type="destroy">
+    PROC_HANDLE_ITEM
+        *process = item;
+
+    if (process
+    &&  --process-> links &lt;= 0)
+      {
+        if (process-> status == PROCESS_RUNNING)
+            running_count--;
+        mem_free (process-> command);
+        mem_free (process-> workdir);
+        mem_free (process-> inname);
+        mem_free (process-> outname);
+        mem_free (process-> errname);
+        sym_delete_table (process-> envt);
+        mem_free (process-> error_msg);
+        list_unlink (process);
+        mem_free (process);
+      }
+    return 0;
+    </operation>
+
+    <operation type="get_attr">
+        <start>
+    PROC_HANDLE_ITEM
+        *process = item;
+    static VALUE
+        value;
+
+    init_value (& value);
+        </start>
+        <attr name = "wait" >
+        assign_number (& value, process-> waiting);
+        </attr>
+        <attr name = "status" >
+        assign_number (& value, process-> status);
+        </attr>
+        <attr name = "error" >
+        if (process-> error_msg)
+            assign_string (& value, process-> error_msg);
+        </attr>
+        <finish>
+    return & value;
+        </finish>
+    </operation>
+
+    <operation type="put_attr">
+        <start>
+    PROC_HANDLE_ITEM
+        *process = item;
+    int
+        rc = 0;
+
+    number_value (value);
+        </start>
+        <attr name = "wait" >
+        if (value-> type == TYPE_NUMBER
+        &&  value-> n    &gt;= 0
+        &&  value-> n    &lt;= 1)
+            process-> waiting = (Bool) value-> n;
+        else
+            rc = -1;
+        </attr>
+        <finish>
+    else
+        rc = -1;
+
+    return rc;
+        </finish>
+    </operation>
+
+<!-------------------------------------------------------------------------->
+
+    <function name = "setenv" >
+        <description>
+    Sets an environment variable for the process.  Can only be called before
+    the process is started with proc_handle.run ()
+        </description>
+            <parameter name = "name"  pass = "value" compulsory = "1" />
+            <parameter name = "value" pass = "value"                  />
+        <body>
+  {
+    SYMBOL
+        *symbol;
+
+    if (((PROC_HANDLE_ITEM *) item)-> status != PROCESS_NOT_STARTED)
+      {
+        strcpy (object_error,
+               "Cannot set environment variable on running process.");
+        return -1;
+      }
+    if (value && value-> value. type != TYPE_UNDEFINED)
+        sym_assume_symbol (((PROC_HANDLE_ITEM *) item)-> envt,
+                           string_value (& name-> value),
+                           string_value (& value-> value));
+    else
+      {
+        symbol = sym_lookup_symbol (((PROC_HANDLE_ITEM *) item)-> envt,
+                                    string_value (& name-> value));
+        if (symbol)
+            sym_delete_symbol (((PROC_HANDLE_ITEM *) item)-> envt,
+                               symbol);
+      }
+  }
+        </body>
+    </function>
+
+    <function name = "getenv" >
+        <description>
+    Gets an environment variable from the process.
+        </description>
+            <parameter name = "name"  pass = "value" compulsory = "1" />
+        <body>
+  {
+    char
+        *value;
+
+    if (((PROC_HANDLE_ITEM *) item)-> status != PROCESS_NOT_STARTED)
+      {
+        strcpy (object_error,
+               "Cannot set environment variable on running process.");
+        return -1;
+      }
+    value = sym_get_value (((PROC_HANDLE_ITEM *) item)-> envt,
+                           string_value (& name-> value), NULL);
+    assign_string (& result-> value, memt_strdup (NULL, value));
+  }
+        </body>
+    </function>
+
+    <function name = "run" immediate = "0" >
+        <description>
+    Runs a process created with proc.create ()
+
+    Returns -1 if there was an error creating the object.  Also places an
+    error message into the parameter error.
+        </description>
+        <parameter name = "error"    pass = "reference"   compulsory = "0" />
+        <body>
+  {
+    PROCESS_DATA
+        procinfo = PROCESS_DATA_INIT;
+    PROC_HANDLE_ITEM
+        *process = item;
+    int
+        rc;
+
+    process-> error      = error;
+    process-> result     = result;
+    process-> gsl_thread = gsl_thread;
+
+    rc = process_setinfo (& procinfo,
+                          process-> inname,
+                          process-> outname,
+                          TRUE,
+                          process-> errname,
+                          TRUE);
+    if (rc)
+      {
+        return_with_error (process,
+                           "Error redirecting stdin, stdout or stderrn");
+        return 0;
+      }
+
+    procinfo. filename = process-> command;
+    procinfo. wait     = FALSE;
+    procinfo. workdir  = process-> workdir;
+    procinfo. envv     = symb2strt (process-> envt);
+
+    process-> handle = process_create_full (& procinfo);
+
+    strtfree (procinfo.envv);
+
+    if (process-> handle == 0)          /*  Process wasn't created  */
+      {
+        return_with_error (process,
+                           strerror (procinfo. error));
+        return 0;
+      }
+    process-> status = PROCESS_RUNNING;
+    if (running_count == 0)              /*  Otherwise already scheduled      */
+        schedule_check_processes_status ();
+
+    running_count++;
+
+    if (! process-> waiting)
+        lsend_ggcode_call_ok (& process-> gsl_thread-> queue-> qid, NULL,
+                              NULL, NULL, NULL, 0);
+
+    /*  Build return value  */
+    assign_number (& result-> value, 0);
+}
+        </body>
+    </function>
+
+</class>
+
+</gxl>

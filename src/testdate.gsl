@@ -1,0 +1,21 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  testdate.gsl - Test date GSL functions
+.-                                                                            
+.------------------------------------------------------------------------------
+
+mydate = 19630619
+
+echo date.picture ()
+echo date.picture (mydate,)
+echo date.picture (mydate, "mmm d, yy")
+echo date.picture (, "dddd dd mmmm yyyy")
+echo date.number (date)
+
+mytime = 15520123
+
+echo time.picture ()
+echo time.picture (mytime,)
+echo time.picture (mytime, "hh:mm")
+echo time.number (time)
+

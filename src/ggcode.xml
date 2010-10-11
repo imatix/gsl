@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<!--
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+    
+<application        title  = "GGCODE messages"
+                    script = "smtmesg.gsl"
+                    module = "ggcodem" >
+
+    <!-- ------------------------------------------------------------------
+         Messages for GSLGen GGCODE agent
+         ------------------------------------------------------------------ -->
+    <agent          name   = "ggcode"           title = "GSLGen GGCODE agent" >
+
+        <method     name   = "execute"          title = "Execute script"
+                    type   = "internal" />
+        <method     name   = "start"            title = "Start thread"
+                    type   = "internal" />
+        <method     name   = "spawn"            title = "Spawn thread"
+                    type   = "internal" />
+        <method     name   = "continue"         title = "Continue thread"
+                    type   = "internal" />
+        <method     name   = "next"             title = "Execute next line"
+                    type   = "internal" />
+        <method     name   = "step"             title = "Step next line"
+                    type   = "internal" />
+        <method     name   = "finish"           title = "Finish thread"
+                    type   = "internal" />
+
+        <message    name   = "gsl" >
+            <field  name   = "command"          title = "GSL command line"
+                    type   = "string" />
+
+            <method name   = "gsl"              title = "Execute command"
+                    type   = "internal" />
+        </message>
+
+        <message    name   = "evaluate" >
+            <field  name   = "expression"       title = "GSL command line"
+                    type   = "string" />
+
+            <method name   = "evaluate"         title = "Execute command"
+                    type   = "internal" />
+        </message>
+
+        <method     name   = "call"             title = "Call GSL function"
+                    type   = "command" />
+        <message    name   = "job" >
+            <field  name   = "job"              title = "Job id"
+                    type   = "pointer" />
+
+            <method     name   = "ok"           title = "OK reply"
+                        type   = "reply" />
+        </message>
+
+        <message    name   = "error reply" >
+            <field  name   = "job"              title = "Job id"
+                    type   = "pointer" />
+            <field  name   = "error_name"       title = "Error file name"
+                    type   = "string" />
+            <field  name   = "error_line"       title = "Error line"
+                    type   = "qbyte" />
+            <field  name   = "error_text"       title = "Error message text"
+                    type   = "string" />
+
+            <method name   = "message"          title = "Error reply"
+                    type   = "reply" />
+            <method name   = "error"            title = "Error reply"
+                    type   = "reply" />
+            <method name   = "fatal"            title = "Fatal reply"
+                    type   = "reply" />
+        </message>
+
+        <method     name   = "call ok"
+                    type   = "internal" />
+        <message    name   = "call error" >
+            <field  name   = "error_name"       title = "Error file name"
+                    type   = "string" />
+            <field  name   = "error_line"       title = "Error line"
+                    type   = "qbyte" />
+            <field  name   = "error_text"       title = "Error message text"
+                    type   = "string" />
+
+            <method name   = "call message"     title = "Message reply"
+                    type   = "reply" />
+            <method name   = "call error"       title = "Error reply"
+                    type   = "reply" />
+        </message>
+
+    </agent>
+
+</application>

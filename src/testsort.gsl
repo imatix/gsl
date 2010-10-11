@@ -1,0 +1,52 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  testsort.gsl - Test Math GSL functions
+.-                 Bubble Sort
+.-                                                                            
+.------------------------------------------------------------------------------
+
+function bubble_sort (tab, size)
+    i = 0
+    while i < my.size
+        j = 1
+        while (i + j) < my.size
+            if $(my.tab)_$(j - 1) > $(my.tab)_$(j)
+                temp = $(my.tab)_$(j)
+                $(my.tab)_$(j) = $(my.tab)_$(j - 1)
+                $(my.tab)_$(j - 1) = temp
+            endif
+            j += 1
+        endwhile
+        i += 1
+    endwhile
+endfunction
+
+function print_array (tab, size)
+    i = 0
+    while i < my.size
+        echo "$(i): $($(my.tab)_$(i))"
+        i += 1
+    endwhile
+endfunction
+
+function init_array (tab, size)
+    min = 1
+    max = 15
+    i = 0
+    while i < my.size
+        $(my.tab)_$(i) = math.ceil ((max - min) * math.rand () + min)
+        i += 1
+    endwhile
+endfunction
+
+n = 10
+init_array ("t", n)
+
+echo "Before Buble Sort:"
+print_array ("t", n)
+
+bubble_sort ("t", n)
+
+echo "After Buble Sort:"
+print_array ("t", n)
+

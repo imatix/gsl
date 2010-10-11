@@ -1,0 +1,459 @@
+<?xml?>
+<!--
+    GSL/symb - Symbol class
+
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<gxl script = "ggobjt.gsl" filename = "ggsymb" title = "GSL/symb package" >
+
+<public>
+typedef struct {
+    int
+        links;
+    char
+        *name;
+    SYMTAB
+        *symtab;
+    Bool
+        done,
+        loop;                           /*  To check for self-references     */
+} SYMTAB_ITEM;
+</public>
+
+<extra>
+static Bool
+reset_done_flag (SYMTAB_ITEM *symtab_item)
+{
+    SYMBOL
+        *symbol;
+    CLASS_ITEM
+        *class_item;
+        
+    if (! symtab_item-> loop)
+      {
+        symtab_item-> done = FALSE;
+        symtab_item-> loop = TRUE;
+        if (symtab_item-> symtab)
+            for (symbol = symtab_item-> symtab-> symbols; symbol; symbol = symbol-> next)
+              {
+                class_item = symbol-> data;
+            
+                if (class_item
+                &&  class_item-> class == & symb_class
+                &&  class_item-> item)
+                    reset_done_flag (class_item-> item);
+              }
+        symtab_item-> loop = FALSE;
+      }
+    return FALSE;
+}
+
+
+static Bool
+test_unlink_symtab_item (SYMTAB_ITEM *symtab_item, SYMTAB_ITEM *test_item)
+{
+    SYMBOL
+        *symbol;
+    CLASS_ITEM
+        *class_item;
+        
+    if (symtab_item == test_item)
+        symtab_item-> links--;
+    else
+    if ((! symtab_item-> done)
+    &&     symtab_item-> symtab)
+      {
+        symtab_item-> done = TRUE;
+        if (symtab_item-> symtab)
+            for (symbol = symtab_item-> symtab-> symbols; symbol; symbol = symbol-> next)
+              {
+                class_item = symbol-> data;
+            
+                if (class_item
+                &&  class_item-> class == & symb_class
+                &&  class_item-> item)
+                    test_unlink_symtab_item (class_item-> item, test_item);
+              }
+      }
+    return test_item-> links > 0;
+}
+
+static Bool
+free_symbol_data (SYMBOL *symbol)
+{
+    CLASS_ITEM
+        *class_item = symbol-> data;
+
+    if (class_item)
+      {
+        if (class_item-> class
+        &&  class_item-> class-> destroy
+        &&  class_item-> item)
+            class_item-> class-> destroy (class_item-> item);
+
+        mem_free (class_item);
+      }
+    return TRUE;
+}
+
+static void
+delete_symtab_item (SYMTAB_ITEM *symtab_item)
+{
+    SYMTAB
+        *symtab = symtab_item-> symtab;
+
+    if (symtab)
+      {
+        symtab_item-> symtab = NULL;
+        sym_exec_all (symtab, free_symbol_data);
+        sym_delete_table (symtab);
+      }
+    mem_free (symtab_item-> name);
+    mem_free (symtab_item);
+}
+
+static void
+remove_item_from_symtab (SYMTAB *symtab, void *remove)
+{
+    SYMBOL
+        *symbol,
+        *next;
+    CLASS_ITEM
+        *class_item;
+        
+    for (symbol = symtab-> symbols; symbol; symbol = next)
+      {
+        next = symbol-> next;           /*  In case symbol gets deleted      */
+        class_item = symbol-> data;
+    
+        if (class_item
+        &&  class_item-> class == & symb_class
+        &&  class_item-> item)
+            remove_item_from_symtab (((SYMTAB_ITEM *) (class_item-> item))-> symtab,
+                                     remove);
+      
+        if (class_item
+        &&  class_item-> item == remove)
+          {
+            if (class_item-> class == & symb_class)
+                delete_symtab_item (class_item-> item);
+            else
+            if (class_item-> class-> destroy)
+                class_item-> class-> destroy (class_item-> item);
+    
+            mem_free (symbol-> data);
+            sym_delete_symbol (symtab, symbol);
+          }
+      }
+}
+
+Bool
+copy_symbol (SYMBOL *symbol, CLASS_DESCRIPTOR *class, void *item)
+{
+    void
+        *new_item;
+    VALUE
+        value;
+    CLASS_ITEM
+        *child;
+
+    if (symbol-> value)
+      {
+        init_value (& value);
+        value. type = TYPE_UNKNOWN;
+        value. s    = symbol-> value;
+
+        if (! class-> put_attr (item, symbol-> name, & value, FALSE))
+            return TRUE;                    /*  Normal */
+        else
+            return FALSE;                   /*  Error  */
+      }
+    else
+      {
+        child = symbol-> data;
+        if (child-> class-> copy
+        && (new_item = child-> class-> copy (child-> item,
+                                             class,
+                                             NULL,
+                                             item,
+                                             NULL)))
+          {
+            /*  Destroy new item; otherwise it'll be left dangling  */
+            if (class-> destroy)
+                class-> destroy (new_item);
+            return TRUE;
+          }
+        else
+            return FALSE;
+      }
+}
+</extra>
+
+<class name = "symb" title = "Symbol" objects = "1" register = "0" >
+
+    <operation type="get_attr">
+    char
+        *name_lwc;
+    SYMTAB_ITEM
+        *symtab_item = item;
+    SYMBOL
+        *symbol = NULL;
+    static VALUE
+        value;
+    CLASS_ITEM
+        *class_item;
+
+    ASSERT (symtab_item);
+    if (! symtab_item-> symtab)         /*  Item is deleted.  */
+        return NULL;
+
+    name_lwc = memt_strdup (NULL, name);
+    strlwc (name_lwc);
+
+    init_value (& value);
+
+    if (name_lwc && name_lwc [0])
+        symbol = sym_lookup_symbol (symtab_item-> symtab,
+                                    name_lwc);
+    mem_free (name_lwc);
+
+    if (symbol)
+      {
+        if (symbol-> value)
+          {
+            value. s    = symbol-> value;
+            value. type = TYPE_UNKNOWN;
+            return & value;
+          }
+        else
+        if (symbol-> data)
+          {
+            class_item  = symbol-> data;
+
+            /*  Build value manually rather than use assign_pointer because   */
+            /*  don't want a link made.                                       */
+            value. type = TYPE_POINTER;
+            value. c    = class_item-&gt; class;
+            value. i    = class_item-&gt; item;
+
+            return & value;
+          }
+      }
+    return NULL;
+    </operation>
+
+    <operation type="put_attr" >
+    char
+        *name_lwc;
+    SYMTAB_ITEM
+        *symtab_item = item;
+    SYMBOL
+        *symbol;
+    CLASS_DESCRIPTOR
+        *old_class = NULL;
+    void
+        *old_item = NULL;
+
+    ASSERT (symtab_item);
+    if (! symtab_item-> symtab)         /*  Item is deleted.  */
+        return -1;
+
+    if (name && name [0])
+      {
+        name_lwc = memt_strdup (NULL, name);
+        strlwc (name_lwc);
+
+        symbol = sym_lookup_symbol (symtab_item-> symtab, name_lwc);
+        if (symbol && symbol-> data)
+          {
+            old_class = ((CLASS_ITEM *) symbol-> data)-> class;
+            old_item  = ((CLASS_ITEM *) symbol-> data)-> item;
+          }
+
+        if (value && value-> type == TYPE_POINTER)
+          {
+            if (value-> c-> link
+            &&  value-> i)
+                value-> c-> link (value-> i);
+
+            if (symbol)
+                sym_set_value (symbol, NULL);
+            else
+                symbol = sym_assume_symbol (symtab_item-> symtab,
+                                            name_lwc, NULL);
+
+            if (! symbol-> data)
+                symbol-> data = memt_alloc (NULL, sizeof (CLASS_ITEM));
+
+            ((CLASS_ITEM *) symbol-> data)-> class = value-> c;
+            ((CLASS_ITEM *) symbol-> data)-> item  = value-> i;
+          }
+        else
+        if ((! value) || value-> type == TYPE_UNDEFINED)
+          {
+            if (symbol)
+              {
+                mem_free (symbol-> data);
+                sym_delete_symbol (symtab_item-> symtab, symbol);
+              }
+          }
+        else
+          {
+            if (symbol)
+              {
+                if ((! symbol-> value)
+                ||  (! streq (symbol-> value, string_value (value))))
+                    sym_set_value (symbol, value-> s);
+
+                if (symbol-> data)
+                  {
+                    mem_free (symbol-> data);
+                    symbol-> data = NULL;
+                  }
+              }
+            else
+                sym_assume_symbol (symtab_item-> symtab, name_lwc,
+                                   string_value (value));
+          }
+
+        if (old_class
+        &&  old_class-> destroy
+        &&  old_item)
+            old_class-> destroy (old_item);
+
+        mem_free (name_lwc);
+        return 0;
+      }
+    return -1;
+    </operation>
+
+<!-------------------------------------------------------------------------->
+
+    <operation type="item_name">
+ASSERT (item);
+if (! ((SYMTAB_ITEM *) item)-> symtab)
+    return NULL;
+
+return ((SYMTAB_ITEM *) item)-> name;
+    </operation>
+
+    <operation type="create">
+SYMTAB_ITEM
+    *symtab_item;
+
+symtab_item = memt_alloc (NULL, sizeof (SYMTAB_ITEM));
+symtab_item-> links   = 0;
+symtab_item-> name    = memt_strdup (NULL, name);
+symtab_item-> symtab  = sym_create_table ();
+symtab_item-> loop    = FALSE;
+
+*class = & symb_class;
+*item  = symtab_item;
+
+return 0;
+    </operation>
+
+    <operation type="copy">
+    SYMBOL
+        *symbol;
+    SYMTAB_ITEM
+        *symtab_item = item;
+    CLASS_DESCRIPTOR
+        *new_class;
+    void
+        *new_item = NULL;
+    int
+        rc = -1;
+
+    if (to_class-> create)
+        rc = to_class-> create (name ? name : symtab_item-> name,
+                                parent, sibling,
+                                &new_class, &new_item);
+
+    if ((! rc)
+    &&  new_item
+    &&  new_class-> put_attr)
+        for (symbol = symtab_item-> symtab-> symbols; symbol; symbol = symbol-> next)
+            copy_symbol (symbol, new_class, new_item);
+            
+    if (rc >= 0)
+        return new_item;
+    else
+      {
+        if (new_class-> destroy)
+            new_class-> destroy (new_item);
+
+        return NULL;
+      }
+    </operation>
+
+    <operation type="link">
+if (item)
+    ((SYMTAB_ITEM *) item)-> links++;
+
+return 0;
+    </operation>
+
+    <operation type="destroy">
+SYMTAB_ITEM
+    *symtab_item = item;
+int
+    save_links;
+SYMBOL
+    *symbol;
+CLASS_ITEM
+    *class_item;
+
+if (symtab_item)
+  {
+    /*  If all links are gone then delete now.  */
+    symtab_item-> links--;
+    save_links = symtab_item-> links;
+
+    if (symtab_item-> links > 0)
+      {
+        /*  Try to find a loop that will remove all links  */
+        reset_done_flag (symtab_item);
+        
+        for (symbol = symtab_item-> symtab-> symbols; symbol; symbol = symbol-> next)
+            {
+            class_item = symbol-> data;
+        
+            if (class_item
+            &&  class_item-> class == & symb_class
+            &&  class_item-> item)
+                test_unlink_symtab_item (class_item-> item, symtab_item);
+            }
+      }
+    if (symtab_item-> links == 0)
+        delete_symtab_item (symtab_item);
+    else
+        symtab_item-> links = save_links;
+  }
+return 0;
+    </operation>
+
+    <operation type="remove">
+    SYMTAB_ITEM
+        *symtab_item = item;
+        
+    remove_item_from_symtab (symtab_item-> symtab, remove);
+    </operation>
+
+</class>
+
+</gxl>

@@ -1,0 +1,505 @@
+<?xml?>
+<!--
+    GSL/string - String object
+
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<gxl script = "ggobjt.gsl" filename = "ggstrn" title = "GSL/string package" >
+
+<extra>
+static Bool
+node_is_countable (int argn, RESULT_NODE **argv,
+                   char *function, RESULT_NODE *result)
+{
+    if (argv [argn])
+      {
+        if (argv [argn]-> value. type != TYPE_UNDEFINED)
+          {
+            number_value (&argv [argn]-> value);
+            if ((argv [argn]-> value. type == TYPE_NUMBER)
+            && (argv [argn]-> value. n == floor (argv [argn]-> value. n))
+            && (argv [argn]-> value. n >= 0))
+                return TRUE;
+            else
+                snprintf (object_error, LINE_MAX,
+                          "Illegal argument %u to function %s.",
+                          argn + 1, function);
+          }
+        else
+          {
+            result-> culprit = argv [argn]-> culprit;
+            argv [argn]-> culprit = NULL;
+          }
+      }
+
+    return FALSE;
+}
+</extra>
+
+<class name = "string" title = "String Functions" >
+
+<!-------------------------------------------------------------------------->
+
+<function name = "length" >
+    <parameter name = "string" pass = "value" compulsory = "1" />
+<body>
+    result-> value. type = TYPE_NUMBER;
+    result-> value. n    = strlen (string_value (&string-> value));
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "locate" >
+    <parameter name = "haystack" pass = "value" compulsory = "1" />
+    <parameter name = "needle"   pass = "value" compulsory = "1" />
+<body>
+  {
+    char
+        *strptr = strstr (string_value (&haystack-> value),
+                          string_value (&needle  -> value));
+    if (strptr)
+      {
+        result-> value. type = TYPE_NUMBER;
+        result-> value. n    = strptr - haystack-> value. s;
+      }
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "locate_last" >
+    <parameter name = "haystack" pass = "value" compulsory = "1" />
+    <parameter name = "needle"   pass = "value" compulsory = "1" />
+<body>
+  {
+    char*
+        haystackptr = string_value (&haystack-> value);
+    char*
+        needleptr = string_value (&needle-> value);
+    char*
+        strptr = strstr (haystackptr, needleptr);
+    char*
+        lastseenptr = NULL;
+    
+    while (strptr != NULL) 
+      {
+        lastseenptr = strptr;
+        strptr = strstr (lastseenptr + 1, needleptr);
+      }
+
+    if (lastseenptr != NULL)
+      {
+        result-> value. type = TYPE_NUMBER;
+        result-> value. n    = lastseenptr - haystack-> value. s;
+      }
+  }
+</body>
+</function>
+
+
+<!-------------------------------------------------------------------------->
+
+<function name = "substr" min_parms = "2" >
+    <parameter name = "string" pass = "value"  compulsory = "1" />
+    <parameter name = "start"  pass = "value"                   />
+    <parameter name = "end"    pass = "value"                   />
+    <parameter name = "length" pass = "value"                   />
+<body>
+  {
+    long
+        start_n  = 0,
+        end_n    = 0,
+        length_n = 0;
+
+    if (start  &&start -> value. type == TYPE_UNDEFINED)
+        start = NULL;
+    if (end    &&end   -> value. type == TYPE_UNDEFINED)
+        end = NULL;
+    if (length &&length-> value. type == TYPE_UNDEFINED)
+        length = NULL;
+
+    if (start &&end &&length)
+      {
+        strcpy (object_error, "Too many parameters for function 'substr'.");
+        return -1;
+      }
+    if (!(start || end || length))
+      {
+        strcpy (object_error, "Too few parameters for function 'substr'.");
+        return -1;
+      }
+    if (start)
+      {
+        if (node_is_countable (1, argv, "substr", result))
+            start_n = (long) start-> value. n;
+        else
+            return -1;
+      }
+    if (end)
+      {
+        if (node_is_countable (2, argv, "substr", result))
+            end_n = (long) end-> value. n;
+        else
+            return -1;
+      }
+    if (length)
+      {
+        if (node_is_countable (3, argv, "substr", result))
+            length_n = (long) length-> value. n;
+        else
+            return -1;
+      }
+    if (start &&end &&(end_n &lt; start_n))
+      {
+        strcpy (object_error, "'End' must be at least 'Start' in 'substr'");
+        return -1;
+      }
+    if (length &&!start)
+      {
+        if (!end)
+            end_n = strlen (string-> value. s) - 1;
+        start_n = end_n - length_n + 1;
+        if (start_n &lt; 0)
+            start_n = 0;
+        length_n = end_n - start_n + 1;
+      }
+    else
+      {
+        if (!start)
+            start_n = 0;
+        if (!length)
+          {
+            if (end)
+                length_n = end_n - start_n + 1;
+            else
+                length_n = strlen (string-> value. s);
+          }
+      }
+    if (start_n >= (long) strlen (string-> value. s))
+        result-> value. s = mem_strdup ("");
+    else
+      {
+        result-> value. s = mem_alloc (length_n + 1);
+        if (start_n >= 0)
+            strncpy (result-> value. s, &string-> value. s [start_n], length_n);
+        else
+            strncpy (result-> value. s, string-> value. s, length_n);
+
+        (result-> value. s) [length_n] = '\0';
+      }
+    result-> value. type = TYPE_STRING;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "trim" >
+    <parameter name = "string"   pass = "value" compulsory = "1" />
+<body>
+{
+    char *
+        scanptr;
+        
+    if (string-> value. type == TYPE_STRING
+    ||  string-> value. type == TYPE_NUMBER
+    ||  string-> value. type == TYPE_UNKNOWN)
+        result-> value. type = string-> value. type;
+
+    if (string-> value. s)
+      {
+        scanptr = string-> value. s;
+        while (*scanptr == '\n')
+            scanptr++;
+        result-> value. s = mem_strdup (strcrop (scanptr));
+        ASSERT (result-> value. s);
+      }
+    result-> value. n = string-> value. n;
+}
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "justify" >
+    <parameter name = "string"   pass = "value" compulsory = "1" />
+    <parameter name = "width"    pass = "value" compulsory = "1" />
+    <parameter name = "prefix"   pass = "value" />
+<body>
+{
+    unsigned long
+        width_n;
+
+    if (node_is_countable (1, argv, "justify", result))
+        width_n = (unsigned long) width-> value. n;
+    else
+        return -1;
+
+    result-> value. s = strreformat (string_value (&string-> value),
+                                     width_n,
+                                     string_result (prefix));
+    result-> value. type = TYPE_STRING;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "certify" min_parms = "1" >
+    <parameter name = "number"    pass = "value" compulsory = "1" />
+    <parameter name = "language"  pass = "value" />
+<body>
+  {
+    #define MAX_CHARS           512
+    #define DEFAULT_LANGUAGE    "en-gb"
+
+    static char
+        buffer [MAX_CHARS + 1];
+
+    if (language  &&language -> value. type == TYPE_UNDEFINED)
+        language = NULL;
+
+    certify_the_number (
+        buffer,
+        MAX_CHARS,
+        (long) number_value (&number-> value),
+        language ? string_value (&language-> value) : DEFAULT_LANGUAGE,
+        850
+    );
+
+    result-> value. type = TYPE_STRING;
+    result-> value. s    = mem_strdup (buffer);
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "replace" >
+    <parameter name = "strbuf"     pass = "value" compulsory = "1" />
+    <parameter name = "strpattern" pass = "value" compulsory = "1" />
+<body>
+  {
+    char
+        *original,
+        *copy;
+    size_t
+        max_length;
+
+    original = string_value (&strbuf->value);
+    max_length = strlen (original) * 4;    //  Some random factor
+    copy = mem_alloc (max_length + 1);
+    strcpy (copy, original);
+
+    stringreplace (copy, string_value (&strpattern->value), max_length);
+    result-> value. s    = copy;
+    result-> value. type = TYPE_STRING;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "match" >
+    <parameter name = "string1" pass = "value" compulsory = "1" />
+    <parameter name = "string2" pass = "value" compulsory = "1" />
+<body>
+  {
+    result-> value. n = strmatch (string_value (&string1-> value),
+                                     string_value (&string2-> value));
+    result-> value. type = TYPE_NUMBER;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "prefixed" >
+    <parameter name = "string" pass = "value" compulsory = "1" />
+    <parameter name = "prefix" pass = "value" compulsory = "1" />
+<body>
+  {
+    result-> value. n = strprefixed (string_value (&string-> value),
+                                        string_value (&prefix-> value));
+    result-> value. type = TYPE_NUMBER;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "prefix" >
+    <parameter name = "string" pass = "value" compulsory = "1" />
+    <parameter name = "delims" pass = "value" compulsory = "1" />
+<body>
+  {
+    char
+        *strptr = strprefix (string_value (&string-> value),
+                             string_value (&delims-> value));
+    result-> value. s    = strptr;           /*  strprefix does mem_alloc  */
+    result-> value. type = TYPE_STRING;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "defix" >
+    <parameter name = "string" pass = "value" compulsory = "1" />
+    <parameter name = "delims" pass = "value" compulsory = "1" />
+<body>
+  {
+    char
+        *strptr = strdefix (string_value (&string-> value),
+                            string_value (&delims-> value));
+    result-> value. s    = mem_strdup (strptr);
+    result-> value. type = TYPE_STRING;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "hash" >
+    <parameter name = "string" pass = "value" compulsory = "1" />
+<body>
+  {
+    result-> value. n = strhash (string_value (&string-> value));
+    result-> value. type = TYPE_NUMBER;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "convch" >
+    <parameter name = "string" pass = "value" compulsory = "1" />
+    <parameter name = "from"   pass = "value" compulsory = "1" />
+    <parameter name = "to"     pass = "value" compulsory = "1" />
+<body>
+  {
+    char
+        *strptr = strconvch (string_value (&string-> value),
+                            *string_value (&from  -> value),
+                            *string_value (&to    -> value));
+    result-> value. s    = mem_strdup (strptr);
+    result-> value. type = TYPE_STRING;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "lexcmp" >
+    <parameter name = "string1" pass = "value" compulsory = "1" />
+    <parameter name = "string2" pass = "value" compulsory = "1" />
+<body>
+  {
+    result-> value. n = lexcmp (string_value (&string1-> value),
+                                   string_value (&string2-> value));
+    result-> value. type = TYPE_NUMBER;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "lexncmp" >
+    <parameter name = "string1" pass = "value" compulsory = "1" />
+    <parameter name = "string2" pass = "value" compulsory = "1" />
+    <parameter name = "count"   pass = "value" compulsory = "1" />
+<body>
+  {
+    result-> value. n = lexncmp (string_value (&string1-> value),
+                                    string_value (&string2-> value),
+                              (int) number_value (&count  -> value));
+    result-> value. type = TYPE_NUMBER;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "lexwcmp" >
+    <parameter name = "string1" pass = "value" compulsory = "1" />
+    <parameter name = "pattern" pass = "value" compulsory = "1" />
+<body>
+  {
+    result-> value. n = lexwcmp (string_value (&string1-> value),
+                                    string_value (&pattern-> value));
+    result-> value. type = TYPE_NUMBER;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "matchpat" >
+    <parameter name = "string1" pass = "value" compulsory = "1" />
+    <parameter name = "pattern" pass = "value" compulsory = "1" />
+    <parameter name = "ic"      pass = "value" />
+<body>
+  {
+    Bool
+        ignore_case;
+
+    if (ic)
+        ignore_case = (Bool) number_value (&ic-> value);
+    else
+        ignore_case = 0;                /*  If mode unspecified, use FALSE   */
+
+    result-> value. n = match_pattern (string_value (&string1-> value),
+                                          string_value (&pattern-> value),
+                                          ignore_case);
+    result-> value. type = TYPE_NUMBER;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "soundex" >
+    <parameter name = "string" pass = "value" compulsory = "1" />
+<body>
+  {
+    char
+        *strptr = soundex (string_value (&string-> value));
+    result-> value. s    = mem_strdup (strptr);
+    result-> value. type = TYPE_STRING;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "cntch" >
+    <parameter name = "string" pass = "value" compulsory = "1" />
+    <parameter name = "value"  pass = "value" compulsory = "1" />
+<body>
+  {
+    result-> value. n = strcntch (string_value (&string-> value),
+                                    *string_value (&value -> value));
+    result-> value. type = TYPE_NUMBER;
+  }
+</body>
+</function>
+
+</class>
+
+</gxl>

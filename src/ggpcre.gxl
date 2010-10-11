@@ -1,0 +1,147 @@
+<?xml?>
+<!--
+    GSL/regexp - Regular Expression functions
+
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<gxl script = "ggobjt.gsl" filename = "ggpcre" title = "GSL/regexp package" >
+
+<extra>
+#include "pcre.h"
+</extra>
+
+<class name = "regexp" title = "Regular Expression Functions" >
+
+<!-- regexp.match (pattern, subject, sub1, sub2, ...) ------------------------>
+
+<function name = "match" max_parms = "0" >
+    <parameter name = "pattern"     pass = "value"     compulsory = "1" />
+    <parameter name = "subject"     pass = "value"     compulsory = "1" />
+    <parameter                      pass = "reference" compulsory = "0" />
+<body>
+  {
+    GGCODE_TCB
+        *tcb = gsl_thread-> tcb;
+    pcre
+        *re;
+    char
+        *error;
+    int 
+        erroffset;
+    int 
+        *ovector;
+    int
+        oveccount,
+        rc,
+        i,
+        start,
+        len;
+    VALUE
+        value;
+
+    re = pcre_compile (string_value (&pattern-> value),
+                       0,
+                       (const char **) &error,
+                       &erroffset,
+                       NULL);
+    if (! re)
+      {
+        snprintf (object_error, LINE_MAX,
+                  "Regular expression pattern error: %s\n%s\n%*c",
+                  error,
+                  pattern-> value. s,
+                  erroffset + 1, '^');
+        return -1;
+      }
+
+    rc = pcre_fullinfo (re,
+                        NULL,
+                        PCRE_INFO_CAPTURECOUNT,
+                        &oveccount);
+    oveccount = (oveccount + 1) * 3;
+    ovector   = mem_alloc (oveccount * sizeof (int));
+
+    string_value (&subject-> value);
+    rc = pcre_exec (re,
+                    NULL,
+                    subject-> value. s,
+                    (int) strlen (subject-> value. s),
+                    0,
+                    0,
+                    ovector,
+                    oveccount);
+
+    (pcre_free) (re);
+
+    if (rc == PCRE_ERROR_NOMATCH)
+        rc = 0;
+    else if (rc &lt; 0)
+      {
+        snprintf (object_error, LINE_MAX,
+                 "Regular expression matching error: %d", rc);
+        mem_free (ovector);
+        return -1;
+      }
+    else if (rc == 1)
+        rc = -1;
+    else
+        rc -= 1;
+
+    result-> value. type = TYPE_NUMBER;
+    result-> value. n    = rc;
+
+    i = 1;
+    while (i &lt; argc - 1)
+      {
+        if (argv [i + 1])
+          {
+            init_value (& value);
+            if (i &lt;= rc)
+              {
+                start = ovector [i * 2];
+                len   = ovector [i * 2 + 1] - start;
+
+                value. type = TYPE_STRING;
+                value. s    = mem_alloc (len + 1);
+                memcpy (value. s, subject-> value. s + start, len);
+                value. s [len] = 0;
+              }
+
+            if (! store_symbol_definition (& tcb-> scope_stack,
+                                           tcb-> gsl-> ignorecase,
+                                           argv [i + 1],
+                                           &value,
+                                           &error))
+              {
+                strncpy (object_error, error, LINE_MAX);
+                mem_free (value.s);
+                mem_free (ovector);
+                return -1;
+              }
+            destroy_value (& value);
+          }
+        i++;
+      }
+
+    mem_free (ovector);
+  }
+</body>
+</function>
+
+</class>
+
+</gxl>

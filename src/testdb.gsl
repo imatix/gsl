@@ -1,0 +1,82 @@
+#   Tests GSL/DB interface to Berkeley DB
+
+global.ignorecase = 0
+echo "Testing GSL object " + db.version ("obj")
+echo "Database version:"   + db.version ("db")
+
+#   We test each of the database types supported by Berkeley DB
+#   These use different locking and transaction modes, so it's
+#   worth trying each one.
+xml to root << '
+    <test database = "testds"   type = "ds"   />
+    <test database = "testcds"  type = "cds"  />
+    <test database = "testtds"  type = "tds"  />
+    <test database = "testhads" type = "hads" />
+'
+for test
+    echo "Testing $(type) in $(database)..."
+    dir.delete (database)
+    db.create_database (database, type, 0)
+
+    db.connect (database)
+    db.set ("debug", 1)
+
+    echo "Creating tables"
+    db.create_table ("customer")
+    db.create_index ("customer", "journal", "c:1-3")
+    db.create_index ("customer", "postcode", "f,:5")
+    db.create_table ("contract")
+    db.create_table ("account")
+
+    echo "Inserting records"
+    db.insert ("customer", "100100", "F01,Tom's Hardware,Main Avenue,Montreal,1080")
+    db.insert ("customer", "100200", "F01,Once More With Feeling,Downtown street 31,Harvard,2031")
+    db.insert ("customer", "100300", "F02,Those Old Time Blues,Washington Square,Los Angelese,9002")
+    db.insert ("customer", "100400", "F01,Mother Earth,Business Avenue,New York,1020")
+    db.insert ("customer", "100500", "F03,Englishe Bookshoppe,Tough Times Square,Bristol,33YMQ")
+    db.insert ("customer", "100600", "F02,Janet's Pet Store,Dog Boulevard,London,YWM21P")
+    db.flush  ("customer")
+
+    db.stats ("customer")
+    for stats
+        echo "Records=$(rows) pagesize=$(pagesize) used=$(usedpages) free=$(freepages) depth=$(depth)"
+    endfor
+
+    echo "Reading records by primary key"
+    have_data = db.fetch ("customer")
+    records   = 0
+    while have_data
+        records += 1
+        have_data = db.fetch ("customer",,"next")
+    endwhile
+    echo " -- $(records) records read"
+
+    echo "Reading records for journal F01"
+    have_data = db.fetch ("customer", "journal", "ge", "F01")
+    records   = 0
+    while have_data & ->record.index = "F01"
+        records += 1
+        have_data = db.fetch ("customer", "journal", "next")
+    endwhile
+    echo " -- $(records) records read"
+
+    echo "Deleting records for journal F02"
+    have_data = db.fetch ("customer", "journal", "eq", "F02")
+    records   = 0
+    while have_data & ->record.index = "F02"
+        records += 1
+        db.delete ("customer")
+        have_data = db.fetch ("customer", "journal", "next")
+    endwhile
+    echo " -- $(records) records deleted"
+
+    echo "Rows in table:" + db.stats ("customer")
+    
+    db.disconnect ()
+    db.connect (database)
+    echo "Dropping contract table"
+    db.drop_table ("contract")
+endfor
+
+echo "Finished all tests"
+

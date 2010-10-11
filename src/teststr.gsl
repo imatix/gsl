@@ -1,0 +1,42 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  teststr.gsl - test string functions
+.-                                                                            
+.------------------------------------------------------------------------------
+
+number = 212000000
+rs = string.certify (number, "fr")
+echo "certify: should be 'Deux cent douze millions': " + rs
+
+rs = string.certify (number, )
+echo "certify: should be 'Two hundred and twelve million': " + rs
+
+str = "A fool and his guilt are soon parted."
+echo str
+echo string.replace (str, "guilt|honey")
+
+str = "A beautiful eye makes silence eloquent, a kind eye makes contradiction
+an assent, an enraged eye makes beauty deformed. This little member gives life
+to every part about us; and I believe the story of Argus implies no more, than
+the eye is in every part; that is to say, every other part would be mutilated,
+were not its force represented more by the eye than even by itself. -- Addison"
+
+echo string.justify (str, 45)
+echo string.match ("pipo des alpes", "pipo des alpes")
+echo string.match ("pipo des alpes", "totor du jura")
+echo string.match ("abc", "123456")
+echo string.prefixed ("pipo des alpes", "pipo")
+echo string.prefixed ("pipo des alpes", "toto")
+echo string.prefix ("pipo des alpes", " ")
+echo string.defix ("pipo des alpes", " ")
+echo string.hash ("pipo des alpes")
+echo string.convch ("pipo des alpes", "p", "t")
+echo string.lexcmp ("pipo des alpes", "Pipo des Alpes")
+echo string.lexncmp ("pipo des alpes", "peepoo dezalp", 5)
+echo string.lexwcmp ("pipo des alpes", "Pipo des *")
+echo string.matchpat ("pipo des alpes", "[a-z]*")
+echo string.soundex ("pipo des alpes")
+echo string.cntch ("pipo des alpes", "p")
+>  |  $(string.justify(str,20):block)\
+>                           |  $(string.justify (str, 30):block)\
+>                                                              |

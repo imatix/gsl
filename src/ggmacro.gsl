@@ -1,0 +1,39 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  ggmacro.gsl - GSL macro examples                                          
+.-
+.-  Copyright (c) 1996-2010 iMatix Corporation
+.-
+.-  This program is free software; you can redistribute it and/or modify
+.-  it under the terms of the GNU General Public License as published by
+.-  the Free Software Foundation; either version 2 of the License, or (at
+.-  your option) any later version.
+.-
+.-  This program is distributed in the hope that it will be useful, but
+.-  WITHOUT ANY WARRANTY; without even the implied warranty of
+.-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.-  General Public License for more details.
+.-
+.-  For information on alternative licensing for OEMs, please contact
+.-  iMatix Corporation.
+.-
+.------------------------------------------------------------------------------
+.-
+.macro push_outfile (newfile)
+.    if ! defined (_file_stack)
+.        define _file_stack 0
+.    endif
+.    define _file_stack = _file_stack + 1
+.    define _file_stack_$(_file_stack) = outfile
+.    append newfile
+.endmacro
+.-
+.macro pop_outfile
+.    if ! defined (_file_stack) | _file_stack = 0
+.        abort "File stack empty."
+.    endif
+.    append _file_stack_$(_file_stack)
+.    define _file_stack_$(_file_stack)
+.    define _file_stack = _file_stack - 1
+.endmacro
+.-

@@ -1,0 +1,510 @@
+<?xml?>
+<!--
+    GSL/gsl - GSL internals class
+
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<gxl script = "ggobjt.gsl" filename = "gggsl" title = "GSL/gsl control package" >
+
+<public>
+typedef struct {
+    int
+        links;
+    Bool
+        ignorecase,                    /*  = use case for pretty-print       */
+        cobol,                         /*  COBOL = 6 char line numbers       */
+        template;                      /*  Template mode?                    */
+    SCRIPT_LINE
+        *line;                         /*  script_line item for current line */
+    int
+        shuffle;                       /*  Min whitespace size for shuffle   */
+    char
+        *terminator;                   /*  Line terminator string            */
+    int
+        argc;                          /*  Command line arguments            */
+    char
+        **argv;
+    SYMTAB_ITEM
+        *switches;                     /*  Original command-line switches    */
+    char
+        *output_file,                  /*  Output file name                  */
+        *input_file;                   /*  Input file name                   */
+    long
+        output_line;                   /*  Line number in output file.       */
+} GSL_CONTROL;
+
+extern char
+    *me,                               /*  Module name                       */
+    *version;                          /*  GSL version                       */
+</public>
+
+<startup>
+    /*  Shutdown event comes from Kernel                                     */
+    declare_smtlib_shutdown   (shutdown_event, SMT_PRIORITY_MAX);
+
+    /*  GSL interpreter reply events                                         */
+    declare_ggcode_ok      (ok_event,      0);
+    declare_ggcode_message (message_event, 0);
+    declare_ggcode_error   (error_event,   0);
+    declare_ggcode_fatal   (fatal_event,   0);
+
+</startup>
+
+<!---------------------------- GSL Class ----------------------------------->
+
+<class name = "gsl" title = "GSL Control Class" register = "1" >
+
+    <initialise>
+  {
+    GSL_CONTROL
+        *gsl;
+
+    gsl = mem_alloc (sizeof (GSL_CONTROL));
+
+    gsl-> links       = 0;
+    gsl-> ignorecase  = TRUE;
+    gsl-> cobol       = FALSE;
+    gsl-> template    = FALSE;
+    gsl-> line        = NULL;
+    gsl-> shuffle     = 2;
+    gsl-> terminator  = NULL;
+    gsl-> argc        = 0;
+    gsl-> argv        = NULL;
+    gsl-> switches    = NULL;
+    gsl-> output_file = NULL;
+    gsl-> input_file  = NULL;
+    gsl-> output_line = 1;
+
+    *item = gsl;
+    ((GGCODE_TCB *) gsl_thread-> tcb)-> gsl = gsl;
+  }
+    </initialise>
+
+    <operation type="link">
+    ((GSL_CONTROL *) item)-> links++;
+    return 0;
+    </operation>
+
+    <operation type="destroy" >
+    GSL_CONTROL
+        *gsl = item;
+    int
+        i;
+
+    if (--gsl-> links == 0)
+      {
+        mem_free (gsl-> terminator);
+        for (i = 0; i &lt; gsl-> argc; i++)
+            mem_free (gsl-> argv [i]);
+        mem_free (gsl-> argv);
+        mem_free (gsl-> output_file);
+        mem_free (gsl-> input_file);
+        symb_class. destroy (gsl-> switches);
+        mem_free (gsl);
+      }
+    return 0;
+    </operation>
+
+    <operation type="item_name">
+    return "gsl";
+    </operation>
+
+    <operation type = "get_attr">
+        <start>
+    GSL_CONTROL
+        *gsl = item;
+    static VALUE
+        value;
+    char
+        *args,
+        *endptr;
+    int
+        argn;
+
+    init_value (& value);
+        </start>
+        <attr name = "ignorecase">
+    assign_number (& value, gsl-> ignorecase);
+        </attr>
+        <attr name = "cobol">
+    assign_number (& value, gsl-> cobol);
+        </attr>
+        <attr name = "script">
+    if (gsl-> line)
+      {
+        /*  Build value manually rather than use assign_pointer because   */
+        /*  don't want a link made.                                       */
+        value. type = TYPE_POINTER;
+        value. c    = & script_line_class;
+        value. i    = gsl-> line;
+      }
+        </attr>
+        <attr name = "shuffle">
+    assign_number (& value, gsl-> shuffle);
+        </attr>
+        <attr name = "terminator">
+    assign_string (& value, gsl-> terminator);
+        </attr>
+        <attr name = "switches">
+    /*  Build value manually rather than use assign_pointer because   */
+    /*  don't want a link made.                                       */
+    value. type = TYPE_POINTER;
+    value. c    = & symb_class;
+    value. i    = gsl-> switches;
+        </attr>
+        <attr name = "me">
+    assign_string (& value, me);
+        </attr>
+        <attr name = "version">
+    assign_string (& value, version);
+        </attr>
+        <attr name = "argc">
+    assign_number (& value, gsl-> argc);
+        </attr>
+        <attr name = "outfile">
+    assign_string (& value, gsl-> output_file);
+        </attr>
+        <attr name = "filename">
+    assign_string (& value, gsl-> input_file);
+        </attr>
+        <attr name = "line">
+    assign_number (& value, gsl-> output_line);
+        </attr>
+        <finish>
+    else
+    if (name && name [0])
+      {
+        args = mem_strdup (name);
+        strlwc (args);
+        if (strlen (args) &gt;= 4
+        &&  args [0] == 'a' && args [1] == 'r' && args [2] == 'g')
+          {
+            argn = (int) strtol (& args [3], & endptr, 10);
+            if (*endptr == 0            /*  Complete conversion  */
+            &&  argn &lt;= gsl-&gt; argc)     /*  Within range         */
+              {
+                value. type = TYPE_UNKNOWN;
+                value. s    = gsl-> argv [argn - 1];
+              }
+          }
+        mem_free (args);
+      }
+
+    return & value;
+        </finish>
+    </operation>
+
+    <operation type = "put_attr">
+        <start>
+    GSL_CONTROL
+        *gsl = item;
+        </start>
+        <attr name = "ignorecase">
+    gsl-> ignorecase = (Bool) number_value (value);
+        </attr>
+        <attr name = "cobol">
+    gsl-> cobol      = (Bool) number_value (value);
+        </attr>
+        <attr name = "shuffle">
+    gsl-> shuffle    = (Bool) number_value (value);
+        </attr>
+        <attr name = "terminator">
+    mem_free (gsl-> terminator);
+    gsl-> terminator = memt_strdup (NULL, string_value (value));
+        </attr>
+        <finish>
+    else
+        return -1;
+
+    return 0;
+        </finish>
+    </operation>
+
+
+<!-------------------------------------------------------------------------->
+
+    <function name = "include" immediate = "0">
+        <description>
+    Includes a GSL script file.
+    
+    Uses the current template mode unless over-ridden by the optional argument.
+        </description>
+        <parameter name = "filename" pass = "value"     compulsory = "1" />
+        <parameter name = "template" pass = "value"     compulsory = "0" />
+        <body>
+  {
+    THREAD
+        *thread;
+    GGCODE_TCB
+        *new_gsl_tcb;
+    
+    thread = thread_create (AGENT_NAME, "");
+    tcb = thread-> tcb;
+    tcb-> thread_type_event = execute_event;
+    tcb-> replyqid          = gsl_thread-> queue-> qid;
+    tcb-> result            = result;
+    tcb-> buffer            = output_catch_start ();
+    
+    tcb-> slave_thread = gsl_copy (gsl_thread,
+                                   thread-> queue,
+                                   tcb-> buffer);
+    new_gsl_tcb = tcb-> slave_thread-> tcb;
+    new_gsl_tcb-> script_name = mem_strdup (string_value (& filename-> value));
+    if (template)
+        new_gsl_tcb-> gsl-> template = (Bool) number_value (& template-> value);
+        
+    gsl_continue (tcb-> slave_thread,
+                  FALSE,
+                  thread-> queue);
+  }
+        </body>
+    </function>
+
+<!-------------------------------------------------------------------------->
+
+    <function name = "exec" immediate = "0">
+        <description>
+    Executes a GSL script.  If the script does not open an output file,
+    its output is returned as the result of this function.
+    
+    Uses the current template mode unless over-ridden by the optional argument.
+        </description>
+        <parameter name = "command"  pass = "value"     compulsory = "1" />
+        <parameter name = "template" pass = "value"     compulsory = "0" />
+        <body>
+  {
+    THREAD
+        *thread;
+    GGCODE_TCB
+        *new_gsl_tcb;
+    
+    thread = thread_create (AGENT_NAME, "");
+    tcb = thread-> tcb;
+    tcb-> thread_type_event = execute_event;
+    tcb-> replyqid          = gsl_thread-> queue-> qid;
+    tcb-> result            = result;
+    tcb-> buffer            = output_catch_start ();
+    
+    tcb-> slave_thread = gsl_copy (gsl_thread,
+                                   thread-> queue,
+                                   tcb-> buffer);
+    new_gsl_tcb = tcb-> slave_thread-> tcb;
+    new_gsl_tcb-> script_name = mem_strdup (strprintf ("(%s %u)",
+                                                       gsl_cur_script (gsl_thread),
+                                                       gsl_cur_line (gsl_thread)));
+    gg_send_output (tcb-> slave_thread, output_catch, FALSE);
+    if (template)
+        new_gsl_tcb-> gsl-> template = (Bool) number_value (& template-> value);
+    
+    gsl_command (tcb-> slave_thread,
+                 string_value (& command-> value),
+                 FALSE,
+                 thread-> queue);
+  }
+        </body>
+    </function>
+
+<!-------------------------------------------------------------------------->
+
+</class>
+
+<dialog>
+Starting:
+    (--) Execute                            -> Executing
+          +
+          
+Executing:
+    (--) Ok                                 ->
+          + Return-Done
+          + Terminate-The-Thread
+    (--) Message                            ->
+          + Forward-Message-As-Call-Message
+    (--) Error                              ->
+          + Forward-Message-As-Call-Error
+          + Terminate-The-Thread
+    (--) Fatal                              ->
+          + Forward-Message-As-Call-Error
+          + Terminate-The-Thread
+          
+Defaults:
+    (--) Shutdown                           ->
+          + Terminate-The-Thread
+</dialog>
+
+<extra>
+#include "ggscrp.h"                    /*  File module for 'script' item     */
+
+/*- Macros ------------------------------------------------------------------*/
+
+#define BUFFER_SIZE 4096
+
+/*- Types -------------------------------------------------------------------*/
+
+typedef struct {
+    event_t
+        thread_type_event;
+    VDESCR
+        *buffer;
+    RESULT_NODE
+        *result,
+        *eval_result;
+    THREAD
+        *slave_thread;
+    QID
+        replyqid;
+} TCB;
+
+/*- Global variables used in this source file only --------------------------*/
+
+static TCB
+    *tcb;                               /*  Address thread context block     */
+
+/*- Global variables --------------------------------------------------------*/
+
+char
+    *me,                               /*  Module name                       */
+    *version;                          /*  GSL version                       */
+
+
+/*- Functions ---------------------------------------------------------------*/
+
+static VDESCR *
+output_catch_start (void)
+{
+    VDESCR
+        *vdescr;
+        
+    vdescr = mem_alloc (sizeof (VDESCR));
+    vdescr-> max_size = 0;
+    vdescr-> cur_size = 0;
+    vdescr-> data     = NULL;
+    
+    return vdescr;
+}
+
+static void
+output_catch (JOBID job, const char *text)
+{
+    VDESCR 
+        *buffer = (VDESCR *) job;
+    size_t
+        text_length = strlen (text);
+    
+    if (text_length)
+      {
+        if (buffer-> cur_size + text_length > buffer-> max_size)
+          {
+            if (buffer-> data == NULL)
+                buffer-> data = mem_alloc (BUFFER_SIZE);
+            else
+                buffer-> data = mem_realloc (buffer-> data,
+                                             buffer-> max_size + BUFFER_SIZE);
+            buffer-> max_size += BUFFER_SIZE;
+          }
+        memcpy (buffer-> data + buffer-> cur_size,
+                text, text_length);
+        buffer-> cur_size += text_length;
+      }
+}
+
+
+/*************************   INITIALISE THE THREAD   *************************/
+
+MODULE initialise_the_thread (THREAD *thread)
+{
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+    
+    the_next_event = tcb-> thread_type_event;
+}
+
+
+/******************************   RETURN DONE   ******************************/
+
+MODULE return_done (THREAD *thread)
+{
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    if (tcb-> buffer)
+      {
+        tcb-> result-> value. type = TYPE_UNKNOWN;
+        tcb-> result-> value. s    = mem_alloc (tcb-> buffer-> cur_size + 1);
+        memcpy (tcb-> result-> value. s, 
+                tcb-> buffer-> data, tcb-> buffer-> cur_size);
+        tcb-> result-> value. s [tcb-> buffer-> cur_size] = 0;
+      }    
+    lsend_ggcode_call_ok (& tcb-> replyqid, NULL,
+                          NULL, NULL, NULL, 0);
+}
+
+
+/********************   FORWARD MESSAGE AS CALL MESSAGE   ********************/
+
+MODULE forward_message_as_call_message (THREAD *thread)
+{
+    struct_ggcode_error_reply
+        *error_reply;
+
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    get_ggcode_error_reply (thread-> event-> body, & error_reply);
+    lsend_ggcode_call_message (& tcb-> replyqid, NULL,
+                               NULL, NULL, NULL, 0,
+                               error_reply-> error_name, 
+                               error_reply-> error_line,
+                               error_reply-> error_text);
+    free_ggcode_error_reply (& error_reply);
+}
+
+
+/*********************   FORWARD MESSAGE AS CALL ERROR   *********************/
+
+MODULE forward_message_as_call_error (THREAD *thread)
+{
+    struct_ggcode_error_reply
+        *error_reply;
+
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    get_ggcode_error_reply (thread-> event-> body, & error_reply);
+    lsend_ggcode_call_error (& tcb-> replyqid, NULL,
+                             NULL, NULL, NULL, 0,
+                             error_reply-> error_name, 
+                             error_reply-> error_line,
+                             error_reply-> error_text);
+    free_ggcode_error_reply (& error_reply);
+}
+
+
+/**************************   TERMINATE THE THREAD   *************************/
+
+MODULE terminate_the_thread (THREAD *thread)
+{
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    if (tcb-> buffer)
+      {
+        mem_free (tcb-> buffer-> data);
+        mem_free (tcb-> buffer);
+      }
+    gsl_finish (tcb-> slave_thread);
+    the_next_event = terminate_event;
+}
+
+</extra>
+
+
+</gxl>

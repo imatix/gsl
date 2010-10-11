@@ -1,0 +1,68 @@
+<?xml?>
+<!--
+    GSL/envt - Environment variables functions object
+
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<gxl script = "ggobjt.gsl" filename = "ggenvt" title = "GSL/environment package" >
+
+<extra>
+</extra>
+
+<class name = "env" title = "Environment Functions" >
+
+<!-------------------------------------------------------------------------->
+
+<function name = "get" >
+    <parameter name = "name" pass = "value" compulsory = "1" />
+<body>
+  {
+    result-> value. s = mem_strdup (getenv (string_value (& name-> value)));
+    if (result-> value. s)
+        result-> value. type = TYPE_STRING;
+
+    return 0;
+  }
+</body>
+</function>
+
+<!-------------------------------------------------------------------------->
+
+<function name = "set" cname="envset">
+    <parameter name = "name"  pass = "value" compulsory = "1" />
+    <parameter name = "value" pass = "value"                  />
+<body>
+  {
+    result-> value. type = TYPE_NUMBER;
+    if (value
+    &&  value-> value. type != TYPE_UNDEFINED)
+        result-> value. n = env_set (string_value (& name-> value),
+                                     string_value (& value-> value),
+                                     1);
+    else
+      {
+        env_clear (string_value (& name-> value));
+        result-> value. n = 0;
+      }
+    return 0;
+  }
+</body>
+</function>
+
+</class>
+
+</gxl>

@@ -1,0 +1,18 @@
+#   Trivial GSL console
+#   Just to show the idea
+#
+console.put (console.version ())
+console.put ( 'Welcome to the GSL console.
+From here you can run GSL commands interactively.
+Type any GSL command and press [Enter] to execute it.
+Type \'exit\' to leave the command console.
+')
+
+while 1
+    string = console.get ("> ")
+    if string = "exit"
+        last
+    endif
+    gsl string
+endwhile
+

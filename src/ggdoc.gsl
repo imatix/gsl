@@ -1,0 +1,57 @@
+.------------------------------------------------------------------------------
+.-
+.-  ggdoc.gsl - Object module documentation generator
+.-
+.-
+.-  Copyright (c) 1996-2010 iMatix Corporation
+.-
+.-  This program is free software; you can redistribute it and/or modify
+.-  it under the terms of the GNU General Public License as published by
+.-  the Free Software Foundation; either version 2 of the License, or (at
+.-  your option) any later version.
+.-
+.-  This program is distributed in the hope that it will be useful, but
+.-  WITHOUT ANY WARRANTY; without even the implied warranty of
+.-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.-  General Public License for more details.
+.-
+.-  For information on alternative licensing for OEMs, please contact
+.-  iMatix Corporation.
+.-
+.------------------------------------------------------------------------------
+.-
+.xml to root << .
+<operation_type name="item_name"/>
+<operation_type name="get_attr"/>
+<operation_type name="put_attr"/>
+<operation_type name="first_child"/>
+<operation_type name="next_sibling"/>
+<operation_type name="parent"/>
+<operation_type name="create"/>
+<operation_type name="destroy"/>
+<operation_type name="link"/>
+<operation_type name="delete"/>
+<operation_type name="copy"/>
+<operation_type name="move"/>
+<operation_type name="remove"/>
+.
+.-
+MODULE: $(title:)
+
+.for class by - register ? 1
+    Class: $(title:)
+    
+.    for function
+        Function: $(!register??'<'?)$(class.name:)$(!register??'>'?) . \
+$(name:) (\
+.        for parameter
+$(compulsory??''?'[')$(name:)$(compulsory??''?']')$(!last()??','?)\
+.        endfor
+)
+.        if defined (-> description)
+            $(string.trim(->description.):justify,block                       )
+.        endif
+
+.    endfor
+
+.endfor

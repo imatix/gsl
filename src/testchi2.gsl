@@ -1,0 +1,90 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  testchi2.gsl - Test random GSL functions
+.-                                                                            
+.------------------------------------------------------------------------------
+
+#
+#   Randomness test:
+#       Chi square computation
+#
+
+#   Number of random number processed
+max_number = 40000
+#   Number of boxes for storage
+box_number = 10
+#   Number of step for display
+step_number = 1000
+
+
+#   Init of boxes
+#
+k = 0
+while (k < box_number)
+    boxes_$(k) = 0
+    k += 1
+endwhile
+
+#   Process random processes
+#
+sum1 = 0
+sum2 = 0
+i = 0
+while (i < max_number)
+    if (math.mod (i, step_number) = 0)
+        echo "$(i) processed..."
+    endif
+
+    stored = 0
+    r = math.rand ()
+
+    sum1 += r
+    sum2 += r * r
+    k = 0
+    #   Test if in first boxes
+    while (k < box_number - 1)
+        if !stored & r < ((k + 1) / box_number)
+            boxes_$(k) += 1
+            stored = 1
+        endif
+        k += 1
+    endwhile
+
+    #   Else (last box)
+    if (!stored)
+        boxes_$(box_number - 1) += 1
+        stored = 1
+    endif
+
+    i += 1
+endwhile
+
+#   Display results (content of boxes)
+#
+k = 0
+while (k < box_number)
+    echo "< $((k + 1) / box_number): $(boxes_$(k))"
+    k += 1
+endwhile
+
+#   Compute Chi square value
+#
+e = max_number / box_number
+chisq = 0
+k = 0
+while (k < box_number)
+    t = boxes_$(k) - e
+    chisq += t * t / e
+    k += 1
+endwhile
+
+mean1 = sum1 / max_number
+mean2 = sum2 / max_number
+var = mean2 - (mean1 * mean1)
+
+#   Display results stats
+#
+echo "Mean     = $(mean1)"
+echo "Variance = $(var)"
+echo "Chi 2    = $(chisq)"
+

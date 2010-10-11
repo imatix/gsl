@@ -1,0 +1,1068 @@
+<?xml?>
+<!--
+    GSL/thrd - Thread module
+
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<gxl script = "ggobjt.gsl" filename = "ggthrd" title = "GSL/thrd package" >
+
+<startup>
+    declare_smtlib_shutdown       (shutdown_event,      0);
+
+    /*  Reply messages from GSL interpreter                                  */
+    declare_ggcode_call_ok      (ok_event,      0);
+    declare_ggcode_call_message (message_event, 0);
+    declare_ggcode_call_error   (error_event,   0);
+
+    declare_ggcode_ok           (ok_event,      0);
+    declare_ggcode_error        (error_event,   0);
+    declare_ggcode_fatal        (error_event,   0);
+
+    /*  Declare internal interrupt message  */
+    method_declare (agent, THREAD_INTERRUPT, interrupt_event, 0);
+</startup>
+
+<dialog>
+After-Init:
+    (--) Parse                              -> Parsing
+          +
+    (--) Run                                -> Running
+          + Spawn-GSL-Thread
+    (--) Parse-And-Run                      -> Parsing-Before-Run
+          +
+
+Parsing:
+    (--) Message                            ->
+          + Log-Message
+    (--) Ok                                 ->
+          + Reply-Parsed-Ok-Result
+          + Terminate-The-Thread
+    (--) Error                              ->
+          + Reply-Parse-Error-Result
+          + Destroy-The-Thread
+          + Terminate-The-Thread
+    (--) Shutdown                           ->
+          + Terminate-The-Thread
+
+Running:
+    (--) Ok                                 ->
+          + Set-Thread-Finished-Status
+          + Terminate-The-Thread
+    (--) Error                              ->
+          + Set-Thread-Error-Status
+          + Terminate-The-Thread
+    (--) Shutdown                           ->
+          + Terminate-The-Thread
+
+Parsing-Before-Run:
+    (--) Message                            ->
+          + Log-Message
+    (--) Ok                                 -> Running
+          + Reply-Running-Ok-Result
+          + Spawn-GSL-Thread
+    (--) Error                              ->
+          + Reply-Parse-Error-Result
+          + Destroy-The-Thread
+          + Terminate-The-Thread
+    (--) Shutdown                           ->
+          + Terminate-The-Thread
+
+Defaults:
+    (--) Interrupt                          ->
+          + Shutdown-Running-GSL-Thread
+          + Terminate-The-Thread
+
+</dialog>
+
+<extra>
+#define THREAD_INTERRUPT "thread_interrupt"
+
+#define THREAD_PARSED      0
+#define THREAD_RUNNING     1
+#define THREAD_FINISHED    2
+#define THREAD_INTERRUPTED 3
+#define THREAD_ERROR      -1
+
+typedef struct {
+    int
+        links;
+    int
+        error_line;                      /*  Line number of error.            */
+    char
+        *error_text,                     /*  Error message.                   */
+        *error_file;                     /*  Source file name of error.       */
+    LIST
+        messages;                        /*  Message queue for this thread    */
+    Bool
+        waiting;                         /*  Waiting on a message arrival?    */
+    THREAD
+        *gsl_thread;                     /*  The thread - messy               */
+    QUEUE
+        *replyq;
+    int
+        argc;
+    RESULT_NODE
+        **argv;
+} THREAD_CONTEXT;
+
+typedef struct _MESSAGE {
+    struct _MESSAGE
+        *next,
+        *prev;
+    THREAD_CONTEXT
+        *sender;
+    int
+        val_count;
+    VALUE
+        *val;
+} MESSAGE;
+
+typedef struct {
+    int
+        links;
+    THREAD_CONTEXT
+        *context;
+    THREAD
+        *controller_thread;              /*  The GGTHRD thread                */
+    SCRIPT_HANDLE
+        *script_handle;
+    int
+        status,
+        error_line;                      /*  Line number of error.            */
+    char
+        *error_text,                     /*  Error message.                   */
+        *error_file;                     /*  Source file name of error.       */
+} THREAD_HANDLE_ITEM;
+
+typedef struct {
+    event_t
+        thread_type;
+    THREAD
+        *parent_thread,                  /*  The GSL thread that created us   */
+        *child_thread;                   /*  The GSL thread that we created   */
+    RESULT_NODE
+        *error,                          /*  For GSL error parameter          */
+        *result;                         /*  For GSL function return code     */
+    THREAD_HANDLE_ITEM
+        *thread_handle;
+    THREAD_CONTEXT
+        *parent_context;
+} TCB;
+
+static TCB
+    *tcb;                               /*  Address thread context block     */
+
+/*****************************************************************************/
+
+static THREAD_HANDLE_ITEM*
+create_thread_handle (void)
+{
+    THREAD_HANDLE_ITEM
+        *handle;
+
+    handle = memt_alloc (NULL, sizeof (THREAD_HANDLE_ITEM));
+
+    handle-> links             = 0;
+    handle-> context           = NULL;
+    handle-> controller_thread = NULL;
+    handle-> script_handle     = NULL;
+    handle-> status            = THREAD_PARSED;
+    handle-> error_line        = 0;
+    handle-> error_text        = NULL;
+    handle-> error_file        = NULL;
+
+    return handle;
+}
+
+static THREAD*
+create_controller_thread (THREAD         *gsl_thread,
+                          THREAD_CONTEXT *context,
+                          char           *command,
+                          event_t         thread_type,
+                          RESULT_NODE    *result,
+                          RESULT_NODE    *error)
+{
+    GGCODE_TCB
+        *gsl_tcb = gsl_thread-> tcb;
+    THREAD
+        *thread;
+
+    thread = thread_create (AGENT_NAME, "");
+    tcb = thread-> tcb;
+
+    tcb-> thread_type    = thread_type;
+    tcb-> parent_thread  = gsl_thread;
+    tcb-> child_thread   = NULL;
+    tcb-> error          = error;
+    tcb-> result         = result;
+    tcb-> parent_context = context;
+    context-> links++;
+    context-> replyq     = gsl_tcb-> replyq;
+
+    tcb-> thread_handle                     = create_thread_handle ();
+    tcb-> thread_handle-> controller_thread = thread;
+    tcb-> thread_handle-> links++;       /*  Keep this link  */
+
+    if (command)
+        script_load_string (strprintf ("(%s %u)",
+                                       gsl_cur_script (gsl_thread),
+                                       gsl_cur_line (gsl_thread)),
+                            command,
+                            gsl_tcb-> gsl-> line-> template,
+                            (Bool) (gsl_tcb-> execute_full == 0),
+                            tcb-> result,
+                            thread-> queue);
+
+    return thread;
+}
+
+static int
+store_module_error (THREAD_CONTEXT *context,
+                    RESULT_NODE    *error,
+                    GGCODE_TCB     *gsl_tcb,
+                    const char     *error_text,
+                    const char     *error_file,
+                    int             error_line,
+                    char          **store_error_text)
+{
+    VALUE
+        value;
+
+    init_value (& value);
+    mem_free (context-> error_text);
+    mem_free (context-> error_file);
+    context-> error_text = memt_strdup (NULL, error_text);
+    context-> error_file = memt_strdup (NULL, error_file);
+    context-> error_line = error_line;
+
+    assign_string (& value, strprintf ("(%s %u) %s",
+                                       error_file,
+                                       error_line,
+                                       error_text));
+
+    if (error)
+        if (! store_symbol_definition (& gsl_tcb-> scope_stack,
+                                       gsl_tcb-> gsl-> ignorecase,
+                                       error,
+                                       &value,
+                                       store_error_text))
+            return -1;
+
+    return 0;
+}
+
+static int
+store_thread_error (THREAD_HANDLE_ITEM *thread_handle,
+                    THREAD_CONTEXT     *context,
+                    RESULT_NODE        *error,
+                    GGCODE_TCB         *gsl_tcb,
+                    const char         *error_text,
+                    const char         *error_file,
+                    int                 error_line,
+                    char              **store_error_text)
+{
+    thread_handle-> status = THREAD_ERROR;
+    if (error_text)
+      {
+        mem_free (thread_handle-> error_text);
+        mem_free (thread_handle-> error_file);
+        thread_handle-> error_text = memt_strdup (NULL, error_text);
+        thread_handle-> error_file = memt_strdup (NULL, error_file);
+        thread_handle-> error_line = error_line;
+
+        return store_module_error (context,
+                                   error,
+                                   gsl_tcb,
+                                   error_text,
+                                   error_file,
+                                   error_line,
+                                   store_error_text);
+      }
+    return 0;
+}
+
+static int
+wakeup (long dummy_date, long dummy_time, void *gsl_thread)
+{
+    lsend_ggcode_call_ok (
+        & ((THREAD *) gsl_thread)-> queue-> qid, NULL,
+        NULL, NULL, NULL, 0);
+    return 1;
+}
+
+static void
+message_destroy (MESSAGE *message)
+{
+    int
+        i;
+
+    for (i = 0; i &lt; message-> val_count; i++)
+      {
+        mem_free (message-> val[i]. s);
+        mem_free (message-> val[i]. b);
+        if (message-> val[i]. type == TYPE_POINTER
+        &&  message-> val[i]. c-> destroy)
+            message-> val[i]. c-> destroy (message-> val[i]. i);
+      }
+    mem_free (message-> val);
+    list_unlink (message);
+    mem_free (message);
+}
+
+
+static void
+message_receive (MESSAGE *message,
+                 int argc, RESULT_NODE **argv,
+                 THREAD *gsl_thread)
+{
+    GGCODE_TCB
+        *gsl_tcb = gsl_thread-> tcb;
+    VALUE
+        value;
+    char
+        *error_text;
+    int
+        i;
+
+    if (argc > 0
+    &&  argv [0])                        /*  Was a 'sender' reference given?  */
+      {
+        init_value (& value);
+
+        /*  Build value manually rather than use assign_pointer because   */
+        /*  don't want a link made.                                       */
+        value. type = TYPE_POINTER;
+        value. c    = &remote_thread_class;
+        value. i    = message-> sender;
+
+        if (! store_symbol_definition (& gsl_tcb-> scope_stack,
+                                       gsl_tcb-> gsl-> ignorecase,
+                                       argv [0],
+                                       &value,
+                                       &error_text))
+          {
+            lsend_ggcode_call_error (
+                & gsl_thread-> queue-> qid, NULL,
+                NULL, NULL, NULL, 0,
+                NULL, 0,
+                error_text);
+            return;
+          }
+      }
+    for (i = 0; i &lt; message-> val_count; i++)
+      {
+        if (i + 1 &lt; argc
+        &&  argv [i + 1])
+            if (! store_symbol_definition (& gsl_tcb-> scope_stack,
+                                           gsl_tcb-> gsl-> ignorecase,
+                                           argv [i + 1],
+                                           & message-> val [i],
+                                           &error_text))
+              {
+                lsend_ggcode_call_error (
+                    & gsl_thread-> queue-> qid, NULL,
+                    NULL, NULL, NULL, 0,
+                    NULL, 0,
+                    error_text);
+                return;
+              }
+      }
+
+    message_destroy (message);
+
+    lsend_ggcode_call_ok (
+        & gsl_thread-> queue-> qid, NULL,
+        NULL, NULL, NULL, 0);
+}
+
+
+static void
+message_create (THREAD_CONTEXT *local_context,
+                THREAD_CONTEXT *remote_context,
+                int argc, RESULT_NODE **argv)
+{
+    MESSAGE
+        *message;
+    int
+        i;
+
+    list_create (message, sizeof (MESSAGE));
+    message-> sender    = local_context;
+    message-> val_count = argc;
+    message-> val = memt_alloc (NULL, argc * sizeof (VALUE));
+    for (i = 0; i &lt; argc; i++)
+      {
+        init_value (& message-> val [i]);
+        copy_value (& message-> val [i], & argv [i]-> value);
+      }
+    list_relink_before (message, & remote_context-> messages);
+
+    if (remote_context-> waiting)
+      {
+        remote_context-> waiting = FALSE;
+        message_receive (message,
+                         remote_context-> argc,
+                         remote_context-> argv,
+                         remote_context-> gsl_thread);
+        remote_context-> gsl_thread = NULL;   /*  No longer valid  */
+      }
+}
+
+
+/*************************   INITIALISE THE THREAD   *************************/
+
+MODULE initialise_the_thread (THREAD *thread)
+{
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    the_next_event = tcb-> thread_type;
+}
+
+
+/******************************   LOG MESSAGE   ******************************/
+
+MODULE log_message (THREAD *thread)
+{
+    struct_ggcode_call_error
+        *error;
+    char
+        *store_error_text;
+
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    get_ggcode_call_error (thread-> event-> body, & error);
+
+    if (store_thread_error (tcb-> thread_handle,
+                            tcb-> parent_context,
+                            tcb-> error,
+                            tcb-> parent_thread-> tcb,
+                            error-> error_text,
+                            error-> error_name,
+                            error-> error_line,
+                            &store_error_text))
+        lsend_ggcode_call_error (& tcb-> parent_thread-> queue-> qid, NULL,
+                                 NULL, NULL, NULL, 0,
+                                 NULL, 0,
+                                 store_error_text);
+    else
+        lsend_ggcode_call_message (& tcb-> parent_thread-> queue-> qid, NULL,
+                                   NULL, NULL, NULL, 0,
+                                   error-> error_name,
+                                   error-> error_line,
+                                   error-> error_text);
+
+    free_ggcode_call_error (& error);
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+}
+
+
+/*************************   REPLY PARSED OK RESULT   ************************/
+
+MODULE reply_parsed_ok_result (THREAD *thread)
+{
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    tcb-> thread_handle-> script_handle = tcb-> result-> value. i;
+
+    /*  Set return value for function call */
+    init_value (& tcb-> result-> value);
+    assign_pointer (& tcb-> result-> value,
+                    & parsed_item_class, tcb-> thread_handle);
+
+    lsend_ggcode_call_ok (& tcb-> parent_thread-> queue-> qid, NULL,
+                          NULL, NULL, NULL, 0);
+}
+
+
+/************************   REPLY RUNNING OK RESULT   ************************/
+
+MODULE reply_running_ok_result (THREAD *thread)
+{
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    tcb-> thread_handle-> script_handle = tcb-> result-> value. i;
+
+    /*  Set return value for function call */
+    assign_pointer (& tcb-> result-> value,
+                    & child_thread_class, tcb-> thread_handle);
+
+    lsend_ggcode_call_ok (& tcb-> parent_thread-> queue-> qid, NULL,
+                          NULL, NULL, NULL, 0);
+}
+
+
+/************************   REPLY PARSE ERROR RESULT   ***********************/
+
+MODULE reply_parse_error_result (THREAD *thread)
+{
+    struct_ggcode_call_error
+        *error;
+    char
+        *store_error_text;
+
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    get_ggcode_call_error (thread-> event-> body, & error);
+
+    if (store_thread_error (tcb-> thread_handle,
+                            tcb-> parent_context,
+                            tcb-> error,
+                            tcb-> parent_thread-> tcb,
+                            error-> error_text,
+                            error-> error_name,
+                            error-> error_line,
+                            &store_error_text))
+        lsend_ggcode_call_error (& tcb-> parent_thread-> queue-> qid, NULL,
+                                 NULL, NULL, NULL, 0,
+                                 NULL, 0,
+                                 store_error_text);
+    else
+        lsend_ggcode_call_ok (& tcb-> parent_thread-> queue-> qid, NULL,
+                              NULL, NULL, NULL, 0);
+
+    free_ggcode_call_error (& error);
+}
+
+
+/***************************   DESTROY THE THREAD   **************************/
+
+MODULE destroy_the_thread (THREAD *thread)
+{
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    mem_free (tcb-> thread_handle-> error_text);
+    mem_free (tcb-> thread_handle-> error_file);
+    mem_free (tcb-> thread_handle);
+    tcb-> thread_handle = NULL;
+}
+
+
+/***********************   SET THREAD FINISHED STATUS   **********************/
+
+MODULE set_thread_finished_status (THREAD *thread)
+{
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    tcb-> child_thread           = NULL;
+    tcb-> thread_handle-> status = THREAD_FINISHED;
+}
+
+
+/************************   SET THREAD ERROR STATUS   ************************/
+
+MODULE set_thread_error_status (THREAD *thread)
+{
+    struct_ggcode_error_reply
+        *error_reply;
+
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    tcb-> child_thread = NULL;
+
+    event_send (& tcb-> parent_context-> replyq-> qid,
+                NULL,
+                thread-> event-> name,
+                thread-> event-> body,
+                thread-> event-> body_size,
+                NULL, NULL, NULL, 0);
+
+    get_ggcode_error_reply (thread-> event-> body, & error_reply);
+    store_thread_error (tcb-> thread_handle,
+                        tcb-> parent_context,
+                        NULL,
+                        NULL,
+                        error_reply-> error_text,
+                        error_reply-> error_name,
+                        error_reply-> error_line,
+                        NULL);
+
+    free_ggcode_error_reply (& error_reply);
+}
+
+
+/****************************   SPAWN GSL THREAD   ***************************/
+
+MODULE spawn_gsl_thread (THREAD *thread)
+{
+    THREAD_CONTEXT
+        *context;
+
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    /*  Bump up the number of links so source doesn't get deleted when the   */
+    /*  spawned script finishes.                                             */
+    script_handle_link (tcb-> thread_handle-> script_handle);
+
+    tcb-> thread_handle-> status = THREAD_RUNNING;
+
+    tcb-> child_thread = gsl_spawn
+                           (tcb-> parent_thread,
+                            thread-> queue,
+                            tcb-> thread_handle-> script_handle);
+
+    context = get_class_item (tcb-> child_thread, THREAD_NAME);
+
+    tcb-> thread_handle-> context = context;
+    tcb-> thread_handle-> context-> links++;
+
+    tcb-> parent_thread = NULL;          /*  Assume parent thread finished   */
+}
+
+
+/**********************   SHUTDOWN RUNNING GSL THREAD   **********************/
+
+MODULE shutdown_running_gsl_thread (THREAD *thread)
+{
+    tcb = thread-> tcb;                 /*  Point to thread's context        */
+
+    if (tcb-> child_thread)
+      {
+        if (! tcb-> child_thread-> queue-> shutdown)
+          {
+            tcb-> thread_handle-> status = THREAD_INTERRUPTED;
+
+            tcb-> child_thread-> queue-> shutdown = TRUE;
+            lsend_smtlib_shutdown (& tcb-> child_thread-> queue-> qid,
+                                   NULL,
+                                   NULL, NULL, NULL, 0,
+                                   0);      /*  Don't specify a signal           
+*/          }
+      }
+}
+
+
+/**************************   TERMINATE THE THREAD   *************************/
+
+MODULE terminate_the_thread (THREAD *thread)
+{
+    tcb = thread-> tcb;                  /*  Point to thread's context       */
+
+
+    if (tcb-> thread_handle)
+      {
+        tcb-> thread_handle-> controller_thread = NULL;
+        child_thread_destroy (tcb-> thread_handle);    /*  Remove this link  */
+      }
+
+    threaddestroy (tcb-> parent_context);
+
+    the_next_event = terminate_event;
+}
+</extra>
+
+<class name = "thread" title = "Thread" register = "1" >
+
+    <initialise>
+  {
+    THREAD_CONTEXT
+        *context;
+
+    context = memt_alloc (NULL, sizeof (THREAD_CONTEXT));
+    context-> links      = 0;
+    context-> error_text = NULL;
+    context-> error_file = NULL;
+    context-> error_line = 0;
+    context-> waiting    = FALSE;
+    context-> gsl_thread = NULL;         /*  Gets filled in in thread.receive */
+    context-> replyq     = NULL;
+    list_reset (& context-> messages);
+
+    *item = context;
+  }
+    </initialise>
+
+    <operation type="link">
+((THREAD_CONTEXT *) item)-> links++;
+return 0;
+    </operation>
+
+    <operation type="destroy" cname="threaddestroy" >
+  {
+    THREAD_CONTEXT
+        *context = item;
+
+    if (--context-> links == 0)
+      {
+        mem_free (context-> error_text);
+        mem_free (context-> error_file);
+        while (! list_empty (& context-> messages))
+            message_destroy ((MESSAGE *) context-> messages. next);
+
+        mem_free (context);
+      }
+    return 0;
+  }
+    </operation>
+
+    <operation type="get_attr">
+        <start>
+    THREAD_CONTEXT
+        *context = item;
+    static VALUE
+        value;
+
+    init_value (& value);
+        </start>
+        <attr name="error_text" >
+        if (context-> error_text)
+            assign_string (& value, context-> error_text);
+        </attr>
+        <attr name="error_file" >
+        if (context-> error_text)
+            assign_string (& value, context-> error_file);
+        </attr>
+        <attr name="error_line" >
+        if (context-> error_text)
+            assign_number (& value, context-> error_line);
+        </attr>
+        <attr name="error"      >
+        if (context-> error_text)
+            assign_string (& value, strprintf ("(%s %u) %s",
+                                               context-> error_file,
+                                               context-> error_line,
+                                               context-> error_text));
+        </attr>
+        <finish>
+    return & value;
+        </finish>
+    </operation>
+
+    
+<!-------------------------------------------------------------------------->
+    <function name = "parse" immediate = "0" >
+        <description>
+    Parses the command, placing any error message in the parameter 'error'.
+    Errors can also be recovered via thread class attributes.
+    If successful, returns an object of type 'parsed item' which can
+    then be run as many times as necessary, saving the need to re-parse
+    each time.
+        </description>
+        <parameter name = "command"    pass = "value"       compulsory = "1" />
+        <parameter name = "error"      pass = "reference"   compulsory = "0" />
+        <body>
+    create_controller_thread (gsl_thread,
+                         item,
+                         string_value (&command-> value),
+                         parse_event,
+                         result,
+                         error);
+    return 0;
+        </body>
+    </function>
+
+    
+<!-------------------------------------------------------------------------->
+    <function name = "new" immediate = "0" >
+        <description>
+    Parses and runs the command, placing any error message in the parameter
+    'error'.   Errors can also be recovered via thread class and child thread
+    object attributes.   If the parsing was successful, returns an object
+    of type 'child thread'.
+        </description>
+        <parameter name = "command"    pass = "value"       compulsory = "1" />
+        <parameter name = "error"      pass = "reference"   compulsory = "0" />
+        <body>
+    create_controller_thread (gsl_thread,
+                              item,
+                              string_value (&command-> value),
+                              parse_and_run_event,
+                              result,
+                              error);
+    return 0;
+        </body>
+    </function>
+
+    
+<!-------------------------------------------------------------------------->
+    <function name = "sleep" immediate = "0">
+        <description>
+    Puts the current thread to sleep for the specified number of centiseconds.
+    Returns -1 if csecs is invalid.
+        </description>
+        <parameter name = "csecs"   pass = "value"     compulsory = "1" />
+        <body>
+  {
+    long
+        date = 0,
+        time = 0;
+
+    number_value (& csecs-> value);
+    if (csecs-> value. type != TYPE_NUMBER
+    || (csecs-> value. n &lt; 0
+    ||  csecs-> value. n &gt; ULONG_MAX))
+      {
+        strprintf (object_error,
+                   "Illegal delay value for proc.sleep: %s",
+                   string_value (& csecs-> value));
+        return -1;
+      }
+    future_date (& date, & time, 0, (qbyte) csecs-> value. n);
+    schedule_async_nonblock (wakeup, gsl_thread,
+                             SMT_PRIORITY_NORMAL, date, time);
+  }
+        </body>
+    </function>
+    
+<!-------------------------------------------------------------------------->
+    <function name = "receive" max_parms = "0" immediate = "0" >
+        <description>
+    Receives a message from the thread's message queue.  If the queue is empty,
+    the thread sleeps until a message is available.
+
+    Places a reference to the sending thread in the first parameter.  Places
+    arbitrary values from the message into successive parameters.
+        </description>
+        <parameter                  pass = "reference"  compulsory = "0" />
+        <body>
+  {
+    THREAD_CONTEXT
+        *context = item;
+
+    if (list_empty (& context-> messages))
+      {
+        context-> waiting    = TRUE;
+        context-> gsl_thread = gsl_thread;
+        context-> argc       = argc;
+        context-> argv       = argv;
+        return 0;
+      }
+
+    message_receive ((MESSAGE *) context-> messages. next,
+                     argc, argv,
+                     gsl_thread);
+    context-> gsl_thread = NULL;         /*  No longer valid  */
+  }
+        </body>
+    </function>
+
+</class>
+
+<class name = "remote thread" title = "Thread" register = "0" >
+
+    <operation type="link">
+    return thread_link (item);
+    </operation>
+    <operation type="destroy" >
+    return threaddestroy (item);
+    </operation>
+    <operation type="get_attr">
+    return thread_get_attr (item, name, ignorecase);
+    </operation>
+
+    
+<!-------------------------------------------------------------------------->
+    <function name = "send" max_parms = "0" immediate = "1">
+        <description>
+    Sends a message with an arbitrary number of arguments to the thread.
+        </description>
+        <body>
+  {
+    THREAD_CONTEXT
+        *remote_context = item,
+        *local_context;
+
+    local_context = get_class_item (gsl_thread, THREAD_NAME);
+
+    message_create (local_context, remote_context, argc, argv);
+  }
+        </body>
+    </function>
+
+
+</class>
+
+<class name = "child thread" title = "Thread" register = "0" >
+
+    <operation type="link">
+((THREAD_HANDLE_ITEM *) item)-> links++;
+return 0;
+    </operation>
+
+    <operation type="destroy" >
+  {
+    THREAD_HANDLE_ITEM
+        *thread_handle = item;
+
+    if (--thread_handle-> links == 0)
+      {
+        if (thread_handle-> script_handle)
+            script_handle_destroy (thread_handle-> script_handle);
+        if (thread_handle-> context)
+            threaddestroy (thread_handle-> context);
+        mem_free (thread_handle-> error_text);
+        mem_free (thread_handle-> error_file);
+        mem_free (thread_handle);
+      }
+    return 0;
+  }
+    </operation>
+
+    <operation type="get_attr">
+        <start>
+    THREAD_HANDLE_ITEM
+        *thread_handle = item;
+    static VALUE
+        value;
+
+    init_value (& value);
+        </start>
+        <attr name="status" >
+        <description>
+    Values are:
+
+        THREAD_PARSED       0
+        THREAD_RUNNING      1
+        THREAD_FINISHED     2
+        THREAD_INTERRUPTED  3
+        THREAD_ERROR       -1
+        </description>
+        assign_number (& value, thread_handle-> status);
+        </attr>
+        <attr name="error_text" >
+        if (thread_handle-> error_text)
+            assign_string (& value, thread_handle-> error_text);
+        </attr>
+        <attr name="error_file" >
+        if (thread_handle-> error_text)
+            assign_string (& value, thread_handle-> error_file);
+        </attr>
+        <attr name="error_line" >
+        if (thread_handle-> error_text)
+            assign_number (& value, thread_handle-> error_line);
+        </attr>
+        <attr name="error"      >
+        if (thread_handle-> error_text)
+            assign_string (& value, strprintf ("(%s %u) %s",
+                                               thread_handle-> error_file,
+                                               thread_handle-> error_line,
+                                               thread_handle-> error_text));
+        </attr>
+        <attr name="status" >
+        assign_number (& value, thread_handle-> status);
+        </attr>
+        <finish>
+    return & value;
+        </finish>
+    </operation>
+
+    
+<!-------------------------------------------------------------------------->
+    <function name = "interrupt" immediate = "1">
+        <description>
+    Shuts down the thread.
+        </description>
+        <body>
+  {
+    THREAD_HANDLE_ITEM
+        *thread_handle = item;
+
+    if (thread_handle-> status == THREAD_RUNNING)
+        event_send (& thread_handle-> controller_thread-> queue-> qid,
+                    NULL,
+                    THREAD_INTERRUPT,
+                    NULL, 0,
+                    NULL, NULL, NULL, 0);
+  }
+        </body>
+    </function>
+
+    <function name = "send" max_parms = "0" immediate = "1">
+        <description>
+    Sends a message with an arbitrary number of arguments to the thread.
+        </description>
+        <body>
+  {
+    THREAD_HANDLE_ITEM
+        *thread_handle = item;
+    THREAD_CONTEXT
+        *local_context,
+        *remote_context = thread_handle-> context;
+
+    local_context = get_class_item (gsl_thread, THREAD_NAME);
+
+    message_create (local_context, remote_context, argc, argv);
+  }
+        </body>
+    </function>
+
+</class>
+
+<class name = "parsed item" title = "Thread" register = "0" >
+
+    <operation type="link">
+((THREAD_HANDLE_ITEM *) item)-> links++;
+return 0;
+    </operation>
+
+    <operation type="destroy" >
+  {
+    THREAD_HANDLE_ITEM
+        *thread_handle = item;
+
+    if (--thread_handle-> links == 0)
+      {
+        script_handle_destroy (thread_handle-> script_handle);
+        mem_free (thread_handle-> error_text);
+        mem_free (thread_handle-> error_file);
+        mem_free (thread_handle);
+      }
+    return 0;
+  }
+    </operation>
+
+    <operation type="get_attr">
+    return child_thread_get_attr (item, name, ignorecase);
+    </operation>
+
+    
+<!-------------------------------------------------------------------------->
+    <function name = "run" immediate = "1" >
+        <parameter name = "error"      pass = "reference"   compulsory = "0" />
+        <body>
+  {
+    THREAD
+        *thread;
+    THREAD_HANDLE_ITEM
+        *handle = item;
+    THREAD_CONTEXT
+        *local_context;
+
+    local_context = get_class_item (gsl_thread, THREAD_NAME);
+
+    thread = create_controller_thread (gsl_thread,
+                                       local_context,
+                                       NULL,
+                                       run_event,
+                                       result,
+                                       error);
+    tcb = thread-> tcb;
+
+    tcb-> thread_handle-> script_handle = handle-> script_handle;
+    script_handle_link (tcb-> thread_handle-> script_handle);
+
+    assign_pointer (& tcb-> result-> value,
+                    & child_thread_class,
+                    tcb-> thread_handle);
+
+    return 0;
+  }
+        </body>
+    </function>
+
+</class>
+
+</gxl>

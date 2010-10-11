@@ -1,0 +1,34 @@
+maxthread = 20
+maxmsg = 100
+
+function global.abort_error ()
+    abort sock.error
+endfunction
+
+function global.testecho (n)
+   scope testecho
+      testecho.s = sock.connect ("localhost", (arg1 ? 0) + 7) ? abort_error ()
+      testecho.i = 0
+      while i < maxmsg
+          testecho.msg = "$(n) - $(i)"
+          s.write (msg)
+          s.read  (testecho.buf, 1)
+          if ! defined (testecho.buf) | buf <> msg
+              echo "ERROR $(n) - <$(testecho.buf ? 'UNDEF')>"
+          endif
+          i += 1
+      endwhile
+      s.close ()
+   endscope
+#   For coninued hammering uncomment the following lines.
+#   thread.new ("testecho (numthread)")
+#   numthread += 1
+#   echo numthread
+endfunction
+
+numthread = 0
+while numthread < maxthread
+   thread.new ("testecho (numthread)")
+   numthread += 1
+   echo numthread
+endwhile

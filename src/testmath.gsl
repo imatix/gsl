@@ -1,0 +1,39 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  testmath.gsl - Test math GSL functions
+.-                                                                            
+.------------------------------------------------------------------------------
+
+echo "Math.abs function result (should be 3): " + math.abs (-3)
+echo "Math.ceil function result (should be 46): " + math.ceil (45.234)
+echo "Math.floor function result (should be 45): " + math.floor (45.234)
+echo "Math.mod function result (should be 2): " + math.mod (22, 5)
+
+i = 0
+while i < 10
+    echo "Math.rand function result: " + math.rand ()
+    i += 1
+endwhile
+
+echo "Math.sqrt function result (should be 5): " + math.sqrt (25)
+echo "Math.exp function result (should be 20.08...): " + math.exp (3)
+echo "Math.log function result (should be 2.30...): " + math.log (10)
+echo "Math.log10 function result (should be 3): " + math.log10 (1000)
+echo "Math.pow function result (should be -0.125): " + math.pow (-2, -3)
+
+pi = math.pi ()
+echo "Math.pi function result (should be PI): " + pi
+echo "Math.sin function result (should be 1): " + math.sin (pi / 2)
+echo "Math.cos function result (should be 1): " + math.cos (0)
+echo "Math.tan function result (should be 1): " + math.tan (pi / 4)
+echo "Math.asin function result (should be PI): " + math.asin (1) * 2
+echo "Math.acos function result (should be PI): " + math.acos (-1)
+echo "Math.atan function result (should be PI): " + math.atan (1) * 4
+echo "Math.atan2 function result (should be -PI): " + math.atan2 (-1, 1) * 4
+echo "Math.sinh function result (should be 0): " + math.sinh (0)
+echo "Math.cosh function result (should be 1): " + math.cosh (0)
+echo "Math.tanh function result (should be -0.7615...): " + math.tanh (-1)
+echo "Math.asinh function result (should be 0.8813...): " + math.asinh (1)
+echo "Math.acosh function result (should be 1.316...): " + math.acosh (2)
+echo "Math.atanh function result (should be -0.5493...): " + math.atanh (-0.5)
+

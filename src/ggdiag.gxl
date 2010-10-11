@@ -1,0 +1,111 @@
+<?xml?>
+<!--
+    GSL/diag - Diagnostic functions object
+    
+    Copyright (c) 1996-2010 iMatix Corporation
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at
+    your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    For information on alternative licensing for OEMs, please contact
+    iMatix Corporation.
+-->
+
+<gxl script = "ggobjt.gsl" filename = "ggdiag" title = "GSL/diag package" >
+
+<extra>
+</extra>
+
+<class name = "diag" title = "Diagnostic Functions" register = "1" >
+
+<function name = "used" >
+    <body>
+  {
+    result-> value. type = TYPE_NUMBER;
+    result-> value. n    = mem_used ();
+
+    return 0;
+  }
+    </body>
+</function>
+
+<function name = "allocs" >
+    <body>
+  {
+    result-> value. type = TYPE_NUMBER;
+    result-> value. n    = mem_allocs ();
+
+    return 0;
+  }
+    </body>
+</function>
+
+<function name = "frees" >
+    <body>
+  {
+    result-> value. type = TYPE_NUMBER;
+    result-> value. n    = mem_frees ();
+
+    return 0;
+  }
+    </body>
+</function>
+
+<function name = "display" >
+    <parameter name = "filename" pass = "value" compulsory = "1" />
+    <body>
+  {
+    FILE
+        *file;
+
+    file = file_open (string_value (& filename-> value), 'w');
+    if (! file)
+      {
+        strcpy (object_error, strerror (errno));
+        return -1;
+      }
+    mem_display (file);
+    file_close (file);
+
+    return 0;
+  }
+    </body>
+</function>
+
+<function name = "checkall" >
+    <body>
+    mem_checkall ();
+    </body>
+</function>
+
+<function name = "raise" >
+    <parameter name = "signal" pass = "value" compulsory = "1" />
+    <body>
+    raise ((int) number_value (& signal-> value));
+    </body>
+</function>
+
+<function name = "animate" >
+    <parameter name = "value" pass = "value" compulsory = "1" />
+    <body>
+    gsl_thread-> animate = (Bool) number_value (& value-> value);
+    </body>
+</function>
+
+<function name = "console_set_mode" >
+    <parameter name = "mode" pass = "value" compulsory = "1" />
+    <body>
+    console_set_mode ((int) number_value (& mode-> value));
+    </body>
+</function>
+
+</class>
+
+</gxl>

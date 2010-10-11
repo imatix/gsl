@@ -1,0 +1,101 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  testall.gsl - Test all GSL functions
+.-                                                                            
+.------------------------------------------------------------------------------
+if ! defined (testall_included)
+    echo "Starting regression tests..."
+    define testall_included = 1
+endif
+
+echo "Non-template mode:"
+>The current script is: $(script)
+>The date and time are: $(date), $(time).
+>This are some special characters: ! ( ) \\ ? . : ;
+
+template 1
+.echo "Non-template mode:"
+The current script is: $(script)
+The date and time are: $(date), $(time).
+This are some special characters: ! ( ) \\ ? . : ;
+.endtemplate
+
+new child
+    child.name = "me"
+endnew
+new child
+    child.name = "you"
+endnew
+new colour
+    colour.name = "blue"
+    for root.child where name = "me"
+        new style
+            style.width = "1"
+        endnew
+    endfor
+endnew
+for child
+    if name = "you"
+        last
+    endif
+    echo "1: me = " + child.name
+    echo "2: blue = " + root-> colour.name
+endfor
+
+define var = undefinedvar?
+if defined (var)
+    echo "We should not come here"
+else
+    echo "3: undefined variable as expected"
+endif
+
+for child
+    child.level = "purple"
+    new level to child
+        level.name = "1"
+        level.size = "medium"
+    endnew
+    for child.level as childlevel
+        echo "4: $(childlevel.size) rare, purple = $(child.level)"
+        echo "Should be 'level' -> $(name ($(0)))"
+        echo "Should be 'child' -> $(name ($(-1)))"
+        echo "Should be 'root'  -> $(name ($(-2)))"
+        echo "Should be 'gsl'   -> $(name ($(-4))?)"
+        echo "Should be '1':    -> $(count (-1.level))"
+        new level to -1
+            level.name = "2"
+            level.size = "large"
+        endnew
+        echo "Should be '2':    -> $(count (-1.level))"
+    endfor
+    last
+endfor
+
+[gsl].include ("testall.inc")
+[gsl].include ("testall.inc")
+
+define var =
+var ?= "abc"
+if var = "abc"
+    echo "6: ?= assignment works okay"
+endif
+
+var1 ?= var2 ?
+echo "7: var1 is undefined: $(var1?"okay")"
+
+function hello (world)
+echo hello.world
+endfunction
+
+invoke hello ("8: function call with arguments seems to work")
+
+function test ()
+return "9: function returning value"
+endfunction
+
+echo test ()
+
+echo "10: Count function result (should be 2): " + count (child)
+
+echo "11: last step in testall"
+

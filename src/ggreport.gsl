@@ -1,0 +1,46 @@
+.------------------------------------------------------------------------------
+.-                                                                            
+.-  ggreport.gsl - GSL reporting examples                                     
+.-                                                                            
+.-
+.-  Copyright (c) 1996-2010 iMatix Corporation
+.-
+.-  This program is free software; you can redistribute it and/or modify
+.-  it under the terms of the GNU General Public License as published by
+.-  the Free Software Foundation; either version 2 of the License, or (at
+.-  your option) any later version.
+.-
+.-  This program is distributed in the hope that it will be useful, but
+.-  WITHOUT ANY WARRANTY; without even the implied warranty of
+.-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.-  General Public License for more details.
+.-
+.-  For information on alternative licensing for OEMs, please contact
+.-  iMatix Corporation.
+.-
+.------------------------------------------------------------------------------
+.-
+.macro report
+.    if macro ("$(name())_prefix")
+.        invoke $(name())_prefix
+.    endif
+.    define report.last = ""
+.    for . where name () <> ""
+.        if name () <> report.last
+.            if report.last <> "" & macro ("$(last:)_footer")
+.                invoke $(last:)_footer
+.            endif
+.            if macro ("$(name())_header")
+.                invoke $(name ())_header
+.            endif
+.            define report.last = name ()
+.        endif
+.        invoke report
+.    endfor
+.    if report.last <> "" & macro ("$(last:)_footer")
+.        invoke $(last:)_footer
+.    endif
+.    if macro ("$(name())_suffix")
+.        invoke $(name())_suffix
+.    endif
+.endmacro
