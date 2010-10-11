@@ -299,7 +299,6 @@ static void process_the_switch (void)
 #if defined (CCOPTS)
         printf ("Compiler: " CCOPTS "\n");
 #endif
-        printf ("Revision: " SVN_REVISION "\n");
         exit (0);
       }
     else
