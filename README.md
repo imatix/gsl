@@ -36,7 +36,7 @@
 &emsp;<a href="#toc3-753">Myths about Code Generation</a>
 &emsp;<a href="#toc3-770">The Correctness of Generated Code</a>
 
-**<a href="#toc2-787">Reference</a>**
+**<a href="#toc2-787">GSL/4.1 Reference Manual</a>**
 &emsp;<a href="#toc3-790">Command-line Syntax</a>
 &emsp;<a href="#toc3-807">Concepts</a>
 &emsp;<a href="#toc4-810">Scalar Data Types</a>
@@ -679,9 +679,9 @@ Be warned. This might hurt a little. All I can promise is that if you learn to u
 <A name="toc3-603" title="Becoming a Very Good Programmer" />
 ### Becoming a Very Good Programmer
 
-My name is Pieter Hintjens, and I am a programmer. My team and I build infrastructure software - frameworks, middleware, servers, etc. I've learned a few things about software since I wrote my first small program in 1981 or so. First: if it's not impossible, it's not worth doing. Second: software design is about overcoming human limitations, not technical ones. Third: very few people can actually design good, useful, large-scale software systems, which for me is the goal of programming.
+I've learned a few things about software since I wrote my first small program in 1981 or so. First: if it's not impossible, it's not worth doing. Second: software design is about overcoming human limitations, not technical ones. Third: very few people can actually design good, useful, large-scale software systems, which for me is the goal of programming.
 
-In my experience there are at least four main aspects to becoming a very good programmer:
+In my experience there are these four main aspects to becoming a very good programmer (which I hope to become, one day):
 
 * Never throw out anything that works until it is really worn out. This mainly means writing portable code.
 * Never solve the same problem more than once in parallel. This mainly means building tools.
@@ -860,8 +860,8 @@ In any programming environment, the key to producing good code is to test heavil
 
 Since we use the MOP approach to build the code generators themselves, we get very good code generators, cheaply. It is the same concept as a "self-hosting" compiler. On many projects where we've used MOP, I'm able to deliver hundreds of thousands of lines of code, and say, with confidence, "there is not a single bug in this code".
 
-<A name="toc2-787" title="Reference" />
-## Reference
+<A name="toc2-787" title="GSL/4.1 Reference Manual" />
+## GSL/4.1 Reference Manual
 
 <A name="toc3-790" title="Command-line Syntax" />
 ### Command-line Syntax
