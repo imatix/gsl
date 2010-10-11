@@ -12,76 +12,76 @@
 &emsp;<a href="#toc3-27">Building and installing</a>
 &emsp;<a href="#toc3-37">This Document</a>
 
-**<a href="#toc2-57">Starting with GSL</a>**
-&emsp;<a href="#toc3-60">Hello World</a>
-&emsp;<a href="#toc3-137">Templates and Scripts</a>
-&emsp;<a href="#toc3-214">Modeling a Web Site</a>
-&emsp;<a href="#toc3-272">First Draft</a>
-&emsp;<a href="#toc3-373">Inserting Variables</a>
-&emsp;<a href="#toc3-401">Looping through Trees</a>
-&emsp;<a href="#toc3-429">Building the Output</a>
-&emsp;<a href="#toc3-497">Putting it All Together</a>
-&emsp;<a href="#toc3-591">Exercise for the Reader</a>
-&emsp;<a href="#toc3-596">Extending the Model</a>
+**<a href="#toc2-42">Starting with GSL</a>**
+&emsp;<a href="#toc3-45">Hello World</a>
+&emsp;<a href="#toc3-122">Templates and Scripts</a>
+&emsp;<a href="#toc3-199">Modeling a Web Site</a>
+&emsp;<a href="#toc3-257">First Draft</a>
+&emsp;<a href="#toc3-358">Inserting Variables</a>
+&emsp;<a href="#toc3-386">Looping through Trees</a>
+&emsp;<a href="#toc3-414">Building the Output</a>
+&emsp;<a href="#toc3-482">Putting it All Together</a>
+&emsp;<a href="#toc3-576">Exercise for the Reader</a>
+&emsp;<a href="#toc3-581">Extending the Model</a>
 
-**<a href="#toc2-607">Model-Oriented Programming</a>**
-&emsp;<a href="#toc3-618">Becoming a Very Good Programmer</a>
-&emsp;<a href="#toc3-632">Tools that Write Software</a>
-&emsp;<a href="#toc3-647">Abstractions and Modeling Languages</a>
-&emsp;<a href="#toc3-666">Leverage to Move Mountains</a>
-&emsp;<a href="#toc3-685">Case Study - OpenAMQ</a>
-&emsp;<a href="#toc3-715">Other Model-Driven Architectures</a>
-&emsp;<a href="#toc3-728">Why use MOP?</a>
-&emsp;<a href="#toc3-753">A Short History of Code Generation</a>
-&emsp;<a href="#toc3-768">Myths about Code Generation</a>
-&emsp;<a href="#toc3-785">The Correctness of Generated Code</a>
+**<a href="#toc2-592">Model-Oriented Programming</a>**
+&emsp;<a href="#toc3-603">Becoming a Very Good Programmer</a>
+&emsp;<a href="#toc3-617">Tools that Write Software</a>
+&emsp;<a href="#toc3-632">Abstractions and Modeling Languages</a>
+&emsp;<a href="#toc3-651">Leverage to Move Mountains</a>
+&emsp;<a href="#toc3-670">Case Study - OpenAMQ</a>
+&emsp;<a href="#toc3-700">Other Model-Driven Architectures</a>
+&emsp;<a href="#toc3-713">Why use MOP?</a>
+&emsp;<a href="#toc3-738">A Short History of Code Generation</a>
+&emsp;<a href="#toc3-753">Myths about Code Generation</a>
+&emsp;<a href="#toc3-770">The Correctness of Generated Code</a>
 
-**<a href="#toc2-802">Reference</a>**
-&emsp;<a href="#toc3-805">Command-line Syntax</a>
-&emsp;<a href="#toc3-822">Concepts</a>
-&emsp;<a href="#toc4-825">Scalar Data Types</a>
-&emsp;<a href="#toc4-830">Structured Data Types</a>
-&emsp;<a href="#toc4-837">Constants</a>
-&emsp;<a href="#toc4-842">Scopes</a>
-&emsp;<a href="#toc4-885">Data Specifiers</a>
-&emsp;<a href="#toc4-973">Expressions</a>
-&emsp;<a href="#toc3-1126">Internals</a>
-&emsp;<a href="#toc4-1129">Internal Variables</a>
-&emsp;<a href="#toc4-1140">Template and Script Modes</a>
-&emsp;<a href="#toc4-1149">Template Lines</a>
-&emsp;<a href="#toc4-1156">Script Lines</a>
-&emsp;<a href="#toc4-1163">Comments</a>
-&emsp;<a href="#toc4-1181">Ignorecase</a>
-&emsp;<a href="#toc4-1186">Shuffle</a>
-&emsp;<a href="#toc4-1217">COBOL</a>
-&emsp;<a href="#toc4-1222">Line Terminators</a>
-&emsp;<a href="#toc4-1227">Arguments</a>
-&emsp;<a href="#toc4-1243">Predefined Identifiers</a>
-&emsp;<a href="#toc3-1269">Built-In Functions</a>
-&emsp;<a href="#toc4-1272">conv</a>
-&emsp;<a href="#toc4-1281">diag</a>
-&emsp;<a href="#toc4-1294">environment</a>
-&emsp;<a href="#toc4-1302">fileio</a>
-&emsp;<a href="#toc4-1339">gsl control</a>
-&emsp;<a href="#toc4-1353">math</a>
-&emsp;<a href="#toc4-1382">regexp</a>
-&emsp;<a href="#toc4-1388">process management</a>
-&emsp;<a href="#toc4-1410">script</a>
-&emsp;<a href="#toc4-1415">socket</a>
-&emsp;<a href="#toc4-1428">string</a>
-&emsp;<a href="#toc4-1453">symb</a>
-&emsp;<a href="#toc4-1458">thrd</a>
-&emsp;<a href="#toc4-1495">time</a>
-&emsp;<a href="#toc4-1510">XML</a>
-&emsp;<a href="#toc3-1558">Script Commands</a>
-&emsp;<a href="#toc4-1561">Output File Manipulation</a>
-&emsp;<a href="#toc4-1606">Control Structures</a>
-&emsp;<a href="#toc4-1717">Scope Manipulation</a>
-&emsp;<a href="#toc4-1732">Symbol Definition</a>
-&emsp;<a href="#toc4-1763">Structured Data Manipulation</a>
-&emsp;<a href="#toc4-1841">Script Manipulation</a>
-&emsp;<a href="#toc4-1871">Macros and Functions</a>
-&emsp;<a href="#toc4-1936">Miscellaneous</a>
+**<a href="#toc2-787">Reference</a>**
+&emsp;<a href="#toc3-790">Command-line Syntax</a>
+&emsp;<a href="#toc3-807">Concepts</a>
+&emsp;<a href="#toc4-810">Scalar Data Types</a>
+&emsp;<a href="#toc4-815">Structured Data Types</a>
+&emsp;<a href="#toc4-822">Constants</a>
+&emsp;<a href="#toc4-827">Scopes</a>
+&emsp;<a href="#toc4-870">Data Specifiers</a>
+&emsp;<a href="#toc4-958">Expressions</a>
+&emsp;<a href="#toc3-1111">Internals</a>
+&emsp;<a href="#toc4-1114">Internal Variables</a>
+&emsp;<a href="#toc4-1125">Template and Script Modes</a>
+&emsp;<a href="#toc4-1134">Template Lines</a>
+&emsp;<a href="#toc4-1141">Script Lines</a>
+&emsp;<a href="#toc4-1148">Comments</a>
+&emsp;<a href="#toc4-1166">Ignorecase</a>
+&emsp;<a href="#toc4-1171">Shuffle</a>
+&emsp;<a href="#toc4-1202">COBOL</a>
+&emsp;<a href="#toc4-1207">Line Terminators</a>
+&emsp;<a href="#toc4-1212">Arguments</a>
+&emsp;<a href="#toc4-1228">Predefined Identifiers</a>
+&emsp;<a href="#toc3-1254">Built-In Functions</a>
+&emsp;<a href="#toc4-1257">conv</a>
+&emsp;<a href="#toc4-1266">diag</a>
+&emsp;<a href="#toc4-1279">environment</a>
+&emsp;<a href="#toc4-1287">fileio</a>
+&emsp;<a href="#toc4-1324">gsl control</a>
+&emsp;<a href="#toc4-1338">math</a>
+&emsp;<a href="#toc4-1367">regexp</a>
+&emsp;<a href="#toc4-1373">process management</a>
+&emsp;<a href="#toc4-1395">script</a>
+&emsp;<a href="#toc4-1400">socket</a>
+&emsp;<a href="#toc4-1413">string</a>
+&emsp;<a href="#toc4-1438">symb</a>
+&emsp;<a href="#toc4-1443">thrd</a>
+&emsp;<a href="#toc4-1480">time</a>
+&emsp;<a href="#toc4-1495">XML</a>
+&emsp;<a href="#toc3-1543">Script Commands</a>
+&emsp;<a href="#toc4-1546">Output File Manipulation</a>
+&emsp;<a href="#toc4-1591">Control Structures</a>
+&emsp;<a href="#toc4-1702">Scope Manipulation</a>
+&emsp;<a href="#toc4-1717">Symbol Definition</a>
+&emsp;<a href="#toc4-1748">Structured Data Manipulation</a>
+&emsp;<a href="#toc4-1826">Script Manipulation</a>
+&emsp;<a href="#toc4-1856">Macros and Functions</a>
+&emsp;<a href="#toc4-1921">Miscellaneous</a>
 
 <A name="toc2-10" title="Overview" />
 ## Overview
@@ -115,25 +115,10 @@ To build from git on a UNIX-like box:
 
 This document is originally at README.txt and is built using [gitdown](http://github.com/imatix/gitdown).
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<A name="toc2-57" title="Starting with GSL" />
+<A name="toc2-42" title="Starting with GSL" />
 ## Starting with GSL
 
-<A name="toc3-60" title="Hello World" />
+<A name="toc3-45" title="Hello World" />
 ### Hello World
 
 Our first step is to make a "hello world" program in GSL. It's quite simple. Make a file called hello.gsl that contains one line:
@@ -150,7 +135,7 @@ Initially, GSL looks like any other scripting language. I can write little scrip
 
     amount = 1000
     year = 2006
-    while year &lt; 2026
+    while year < 2026
         amount = amount * 1.05
         year = year + 1
     endwhile
@@ -167,12 +152,12 @@ To run the above program, assuming it was saved in a file called interest.gsl, I
 
 This executes the script and tells me that if I am really patient, I'll be rich one day. Now I'm going to change this little program to make the same kind of calculation for different amounts, rates, and years. Where do I put these different terms and rates? The answer is, in an XML file. The file is called deposits.xml:
 
-    &lt;?xml version="1.0"?&gt;
-    &lt;deposits script = "interest.gsl" &gt;
-        &lt;deposit amount = "1000000" rate = "5" years = "20" /&gt;
-        &lt;deposit amount = "500000" rate = "4" years = "10" /&gt;
-        &lt;deposit amount = "2500000" rate = "6" years = "15" /&gt;
-    &lt;/deposits&gt;
+    <?xml version="1.0"?>
+    <deposits script = "interest.gsl" >
+        <deposit amount = "1000000" rate = "5" years = "20" />
+        <deposit amount = "500000" rate = "4" years = "10" />
+        <deposit amount = "2500000" rate = "6" years = "15" />
+    </deposits>
 
 We change our script to give the result below.
 
@@ -180,7 +165,7 @@ We change our script to give the result below.
      for deposit
         year = 1
         accumulated = amount
-        while year &lt; years
+        while year < years
             accumulated = accumulated * (rate / 100 + 1)
             year = year + 1
         endwhile
@@ -200,7 +185,7 @@ Note the change of command syntax. We first ran the GSL script. Now we're runnin
 
 Any GSL script, no matter how simple, works with an XML document loaded into GSL's memory as a data tree. In our first interest.gsl script, the data tree contains just this:
 
-    &lt;root script = "interest" /&gt;
+    <root script = "interest" />
 
 GSL automatically creates this data tree when we ask it to execute a GSL script.
 
@@ -210,19 +195,19 @@ If, on the other hand, we ask GSL to execute an XML file, it loads this XML file
 
 All variables that we define and use are stored in the data tree, somewhere. This is the only data structure that GSL scripts work with, and it can get very complex. For many people, understanding this complexity is the most difficult thing about using GSL - hierarchies of data are one of those things most human brains do not handle very well. We use abstractions like XNF to make this simpler, but that is something I'll discuss later.
 
-<A name="toc3-137" title="Templates and Scripts" />
+<A name="toc3-122" title="Templates and Scripts" />
 ### Templates and Scripts
 
 GSL uses the term "template" to describe text that is output as generated code. GSL works in two modes - script mode, and template mode. When you execute a GSL script directly, as we did in the first example, GSL starts in script mode. When you execute a GSL script indirectly, through an XML file, as we did in the second example, GSL starts in template mode. Try removing the .template 0 and .endtemplate lines and you'll see what I mean. The script just gets copied to the output stream, the console, by default.
 
-In template mode, GSL commands start with a dot in the first column. In script mode, all lines are assumed to be GSL commands unless they start with "&gt;" (output) in the first column, in which case they are handled as template lines.
+In template mode, GSL commands start with a dot in the first column. In script mode, all lines are assumed to be GSL commands unless they start with ">" (output) in the first column, in which case they are handled as template lines.
 
 Script mode is useful when you are doing a lot of GSL scripting work. Often you need to prepare data, check the XML tree, and so on, before you can start to generate code. Template mode is useful when you want to output a lot of data, or actually want to generate code.
 
 You can mix GSL commands and template code by putting a dot at the start of
 lines with GSL commands. Like this:
 
-    .while year &lt; years
+    .while year < years
     .   accumulated = accumulated * (rate / 100 + 1)
     .   year = year + 1
     .endwhile
@@ -230,34 +215,34 @@ lines with GSL commands. Like this:
 I'm now going to generate a little HTML report of how the different calculations. The listing below shows the third version of interest.gsl:
 
     .output "deposits.html"
-    &lt;html&gt;
-    &lt;head&gt;
-    &lt;title&gt;So You Want To Be A Millionaire?&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-    &lt;h1&gt;So You Want To Be A Millionaire?&lt;/h1&gt;
-    &lt;table&gt;
-    &lt;tr&gt;&lt;th&gt;Original amount&lt;/th&gt;
-    &lt;th&gt;Interest rate&lt;/th&gt;
-    &lt;th&gt;Term, years&lt;/th&gt;
-    &lt;th&gt;Final amount&lt;/th&gt;
-    &lt;/tr&gt;
+    <html>
+    <head>
+    <title>So You Want To Be A Millionaire?</title>
+    </head>
+    <body>
+    <h1>So You Want To Be A Millionaire?</h1>
+    <table>
+    <tr><th>Original amount</th>
+    <th>Interest rate</th>
+    <th>Term, years</th>
+    <th>Final amount</th>
+    </tr>
     .for deposit
     .   year = 1
     .   accumulated = amount
-    .   while year &lt; years
+    .   while year < years
     .       accumulated = accumulated * (rate / 100 + 1)
     .       year = year + 1
     .   endwhile
-    &lt;tr&gt;&lt;td&gt;&#36;(amount)&lt;/td&gt;
-    &lt;td&gt;&#36;(rate)%&lt;/td&gt;
-    &lt;td&gt;&#36;(years)&lt;/td&gt;
-    &lt;td&gt;&#36;(accumulated)&lt;/td&gt;
-    &lt;/tr&gt;
+    <tr><td>&#36;(amount)</td>
+    <td>&#36;(rate)%</td>
+    <td>&#36;(years)</td>
+    <td>&#36;(accumulated)</td>
+    </tr>
     .endfor
-    &lt;/table&gt;
-    &lt;/body&gt;
-    &lt;/html&gt;
+    </table>
+    </body>
+    </html>
 
 Note these syntax aspects:
 
@@ -287,7 +272,7 @@ GSL lets you load and navigate XML data so easily that you don't even realize
 you're busy. The combination of an explicit script language like GSL plus a
 hierarchical XML data tree works well.
 
-<A name="toc3-214" title="Modeling a Web Site" />
+<A name="toc3-199" title="Modeling a Web Site" />
 ### Modeling a Web Site
 
 I'm going to propose a simple abstract model for a web site, as an example. When you understand this example, you'll have a much better idea of how we design new models, so that you can design your own.
@@ -323,102 +308,102 @@ When we mass produce something, we're clearly aiming for low cost and consistent
 
 The next step is to sketch a model that can hold this information in a useful way. Remember that we use XML as a modeling language. So, we invent an XML syntax for our model. For each page, I'd like to write something like this:
 
-    &lt;page
+    <page
         name = "name of page"
         title = "Title text goes here"
         subtitle = "Subtitle text goes here"
-        &gt;
-    &lt;content&gt;
+        >
+    <content>
     Content HTML goes here
-    &lt;/content&gt;
-    &lt;/page&gt;
+    </content>
+    </page>
 
 When I design new XML languages like the above, I use entity attributes to hold single-line properties, and child entities to hold multi-line properties or properties that can occur more than once. It just seems more elegant than putting properties in child entities, since this implies those properties can occur many times. It does not make sense for a page to have more than one name, title, subtitle, or image in our model, so we define these as attributes of the page entity. The iMatix MOP tools use this style very heavily.
 
 Once we've defined a set of pages, how do we tie these together into a web site? Let's use a second model for the overall web site:
 
-    &lt;site copyright = "copyright statement goes here"&gt;
-    &lt;section name = "name of section"&gt;
-        &lt;page name = "name of page" /&gt; ...
-    &lt;/section&gt;...
-    &lt;/site&gt;
+    <site copyright = "copyright statement goes here">
+    <section name = "name of section">
+        <page name = "name of page" /> ...
+    </section>...
+    </site>
 
 I've defined a &lt;section&gt; tag that breaks the pages into groups. Now let's jump right in and make ourselves a web site. There's no better way to test a model than to try using it. As an example, I'll make a new web site for my local grocer, who has decided, finally, to go on-line.
 
-<A name="toc3-272" title="First Draft" />
+<A name="toc3-257" title="First Draft" />
 ### First Draft
 
 We'll make the web site as several XML files. This is a design choice. We could also make the site as a single large XML file. It's a trade-off between ease of use (a single file is easier in smaller cases) and scalability (it's not practical to edit a large site with hundreds of pages as a single file).
 
 To start with, we'll define the overall site like this:
 
-    &lt;?xml version = "1.0" ?&gt;
-    &lt;site
+    <?xml version = "1.0" ?>
+    <site
         copyright = "Copyright &#169; Local Grocer"
         script = "sitegen_1.gsl"
-        &gt;
-    &lt;section name = "Welcome"&gt;
-        &lt;page name = "index" /&gt;
-    &lt;/section&gt;
-    &lt;section name = "Products"&gt;
-        &lt;page name = "fruit" /&gt;
-        &lt;page name = "vegetables" /&gt;
-    &lt;/section&gt;
-    &lt;/site&gt;
+        >
+    <section name = "Welcome">
+        <page name = "index" />
+    </section>
+    <section name = "Products">
+        <page name = "fruit" />
+        <page name = "vegetables" />
+    </section>
+    </site>
 
 Note the first line, which defines the file as XML, and the 'script' tag, which tells GSL what script to run to process the data. We've defined three pages. Let's write very a simple version of each of these:
 
 Next, we will write three more short XML files as shown below. First the index page:
 
-    &lt;page
+    <page
         name = "index"
         title = "Local Grocer"
         subtitle = "Visit the Local Grocer"
-        &gt;
-    &lt;content&gt;
-    &lt;h3&gt;Close to you&lt;/h3&gt;
-    &lt;p&gt;We're just around the corner, if you live near by.&lt;/p&gt;
-    &lt;h3&gt;Always open&lt;/h3&gt;
-    &lt;p&gt;And if we're closed, just come back tomorrow.&lt;/p&gt;
-    &lt;h3&gt;Cheap and convenient&lt;/h3&gt;
-    &lt;p&gt;Much cheaper and easier than growing your own vegetables and fruit.&lt;/p&gt;
-    &lt;/content&gt;
-    &lt;/page&gt;
+        >
+    <content>
+    <h3>Close to you</h3>
+    <p>We're just around the corner, if you live near by.</p>
+    <h3>Always open</h3>
+    <p>And if we're closed, just come back tomorrow.</p>
+    <h3>Cheap and convenient</h3>
+    <p>Much cheaper and easier than growing your own vegetables and fruit.</p>
+    </content>
+    </page>
 
 Next, the fruit page:
 
-    &lt;page
+    <page
         name = "fruit"
         title = "Our Fruit Stand"
         subtitle = "Lucious Tropical Fruits"
-        &gt;
-    &lt;content&gt;
-    &lt;h3&gt;Always fresh&lt;/h3&gt;
-    &lt;p&gt;Just like it was plucked from the tree last month.&lt;/p&gt;
-    &lt;h3&gt;Special deal&lt;/h3&gt;
-    &lt;p&gt;Any five pieces of fruit, for the price of ten!&lt;/p&gt;
-    &lt;h3&gt;Money back if not satisfied&lt;/h3&gt;
-    &lt;p&gt;We'll give you your money back if we're not satisfied with it!&lt;/p&gt;
-    &lt;/content&gt;
-    &lt;/page&gt;
+        >
+    <content>
+    <h3>Always fresh</h3>
+    <p>Just like it was plucked from the tree last month.</p>
+    <h3>Special deal</h3>
+    <p>Any five pieces of fruit, for the price of ten!</p>
+    <h3>Money back if not satisfied</h3>
+    <p>We'll give you your money back if we're not satisfied with it!</p>
+    </content>
+    </page>
 
 and last the vegetable page:
 
-    &lt;page
+    <page
         name = "vegetables"
         title = "Our Vegetables"
         subtitle = "Healthy Organic Vegetables"
-    &gt;
-    &lt;content&gt;
-    &lt;h3&gt;100% organic vegetables&lt;/h3&gt;
-    &lt;p&gt;All vegetables made from cardon, oxygen, and hydrogen molecules
-    with trace elements.&lt;/p&gt;
-    &lt;h3&gt;Country fresh style&lt;/h3&gt;
-    &lt;p&gt;We don't know what that means, but it sounded nice!&lt;/p&gt;
-    &lt;h3&gt;Unique take-away concept&lt;/h3&gt;
-    &lt;p&gt;Now you can consume your vegetables in the comfort of your own home.&lt;/p&gt;
-    &lt;/content&gt;
-    &lt;/page&gt;
+    >
+    <content>
+    <h3>100% organic vegetables</h3>
+    <p>All vegetables made from cardon, oxygen, and hydrogen molecules
+    with trace elements.</p>
+    <h3>Country fresh style</h3>
+    <p>We don't know what that means, but it sounded nice!</p>
+    <h3>Unique take-away concept</h3>
+    <p>Now you can consume your vegetables in the comfort of your own home.</p>
+    </content>
+    </page>
 
 Finally, here is the first draft of the web generation script. It does not produce anything, it simply loads the web site data into an XML tree and then saves this (in a file called root.xml) that we can look at to see what live data the script is actually working with:
 
@@ -427,9 +412,9 @@ Finally, here is the first draft of the web generation script. It does not produ
     .template 0
      for section
         for page
-            ###  Load XML &lt;page&gt; data
+            ###  Load XML <page> data
             xml to section from "&#36;(page.name).xml"
-            ###  Delete old &lt;page&gt; tag
+            ###  Delete old <page> tag
             delete page
         endfor
      endfor
@@ -446,7 +431,7 @@ Finally, the script saves the whole XML tree to a file. If you want to try the n
 
 GSL looks for the file called 'site.xml'. When the script has run, take a look at root.xml. This shows you what we're going to work with to generate the real HTML.
 
-<A name="toc3-373" title="Inserting Variables" />
+<A name="toc3-358" title="Inserting Variables" />
 ### Inserting Variables
 
 When we generate output, we insert variable values into the generated text. This is very much like using shell variables.
@@ -474,7 +459,7 @@ lets us switch off automatic case conversion, using this instruction:
 
 This tells GSL, "variable names are case-sensitive, and do not convert variable values on output".
 
-<A name="toc3-401" title="Looping through Trees" />
+<A name="toc3-386" title="Looping through Trees" />
 ### Looping through Trees
 
 In our first draft we loaded each page into the XML tree and deleted the original page definition. That was this text:
@@ -502,7 +487,7 @@ We can add more templates - to produce other types of output - for the same mode
 
 And you'll see in later examples that we tend to write a single GSL file for each output we want to produce. In XNF - the tool we use for larger-scale code generation projects - these scripts are called "targets".
 
-<A name="toc3-429" title="Building the Output" />
+<A name="toc3-414" title="Building the Output" />
 ### Building the Output
 
 The HTML template looks like this:
@@ -510,10 +495,10 @@ The HTML template looks like this:
     .template 1
     .echo "Generating &#36;(page.name) page..."
     .output "&#36;(page.name).html"
-    &lt;!DOCTYPE...&gt;
-    &lt;html&gt;
+    <!DOCTYPE...>
+    <html>
        ...
-    &lt;/html&gt;
+    </html>
     .endtemplate
 
 Most of it is fairly straight-forward, though you do need to understand how XHTML and CSS work (and I'm not going to explain that here).
@@ -529,13 +514,13 @@ The template starts by setting template mode on. This means that any GSL command
 Let's look at the chunk of code that produces the site index. This is - in our version of the web site generator - a menu that is embedded into each page. The CSS stylesheet can place this menu anywhere on the page. Here is the GSL code that generates it:
 
     .for site.section
-    &lt;h3 class="menu_heading"&gt;&#36;(section.name)&lt;/h3&gt;
-    &lt;ul class="menu_item"&gt;
+    <h3 class="menu_heading">&#36;(section.name)</h3>
+    <ul class="menu_item">
     .   for page
-    &lt;li&gt;&lt;a class="menu_item"
-        href="&#36;(page.name).html"&gt;&#36;(page.title)&lt;/a&gt;&lt;/li&gt;
+    <li><a class="menu_item"
+        href="&#36;(page.name).html">&#36;(page.title)</a></li>
     .   endfor
-    &lt;/ul&gt;
+    </ul>
     .endfor
 
 The interesting thing here is that we say for site.section in order to iterate through the sections. The site. prefix is a parent scope name, it tells GSL "look for all sections in the current site". If we don't use the scope name, GSL would look for all sections in the current scope (the page) and find nothing. This is a common beginner's error.
@@ -562,15 +547,15 @@ Near the end of the template you see this construction:
     &#36;(content.string ())
     .endfor
 
-What is going on here? The answer is, we're grabbing the whole &lt;content&gt; block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
+What is going on here? The answer is, we're grabbing the whole &lt;content> block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
 
 The scope string() function returns a string that holds the XML value of the specified entity. For the index page, it returns this value (as a single string):
 
-    &lt;content&gt;&lt;h3&gt;Close to you&lt;/h3&gt;&lt;p&gt;We're just around the corner, if you live near by.&lt;/p&gt;&lt;h3&gt;Always open&lt;/h3&gt;&lt;p&gt;And if we're closed, just come back tomorrow.&lt;/p&gt;&lt;h3&gt;Cheap and convenient&lt;/h3&gt;&lt;p&gt;Much cheaper and easier than growing your own vegetables and fruit.&lt;/p&gt;&lt;/content&gt;
+    <content><h3>Close to you</h3><p>We're just around the corner, if you live near by.</p><h3>Always open</h3><p>And if we're closed, just come back tomorrow.</p><h3>Cheap and convenient</h3><p>Much cheaper and easier than growing your own vegetables and fruit.</p></content>
 
 When we enclose this in &#36;( and ), it writes the string to the current output file. Thus we generate the body of the web page.
 
-<A name="toc3-497" title="Putting it All Together" />
+<A name="toc3-482" title="Putting it All Together" />
 ### Putting it All Together
 
 In our first draft we read the XML data from several files and we constructed a single tree with all the data we needed to generate code. This two-pass approach is the way I recommend you construct all GSL code generators:
@@ -602,57 +587,57 @@ Here is the template for the HTML output.
     .###  This whole script runs in template mode.
     .#
     .template 1
-    &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
-    &lt;html&gt;
-    &lt;head&gt;
-      &lt;title&gt;&#36;(page.title)&lt;/title&gt;
-      &lt;link rel="stylesheet" href="default.css" type="text/css"/&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-      &lt;div id="left_container"&gt;
-        &lt;div id="logo_container"&gt;
-          &lt;a href="index.html"&gt;&lt;img id="logo" src="&#36;(page.name).jpg"/&gt;&lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div id="menu_container"&gt;
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <html>
+    <head>
+      <title>&#36;(page.title)</title>
+      <link rel="stylesheet" href="default.css" type="text/css"/>
+    </head>
+    <body>
+      <div id="left_container">
+        <div id="logo_container">
+          <a href="index.html"><img id="logo" src="&#36;(page.name).jpg"/></a>
+        </div>
+        <div id="menu_container">
     .for site.section
-          &lt;h3 class="menu_heading"&gt;&#36;(section.name)&lt;/h3&gt;
-          &lt;ul class="menu_item"&gt;
+          <h3 class="menu_heading">&#36;(section.name)</h3>
+          <ul class="menu_item">
     .   for page
-            &lt;li&gt;&lt;a class="menu_item" href="&#36;(page.name).html"&gt;&#36;(page.title)&lt;/a&gt;&lt;/li&gt;
+            <li><a class="menu_item" href="&#36;(page.name).html">&#36;(page.title)</a></li>
     .   endfor
-          &lt;/ul&gt;
+          </ul>
     .endfor
-          &lt;h3 class="menu_heading"&gt;Copyright&lt;/h3&gt;
-        &lt;/div&gt;
-        &lt;div id="copyright"&gt;
-          &lt;p&gt;&#36;(copyright)&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;h3 class="menu_heading"&gt; &lt;/h3&gt;
-      &lt;/div&gt;
-      &lt;div id="right_container"&gt;
-        &lt;div id="title_container"&gt;
-          &lt;h1 id="title"&gt;&#36;(page.title)&lt;/h1&gt;
-          &lt;h2 id="title"&gt;&#36;(page.subtitle)&lt;/h2&gt;
-        &lt;/div&gt;
-        &lt;div id="content_container"&gt;
-        &lt;!-- Page content --&gt;
+          <h3 class="menu_heading">Copyright</h3>
+        </div>
+        <div id="copyright">
+          <p>&#36;(copyright)</p>
+        </div>
+        <h3 class="menu_heading"> </h3>
+      </div>
+      <div id="right_container">
+        <div id="title_container">
+          <h1 id="title">&#36;(page.title)</h1>
+          <h2 id="title">&#36;(page.subtitle)</h2>
+        </div>
+        <div id="content_container">
+        <!-- Page content -->
     .for content
         &#36;(content.string ())
     .endfor
-        &lt;!-- End page content --&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/body&gt;
-    &lt;/html&gt;
+        <!-- End page content -->
+        </div>
+      </div>
+    </body>
+    </html>
     .endtemplate
 
 To build the final web site, make sure the site.xml specifies the correct script:
 
-    &lt;site
+    <site
         copyright = "Copyright &#169; Local Grocer"
         script = "sitegen.gsl"
-        &gt;
+        >
 
 And then build the web site using the same command as previously:
 
@@ -664,12 +649,12 @@ The HTML template and the CSS file are made for each other. Note that:
 * The colors and layout of the pages is defined in the CSS stylesheet.
 * The menu is generated into each page.
 
-<A name="toc3-591" title="Exercise for the Reader" />
+<A name="toc3-576" title="Exercise for the Reader" />
 ### Exercise for the Reader
 
 It's an interesting exercise to re-implement our code generator using other code generation tools. For example, if you're familiar with XSLT, try building the web site generator using that. You may find you need to cheat, for example putting the whole web site model into a single file.
 
-<A name="toc3-596" title="Extending the Model" />
+<A name="toc3-581" title="Extending the Model" />
 ### Extending the Model
 
 I've shown you how to design a simple model, and bring it to life using GSL. This web site generator is actually based on one that I use for some of my own web sites. You can extend this model in many directions, for instance:
@@ -680,7 +665,7 @@ I've shown you how to design a simple model, and bring it to life using GSL. Thi
 
 But most of all, the point of this example is to teach you how to use GSL in your daily work. As you've seen, it's easy to create models, and it's easy to change them. This is the secret of code generation - you don't need to get it right the first time. Models are hard to get right. So go ahead and experiment, since GSL makes it cheap to change your mind.
 
-<A name="toc2-607" title="Model-Oriented Programming" />
+<A name="toc2-592" title="Model-Oriented Programming" />
 ## Model-Oriented Programming
 
 This is article is aimed at the professional programmer. I'm going to attack a complex subject, something that few people know about. It's a new way of programming called "model-oriented programming". I'm not going to ask you to throw out your programming languages or tools. MOP works as a layer on top of everything you know today. I am going to ask you to rethink what it means to "write a program", and to see that most of the code you write could be better written by robots, meaning other programs. And I'm going to teach you how to design and make such robots.
@@ -691,7 +676,7 @@ In this article you will learn what MOP is, and why we invented it. I'll also ex
 
 Be warned. This might hurt a little. All I can promise is that if you learn to use MOP you will use for the rest of your life, and wonder how you ever worked without it.
 
-<A name="toc3-618" title="Becoming a Very Good Programmer" />
+<A name="toc3-603" title="Becoming a Very Good Programmer" />
 ### Becoming a Very Good Programmer
 
 My name is Pieter Hintjens, and I am a programmer. My team and I build infrastructure software - frameworks, middleware, servers, etc. I've learned a few things about software since I wrote my first small program in 1981 or so. First: if it's not impossible, it's not worth doing. Second: software design is about overcoming human limitations, not technical ones. Third: very few people can actually design good, useful, large-scale software systems, which for me is the goal of programming.
@@ -705,7 +690,7 @@ In my experience there are at least four main aspects to becoming a very good pr
 
 Of course you also need talent, opportunity, and guidance, but a focus on portability, obsessive tool building, and years of practice can turn talent into real skill.
 
-<A name="toc3-632" title="Tools that Write Software" />
+<A name="toc3-617" title="Tools that Write Software" />
 ### Tools that Write Software
 
 In this article I'll focus on the second part, making tools. There are quite a few metaphors for software tools. For example, the Unix metaphor consists of tools as filters: read some data, do some work, produce some output. It's a simple model that lets you chain together tools. Linux has many tools that work as filters.
@@ -720,7 +705,7 @@ It's worth comparing HTML to a language like PostScript, also used to get docume
 
 I sometimes use a tool that turns HTML pages into PostScript documents. Now, as a writer, I can use HTML to write my documents and then push a button to turn this HTML into PostScript. What I am actually doing is converting a descriptive language into a programming language. A HTML-to-PostScript converter lets millions of non-technical people suddenly produce perfect programs at will. Millions of people who never think of themselves as "programmers" can write PostScript, via higher-level abstractions like HTML. And the PostScript programs they produce are much better than an average PostScript programmer can write in a reasonable time.
 
-<A name="toc3-647" title="Abstractions and Modeling Languages" />
+<A name="toc3-632" title="Abstractions and Modeling Languages" />
 ### Abstractions and Modeling Languages
 
 HTML is in fact a "modeling language", a language used to describe some system or entity. Modeling languages are very interesting because they provide levels of abstraction that programming languages cannot even conceive of. Abstraction lets you define and use high-level concepts like, "this is a document title", without having to specify what that actually means, on paper or on the screen. Abstraction relies on concepts that have enough meaning to be useful, without being too detailed. For example, "the web" is a useful abstraction for "various URL formats, protocols for transferring such resources, clients and servers that implement such protocols, and collections of resources that are thus interconnected".
@@ -739,7 +724,7 @@ For naive users, a model is a visual thing, but for us programmers, a textual mo
 
 Libero took me about three months to build, time that I've won back on many projects. In a general sense, Libero is like the HTML-to-PostScript convertor. It takes a definition written in an abstract modeling language and turns that into code that makes the model come to life. The generated code is always perfect, and as invisible as the PostScript code.
 
-<A name="toc3-666" title="Leverage to Move Mountains" />
+<A name="toc3-651" title="Leverage to Move Mountains" />
 ### Leverage to Move Mountains
 
 I'm coming to the point of this article. This kind of model-to-code tool is very useful. It gives you leverage. That is, the ability to move mountains. It is much easier, faster, cheaper to change an abstract model than it is to change the code that makes it work. Look again at a PostScript program and now imagine the work needed to change a H1 item to H2.
@@ -758,7 +743,7 @@ I've said that part of being a world-class programmer is the ability to make use
 
 If you've ever studied how compilers work, it's much the same problem. What I'm talking about is building compilers for modeling languages.
 
-<A name="toc3-685" title="Case Study - OpenAMQ" />
+<A name="toc3-670" title="Case Study - OpenAMQ" />
 ### Case Study - OpenAMQ
 
 Modeling languages and programming languages can overlap. For example, objects are a type of model. The biggest problem with putting models into the programming language is that for real, large problems, we need many different types of model, and these cannot be expressed a single language. Languages that attempt this become too complex to work with. Imagine attempting to describe a hierarchical document using objects, and compare this to writing some HTML by hand.
@@ -788,7 +773,7 @@ Let me take you through the main parts of our architecture:
 
 These tools - which are included in the OpenAMQ distribution's `base2` project - are somewhat unusual. The techniques of code generation are not well understood, and no teams have ever pushed these techniques as far as we have. I don't promise that it will be easy to understand - abstraction can be hard to grasp - but once you "get it", you'll be able to produce tools that solve your programming problems ten times faster than using any other technique.
 
-<A name="toc3-715" title="Other Model-Driven Architectures" />
+<A name="toc3-700" title="Other Model-Driven Architectures" />
 ### Other Model-Driven Architectures
 
 Using models as the basis for designing applications is not new. I've worked with many tools that promised "an end to programming" through the magic of point and click modeling. Some of these - such as UML (Universal Modeling Language) - have become industry standards. In my experience, these tools do not work except as expensive and slow documentation tools.
@@ -801,7 +786,7 @@ Classic MDA tools attempt to do everything with a single modeling language. This
 
 To succeed with a model-driven architecture, you need a way to build, test, and improve a variety of different models, each solving one specific domain. What you need is not a single, do-it-all modeling language, but a technology that lets you build arbitrary modeling languages.
 
-<A name="toc3-728" title="Why use MOP?" />
+<A name="toc3-713" title="Why use MOP?" />
 ### Why use MOP?
 
 Despite the trendy name, MOP is really about solving real problems in the most efficient possible way. Let's look at the main advantages my team gets from using MOP:
@@ -826,7 +811,7 @@ So, MOP is best used in small, skilled, and long-lasting teams (like iMatix) tha
 
 The sad thing in the software business is that few people actually understand that better techniques save money. Still, there is no pleasure, as a programmer, in writing bad code using bad tools. So, learn to use MOP, then convince your bosses that they will save money, right away, by using this. Everyone wins.
 
-<A name="toc3-753" title="A Short History of Code Generation" />
+<A name="toc3-738" title="A Short History of Code Generation" />
 ### A Short History of Code Generation
 
 To understand and use MOP you need to appreciate code generation as a technology. I first started writing code generators in 1985, and I've seen these tools evolve through several stages (in my own work, but also in the general domain):
@@ -841,7 +826,7 @@ To understand and use MOP you need to appreciate code generation as a technology
 
 Our first versions of GSL were born in 1995. We moved onto XML in 1997. The problem of writing the code generator scripting language (GSL) is largely solved, and at iMatix we don't consider this a priority task. At some point we want to rewrite GSL to be a lot faster, but what interests us now is using MOP techniques to solve difficult problems.
 
-<A name="toc3-768" title="Myths about Code Generation" />
+<A name="toc3-753" title="Myths about Code Generation" />
 ### Myths about Code Generation
 
 Code generators are often seen as a technological burden, rather than useful tools. I suspect that this is because primitive code generators (which covers most code generators) are so painful to use. Some of the common myths about code generation are:
@@ -858,7 +843,7 @@ Code generators are often seen as a technological burden, rather than useful too
 
 GSL solves most of these problems, and even a beginner can make useful code generators for interfaces, database management, XNF solves the last problem - it applies MOP to MOP itself, letting us make sophisticated code generators much more rapidly than by hand.
 
-<A name="toc3-785" title="The Correctness of Generated Code" />
+<A name="toc3-770" title="The Correctness of Generated Code" />
 ### The Correctness of Generated Code
 
 When you use a tool that produces large amounts of code for you, you will naturally ask, "how do I know the code is correct". You need to be able to trust your tools.
@@ -875,15 +860,15 @@ In any programming environment, the key to producing good code is to test heavil
 
 Since we use the MOP approach to build the code generators themselves, we get very good code generators, cheaply. It is the same concept as a "self-hosting" compiler. On many projects where we've used MOP, I'm able to deliver hundreds of thousands of lines of code, and say, with confidence, "there is not a single bug in this code".
 
-<A name="toc2-802" title="Reference" />
+<A name="toc2-787" title="Reference" />
 ## Reference
 
-<A name="toc3-805" title="Command-line Syntax" />
+<A name="toc3-790" title="Command-line Syntax" />
 ### Command-line Syntax
 
 To run GSL, use the following syntax
 
-    gsl -&lt;option&gt; ... -&lt;attr&gt;[:&lt;value&gt;] ... filename ...
+    gsl -<option> ... -<attr>[:<value>] ... filename ...
 
 If the filename has no extension, GSL tries to find an XML file with that name, or with the extension `.xml' (recognised by the &lt;?xml... tag on the first line).  If it finds no XML file it tries to find a file with that name or the extension `.gsl', which it interprets as a GSL file.
 
@@ -895,32 +880,32 @@ Command-line attributes are loaded with an XML file and are available to a scrip
 
 If GSL found an XML file, it loads it, then looks for an attribute named script of the top-level item.  This name is used to find a GSL script to interpret.  If GSL found a GSL file, it begins interpreting it without loading an XML file.
 
-<A name="toc3-822" title="Concepts" />
+<A name="toc3-807" title="Concepts" />
 ### Concepts
 
-<A name="toc4-825" title="Scalar Data Types" />
+<A name="toc4-810" title="Scalar Data Types" />
 #### Scalar Data Types
 
 GSL recognises two scalar data types: numeric and string.  It generally makes no formal distinction between them; if a value looks numeric then it is treated as such, otherwise it is treated as a string.  If strict typing is required, the type conversion functions `conv.number' and `conv.string' can be used.
 
-<A name="toc4-830" title="Structured Data Types" />
+<A name="toc4-815" title="Structured Data Types" />
 #### Structured Data Types
 
 GSL also understands structured data types.  Structured data types are modelled on XML; they have a name, attributes and children.  Attributes and children may be of a scalar type or (unlike XML) a structured type. An attribute effectively represents a 1:1 link while children represent 1:n links.
 
 Structured data types are used to represent underlying data, and the attributes and children are based on their structure.  The archetypal case is XML data; its particularities mean that children are also XML items, attributes may only have scalar values while both children and attributes may have any name.
 
-<A name="toc4-837" title="Constants" />
+<A name="toc4-822" title="Constants" />
 #### Constants
 
 Constants express a constant value of one of the two scalar types. A string constant is specified with either single- or double-quotes as delimiters, for example: "ABC".   String constants may continue over several source lines.  The line break is considered part of the string constant, unless the last character in the line is a single backslash (`\') in which case neither the backslash nor the line break is part of the string.  A numeric constant is a simple number with an optional sign and optional decimal characters, for example 123 and -0.3.
 
-<A name="toc4-842" title="Scopes" />
+<A name="toc4-827" title="Scopes" />
 #### Scopes
 
 According to The Free On-line Dictionary of Computing, &copy; 1993-2004 Denis Howe:
 
-&gt; The scope of an identifier is the region of a program source within which it represents a certain thing. This usually extends from the place where it is declared to the end of the smallest enclosing block (begin/end or procedure/function body). An inner block may contain a redeclaration of the same identifier in which case the scope of the outer declaration does not include (is "shadowed" or "occluded" by) the scope of the inner.
+> The scope of an identifier is the region of a program source within which it represents a certain thing. This usually extends from the place where it is declared to the end of the smallest enclosing block (begin/end or procedure/function body). An inner block may contain a redeclaration of the same identifier in which case the scope of the outer declaration does not include (is "shadowed" or "occluded" by) the scope of the inner.
 
 GSL extends this usage so that a scope also has an alias, or name.  When we refer to a scope, we generally do so by its alias rather than by the region in the script where it is defined.
 
@@ -958,7 +943,7 @@ The fourth predefined scope is called 'root'.  It refers to an XML item also cal
 
 The fifth and final predefined scope is the top-level XML item from the XML source file, if one was specified.
 
-<A name="toc4-885" title="Data Specifiers" />
+<A name="toc4-870" title="Data Specifiers" />
 #### Data Specifiers
 
 A data specifier is the means by which you access an item of data.  GSL provides a variety of ways to access a particular piece of data.
@@ -997,11 +982,11 @@ What if, in the above example, the scope 'global' defined an attribute 'name', b
 
 Look at the example:
 
-    global.name = xml.load_string ("&lt;A value = \"2\"&gt;Hello&lt;/A&gt;")
+    global.name = xml.load_string ("<A value = \"2\">Hello</A>")
     echo name
     echo global.name.value
 
-The first line loads the XML string &lt;A name = "2"&gt;Hello&lt;/A&gt; (note the backslashes preceeding the quotation marks inside the string) into the attribute 'name' of the global scope.  The second line prints the flattened value of the XML, while the third line outputs the attribute 'value' of the attribute 'name' of the scope 'global'.  Note that the use or non-use of the scope 'global' makes no difference in this case because no innermore scopes defined an attribute 'name'.  The output of this GSL script is:
+The first line loads the XML string &lt;A name = "2">Hello&lt;/A> (note the backslashes preceeding the quotation marks inside the string) into the attribute 'name' of the global scope.  The second line prints the flattened value of the XML, while the third line outputs the attribute 'value' of the attribute 'name' of the scope 'global'.  Note that the use or non-use of the scope 'global' makes no difference in this case because no innermore scopes defined an attribute 'name'.  The output of this GSL script is:
 
     2004/09/20 16:36:25: gsl/4 M: Hello
     2004/09/20 16:36:25: gsl/4 M: 2
@@ -1014,15 +999,15 @@ Notice that this form resembles a request for an attribute with no name; this is
 
 **Navigating Children**
 
-Just as the period ('.') accesses an attribute of a structure, the member ('-&gt;') construct accesses a child.  For instance
+Just as the period ('.') accesses an attribute of a structure, the member ('->') construct accesses a child.  For instance
 
-    global.parent-&gt;child
+    global.parent->child
 
 accesses the (first) child called 'child' of the structure referred to by the attribute 'parent' of the global scope.
 
 A more sophisticated version of this structure exists:
 
-    global.parent-&gt; child (value = "2")
+    global.parent-> child (value = "2")
 
 accesses the (first) child called 'child' for which the condition 'value = "2"' is TRUE.
 
@@ -1030,7 +1015,7 @@ The detail of how this works is that a scope called 'child' is opened for the du
 
 As a final detail, the scope opened during the evaluation of this expression may clash with other scopes called 'child'.  For this reason, the following expression may be used:
 
-    global.parent-&gt; child (baby.value = child.value, baby)
+    global.parent-> child (baby.value = child.value, baby)
 
 The second argument 'baby' indicates that the name of the scope created to evaluate the condition should be 'baby'.
 
@@ -1046,7 +1031,7 @@ GSL has two modes of handling the case of identifiers.  In the default mode, GSL
 
 To change modes, set the value of the identifier `ignorecase' in the gsl scope to 0 or 1.  Eg: `[gsl].ignorecase = 0'
 
-<A name="toc4-973" title="Expressions" />
+<A name="toc4-958" title="Expressions" />
 #### Expressions
 
 GSL expressions are much the same as expressions in other high-level programming languages.  They include the following operators:
@@ -1054,8 +1039,8 @@ GSL expressions are much the same as expressions in other high-level programming
 * Multiplicative: *, /
 * Additive: +, -
 * If/Default: ??, ?
-* Comparative: =, &lt;&gt;, &gt;, &gt;=, &lt;, &lt;=
-* Safe comparative: ?=, ?&lt;&gt;, ?&gt;, ?&gt;=, ?&lt;, ?&lt;=
+* Comparative: =, <>, >, >=, <, <=
+* Safe comparative: ?=, ?<>, ?>, ?>=, ?<, ?<=
 * Logical: |, &, !
 
 Operator precedence is standard (multiplicative, additive, if/default, comparative, logical) and brackets are treated as you would expect.
@@ -1070,11 +1055,11 @@ since the second operator is not evaluated when X is undefined.
 
 The default operator allows undefined expressions to be replaced by another expression.  The value of
 
-    &lt;expr1&gt; ? [&lt;expr2&gt;]
+    <expr1> ? [<expr2>]
 
-is equal to the value of &lt;expr1&gt;, if defined; otherwise it is equal to the value of &lt;expr2&gt;, whether or not the latter is defined.  If the second operand &lt;expr2&gt; is omitted then the evaluation of the expression is `safe', that is, GSL does not object (when this is feasible) to the result of the expression being undefined.  This feature can be used in symbol definitions and substitutions to make GSL accept an undefined expression.  See the description of these instructions for details.
+is equal to the value of &lt;expr1>, if defined; otherwise it is equal to the value of &lt;expr2>, whether or not the latter is defined.  If the second operand &lt;expr2> is omitted then the evaluation of the expression is `safe', that is, GSL does not object (when this is feasible) to the result of the expression being undefined.  This feature can be used in symbol definitions and substitutions to make GSL accept an undefined expression.  See the description of these instructions for details.
 
-The safe comparative operators return the same result as their equivalent comparative operators when both operands are defined.  If one or both operator is undefined, the safe operators return FALSE while the normal operators produce an error.  Notice that `a ?&lt;&gt; b' returns TRUE if both a and b are defined and they are not equal and FALSE otherwise.
+The safe comparative operators return the same result as their equivalent comparative operators when both operands are defined.  If one or both operator is undefined, the safe operators return FALSE while the normal operators produce an error.  Notice that `a ?&lt;> b' returns TRUE if both a and b are defined and they are not equal and FALSE otherwise.
 
 The if operator returns the second operand if the first operand evaluates to a non-zero number.  Otherwise the result is undefined.  Thus an expression such as
 
@@ -1098,7 +1083,7 @@ Generally, additive, multiplicative and logical operators only apply to numeric 
 
 At almost any place in a GSL script, you may use a substitute construct in the place of literal text.  The format of a substitute construct is:
 
-    &#36;( &lt;expression&gt; [% format] [: pretty-print] )
+    &#36;( <expression> [% format] [: pretty-print] )
 
 The construct is replaced by the value of the expression, output according to the format and pretty-print modifiers, if they exist.  The order of the format and pretty-print modifiers is not important.
 
@@ -1183,7 +1168,7 @@ Some examples:  Assume the identifier IDENT has the value `A few words from our 
 
 **What You Can Substitute**
 
-A substitution can appear at any place in a literal string (template line or string constant) or as an operand in an expression.  It can also replace part or all of a single identifier in a data specification, but not a point (`.') or member construct (`-&gt;').
+A substitution can appear at any place in a literal string (template line or string constant) or as an operand in an expression.  It can also replace part or all of a single identifier in a data specification, but not a point (`.') or member construct (`->').
 
 Some examples:  Assume the identifier IDENT has the value `NUM' and identifer NUM has the value `1'.
 
@@ -1199,10 +1184,10 @@ Some examples:  Assume the identifier IDENT has the value `NUM' and identifer NU
 &#36;(&#36;(ident))+1
 : `2'
 
-<A name="toc3-1126" title="Internals" />
+<A name="toc3-1111" title="Internals" />
 ### Internals
 
-<A name="toc4-1129" title="Internal Variables" />
+<A name="toc4-1114" title="Internal Variables" />
 #### Internal Variables
 
 GSL has a series of internal variables, described below, that influence its behaviour in various ways.  These variables are held in the scope `gsl' and can be modified by an instruction of the form:
@@ -1213,30 +1198,30 @@ You can also set the initial value of these variables when starting GSL by using
 
     gsl -xxxxx:yyyy somescript.gsl
 
-<A name="toc4-1140" title="Template and Script Modes" />
+<A name="toc4-1125" title="Template and Script Modes" />
 #### Template and Script Modes
 
-Lines of GSL may be either script lines or template lines.  GSL has two different modes for distinguishing script from template lines.  In template mode, lines are assumed to be template lines unless they begin with a period (`.').  In script mode, lines are assumed to be script lines unless they begin with a greater-than symbol (`&gt;').
+Lines of GSL may be either script lines or template lines.  GSL has two different modes for distinguishing script from template lines.  In template mode, lines are assumed to be template lines unless they begin with a period (`.').  In script mode, lines are assumed to be script lines unless they begin with a greater-than symbol (`>').
 
 GSL starts in one of these modes, depending on the manner in which is was invoked.  If it was invoked using an XML file as an argument, it begins in template mode as it is assumed that the XML file is to be used as data for creating an output file.  If GSL was invoked using a GSL gile as an argument, it begins in script mode.
 
 You can change between template and script mode with the `template' and `endtemplate' commands.  See the description of these commands below for details.
 
-<A name="toc4-1149" title="Template Lines" />
+<A name="toc4-1134" title="Template Lines" />
 #### Template Lines
 
 The simplest template line is just text, which is copied verbatim to the current output file.  If no output file has been opened, or if the last output file has been closed, the output is copied to the standard output.
 
 The backslash ('\') serves several special functions in a template line.  Firstly, if the last character of an template line is a backslash then the line is output with no line terminator; otherwise a line terminator follows the template line.  Secondly, a backslash introduces one of three special character sequences: '\n', '\r' and '\t' which are replaced by a line feed, carriage return and a tabulation character (TAB) respectively.  Thirdly, a backslash followed by and other character is replaced by that character; this allows characters which would normally be interpreted as script commands to be output literally.
 
-<A name="toc4-1156" title="Script Lines" />
+<A name="toc4-1141" title="Script Lines" />
 #### Script Lines
 
 The script commands are described below.
 
 If a script command line ends with a backslash (`\') then the following script line is treated as a continuation of the current line.
 
-<A name="toc4-1163" title="Comments" />
+<A name="toc4-1148" title="Comments" />
 #### Comments
 
 There are three ways to include comments in GSL scripts.  The first is to place a hyphen (`-') as the first character of a script line, or following the point (`.') in a template line.  The second way is to place a hash (`#') after a GSL command.  Any characters following the hyphen are ignored by GSL.  The third way is to enclose comment text (which may continue over more than one line) inside comment markers (`/*' and `*/') just as in C.  However if GSL finds these characters in a template line (but not inside a substitution) it assumes that they are destined for output, so does not treat them as a comment.
@@ -1254,12 +1239,12 @@ Examples:
 
     &#36;("but "/* this is */)
 
-<A name="toc4-1181" title="Ignorecase" />
+<A name="toc4-1166" title="Ignorecase" />
 #### Ignorecase
 
 GSL has two modes which influence case-sensitivity of identifier names. In the first mode (ignore-case), GSL is case-insensitive regarding identifier names and instead as a guide to modifying the output string, as described above ('Case Sensitivity').  In the second mode (case-sensitive), GSL treats the case of identifier names as significant.  You can change the behaviour by setting the value of the attribute 'ignorecase' in the scope 'gsl' to 1 for ignore case and 0 for case sensitivity.
 
-<A name="toc4-1186" title="Shuffle" />
+<A name="toc4-1171" title="Shuffle" />
 #### Shuffle
 
 GSL can help to keep code neat by enlarging or shrinking white space so that column numbers match as far as possible between the script and the output file.  For instance, in the value of the identifier X is ABCDEF then:
@@ -1290,17 +1275,17 @@ evaluates to
 
 Shuffle can cause problems in some cases, for example when outputting literal text where the size of white space is important.  In this case shuffle should be disabled by setting the value to zero.
 
-<A name="toc4-1217" title="COBOL" />
+<A name="toc4-1202" title="COBOL" />
 #### COBOL
 
 GSL helps you make neat COBOL code by automatically filling the first six characters of each line with the four-digit line number followed by two zeroes.  To enable this function set the value of the attribute 'cobol` in the gsl scope to 1.
 
-<A name="toc4-1222" title="Line Terminators" />
+<A name="toc4-1207" title="Line Terminators" />
 #### Line Terminators
 
 GSL uses as its line terminator the value of of the attribute 'terminator' of the gsl scope.  The default value is "\n" but it could also be set to "\r\n", for example.
 
-<A name="toc4-1227" title="Arguments" />
+<A name="toc4-1212" title="Arguments" />
 #### Arguments
 
 If GSL is invoked with a `-a' switch, all arguments following the first are treated as arguments to the first script, rather than as further arguments to GSL, as would otherwise be the case.  So if you type:
@@ -1316,7 +1301,7 @@ or in a loop:
     n = 1
     echo switches.arg&#36;(n)
 
-<A name="toc4-1243" title="Predefined Identifiers" />
+<A name="toc4-1228" title="Predefined Identifiers" />
 #### Predefined Identifiers
 
 There are some identifiers whose value is maintained by GSL in the global space referred to by the predefined scopes `gsl' and `global'.  They are defined as attributes of the global item.
@@ -1342,10 +1327,10 @@ version
 switches
 : A symbol table holding all the command-line switches present when GSL was invoked.
 
-<A name="toc3-1269" title="Built-In Functions" />
+<A name="toc3-1254" title="Built-In Functions" />
 ### Built-In Functions
 
-<A name="toc4-1272" title="conv" />
+<A name="toc4-1257" title="conv" />
 #### conv
 
     Class: Conversion Functions
@@ -1354,7 +1339,7 @@ switches
         Function: conv . ord (arg)
         Function: conv . string (arg)
 
-<A name="toc4-1281" title="diag" />
+<A name="toc4-1266" title="diag" />
 #### diag
 
     Class: Diagnostic Functions
@@ -1367,7 +1352,7 @@ switches
         Function: diag . animate (value)
         Function: diag . console_set_mode (mode)
 
-<A name="toc4-1294" title="environment" />
+<A name="toc4-1279" title="environment" />
 #### environment
 
     Class: Environment Functions
@@ -1375,7 +1360,7 @@ switches
         Function: env . set (name,[value])
 
 
-<A name="toc4-1302" title="fileio" />
+<A name="toc4-1287" title="fileio" />
 #### fileio
 
     Class: Directory
@@ -1404,15 +1389,15 @@ switches
     Class: Directory
 
     Class: File
-        Function: &lt;file entry&gt; . open ([mode],[error])
-        Function: &lt;file entry&gt; . read ([error])
-        Function: &lt;file entry&gt; . write (string,[error])
-        Function: &lt;file entry&gt; . close ([error])
-        Function: &lt;file entry&gt; . tell ([error])
-        Function: &lt;file entry&gt; . seek ([offset],[error])
+        Function: <file entry> . open ([mode],[error])
+        Function: <file entry> . read ([error])
+        Function: <file entry> . write (string,[error])
+        Function: <file entry> . close ([error])
+        Function: <file entry> . tell ([error])
+        Function: <file entry> . seek ([offset],[error])
 
 
-<A name="toc4-1339" title="gsl control" />
+<A name="toc4-1324" title="gsl control" />
 #### gsl control
 
     Class: GSL Control Class
@@ -1426,7 +1411,7 @@ switches
             its output is returned as the result of this function. Uses the
             current template mode unless over-ridden by the optional argument.
 
-<A name="toc4-1353" title="math" />
+<A name="toc4-1338" title="math" />
 #### math
 
     Class: Math Functions
@@ -1455,13 +1440,13 @@ switches
         Function: math . acosh (parm)
         Function: math . atanh (parm)
 
-<A name="toc4-1382" title="regexp" />
+<A name="toc4-1367" title="regexp" />
 #### regexp
 
     Class: Regular Expression Functions
         Function: regexp . match (pattern,subject,[match])
 
-<A name="toc4-1388" title="process management" />
+<A name="toc4-1373" title="process management" />
 #### process management
 
     Class: Process
@@ -1471,24 +1456,24 @@ switches
                 Returns the process object.
 
     Class: Process handle
-        Function: &lt;proc handle&gt; . setenv (name,[value])
+        Function: <proc handle> . setenv (name,[value])
             Sets an environment variable for the process.  Can only be called before
                 the process is started with proc_handle.run ()
 
-        Function: &lt;proc handle&gt; . getenv (name)
+        Function: <proc handle> . getenv (name)
             Gets an environment variable from the process.
 
-        Function: &lt;proc handle&gt; . run ([error])
+        Function: <proc handle> . run ([error])
             Runs a process created with proc.create ()
                 Returns -1 if there was an error creating the object.  Also places an
                 error message into the parameter error.
 
-<A name="toc4-1410" title="script" />
+<A name="toc4-1395" title="script" />
 #### script
 
     Class: GSL Script Line
 
-<A name="toc4-1415" title="socket" />
+<A name="toc4-1400" title="socket" />
 #### socket
 
     Class: Socket
@@ -1496,12 +1481,12 @@ switches
         Function: sock . connect ([host],service,[timeout],[error])
 
     Class: Socket handle
-        Function: &lt;sock handle&gt; . accept ([timeout],[error])
-        Function: &lt;sock handle&gt; . close ([timeout],[error])
-        Function: &lt;sock handle&gt; . read (buffer,[minimum],[timeout],[error])
-        Function: &lt;sock handle&gt; . write (buffer,[timeout],[error])
+        Function: <sock handle> . accept ([timeout],[error])
+        Function: <sock handle> . close ([timeout],[error])
+        Function: <sock handle> . read (buffer,[minimum],[timeout],[error])
+        Function: <sock handle> . write (buffer,[timeout],[error])
 
-<A name="toc4-1428" title="string" />
+<A name="toc4-1413" title="string" />
 #### string
 
     Class: String Functions
@@ -1526,12 +1511,12 @@ switches
         Function: string . soundex (string)
         Function: string . cntch (string,value)
 
-<A name="toc4-1453" title="symb" />
+<A name="toc4-1438" title="symb" />
 #### symb
 
     Class: Symbol
 
-<A name="toc4-1458" title="thrd" />
+<A name="toc4-1443" title="thrd" />
 #### thrd
 
     Class: Thread
@@ -1556,19 +1541,19 @@ switches
                 arbitrary values from the message into successive parameters.
 
     Class: Thread
-        Function: &lt;remote thread&gt; . send ()
+        Function: <remote thread> . send ()
             Sends a message with an arbitrary number of arguments to the thread.
 
     Class: Thread
-        Function: &lt;child thread&gt; . interrupt ()
+        Function: <child thread> . interrupt ()
             Shuts down the thread.
-        Function: &lt;child thread&gt; . send ()
+        Function: <child thread> . send ()
             Sends a message with an arbitrary number of arguments to the thread.
 
     Class: Thread
-        Function: &lt;parsed item&gt; . run ([error])
+        Function: <parsed item> . run ([error])
 
-<A name="toc4-1495" title="time" />
+<A name="toc4-1480" title="time" />
 #### time
 
     Class: Time Functions
@@ -1583,7 +1568,7 @@ switches
         Function: date . picture ([date],[picture])
         Function: date . number (date)
 
-<A name="toc4-1510" title="XML" />
+<A name="toc4-1495" title="XML" />
 #### XML
 
     Class: XML
@@ -1608,38 +1593,38 @@ switches
                 parameter 'error' and in the XML thread context.
 
     Class: XML item
-        Function: &lt;XML item&gt; . deleted ()
+        Function: <XML item> . deleted ()
             Returns TRUE if the XML item has been deleted.
-        Function: &lt;XML item&gt; . prev ()
+        Function: <XML item> . prev ()
             Returns the previous XML item.
-        Function: &lt;XML item&gt; . string ()
+        Function: <XML item> . string ()
             Returns the XML item formatted as a string.
-        Function: &lt;XML item&gt; . load_string (string,[error])
+        Function: <XML item> . load_string (string,[error])
             Loads the supplied string as a child of the item.
                 Returns a pointer to the (first) resulting XML item or undefined if there
                 was an error.  In the latter case, an error messa   ge is placed in the
                 parameter 'error' and in the XML thread context.
-        Function: &lt;XML item&gt; . load_file (filename,[error])
+        Function: <XML item> . load_file (filename,[error])
             Loads the file with the supplied name as a child of the item.
                 Returns a pointer to the (first) resulting XML item or undefined if there
                 was an error.  In the latter case, an error message is placed in the
                 parameter 'error' and in the XML thread context.
-        Function: &lt;XML item&gt; . save (filename,[error])
+        Function: <XML item> . save (filename,[error])
             Saves the XML item to a file with the given name.  Any file errors are
                 places in the parameter 'error' and in the XML thread context.  Returns
                 zero if no error occurred, errno otherwise.
 
     Class: XML value
 
-<A name="toc3-1558" title="Script Commands" />
+<A name="toc3-1543" title="Script Commands" />
 ### Script Commands
 
-<A name="toc4-1561" title="Output File Manipulation" />
+<A name="toc4-1546" title="Output File Manipulation" />
 #### Output File Manipulation
 
 **.output**
 
-    .output &lt;filename&gt;
+    .output <filename>
 
 Closes the current output file, if one is open, and opens a new one.
 
@@ -1652,7 +1637,7 @@ Where FILENAME is an identifier whose value is the desired file name.
 
 **.append**
 
-    .append &lt;filename&gt;
+    .append <filename>
 
 Closes the current output file, if one is open, and opens a previously existing one and prepares to extend it. See the description of the output command for examples.
 
@@ -1664,7 +1649,7 @@ Closes the current output file, if one is open.
 
 **.literal**
 
-    .literal [ from &lt;filename&gt; | " &lt;text&gt; " | &lt;&lt; &lt;terminator&gt; ]
+    .literal [ from <filename> | " <text> " | << <terminator> ]
 
 Copies text directly to the output file, without substition.  The text can come from another file, a GSL expression, or from lines in the script, ending with a line beginning with the specified terminator.
 
@@ -1674,18 +1659,18 @@ Examples:
 
     .literal "whatever you want"
 
-    .literal &lt;&lt; .endliteral
+    .literal << .endliteral
     Lines are now copied without substitution of
     things like &#36;(abc).
     .endliteral
 
-<A name="toc4-1606" title="Control Structures" />
+<A name="toc4-1591" title="Control Structures" />
 #### Control Structures
 
 **.for**
 
-    .for [[&lt;data-specifier&gt;] .] &lt;name&gt; [as &lt;alias&gt; | noalias] [nostack] [where &lt;expr&gt;] [by &lt;expr&gt;]
-    .for  [&lt;data-specifier&gt;] .         [as &lt;alias&gt; | noalias] [nostack] [where &lt;expr&gt;] [by &lt;expr&gt;]
+    .for [[<data-specifier>] .] <name> [as <alias> | noalias] [nostack] [where <expr>] [by <expr>]
+    .for  [<data-specifier>] .         [as <alias> | noalias] [nostack] [where <expr>] [by <expr>]
 
 Opens a scope and introduces a loop.  The following block of code is processed once for each item specified.  If no scope if specified, the most recently opened scope is assumed.  The items processed are those children of the XML item corresponding to this scope.  If the first form is used only children with the specified name are processed; if the second form is used, all children are processed.
 
@@ -1705,7 +1690,7 @@ If there are no items to iterate, an optional .else clause is executed.
 
 **.endfor**
 
-    .endfor [&lt;scope&gt;]
+    .endfor [<scope>]
 
 Terminates a .for loop, closing the scope.  The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .for loops for you.
 
@@ -1727,13 +1712,13 @@ Processes only the second item named FIELD, and executes an .else clause if ther
 
 **.if**
 
-    .if &lt;expr&gt;
+    .if <expr>
 
 Starts conditional processing of the following block of code if the result of evaluating the expression is non-zero.
 
 **.elsif**
 
-    .elsif &lt;expr&gt;
+    .elsif <expr>
 
 May follow an `if' construct.  Any number of `elsif' constructs may be used.
 
@@ -1761,7 +1746,7 @@ Examples:
 
 **.while**
 
-    .while &lt;expr&gt;
+    .while <expr>
 
 Introduces a loop.  The following block of code is processed repeatedly as long as the expression evaluates to a logical value of TRUE, that is not equal to zero.  Expression evaluation takes place before the code is processed, so that the code will never be processed if the expression evaluates to FALSE the first time.
 
@@ -1774,41 +1759,41 @@ Terminates a `while' loop.
 Examples:
 
     .define I = 0
-    .while I &lt; 5
+    .while I < 5
     loop iteration number &#36;(I)
     .endwhile
 
 **.next**
 
-    .next [&lt;scope&gt;]
+    .next [<scope>]
 
 Inside a `for' or `while' loop causes immediate iteration, skipping execution of any code between the `next' command and the `endfor' or `endwhile' statement.  If the scope is specified then the `for' loop corresponding to that scope is iterated.
 
 **.last**
 
-    .last [&lt;scope&gt;]
+    .last [<scope>]
 
 Inside a `for' or `while' loop causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor' or `endwhile' statement.  If the scope is specified then the `for' loop corresponding to that scope is terminated.
 
-<A name="toc4-1717" title="Scope Manipulation" />
+<A name="toc4-1702" title="Scope Manipulation" />
 #### Scope Manipulation
 
 **.scope**
 
-    .scope &lt;data-specifier&gt; [as &lt;alias&gt; | noalias] [nostack]
+    .scope <data-specifier> [as <alias> | noalias] [nostack]
 
 Opens a new scope corresponding to the specified data.
 
 **.endscope**
 
-    .endscope [&lt;scope&gt;]
+    .endscope [<scope>]
 
 Terminates a block opened with a .scope command, closing the scope. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .scope blocks for you.
 
-<A name="toc4-1732" title="Symbol Definition" />
+<A name="toc4-1717" title="Symbol Definition" />
 #### Symbol Definition
 
-    .&lt;data-specifier&gt; [&lt;operator&gt;]= [ &lt;expr&gt; ]
+    .<data-specifier> [<operator>]= [ <expr> ]
 
 Defines or undefines an XML attribute or item value.  There are several different forms, described below:
 
@@ -1824,7 +1809,7 @@ Examples:
 
 Assigns the value 1 to the identifier x in the most recently opened open scope where x is already defined, or in the global scope if x is undefined.
 
-    .-&gt;child. = "Value"
+    .->child. = "Value"
 
 Assigns the string `Value' to the value of the first child of the innermost stacked scope.
 
@@ -1836,19 +1821,19 @@ Multiplies the value of the identifier x by 2.
 
 Does nothing if x is already defined; otherwise assigns it the value of y, or if y is undefined then the value of z, or if z is undefined, x remains undefined.
 
-<A name="toc4-1763" title="Structured Data Manipulation" />
+<A name="toc4-1748" title="Structured Data Manipulation" />
 #### Structured Data Manipulation
 
 **.new**
 
-    .new [[&lt;data-specifier&gt;] . &lt;name&gt;] [before &lt;before-scope&gt; | after &lt;after-scope&gt;] [as &lt;alias&gt; | noalias] [nostack]
-    .new &lt;name&gt; [to &lt;data-specifier&gt; | before &lt;before-scope&gt; | after &lt;after-scope&gt;] [as &lt;alias&gt; | noalias] [nostack]
+    .new [[<data-specifier>] . <name>] [before <before-scope> | after <after-scope>] [as <alias> | noalias] [nostack]
+    .new <name> [to <data-specifier> | before <before-scope> | after <after-scope>] [as <alias> | noalias] [nostack]
 
-Creates a new XML item.  This allows you to build new items in the data tree.  The new item has the specified name and is a child of the XML item corresponding to th specified scope, or the most recently opened scope if none is specified.  If a `before-scope' or `after-scope' is specified, then then it must be the name of an open scope corresponding to a child of &lt;data-specifier&gt;, and the new item is inserted just before &lt;before-scope&gt; or just after &lt;after-scope&gt;; otherwise the  new item is inserted after any existing children.  The construct creates a new scope with the name specified by the alias or the item name if there is no alias.  The following block of code is processed exactly once within this new scope.  It would typically done some attributes of the new XML item.  These values can then be retrieved during a future iteration of a `for' construct through the new item.
+Creates a new XML item.  This allows you to build new items in the data tree.  The new item has the specified name and is a child of the XML item corresponding to th specified scope, or the most recently opened scope if none is specified.  If a `before-scope' or `after-scope' is specified, then then it must be the name of an open scope corresponding to a child of &lt;data-specifier>, and the new item is inserted just before &lt;before-scope> or just after &lt;after-scope>; otherwise the  new item is inserted after any existing children.  The construct creates a new scope with the name specified by the alias or the item name if there is no alias.  The following block of code is processed exactly once within this new scope.  It would typically done some attributes of the new XML item.  These values can then be retrieved during a future iteration of a `for' construct through the new item.
 
 **.endnew**
 
-    .endnew [&lt;scope&gt;]
+    .endnew [<scope>]
 
 Terminates a `new' construct. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .new blocks for you.
 
@@ -1866,7 +1851,7 @@ Examples:
 
 **.delete**
 
-    .delete &lt;data-specifier&gt;
+    .delete <data-specifier>
 
 Deletes the data item corresponding to the specified scope.  Once the item has been deleted, any attempt to reference it produces an error.
 
@@ -1878,9 +1863,9 @@ Examples:
 
 **.copy**
 
-    .copy [&lt;from-scope&gt;] [ to &lt;parent-data&gt; | after &lt;after-scope&gt; | before &lt;before-scope&gt; ] [as &lt;name&gt;]
+    .copy [<from-scope>] [ to <parent-data> | after <after-scope> | before <before-scope> ] [as <name>]
 
-Makes a copy the XML item associated with &lt;from-scope&gt; (or the most recently opened scope if not specified) at the point specified by either the new parent (`to') or new sibling (`after' or `before'), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as' clause allows you to the new item to have a different name from the old item.
+Makes a copy the XML item associated with <from-scope> (or the most recently opened scope if not specified) at the point specified by either the new parent (`to') or new sibling (`after' or `before'), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as' clause allows you to the new item to have a different name from the old item.
 
 Examples:
 
@@ -1892,7 +1877,7 @@ Examples:
 
 **.move**
 
-    .move [&lt;from-data&gt;] [ to &lt;parent-data&gt; | after &lt;after-data&gt; | before &lt;before-data&gt; ] [as &lt;name&gt;]
+    .move [<from-data>] [ to <parent-data> | after <after-data> | before <before-data> ] [as <name>]
 
 Re-attaches a data item at the point specified by  a `to', `after' or `before' clause, renaming it to the name specified in the `as' clause, if specified.
 
@@ -1910,22 +1895,22 @@ Examples:
 
 **.sort**
 
-    .sort [[&lt;data-specifier&gt;] .] [&lt;name&gt;] [as &lt;alias&gt;] by &lt;expr&gt;
+    .sort [[<data-specifier>] .] [<name>] [as <alias>] by <expr>
 
 Sorts the specified items.  A scope is created with each item in turn and is used to evaluate the expression.  The result is then used to sort the items.  The `as' clause allows you to give the created scope a different name.  After execution, the specified items are in order and after any other children of the same parent.
 
-<A name="toc4-1841" title="Script Manipulation" />
+<A name="toc4-1826" title="Script Manipulation" />
 #### Script Manipulation
 
 **.include**
 
-    .include &lt;filename&gt;
+    .include <filename>
 
 Includes another script file.  Deprecated - see `gsl'
 
 **.gsl**
 
-    .gsl [ from &lt;filename&gt; | &lt;expr&gt; ]
+    .gsl [ from <filename> | <expr> ]
 
 Interprets the contents of the specified file or expression as GSL, just as though it were part of the script.
 
@@ -1944,7 +1929,7 @@ Turns template mode on or off.
 
 Terminates the block introduced by a `template' instruction.
 
-<A name="toc4-1871" title="Macros and Functions" />
+<A name="toc4-1856" title="Macros and Functions" />
 #### Macros and Functions
 
 Macros and functions are pieces of GSL which can be invoked with parameters. The only difference between a macro and as function is that macros are interpreted in template mode and functions in script mode.
@@ -1955,7 +1940,7 @@ When a macro or function executes, an unstacked scope is opened with the same na
 
 **.macro**
 
-    .macro [global .] &lt;name&gt; [(&lt;param&gt; [, &lt;param&gt;] ...)]
+    .macro [global .] <name> [(<param> [, <param>] ...)]
 
 introduces a macro definition with the specified name.
 
@@ -1967,23 +1952,23 @@ Terminates a macro definition.
 
 **.function**
 
-    .function [global .] &lt;name&gt; [([&lt;param&gt;] [, &lt;param&gt;] ...)]
+    .function [global .] <name> [([<param>] [, <param>] ...)]
 
 Introduces a function definition with the specified name.
 
 **.endfunction**
 
-    .endfunction &lt;name&gt;
+    .endfunction <name>
 
 Terminates a function definition.
 
 **.return**
 
-    .return [&lt;expression&gt;]
+    .return [<expression>]
 
 **Calling a function**
 
-    .[&lt;scope&gt; .] &lt;function-name&gt; [([&lt;expr&gt;] [, [&lt;expr&gt;]])] ...)]
+    .[<scope> .] <function-name> [([<expr>] [, [<expr>]])] ...)]
 
 A macro or function can also be invoked as an expression.  In this case, the value of is that returned, or is undefined if there is no `.return' statement.
 
@@ -2009,17 +1994,17 @@ Examples:
         .&#36;(dest) = source
     .endfunction
 
-<A name="toc4-1936" title="Miscellaneous" />
+<A name="toc4-1921" title="Miscellaneous" />
 #### Miscellaneous
 
 **.echo**
 
-    .echo &lt;expr&gt;
+    .echo <expr>
 
 Outputs the given expression to the standard output.
 
 **.abort**
 
-    .abort &lt;expr&gt;
+    .abort <expr>
 
 Outputs the given expression to the standard output and halts GSL operation.
