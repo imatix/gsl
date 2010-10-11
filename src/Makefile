@@ -37,7 +37,7 @@
 OBJ = .o
 LIB = .a
 EXE =
-CC  = c -q
+CC  = ./c -q
 
 #   Reset the suffixes that will be considered to just our own list.
 #
