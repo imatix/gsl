@@ -45,43 +45,43 @@
 &emsp;<a href="#toc4-827">Scopes</a>
 &emsp;<a href="#toc4-868">Data Specifiers</a>
 &emsp;<a href="#toc4-956">Expressions</a>
-&emsp;<a href="#toc3-1109">Internals</a>
-&emsp;<a href="#toc4-1112">Internal Variables</a>
-&emsp;<a href="#toc4-1123">Template and Script Modes</a>
-&emsp;<a href="#toc4-1132">Template Lines</a>
-&emsp;<a href="#toc4-1139">Script Lines</a>
-&emsp;<a href="#toc4-1146">Comments</a>
-&emsp;<a href="#toc4-1164">Ignorecase</a>
-&emsp;<a href="#toc4-1169">Shuffle</a>
-&emsp;<a href="#toc4-1200">COBOL</a>
-&emsp;<a href="#toc4-1205">Line Terminators</a>
-&emsp;<a href="#toc4-1210">Arguments</a>
-&emsp;<a href="#toc4-1226">Predefined Identifiers</a>
-&emsp;<a href="#toc3-1252">Built-In Functions</a>
-&emsp;<a href="#toc4-1255">conv</a>
-&emsp;<a href="#toc4-1264">diag</a>
-&emsp;<a href="#toc4-1277">environment</a>
-&emsp;<a href="#toc4-1285">fileio</a>
-&emsp;<a href="#toc4-1322">gsl control</a>
-&emsp;<a href="#toc4-1336">math</a>
-&emsp;<a href="#toc4-1365">regexp</a>
-&emsp;<a href="#toc4-1371">process management</a>
-&emsp;<a href="#toc4-1393">script</a>
-&emsp;<a href="#toc4-1398">socket</a>
-&emsp;<a href="#toc4-1411">string</a>
-&emsp;<a href="#toc4-1436">symb</a>
-&emsp;<a href="#toc4-1441">thrd</a>
-&emsp;<a href="#toc4-1478">time</a>
-&emsp;<a href="#toc4-1493">XML</a>
-&emsp;<a href="#toc3-1541">Script Commands</a>
-&emsp;<a href="#toc4-1544">Output File Manipulation</a>
-&emsp;<a href="#toc4-1589">Control Structures</a>
-&emsp;<a href="#toc4-1700">Scope Manipulation</a>
-&emsp;<a href="#toc4-1715">Symbol Definition</a>
-&emsp;<a href="#toc4-1746">Structured Data Manipulation</a>
-&emsp;<a href="#toc4-1824">Script Manipulation</a>
-&emsp;<a href="#toc4-1854">Macros and Functions</a>
-&emsp;<a href="#toc4-1919">Miscellaneous</a>
+&emsp;<a href="#toc3-1114">Internals</a>
+&emsp;<a href="#toc4-1117">Internal Variables</a>
+&emsp;<a href="#toc4-1128">Template and Script Modes</a>
+&emsp;<a href="#toc4-1137">Template Lines</a>
+&emsp;<a href="#toc4-1144">Script Lines</a>
+&emsp;<a href="#toc4-1151">Comments</a>
+&emsp;<a href="#toc4-1169">Ignorecase</a>
+&emsp;<a href="#toc4-1174">Shuffle</a>
+&emsp;<a href="#toc4-1205">COBOL</a>
+&emsp;<a href="#toc4-1210">Line Terminators</a>
+&emsp;<a href="#toc4-1215">Arguments</a>
+&emsp;<a href="#toc4-1231">Predefined Identifiers</a>
+&emsp;<a href="#toc3-1257">Built-In Functions</a>
+&emsp;<a href="#toc4-1260">conv</a>
+&emsp;<a href="#toc4-1269">diag</a>
+&emsp;<a href="#toc4-1282">environment</a>
+&emsp;<a href="#toc4-1290">fileio</a>
+&emsp;<a href="#toc4-1327">gsl control</a>
+&emsp;<a href="#toc4-1341">math</a>
+&emsp;<a href="#toc4-1370">regexp</a>
+&emsp;<a href="#toc4-1376">process management</a>
+&emsp;<a href="#toc4-1398">script</a>
+&emsp;<a href="#toc4-1403">socket</a>
+&emsp;<a href="#toc4-1416">string</a>
+&emsp;<a href="#toc4-1441">symb</a>
+&emsp;<a href="#toc4-1446">thrd</a>
+&emsp;<a href="#toc4-1483">time</a>
+&emsp;<a href="#toc4-1498">XML</a>
+&emsp;<a href="#toc3-1546">Script Commands</a>
+&emsp;<a href="#toc4-1549">Output File Manipulation</a>
+&emsp;<a href="#toc4-1594">Control Structures</a>
+&emsp;<a href="#toc4-1705">Scope Manipulation</a>
+&emsp;<a href="#toc4-1720">Symbol Definition</a>
+&emsp;<a href="#toc4-1751">Structured Data Manipulation</a>
+&emsp;<a href="#toc4-1829">Script Manipulation</a>
+&emsp;<a href="#toc4-1859">Macros and Functions</a>
+&emsp;<a href="#toc4-1924">Miscellaneous</a>
 
 <A name="toc2-10" title="Overview" />
 ## Overview
@@ -121,7 +121,7 @@ This document was written by Pieter Hintjens in October 2010 based on two 2005 a
 <A name="toc3-45" title="Hello World" />
 ### Hello World
 
-Our first step is to make a "hello world" program in GSL. It's quite simple. Make a file called hello.gsl that contains one line:
+Our first step is to make a "hello world" program in GSL. It's quite simple. Make a file called `hello.gsl` that contains one line:
 
     echo "hello world"
 
@@ -234,10 +234,10 @@ I'm now going to generate a little HTML report of how the different calculations
     .       accumulated = accumulated * (rate / 100 + 1)
     .       year = year + 1
     .   endwhile
-    <tr><td>&#36;(amount)</td>
-    <td>&#36;(rate)%</td>
-    <td>&#36;(years)</td>
-    <td>&#36;(accumulated)</td>
+    <tr><td>$(amount)</td>
+    <td>$(rate)%</td>
+    <td>$(years)</td>
+    <td>$(accumulated)</td>
     </tr>
     .endfor
     </table>
@@ -413,7 +413,7 @@ Finally, here is the first draft of the web generation script. It does not produ
      for section
         for page
             ###  Load XML <page> data
-            xml to section from "&#36;(page.name).xml"
+            xml to section from "$(page.name).xml"
             ###  Delete old <page> tag
             delete page
         endfor
@@ -438,15 +438,15 @@ When we generate output, we insert variable values into the generated text. This
 
 GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the &#36;(name) form outputs a variable in lower case:
 
-    output "&#36;(filename).c"
+    output "$(filename).c"
 
 The &#36;(NAME) form outputs the same value in uppercase:
 
-    #if defined (&#36;(FILENAME)_INCLUDED)
+    #if defined ($(FILENAME)_INCLUDED)
 
 And the &#36;(Name) form outputs the variable in title case, i.e. the first letter is capitalised:
 
-    ###################  &#36;(Filename)   #################
+    ###################  $(Filename)   #################
 
 One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the &#36;(name) form. If we don't want a variable to be automatically case converted, we use this form: &#36;(name:). This is also called the 'empty modifier'.
 
@@ -466,7 +466,7 @@ In our first draft we loaded each page into the XML tree and deleted the origina
 
     for section
         for page
-            xml to section from "&#36;(page.name).xml"
+            xml to section from "$(page.name).xml"
             delete page
         endfor
     endfor
@@ -493,8 +493,8 @@ And you'll see in later examples that we tend to write a single GSL file for eac
 The HTML template looks like this:
 
     .template 1
-    .echo "Generating &#36;(page.name) page..."
-    .output "&#36;(page.name).html"
+    .echo "Generating $(page.name) page..."
+    .output "$(page.name).html"
     <!DOCTYPE...>
     <html>
        ...
@@ -514,11 +514,11 @@ The template starts by setting template mode on. This means that any GSL command
 Let's look at the chunk of code that produces the site index. This is - in our version of the web site generator - a menu that is embedded into each page. The CSS stylesheet can place this menu anywhere on the page. Here is the GSL code that generates it:
 
     .for site.section
-    <h3 class="menu_heading">&#36;(section.name)</h3>
+    <h3 class="menu_heading">$(section.name)</h3>
     <ul class="menu_item">
     .   for page
     <li><a class="menu_item"
-        href="&#36;(page.name).html">&#36;(page.title)</a></li>
+        href="$(page.name).html">$(page.title)</a></li>
     .   endfor
     </ul>
     .endfor
@@ -544,7 +544,7 @@ But the first form is simpler and I recommend you drop explicit parent scope nam
 Near the end of the template you see this construction:
 
     .for content
-    &#36;(content.string ())
+    $(content.string ())
     .endfor
 
 What is going on here? The answer is, we're grabbing the whole &lt;content> block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
@@ -571,7 +571,7 @@ The final web site generator consists of three pieces. Here is the revised web s
      ignorecase = 0
      for section
         for page
-            xml to section from "&#36;(page.name).xml"
+            xml to section from "$(page.name).xml"
             delete page
         endfor
      endfor
@@ -591,39 +591,39 @@ Here is the template for the HTML output.
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
     <html>
     <head>
-      <title>&#36;(page.title)</title>
+      <title>$(page.title)</title>
       <link rel="stylesheet" href="default.css" type="text/css"/>
     </head>
     <body>
       <div id="left_container">
         <div id="logo_container">
-          <a href="index.html"><img id="logo" src="&#36;(page.name).jpg"/></a>
+          <a href="index.html"><img id="logo" src="$(page.name).jpg"/></a>
         </div>
         <div id="menu_container">
     .for site.section
-          <h3 class="menu_heading">&#36;(section.name)</h3>
+          <h3 class="menu_heading">$(section.name)</h3>
           <ul class="menu_item">
     .   for page
-            <li><a class="menu_item" href="&#36;(page.name).html">&#36;(page.title)</a></li>
+            <li><a class="menu_item" href="$(page.name).html">$(page.title)</a></li>
     .   endfor
           </ul>
     .endfor
           <h3 class="menu_heading">Copyright</h3>
         </div>
         <div id="copyright">
-          <p>&#36;(copyright)</p>
+          <p>$(copyright)</p>
         </div>
         <h3 class="menu_heading"> </h3>
       </div>
       <div id="right_container">
         <div id="title_container">
-          <h1 id="title">&#36;(page.title)</h1>
-          <h2 id="title">&#36;(page.subtitle)</h2>
+          <h1 id="title">$(page.title)</h1>
+          <h2 id="title">$(page.subtitle)</h2>
         </div>
         <div id="content_container">
         <!-- Page content -->
     .for content
-        &#36;(content.string ())
+        $(content.string ())
     .endfor
         <!-- End page content -->
         </div>
@@ -1081,7 +1081,7 @@ Generally, additive, multiplicative and logical operators only apply to numeric 
 
 At almost any place in a GSL script, you may use a substitute construct in the place of literal text.  The format of a substitute construct is:
 
-    &#36;( <expression> [% format] [: pretty-print] )
+    $( <expression> [% format] [: pretty-print] )
 
 The construct is replaced by the value of the expression, output according to the format and pretty-print modifiers, if they exist.  The order of the format and pretty-print modifiers is not important.
 
@@ -1157,8 +1157,13 @@ Some examples:  Assume the identifier IDENT has the value `A few words from our 
 &#36;(ident:justify)
 : a few words from our sponsors
 
-    /*  &#36;("Description:":block)\
-                  &#36;(ident:justify,block%-8s)  */:
+And:
+
+    /*  $("Description:":block)\
+                      $(ident:justify,block%-8s)  */
+
+Gives:
+
     /*  Description:  a few                       */
     /*                words                       */
     /*                from our                    */
@@ -1182,10 +1187,10 @@ Some examples:  Assume the identifier IDENT has the value `NUM` and identifer NU
 &#36;(&#36;(ident))+1
 : `2'
 
-<A name="toc3-1109" title="Internals" />
+<A name="toc3-1114" title="Internals" />
 ### Internals
 
-<A name="toc4-1112" title="Internal Variables" />
+<A name="toc4-1117" title="Internal Variables" />
 #### Internal Variables
 
 GSL has a series of internal variables, described below, that influence its behaviour in various ways.  These variables are held in the scope `gsl` and can be modified by an instruction of the form:
@@ -1196,7 +1201,7 @@ You can also set the initial value of these variables when starting GSL by using
 
     gsl -xxxxx:yyyy somescript.gsl
 
-<A name="toc4-1123" title="Template and Script Modes" />
+<A name="toc4-1128" title="Template and Script Modes" />
 #### Template and Script Modes
 
 Lines of GSL may be either script lines or template lines.  GSL has two different modes for distinguishing script from template lines.  In template mode, lines are assumed to be template lines unless they begin with a period (`.`).  In script mode, lines are assumed to be script lines unless they begin with a greater-than symbol (`>`).
@@ -1205,21 +1210,21 @@ GSL starts in one of these modes, depending on the manner in which is was invoke
 
 You can change between template and script mode with the `template` and `endtemplate` commands.  See the description of these commands below for details.
 
-<A name="toc4-1132" title="Template Lines" />
+<A name="toc4-1137" title="Template Lines" />
 #### Template Lines
 
 The simplest template line is just text, which is copied verbatim to the current output file.  If no output file has been opened, or if the last output file has been closed, the output is copied to the standard output.
 
 The backslash (`\`) serves several special functions in a template line.  Firstly, if the last character of an template line is a backslash then the line is output with no line terminator; otherwise a line terminator follows the template line.  Secondly, a backslash introduces one of three special character sequences: `\n`, `\r` and `\t` which are replaced by a line feed, carriage return and a tabulation character (TAB) respectively.  Thirdly, a backslash followed by and other character is replaced by that character; this allows characters which would normally be interpreted as script commands to be output literally.
 
-<A name="toc4-1139" title="Script Lines" />
+<A name="toc4-1144" title="Script Lines" />
 #### Script Lines
 
 The script commands are described below.
 
 If a script command line ends with a backslash (`\`) then the following script line is treated as a continuation of the current line.
 
-<A name="toc4-1146" title="Comments" />
+<A name="toc4-1151" title="Comments" />
 #### Comments
 
 There are three ways to include comments in GSL scripts.  The first is to place a hyphen (`-`) as the first character of a script line, or following the point (`.`) in a template line.  The second way is to place a hash (`#`) after a GSL command.  Any characters following the hyphen are ignored by GSL.  The third way is to enclose comment text (which may continue over more than one line) inside comment markers (`/*` and `*/`) just as in C.  However if GSL finds these characters in a template line (but not inside a substitution) it assumes that they are destined for output, so does not treat them as a comment.
@@ -1235,19 +1240,19 @@ Examples:
 
     If this is a template line then /* this is not a comment */
 
-    &#36;("but "/* this is */)
+    $("but "/* this is */)
 
-<A name="toc4-1164" title="Ignorecase" />
+<A name="toc4-1169" title="Ignorecase" />
 #### Ignorecase
 
 GSL has two modes which influence case-sensitivity of identifier names. In the first mode (ignore-case), GSL is case-insensitive regarding identifier names and instead as a guide to modifying the output string, as described above (`Case Sensitivity`).  In the second mode (case-sensitive), GSL treats the case of identifier names as significant.  You can change the behaviour by setting the value of the attribute `ignorecase` in the scope `gsl` to 1 for ignore case and 0 for case sensitivity.
 
-<A name="toc4-1169" title="Shuffle" />
+<A name="toc4-1174" title="Shuffle" />
 #### Shuffle
 
 GSL can help to keep code neat by enlarging or shrinking white space so that column numbers match as far as possible between the script and the output file.  For instance, in the value of the identifier X is ABCDEF then:
 
-    &#36;(X)   .
+    $(X)   .
 
 evaluates to
 
@@ -1255,7 +1260,7 @@ evaluates to
 
 but
 
-    &#36;(X?"Undefined") .
+    $(X?"Undefined") .
 
 evaluates to
 
@@ -1265,7 +1270,7 @@ The shuffle algorithm uses the value of the attribute `shuffle` of the gsl scope
 
 If the current output ends with a backslash, then the shuffle continues on the following line.  Thus
 
-    &#36;(X?"Undefined")\\
+    $(X?"Undefined")\\
              .
 evaluates to
 
@@ -1273,17 +1278,17 @@ evaluates to
 
 Shuffle can cause problems in some cases, for example when outputting literal text where the size of white space is important.  In this case shuffle should be disabled by setting the value to zero.
 
-<A name="toc4-1200" title="COBOL" />
+<A name="toc4-1205" title="COBOL" />
 #### COBOL
 
 GSL helps you make neat COBOL code by automatically filling the first six characters of each line with the four-digit line number followed by two zeroes.  To enable this function set the value of the attribute `cobol` in the gsl scope to 1.
 
-<A name="toc4-1205" title="Line Terminators" />
+<A name="toc4-1210" title="Line Terminators" />
 #### Line Terminators
 
 GSL uses as its line terminator the value of of the attribute `terminator` of the gsl scope.  The default value is "\n" but it could also be set to "\r\n", for example.
 
-<A name="toc4-1210" title="Arguments" />
+<A name="toc4-1215" title="Arguments" />
 #### Arguments
 
 If GSL is invoked with a `-a` switch, all arguments following the first are treated as arguments to the first script, rather than as further arguments to GSL, as would otherwise be the case.  So if you type:
@@ -1297,9 +1302,9 @@ GSL defines attributes `arg1` in the symbol table `switches` in scope `gsl` with
 or in a loop:
 
     n = 1
-    echo switches.arg&#36;(n)
+    echo switches.arg$(n)
 
-<A name="toc4-1226" title="Predefined Identifiers" />
+<A name="toc4-1231" title="Predefined Identifiers" />
 #### Predefined Identifiers
 
 There are some identifiers whose value is maintained by GSL in the global space referred to by the predefined scopes `gsl` and `global`.  They are defined as attributes of the global item.
@@ -1325,10 +1330,10 @@ version
 switches
 : A symbol table holding all the command-line switches present when GSL was invoked.
 
-<A name="toc3-1252" title="Built-In Functions" />
+<A name="toc3-1257" title="Built-In Functions" />
 ### Built-In Functions
 
-<A name="toc4-1255" title="conv" />
+<A name="toc4-1260" title="conv" />
 #### conv
 
     Class: Conversion Functions
@@ -1337,7 +1342,7 @@ switches
         Function: conv . ord (arg)
         Function: conv . string (arg)
 
-<A name="toc4-1264" title="diag" />
+<A name="toc4-1269" title="diag" />
 #### diag
 
     Class: Diagnostic Functions
@@ -1350,7 +1355,7 @@ switches
         Function: diag . animate (value)
         Function: diag . console_set_mode (mode)
 
-<A name="toc4-1277" title="environment" />
+<A name="toc4-1282" title="environment" />
 #### environment
 
     Class: Environment Functions
@@ -1358,7 +1363,7 @@ switches
         Function: env . set (name,[value])
 
 
-<A name="toc4-1285" title="fileio" />
+<A name="toc4-1290" title="fileio" />
 #### fileio
 
     Class: Directory
@@ -1395,7 +1400,7 @@ switches
         Function: <file entry> . seek ([offset],[error])
 
 
-<A name="toc4-1322" title="gsl control" />
+<A name="toc4-1327" title="gsl control" />
 #### gsl control
 
     Class: GSL Control Class
@@ -1409,7 +1414,7 @@ switches
             its output is returned as the result of this function. Uses the
             current template mode unless over-ridden by the optional argument.
 
-<A name="toc4-1336" title="math" />
+<A name="toc4-1341" title="math" />
 #### math
 
     Class: Math Functions
@@ -1438,13 +1443,13 @@ switches
         Function: math . acosh (parm)
         Function: math . atanh (parm)
 
-<A name="toc4-1365" title="regexp" />
+<A name="toc4-1370" title="regexp" />
 #### regexp
 
     Class: Regular Expression Functions
         Function: regexp . match (pattern,subject,[match])
 
-<A name="toc4-1371" title="process management" />
+<A name="toc4-1376" title="process management" />
 #### process management
 
     Class: Process
@@ -1466,12 +1471,12 @@ switches
                 Returns -1 if there was an error creating the object.  Also places an
                 error message into the parameter error.
 
-<A name="toc4-1393" title="script" />
+<A name="toc4-1398" title="script" />
 #### script
 
     Class: GSL Script Line
 
-<A name="toc4-1398" title="socket" />
+<A name="toc4-1403" title="socket" />
 #### socket
 
     Class: Socket
@@ -1484,7 +1489,7 @@ switches
         Function: <sock handle> . read (buffer,[minimum],[timeout],[error])
         Function: <sock handle> . write (buffer,[timeout],[error])
 
-<A name="toc4-1411" title="string" />
+<A name="toc4-1416" title="string" />
 #### string
 
     Class: String Functions
@@ -1509,12 +1514,12 @@ switches
         Function: string . soundex (string)
         Function: string . cntch (string,value)
 
-<A name="toc4-1436" title="symb" />
+<A name="toc4-1441" title="symb" />
 #### symb
 
     Class: Symbol
 
-<A name="toc4-1441" title="thrd" />
+<A name="toc4-1446" title="thrd" />
 #### thrd
 
     Class: Thread
@@ -1551,7 +1556,7 @@ switches
     Class: Thread
         Function: <parsed item> . run ([error])
 
-<A name="toc4-1478" title="time" />
+<A name="toc4-1483" title="time" />
 #### time
 
     Class: Time Functions
@@ -1566,7 +1571,7 @@ switches
         Function: date . picture ([date],[picture])
         Function: date . number (date)
 
-<A name="toc4-1493" title="XML" />
+<A name="toc4-1498" title="XML" />
 #### XML
 
     Class: XML
@@ -1614,10 +1619,10 @@ switches
 
     Class: XML value
 
-<A name="toc3-1541" title="Script Commands" />
+<A name="toc3-1546" title="Script Commands" />
 ### Script Commands
 
-<A name="toc4-1544" title="Output File Manipulation" />
+<A name="toc4-1549" title="Output File Manipulation" />
 #### Output File Manipulation
 
 **.output**
@@ -1659,10 +1664,10 @@ Examples:
 
     .literal << .endliteral
     Lines are now copied without substitution of
-    things like &#36;(abc).
+    things like $(abc).
     .endliteral
 
-<A name="toc4-1589" title="Control Structures" />
+<A name="toc4-1594" title="Control Structures" />
 #### Control Structures
 
 **.for**
@@ -1695,7 +1700,7 @@ Terminates a .for loop, closing the scope.  The scope name is optional and does 
 Examples:
 
     .for RECORD.FIELD by NAME
-    &#36;(FIELD.NAME)
+    $(FIELD.NAME)
     .endfor
 
 Outputs the names of the fields of the current record, sorted in alphabetical order.
@@ -1758,7 +1763,7 @@ Examples:
 
     .define I = 0
     .while I < 5
-    loop iteration number &#36;(I)
+    loop iteration number $(I)
     .endwhile
 
 **.next**
@@ -1773,7 +1778,7 @@ Inside a `for` or `while` loop causes immediate iteration, skipping execution of
 
 Inside a `for` or `while` loop causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor` or `endwhile` statement.  If the scope is specified then the `for` loop corresponding to that scope is terminated.
 
-<A name="toc4-1700" title="Scope Manipulation" />
+<A name="toc4-1705" title="Scope Manipulation" />
 #### Scope Manipulation
 
 **.scope**
@@ -1788,7 +1793,7 @@ Opens a new scope corresponding to the specified data.
 
 Terminates a block opened with a .scope command, closing the scope. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .scope blocks for you.
 
-<A name="toc4-1715" title="Symbol Definition" />
+<A name="toc4-1720" title="Symbol Definition" />
 #### Symbol Definition
 
     .<data-specifier> [<operator>]= [ <expr> ]
@@ -1819,7 +1824,7 @@ Multiplies the value of the identifier x by 2.
 
 Does nothing if x is already defined; otherwise assigns it the value of y, or if y is undefined then the value of z, or if z is undefined, x remains undefined.
 
-<A name="toc4-1746" title="Structured Data Manipulation" />
+<A name="toc4-1751" title="Structured Data Manipulation" />
 #### Structured Data Manipulation
 
 **.new**
@@ -1897,7 +1902,7 @@ Examples:
 
 Sorts the specified items.  A scope is created with each item in turn and is used to evaluate the expression.  The result is then used to sort the items.  The `as` clause allows you to give the created scope a different name.  After execution, the specified items are in order and after any other children of the same parent.
 
-<A name="toc4-1824" title="Script Manipulation" />
+<A name="toc4-1829" title="Script Manipulation" />
 #### Script Manipulation
 
 **.include**
@@ -1927,7 +1932,7 @@ Turns template mode on or off.
 
 Terminates the block introduced by a `template` instruction.
 
-<A name="toc4-1854" title="Macros and Functions" />
+<A name="toc4-1859" title="Macros and Functions" />
 #### Macros and Functions
 
 Macros and functions are pieces of GSL which can be invoked with parameters. The only difference between a macro and as function is that macros are interpreted in template mode and functions in script mode.
@@ -1989,10 +1994,10 @@ Examples:
     .endfunction
 
     .function assign (dest, source)
-        .&#36;(dest) = source
+        .$(dest) = source
     .endfunction
 
-<A name="toc4-1919" title="Miscellaneous" />
+<A name="toc4-1924" title="Miscellaneous" />
 #### Miscellaneous
 
 **.echo**

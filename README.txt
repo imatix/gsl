@@ -37,7 +37,7 @@ This document was written by Pieter Hintjens in October 2010 based on two 2005 a
 
 ### Hello World
 
-Our first step is to make a "hello world" program in GSL. It's quite simple. Make a file called hello.gsl that contains one line:
+Our first step is to make a "hello world" program in GSL. It's quite simple. Make a file called `hello.gsl` that contains one line:
 
     echo "hello world"
 
@@ -149,10 +149,10 @@ I'm now going to generate a little HTML report of how the different calculations
     .       accumulated = accumulated * (rate / 100 + 1)
     .       year = year + 1
     .   endwhile
-    <tr><td>&#36;(amount)</td>
-    <td>&#36;(rate)%</td>
-    <td>&#36;(years)</td>
-    <td>&#36;(accumulated)</td>
+    <tr><td>$(amount)</td>
+    <td>$(rate)%</td>
+    <td>$(years)</td>
+    <td>$(accumulated)</td>
     </tr>
     .endfor
     </table>
@@ -326,7 +326,7 @@ Finally, here is the first draft of the web generation script. It does not produ
      for section
         for page
             ###  Load XML <page> data
-            xml to section from "&#36;(page.name).xml"
+            xml to section from "$(page.name).xml"
             ###  Delete old <page> tag
             delete page
         endfor
@@ -350,15 +350,15 @@ When we generate output, we insert variable values into the generated text. This
 
 GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the &#36;(name) form outputs a variable in lower case:
 
-    output "&#36;(filename).c"
+    output "$(filename).c"
 
 The &#36;(NAME) form outputs the same value in uppercase:
 
-    #if defined (&#36;(FILENAME)_INCLUDED)
+    #if defined ($(FILENAME)_INCLUDED)
 
 And the &#36;(Name) form outputs the variable in title case, i.e. the first letter is capitalised:
 
-    ###################  &#36;(Filename)   #################
+    ###################  $(Filename)   #################
 
 One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the &#36;(name) form. If we don't want a variable to be automatically case converted, we use this form: &#36;(name:). This is also called the 'empty modifier'.
 
@@ -377,7 +377,7 @@ In our first draft we loaded each page into the XML tree and deleted the origina
 
     for section
         for page
-            xml to section from "&#36;(page.name).xml"
+            xml to section from "$(page.name).xml"
             delete page
         endfor
     endfor
@@ -403,8 +403,8 @@ And you'll see in later examples that we tend to write a single GSL file for eac
 The HTML template looks like this:
 
     .template 1
-    .echo "Generating &#36;(page.name) page..."
-    .output "&#36;(page.name).html"
+    .echo "Generating $(page.name) page..."
+    .output "$(page.name).html"
     <!DOCTYPE...>
     <html>
        ...
@@ -424,11 +424,11 @@ The template starts by setting template mode on. This means that any GSL command
 Let's look at the chunk of code that produces the site index. This is - in our version of the web site generator - a menu that is embedded into each page. The CSS stylesheet can place this menu anywhere on the page. Here is the GSL code that generates it:
 
     .for site.section
-    <h3 class="menu_heading">&#36;(section.name)</h3>
+    <h3 class="menu_heading">$(section.name)</h3>
     <ul class="menu_item">
     .   for page
     <li><a class="menu_item"
-        href="&#36;(page.name).html">&#36;(page.title)</a></li>
+        href="$(page.name).html">$(page.title)</a></li>
     .   endfor
     </ul>
     .endfor
@@ -454,7 +454,7 @@ But the first form is simpler and I recommend you drop explicit parent scope nam
 Near the end of the template you see this construction:
 
     .for content
-    &#36;(content.string ())
+    $(content.string ())
     .endfor
 
 What is going on here? The answer is, we're grabbing the whole &lt;content> block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
@@ -480,7 +480,7 @@ The final web site generator consists of three pieces. Here is the revised web s
      ignorecase = 0
      for section
         for page
-            xml to section from "&#36;(page.name).xml"
+            xml to section from "$(page.name).xml"
             delete page
         endfor
      endfor
@@ -500,39 +500,39 @@ Here is the template for the HTML output.
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
     <html>
     <head>
-      <title>&#36;(page.title)</title>
+      <title>$(page.title)</title>
       <link rel="stylesheet" href="default.css" type="text/css"/>
     </head>
     <body>
       <div id="left_container">
         <div id="logo_container">
-          <a href="index.html"><img id="logo" src="&#36;(page.name).jpg"/></a>
+          <a href="index.html"><img id="logo" src="$(page.name).jpg"/></a>
         </div>
         <div id="menu_container">
     .for site.section
-          <h3 class="menu_heading">&#36;(section.name)</h3>
+          <h3 class="menu_heading">$(section.name)</h3>
           <ul class="menu_item">
     .   for page
-            <li><a class="menu_item" href="&#36;(page.name).html">&#36;(page.title)</a></li>
+            <li><a class="menu_item" href="$(page.name).html">$(page.title)</a></li>
     .   endfor
           </ul>
     .endfor
           <h3 class="menu_heading">Copyright</h3>
         </div>
         <div id="copyright">
-          <p>&#36;(copyright)</p>
+          <p>$(copyright)</p>
         </div>
         <h3 class="menu_heading"> </h3>
       </div>
       <div id="right_container">
         <div id="title_container">
-          <h1 id="title">&#36;(page.title)</h1>
-          <h2 id="title">&#36;(page.subtitle)</h2>
+          <h1 id="title">$(page.title)</h1>
+          <h2 id="title">$(page.subtitle)</h2>
         </div>
         <div id="content_container">
         <!-- Page content -->
     .for content
-        &#36;(content.string ())
+        $(content.string ())
     .endfor
         <!-- End page content -->
         </div>
@@ -968,7 +968,7 @@ Generally, additive, multiplicative and logical operators only apply to numeric 
 
 At almost any place in a GSL script, you may use a substitute construct in the place of literal text.  The format of a substitute construct is:
 
-    &#36;( <expression> [% format] [: pretty-print] )
+    $( <expression> [% format] [: pretty-print] )
 
 The construct is replaced by the value of the expression, output according to the format and pretty-print modifiers, if they exist.  The order of the format and pretty-print modifiers is not important.
 
@@ -1044,8 +1044,13 @@ Some examples:  Assume the identifier IDENT has the value `A few words from our 
 &#36;(ident:justify)
 : a few words from our sponsors
 
-    /*  &#36;("Description:":block)\
-                  &#36;(ident:justify,block%-8s)  */:
+And:
+
+    /*  $("Description:":block)\
+                      $(ident:justify,block%-8s)  */
+
+Gives:
+
     /*  Description:  a few                       */
     /*                words                       */
     /*                from our                    */
@@ -1116,7 +1121,7 @@ Examples:
 
     If this is a template line then /* this is not a comment */
 
-    &#36;("but "/* this is */)
+    $("but "/* this is */)
 
 #### Ignorecase
 
@@ -1126,7 +1131,7 @@ GSL has two modes which influence case-sensitivity of identifier names. In the f
 
 GSL can help to keep code neat by enlarging or shrinking white space so that column numbers match as far as possible between the script and the output file.  For instance, in the value of the identifier X is ABCDEF then:
 
-    &#36;(X)   .
+    $(X)   .
 
 evaluates to
 
@@ -1134,7 +1139,7 @@ evaluates to
 
 but
 
-    &#36;(X?"Undefined") .
+    $(X?"Undefined") .
 
 evaluates to
 
@@ -1144,7 +1149,7 @@ The shuffle algorithm uses the value of the attribute `shuffle` of the gsl scope
 
 If the current output ends with a backslash, then the shuffle continues on the following line.  Thus
 
-    &#36;(X?"Undefined")\\
+    $(X?"Undefined")\\
              .
 evaluates to
 
@@ -1173,7 +1178,7 @@ GSL defines attributes `arg1` in the symbol table `switches` in scope `gsl` with
 or in a loop:
 
     n = 1
-    echo switches.arg&#36;(n)
+    echo switches.arg$(n)
 
 #### Predefined Identifiers
 
@@ -1516,7 +1521,7 @@ Examples:
 
     .literal << .endliteral
     Lines are now copied without substitution of
-    things like &#36;(abc).
+    things like $(abc).
     .endliteral
 
 #### Control Structures
@@ -1551,7 +1556,7 @@ Terminates a .for loop, closing the scope.  The scope name is optional and does 
 Examples:
 
     .for RECORD.FIELD by NAME
-    &#36;(FIELD.NAME)
+    $(FIELD.NAME)
     .endfor
 
 Outputs the names of the fields of the current record, sorted in alphabetical order.
@@ -1614,7 +1619,7 @@ Examples:
 
     .define I = 0
     .while I < 5
-    loop iteration number &#36;(I)
+    loop iteration number $(I)
     .endwhile
 
 **.next**
@@ -1840,7 +1845,7 @@ Examples:
     .endfunction
 
     .function assign (dest, source)
-        .&#36;(dest) = source
+        .$(dest) = source
     .endfunction
 
 #### Miscellaneous
