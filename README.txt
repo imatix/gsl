@@ -16,7 +16,7 @@ This is the fourth major version of GSL, now considered a stable product, repack
 
 ### Ownership and License
 
-GSL/4.1 was actively developed by [iMatix Corporation](http://www.imatix.com) from 1995-2005 and is copyright &copy; 1991-2010 iMatix Corporation.
+GSL was actively developed by [iMatix Corporation](http://www.imatix.com) from 1995-2005 and is copyright &copy; 1991-2010 iMatix Corporation.  Version 4 was developed as part of the technical infrastructure for the [OpenAMQ](http://www.openamq.org) messaging product.
 
 The authors grant you free use of this software under the terms of the GNU General Public License version 3 or, at your choice, any later version. (GPLv3+). For details see the files `COPYING` in this directory.
 
@@ -34,6 +34,28 @@ To build from git on a UNIX-like box:
 This document was written by Pieter Hintjens in October 2010 based on two 2005 articles on 'model oriented programming', and the GSL reference manual.  This text is originally at README.txt and is built using [gitdown](http://github.com/imatix/gitdown).
 
 ## Starting with GSL
+
+[diagram]
+
+    +-------------+
+    |             |
+    |  XML data   |
+    |             |
+    +-----+-------+
+          |            /------------\           +----------------+
+          \----------->|            |---------->|                |
+                       | GSL engine |           | Generated text |
+          /----------->|            |---------->|                |
+          |            \------------/           +----------------+
+    +-----+-------+
+    |             |
+    | GSL scripts |
+    |             |
+    +-------------+
+
+
+                 Figure # - General Process
+[/diagram]
 
 ### Hello World
 
@@ -1833,19 +1855,19 @@ The number of expressions (or empty expressions) must match exactly the number o
 Examples:
 
     .macro echotwice (text)
-    .    echo text
-    .    echo text
+    .    echo my.text
+    .    echo my.text
     .endmacro
     ...
     .echotwice ("Hello")
 
     .function recursive (N)
-        recursive.localvar = N - 1
+        recursive.localvar = my.N - 1
         recursive (localvar)
     .endfunction
 
     .function assign (dest, source)
-        .$(dest) = source
+        .$(my.dest) = my.source
     .endfunction
 
 #### Miscellaneous
