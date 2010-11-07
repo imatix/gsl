@@ -7,6 +7,7 @@
  *  For documentation and updates see http://www.imatix.com.
  *---------------------------------------------------------------------------*/
 
+#include <pcre.h>
 #include "sfl.h"
 #include "smt3.h"
 #include "gsl.h"                        /*  Project header file              */
@@ -49,9 +50,6 @@ CLASS_DESCRIPTOR
         NULL,
         NULL,
         regexp_functions, tblsize (regexp_functions) };
-
-
-#include "pcre.h"
 
 
 static int

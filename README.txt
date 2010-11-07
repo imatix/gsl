@@ -22,12 +22,20 @@ The authors grant you free use of this software under the terms of the GNU Gener
 
 ### Building and installing
 
-To build from git on a UNIX-like box:
+Dependencies:
+
+* pcre package (e.g. libpcre3-dev)
+
+To build from git on a UNIX-like box, and install into /usr/local/bin:
 
     git clone git://github.com/imatix/gsl
     cd gsl/src
     make
     sudo make install
+
+To show command-line help:
+
+    ./gsl
 
 ### This Document
 
