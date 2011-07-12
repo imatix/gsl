@@ -2526,12 +2526,12 @@ MODULE copy_the_item (THREAD *thread)
 {
     CLASS_DESCRIPTOR
         *from_class = NULL,
-        *parent_class,
-        *sibling_class;
+        *parent_class = NULL,
+        *sibling_class = NULL;
     void
         *from_item = NULL,
-        *parent_item,
-        *sibling_item,
+        *parent_item = NULL,
+        *sibling_item = NULL,
         *new_item = NULL;
 
     tcb = thread-> tcb;                 /*  Point to thread's context        */
@@ -2586,10 +2586,11 @@ MODULE delete_the_item (THREAD *thread)
 
     /*  .delete <scope>  */
 
-    if (tcb-> result_node-> scope) {
+    if (tcb-> result_node-> scope)
+      {
         class  = tcb-> result_node-> scope-> value. c;
         delete = tcb-> result_node-> scope-> value. i;
-    }
+      }
     else
         lookup_innermost_item (& class, & delete);
 
@@ -4540,11 +4541,6 @@ MODULE concatenate_operands (THREAD *thread)
                 && (tcb-> result_node-> op2-> script_node-> spaces == 0)
                 &&  tcb-> result_node-> op2-> constant);
           }
-        else
-          {
-            report_error (error_event, "%s", error_text);
-            return;
-          }
       }
 }
 
@@ -5002,10 +4998,11 @@ MODULE get_first_child (THREAD *thread)
     if (exception_raised)
         return;
 
-    if (tcb-> result_node-> scope) {
+    if (tcb-> result_node-> scope)
+      {
         class  = tcb-> result_node-> scope-> value. c;
         parent = tcb-> result_node-> scope-> value. i;
-    }
+      }
     else
         lookup_innermost_item (& class, & parent);
 

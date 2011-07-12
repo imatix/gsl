@@ -44,8 +44,8 @@
 #undef  BUILDDATE
 #undef  BUILDMODEL
 #define VERSION         "4.1"
-#define PRODUCT         "GSL/4.1/github"
-#define COPYRIGHT       "Copyright (c) 1996-2010 iMatix Corporation"
+#define PRODUCT         "GSL/4.1a/github"
+#define COPYRIGHT       "Copyright (c) 1996-2011 iMatix Corporation"
 #define BUILDDATE       ""
 #if defined (DEBUG)
 #   define BUILDMODEL   "Debug release for internal use only"
