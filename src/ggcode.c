@@ -1725,7 +1725,6 @@ MODULE copy_direct_to_output (THREAD *thread)
         while (gsl_file_read (file, line))
           {
             send_text_to_output (line);
-            send_text_to_output (tcb-> gsl-> terminator);
           }
         file_close (file);
         return;
