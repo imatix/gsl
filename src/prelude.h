@@ -262,7 +262,7 @@
 #   include <sys\stat.h>
 #   include <sys\utime.h>
 #   include <share.h>
-#   if _MSC_VER == 1500
+#   if _MSC_VER >= 1500
 #       ifndef _CRT_SECURE_NO_DEPRECATE
 #           define _CRT_SECURE_NO_DEPRECATE   1
 #       endif
