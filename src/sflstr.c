@@ -1571,6 +1571,7 @@ searchreplace (
     size_t max_length)
 {
     int
+        delta,
         count = 0;
     char
         *replace,
@@ -1578,7 +1579,6 @@ searchreplace (
         *found,
         *strbase;
     size_t
-        delta,
         buf_len,
         unchanged_len,
         fnd_len,
