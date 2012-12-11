@@ -925,10 +925,11 @@ pretty_print (VALUE *result,
                 strupc (result-> s);
             }
             else
-            if (streq (token, "camel")) {
+            if (streq (token, "camel") || streq (token, "pascal")) {
+                use_example = FALSE;
                 oldpos = result->s;
                 newpos = result->s;
-                new_word = TRUE;
+                new_word = streq (token, "pascal") ? TRUE: FALSE;
                 while (*oldpos) {
                     if (!isalnum (*oldpos))
                         new_word = TRUE;
