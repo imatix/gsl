@@ -1256,7 +1256,8 @@ If the `error` argument is provided, then the `name` argument must also be provi
 
 Some functions take no arguments.
 
-If a function is given an incorrect number of errors gsl will print an error on the console and terminate.
+If a function is given an incorrect number of errors GSL will print an error on the console 
+and terminate.
 
 If the provided arguments are of the wrong type or otherwise incorrect, the functions
 will return an undefined result, which can be handled with the default operator and tested
@@ -1267,6 +1268,13 @@ and an error occurs, the associated error text will be placed in the parameter a
 as shown in this example.
 
 .pull doc/examples/error-parameter.gsl,code
+
+#### global
+
+    defined (value)
+    
+    count (item, condition)
+        In condition, count. refers to item being counted
 
 #### conv
 
@@ -1489,7 +1497,7 @@ For instance, file.read(handle) could also be written as handle.read().
 
     Class: Symbol
 
-#### thrd
+#### thread
 
     Class: Thread
         Function: thread . parse (command,[error])

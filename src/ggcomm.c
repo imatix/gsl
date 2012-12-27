@@ -871,6 +871,8 @@ construct_block (VALUE *result)
 /*         lower - lower case                                                */
 /*         UPPER - UPPER CASE                                                */
 /*         Neat  - Neat Case                                                 */
+/*         Camel - CamelCase                                                 */
+/*         no    - as-is                                                     */
 /*         c     - Valid_c_identifier                                        */
 /*         COBOL - VALID-COBOL-IDENTIFIER                                    */
 /*         justify - Left justify, moving words                              */
