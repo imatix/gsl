@@ -1,0 +1,55 @@
+MODULE: GSL/XML package
+
+    Class: XML
+    
+        Function: XML . new ([name])
+            Creates a free 'unattached' XML item. In reality it is attached to
+            the global variable ancestor, but only so that GSL can de-allocate
+            it on termination. Therefore if the GSL script does not deallocate
+            the item, it will remain until GSL shuts down.                    
+
+        Function: XML . load_string (string,[error])
+            Loads the supplied string as an XML item. Returns a pointer to the
+            (first) resulting XML item or undefined if there was an error. In 
+            the latter case, an error message is placed in the parameter      
+            'error' and in the XML thread context.                            
+
+        Function: XML . load_file (filename,[error])
+            Loads the file with the supplied name as an XML item. Returns a    
+            pointer to the (first) resulting XML item or undefined if there was
+            an error. In the latter case, an error message is placed in the    
+            parameter 'error' and in the XML thread context.                   
+
+
+    Class: XML item
+    
+        Function: <XML item> . deleted ()
+            Returns TRUE if the XML item has been deleted.
+
+        Function: <XML item> . prev ()
+            Returns the previous XML item.
+
+        Function: <XML item> . string ()
+            Returns the XML item formatted as a string.
+
+        Function: <XML item> . load_string (string,[error])
+            Loads the supplied string as a child of the item. Returns a pointer
+            to the (first) resulting XML item or undefined if there was an     
+            error. In the latter case, an error messa ge is placed in the      
+            parameter 'error' and in the XML thread context.                   
+
+        Function: <XML item> . load_file (filename,[error])
+            Loads the file with the supplied name as a child of the item.      
+            Returns a pointer to the (first) resulting XML item or undefined if
+            there was an error. In the latter case, an error message is placed 
+            in the parameter 'error' and in the XML thread context.            
+
+        Function: <XML item> . save (filename,[error])
+            Saves the XML item to a file with the given name. Any file errors 
+            are places in the parameter 'error' and in the XML thread context.
+            Returns zero if no error occurred, errno otherwise.               
+
+
+    Class: XML value
+    
+

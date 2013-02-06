@@ -1,0 +1,77 @@
+MODULE: GSL/fileio package
+
+    Class: Directory
+    
+        Function: directory . open ([path],[error])
+            Opens directory at `path` for iteration. If `path` is not provided,
+            uses the current directory. Returns a directory object.            
+
+        Function: directory . setcwd (path,[error])
+            Changes current working directory to `path`. Returns result code.
+
+        Function: directory . create (path)
+            Creates directory `path`. Returns result code.
+
+        Function: directory . delete (path,[error])
+            Deletes directory at `path`. Returns result code.
+
+        Function: directory . resolve (path,[separator])
+            Locates `path` relative to current directory. If the path looks   
+            like an absolute directory, returns the cleaned up path. Otherwise
+            appends the path to the current directory and returns the cleaned 
+            up result. Cleans-up the returned path by appending a '/' if      
+            necessary, and resolving any '..' subpaths. If `separator`, a     
+            single character, is provided the resulting path components are   
+            separated by `separator` path components instead of the default   
+            separator (which depends on the operating system).                
+
+
+    Class: File
+    
+        Function: file . open (filename,[mode],[error])
+
+        Function: file . read (handle,[error])
+
+        Function: file . write (handle,string,[error])
+
+        Function: file . close (handle,[error])
+
+        Function: file . tell (handle,[error])
+
+        Function: file . seek (handle,[offset],[error])
+
+        Function: file . slurp (filename,[error])
+
+        Function: file . exists (filename,[error])
+
+        Function: file . timestamp (filename,[error])
+
+        Function: file . rename (oldname,newname,[error])
+
+        Function: file . delete (filename,[error])
+
+        Function: file . locate (filename,[path],[error])
+
+        Function: file . copy (src,dest,[mode],[error])
+
+        Function: file . basename (filename)
+
+
+    Class: Directory
+    
+
+    Class: File
+    
+        Function: <file entry> . open ([mode],[error])
+
+        Function: <file entry> . read ([error])
+
+        Function: <file entry> . write (string,[error])
+
+        Function: <file entry> . close ([error])
+
+        Function: <file entry> . tell ([error])
+
+        Function: <file entry> . seek ([offset],[error])
+
+

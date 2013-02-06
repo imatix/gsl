@@ -1,0 +1,9 @@
+.template 0
+global.zones = XML.load_file("zones.xml", err)
+
+for fruit
+   .zone_desc = zones->zone(name = .zone).description  ? "unknown"
+endfor
+
+root.save("fruits-denormalized.xml")
+.endtemplate

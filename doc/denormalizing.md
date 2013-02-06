@@ -1,0 +1,82 @@
+<A name="toc1-1" title="Denormalizing Trees" />
+Denormalizing Trees
+===================
+
+In code generating, it is useful to work with a single tree in memory. However if the data sources are disparate,
+a useful first step is to combine the data sources into a single tree before starting code generation.
+
+This "denormalizing" step is accomplished by essentially "looking up" each normalized attribute and appending it to the target.
+
+Here is an example. Suppose you had an XML file listing fruits and the zones where they grow and 
+another file describing the zones, and your task is to generate a set of data where each fruit
+is listed with its corresponding zone description.
+
+#File: fruits.xml
+
+    <root>
+        <fruit name="Apple" zone="temperate" />
+        <fruit name="Banana" zone="tropical" />
+        <fruit name="Eggplant" zone="all" />
+    </root>
+
+#File: zones.xml
+
+    <zones>
+        <zone name="temperate" description="between tropics and polar regions"/>
+        <zone name="tropical" description="region surrounding the equator"/>
+        <zone name="all" description="anywhere but the polar regions"/>
+    </zones>
+
+The easiest method is to generate a third file, say, "fruits-denormalized.xml", containing the desired data,
+and use that to drive the generation step.
+
+Here is the GSL script to accomplish that:
+
+     1	.template 0
+     2	zones = XML.load_file("zones.xml")
+     3	for fruit
+     4	    .zone_desc = zones->zone(name = .zone).description ? ""
+     5	endfor
+     6	root.save("fruits-denormalized.xml")
+     7	.endtemplate
+
+
+This script is invoked as:
+
+    gsl -script:fruits.gsl fruits.xml
+
+which will start off in template mode. However, since this script does not generate template output,
+line 1 turns off template mode so each line does not have to be prefixed with a dot.
+
+Line 2 loads the lookup file into a variable named `zones`. The line executes at the top level scope, so
+the variable is really named 'global.zones'. While it is not necessary to be explicit here, a more complicated
+script that loads the data in a different scope may need to be explicit. Note that the xml file must be valid XML.
+It may help to run all xml files through xmllint to be sure. Otherwise gsl will complain with a misleading error.
+This will be fixed in future version.
+
+
+Lines 3 to 5 loop over the input file `fruits.xml` and for each fruit item, does a lookup for the corresponding zone
+and appends the associated description. Normally, if the item were not found, GSL would complain and stop. However, default operator '?' is used to suppress that behaviour and instead assign an empty string in that case.
+
+Finally, the modified tree is saved to a file, ready to be used for a generation task.
+
+File: fruits-denormalized.xml
+
+    <?xml version="1.0"?>
+    <root>
+        <fruit
+            name = "Apple"
+            zone = "temperate"
+            zone_desc = "between tropics and polar regions"/>
+        <fruit
+            name = "Banana"
+            zone = "tropical"
+            zone_desc = "region surrounding the equator"/>
+        <fruit
+            name = "Eggplant"
+            zone = "all"
+            zone_desc = "unknown"/>
+    </root>
+
+This lookup mechanism could be used directly during the generation step, of course.
+However, I generally decompose steps into discrete pieces whenever possible so I can keep track of one step at a time.

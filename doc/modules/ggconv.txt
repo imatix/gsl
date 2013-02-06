@@ -1,0 +1,23 @@
+MODULE: GSL/conv package
+
+    Class: Conversion Functions
+    
+        Function: conv . chr (arg)
+            Converts ascii code to character. If the argument is a number     
+            between 1 and 255, inclusive, returns the character represented by
+            the ascii code. If the argument is a number is outside the range, 
+            returns the empty string.                                         
+
+        Function: conv . number (arg)
+            Converts numeric looking input to number value. If the argument
+            looks like a number, returns the numeric value.                
+
+        Function: conv . ord (arg)
+            Converts character to ascii code. If the argument is a string,
+            returns the ascii code of the first character, only.          
+
+        Function: conv . string (arg)
+            Converts input to string value. If the argument is defined, returns
+            string value.                                                      
+
+

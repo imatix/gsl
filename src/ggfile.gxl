@@ -447,6 +447,11 @@ seek_the_file (FILE_ENTRY_ITEM *file,
 <!-------------------------------------------------------------------------->
 
     <function name = "open" >
+      <description>
+        Opens directory at `path` for iteration.
+        If `path` is not provided, uses the current directory.
+        Returns a directory object.
+      </description>  
         <parameter name = "path"     pass = "value"       compulsory = "0" />
         <parameter name = "error"    pass = "reference"   compulsory = "0" />
         <body>
@@ -510,6 +515,10 @@ seek_the_file (FILE_ENTRY_ITEM *file,
 <!-------------------------------------------------------------------------->
 
     <function name = "setcwd" >
+      <description>
+        Changes current working directory to `path`.
+        Returns result code.
+      </description>
         <parameter name = "path"    pass = "value"       compulsory = "1" />
         <parameter name = "error"   pass = "reference"   compulsory = "0" />
     <body>
@@ -530,6 +539,11 @@ seek_the_file (FILE_ENTRY_ITEM *file,
 <!-------------------------------------------------------------------------->
 
     <function name = "create" >
+      <description>
+        Creates directory `path`.
+        Returns result code.
+      </description>
+
         <parameter name = "path" pass = "value" compulsory = "1" />
         <body>
   {
@@ -542,6 +556,10 @@ seek_the_file (FILE_ENTRY_ITEM *file,
 <!-------------------------------------------------------------------------->
 
     <function name = "delete" >
+      <description>
+        Deletes directory at `path`.
+        Returns result code.
+      </description>
         <parameter name = "path"    pass = "value" compulsory = "1" />
         <parameter name = "error"   pass = "reference"   compulsory = "0" />
         <body>
@@ -562,6 +580,18 @@ seek_the_file (FILE_ENTRY_ITEM *file,
 <!-------------------------------------------------------------------------->
 
     <function name = "resolve" >
+      <description>
+      Locates `path` relative to current directory.
+
+      If the path looks like an absolute directory, returns the cleaned up path.
+      Otherwise appends the path to the current directory and returns the cleaned up result.
+      
+      Cleans-up the returned path by appending a '/' if necessary, and resolving any '..' subpaths.
+
+      If `separator`, a single character, is provided the resulting path components are separated by `separator`
+      path components instead of the default separator (which depends on the operating system).
+      </description>
+
         <parameter name = "path"      pass = "value" compulsory = "1" />
         <parameter name = "separator" pass = "value" compulsory = "0" />
         <body>

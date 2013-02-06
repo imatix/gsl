@@ -1,0 +1,7 @@
+MODULE: GSL/regexp package
+
+    Class: Regular Expression Functions
+    
+        Function: regexp . match (pattern,subject,[match])
+
+

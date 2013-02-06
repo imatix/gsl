@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<root>
+    <fruit
+        name = "Apple"
+        zone = "temperate"
+        zone_desc = "between tropics and polar regions"/>
+    <fruit
+        name = "Banana"
+        zone = "tropical"
+        zone_desc = "region surrounding the equator"/>
+    <fruit
+        name = "Eggplant"
+        zone = "all"
+        zone_desc = "unknown"/>
+</root>

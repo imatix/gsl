@@ -26,6 +26,7 @@
 <class name = "diag" title = "Diagnostic Functions" register = "1" >
 
 <function name = "used" >
+    <description>Shows amount (bytes) of memory allocated.</description>
     <body>
   {
     result-> value. type = TYPE_NUMBER;
@@ -37,6 +38,8 @@
 </function>
 
 <function name = "allocs" >
+
+    <description>Shows number of memory allocations.</description>
     <body>
   {
     result-> value. type = TYPE_NUMBER;
@@ -48,6 +51,8 @@
 </function>
 
 <function name = "frees" >
+
+    <description>Shows number of memory deallocations. Should equal allocs.</description>
     <body>
   {
     result-> value. type = TYPE_NUMBER;
@@ -59,6 +64,7 @@
 </function>
 
 <function name = "display" >
+    <description>Writes the contents of the memory allocation list to the specified file.</description>
     <parameter name = "filename" pass = "value" compulsory = "1" />
     <body>
   {
@@ -80,12 +86,20 @@
 </function>
 
 <function name = "checkall" >
+    <description>
+        Checks all allocated memory blocks for corruption and terminates
+       the program if any are found.
+    </description>
     <body>
     mem_checkall ();
     </body>
 </function>
 
 <function name = "raise" >
+    <description>
+    Send a signal corresponding to the numeric argument to the gsl process.
+    See signal(2) for numeric signal values.
+    </description>
     <parameter name = "signal" pass = "value" compulsory = "1" />
     <body>
     raise ((int) number_value (& signal-> value));
@@ -93,6 +107,10 @@
 </function>
 
 <function name = "animate" >
+    <description>
+        Control GSL finite state machine progress where applicable.
+        Use non-zero numeric argument to enable and a zero to disable.
+    </description>
     <parameter name = "value" pass = "value" compulsory = "1" />
     <body>
     gsl_thread-> animate = (Bool) number_value (& value-> value);
@@ -100,6 +118,15 @@
 </function>
 
 <function name = "console_set_mode" >
+    <description>
+    Sets console display mode; the argument can be one of:
+
+    0 - Output text exactly as specified. (Default).
+    1 - Prefix text by "yy/mm/dd hh:mm:ss "
+    2 - Prefix text by "hh:mm:ss "
+    3 - Same as #2 but output is fully flushed
+    </description>
+
     <parameter name = "mode" pass = "value" compulsory = "1" />
     <body>
     console_set_mode ((int) number_value (& mode-> value));
