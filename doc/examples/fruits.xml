@@ -1,0 +1,5 @@
+<root>
+    <fruit name="Apple" zone="temperate" />
+    <fruit name="Banana" zone="tropical" />
+    <fruit name="Eggplant" zone="all" />
+</root>

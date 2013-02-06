@@ -1,0 +1,20 @@
+MODULE: GSL/socket package
+
+    Class: Socket
+    
+        Function: sock . passive (service,[error])
+
+        Function: sock . connect ([host],service,[timeout],[error])
+
+
+    Class: Socket handle
+    
+        Function: <sock handle> . accept ([timeout],[error])
+
+        Function: <sock handle> . close ([timeout],[error])
+
+        Function: <sock handle> . read (buffer,[minimum],[timeout],[error])
+
+        Function: <sock handle> . write (buffer,[timeout],[error])
+
+

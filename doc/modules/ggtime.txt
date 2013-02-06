@@ -1,0 +1,23 @@
+MODULE: GSL/time package
+
+    Class: Time Functions
+    
+        Function: time . picture ([time],[picture])
+
+        Function: time . number (time)
+
+        Function: time . now ([date],[time])
+            Assigns date and time to the passed parameters. Also returns the
+            time.                                                           
+
+        Function: time . diff (date1,time1,date2,time2)
+            Returns the difference (in csecs) between two date/times.
+
+
+    Class: Date Functions
+    
+        Function: date . picture ([date],[picture])
+
+        Function: date . number (date)
+
+

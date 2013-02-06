@@ -1,0 +1,5 @@
+<zones>
+    <zone name="temperate" description="between tropics and polar regions"/>
+    <zone name="tropical" description="region surrounding the equator"/>
+    <zone name="all" description="anywhere but the polar regions"/>
+</zones>

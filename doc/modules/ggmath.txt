@@ -1,0 +1,53 @@
+MODULE: GSL/math package
+
+    Class: Math Functions
+    
+        Function: math . abs (parm)
+
+        Function: math . ceil (parm)
+
+        Function: math . floor (parm)
+
+        Function: math . mod (x,y)
+
+        Function: math . rand ()
+
+        Function: math . sqrt (parm)
+
+        Function: math . exp (parm)
+
+        Function: math . log (parm)
+
+        Function: math . log10 (parm)
+
+        Function: math . pow (x,y)
+
+        Function: math . sin (parm)
+
+        Function: math . cos (parm)
+
+        Function: math . tan (parm)
+
+        Function: math . sinh (parm)
+
+        Function: math . cosh (parm)
+
+        Function: math . tanh (parm)
+
+        Function: math . asin (parm)
+
+        Function: math . acos (parm)
+
+        Function: math . atan (parm)
+
+        Function: math . atan2 (x,y)
+
+        Function: math . pi ()
+
+        Function: math . asinh (parm)
+
+        Function: math . acosh (parm)
+
+        Function: math . atanh (parm)
+
+

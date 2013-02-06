@@ -1,0 +1,45 @@
+MODULE: GSL/string package
+
+    Class: String Functions
+    
+        Function: string . length (string)
+
+        Function: string . locate (haystack,needle)
+
+        Function: string . locate_last (haystack,needle)
+
+        Function: string . substr (string,[start],[end],[length])
+
+        Function: string . trim (string)
+
+        Function: string . justify (string,width,[prefix])
+
+        Function: string . certify (number,[language])
+
+        Function: string . replace (strbuf,strpattern)
+
+        Function: string . match (string1,string2)
+
+        Function: string . prefixed (string,prefix)
+
+        Function: string . prefix (string,delims)
+
+        Function: string . defix (string,delims)
+
+        Function: string . hash (string)
+
+        Function: string . convch (string,from,to)
+
+        Function: string . lexcmp (string1,string2)
+
+        Function: string . lexncmp (string1,string2,count)
+
+        Function: string . lexwcmp (string1,pattern)
+
+        Function: string . matchpat (string1,pattern,[ic])
+
+        Function: string . soundex (string)
+
+        Function: string . cntch (string,value)
+
+

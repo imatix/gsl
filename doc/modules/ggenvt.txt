@@ -1,0 +1,12 @@
+MODULE: GSL/environment package
+
+    Class: Environment Functions
+    
+        Function: env . get (name)
+            Returns value of environment variable `name`, if it exists.
+
+        Function: env . set (name,[value])
+            If value is provided, sets environment variable `name` to `value`.
+            Otherwise, clears environment variable `name`.                    
+
+

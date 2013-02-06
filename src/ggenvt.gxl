@@ -28,6 +28,9 @@
 <!-------------------------------------------------------------------------->
 
 <function name = "get" >
+    <description>
+        Returns value of environment variable `name`, if it exists.
+    </description>
     <parameter name = "name" pass = "value" compulsory = "1" />
 <body>
   {
@@ -43,6 +46,11 @@
 <!-------------------------------------------------------------------------->
 
 <function name = "set" cname="envset">
+    <description>
+        If value is provided, sets environment variable `name` to `value`.
+        Otherwise, clears environment variable `name`.
+    </description>
+
     <parameter name = "name"  pass = "value" compulsory = "1" />
     <parameter name = "value" pass = "value"                  />
 <body>
