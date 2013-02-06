@@ -574,10 +574,11 @@ proc_handle_run (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, 
         return 0;
       }
 
-    procinfo. filename = process-> command;
-    procinfo. wait     = FALSE;
-    procinfo. workdir  = process-> workdir;
-    procinfo. envv     = symb2strt (process-> envt);
+    procinfo. filename   = process-> command;
+    procinfo. wait       = FALSE;
+    procinfo. workdir    = process-> workdir;
+    procinfo. envv       = symb2strt (process-> envt);
+    procinfo. searchpath = TRUE;
 
     process-> handle = process_create_full (& procinfo);
 
