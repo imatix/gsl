@@ -3,17 +3,30 @@ MODULE: GSL/fileio package
     Class: Directory
     
         Function: directory . open ([path],[error])
-            Opens directory at `path` for iteration. If `path` is not provided,
-            uses the current directory. Returns a directory object.            
+            Opens directory at `path` for iteration. `path` is opened relative 
+            to current directory. If `path` is not provided, uses the current  
+            directory. On success, returns a file entry for the first file in  
+            the directory. On error, returns an undefined value and sets       
+            `error`, if provided. Note: In addition to permission, type, or    
+            existence errors, open will fail if the directory is empty since an
+            empty directory has no entries.                                    
 
         Function: directory . setcwd (path,[error])
-            Changes current working directory to `path`. Returns result code.
+            Changes current working directory to `path`. Returns 0 on success.
+            Returns -1 on error and sets `error`, if provided.                
 
         Function: directory . create (path)
-            Creates directory `path`. Returns result code.
+            Creates directory `path`. On success returns 0. On error, returns  
+            -1 and sets `error`, if provided. Notes: Can create multiple levels
+            of directories, similar to 'mkdir -p' on unix. Will return success 
+            on directories already exist. Note that this is true even if the   
+            user does not access to said directory. Existence is all. If       
+            created, directories have permission 0775.                         
 
         Function: directory . delete (path,[error])
-            Deletes directory at `path`. Returns result code.
+            Removes directory at `path`. On success, returns 0. On error,
+            returns -1 and sets `error`, if provided. Note: will fail on 
+            non-empty directory.                                         
 
         Function: directory . resolve (path,[separator])
             Locates `path` relative to current directory. If the path looks   
@@ -29,20 +42,43 @@ MODULE: GSL/fileio package
     Class: File
     
         Function: file . open (filename,[mode],[error])
+            Opens `filename` with `mode` for reading or writing, depending on  
+            `mode`. If mode is 'r', the file is opened for reading. Default if 
+            mode is not provided. If mode is 'w', the file is opened for       
+            writing. Empties file first. If mode is 'a', the file is opened for
+            appending to existing content. On success, returns a file handle.  
+            On error, returns undefined and sets `error`, if provided.         
 
         Function: file . read (handle,[error])
+            Reads a line from file `handle` . On success, returns content read.
+            On error, returns undefined and sets `error`, if provided.         
 
         Function: file . write (handle,string,[error])
+            Writes `string` to file `handle`. On success, returns 0. On error,
+            returns -1 and sets `error`, if provided.                         
 
         Function: file . close (handle,[error])
+            Closes file `handle`. On success, returns 0. On error, returns -1
+            and sets `error`, if provided.                                   
 
         Function: file . tell (handle,[error])
+            Returns the current file offset of `handle`. The next `read` or 
+            `write` will start at that offset. On success, returns offset, a
+            number denoting the number of bytes into the file. On error,    
+            returns undefined and sets `error`, if provided.                
 
         Function: file . seek (handle,[offset],[error])
+            Moves current file offset to byte `offset` in file `handle`. If
+            `offset` is -1, seeks to end of file, else seeks to specified  
+            offset in file. On success, returns 0. On error, returns -1 and
+            sets `error`, if provided.                                     
 
         Function: file . slurp (filename,[error])
 
         Function: file . exists (filename,[error])
+            Tests for file (or directory) existence. Returns 1 if the file   
+            exists. Returns 0 if the file does not exist and sets `error`, if
+            provided.                                                        
 
         Function: file . timestamp (filename,[error])
 

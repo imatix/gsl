@@ -58,32 +58,31 @@
 &emsp;<a href="#toc4-1253">Arguments</a>
 &emsp;<a href="#toc4-1269">Predefined Identifiers</a>
 &emsp;<a href="#toc3-1295">Built-In Functions</a>
-&emsp;<a href="#toc4-1327">conv</a>
-&emsp;<a href="#toc4-1332">diag</a>
-&emsp;<a href="#toc4-1337">environment</a>
-&emsp;<a href="#toc4-1342">fileio</a>
-&emsp;<a href="#toc4-1345">Directories</a>
-&emsp;<a href="#toc4-1377">gsl control</a>
-&emsp;<a href="#toc4-1391">math</a>
-&emsp;<a href="#toc4-1420">regexp</a>
-&emsp;<a href="#toc4-1426">process management</a>
-&emsp;<a href="#toc4-1431">script</a>
-&emsp;<a href="#toc4-1436">socket</a>
-&emsp;<a href="#toc4-1449">string</a>
-&emsp;<a href="#toc4-1474">symb</a>
-&emsp;<a href="#toc4-1479">thrd</a>
-&emsp;<a href="#toc4-1516">time</a>
-&emsp;<a href="#toc4-1531">XML</a>
-&emsp;<a href="#toc3-1579">Script Commands</a>
-&emsp;<a href="#toc4-1582">Output File Manipulation</a>
-&emsp;<a href="#toc4-1627">Control Structures</a>
-&emsp;<a href="#toc4-1738">Scope Manipulation</a>
-&emsp;<a href="#toc4-1753">Symbol Definition</a>
-&emsp;<a href="#toc4-1784">Structured Data Manipulation</a>
-&emsp;<a href="#toc4-1862">Script Manipulation</a>
-&emsp;<a href="#toc4-1892">Macros and Functions</a>
-&emsp;<a href="#toc4-1957">Miscellaneous</a>
-&emsp;<a href="#toc4-1972">Examples</a>
+&emsp;<a href="#toc4-1321">conv</a>
+&emsp;<a href="#toc4-1326">diag</a>
+&emsp;<a href="#toc4-1331">environment</a>
+&emsp;<a href="#toc4-1336">fileio</a>
+&emsp;<a href="#toc4-1399">gsl control</a>
+&emsp;<a href="#toc4-1413">math</a>
+&emsp;<a href="#toc4-1442">regexp</a>
+&emsp;<a href="#toc4-1448">process management</a>
+&emsp;<a href="#toc4-1453">script</a>
+&emsp;<a href="#toc4-1458">socket</a>
+&emsp;<a href="#toc4-1471">string</a>
+&emsp;<a href="#toc4-1496">symb</a>
+&emsp;<a href="#toc4-1501">thrd</a>
+&emsp;<a href="#toc4-1538">time</a>
+&emsp;<a href="#toc4-1553">XML</a>
+&emsp;<a href="#toc3-1601">Script Commands</a>
+&emsp;<a href="#toc4-1604">Output File Manipulation</a>
+&emsp;<a href="#toc4-1649">Control Structures</a>
+&emsp;<a href="#toc4-1760">Scope Manipulation</a>
+&emsp;<a href="#toc4-1775">Symbol Definition</a>
+&emsp;<a href="#toc4-1806">Structured Data Manipulation</a>
+&emsp;<a href="#toc4-1884">Script Manipulation</a>
+&emsp;<a href="#toc4-1914">Macros and Functions</a>
+&emsp;<a href="#toc4-1979">Miscellaneous</a>
+&emsp;<a href="#toc4-1994">Examples</a>
 
 <A name="toc2-10" title="Overview" />
 ## Overview
@@ -1376,15 +1375,8 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
 and an error occurs, the associated error text will be placed in the parameter and can be used
 as shown in this example.
 
-    dir = directory.open(".", error_text) ?
 
-    if defined(dir)
-     ...
-    else
-        abort "Error: " + error_text
-    endif
-
-<A name="toc4-1327" title="conv" />
+<A name="toc4-1321" title="conv" />
 #### conv
 
 MODULE: GSL/conv package
@@ -1411,7 +1403,7 @@ MODULE: GSL/conv package
 
 
 
-<A name="toc4-1332" title="diag" />
+<A name="toc4-1326" title="diag" />
 #### diag
 
 MODULE: GSL/diag package
@@ -1451,7 +1443,7 @@ MODULE: GSL/diag package
 
 
 
-<A name="toc4-1337" title="environment" />
+<A name="toc4-1331" title="environment" />
 #### environment
 
 MODULE: GSL/environment package
@@ -1467,15 +1459,42 @@ MODULE: GSL/environment package
 
 
 
-<A name="toc4-1342" title="fileio" />
+<A name="toc4-1336" title="fileio" />
 #### fileio
 
-<A name="toc4-1345" title="Directories" />
-#### Directories
+GSL provides three modules for dealing with directories and files; one directory module and two file modules.
+The first file module works with independent files and the second with files during a directory traversal.
+We will discuss the second set after the first because it will make more sense that way.
 
-TODO: Talk about Directories:
+Abstractedly, the modules have functions for working on, working with, and finding out about directories and files.
 
-##### Files
+In the first category, directories have the `create` and `delete` functions which make them appear and disappear, modulo
+file permissions and other errors.  Files also have the same functions, but `create` is spelled `open`. In addition,
+files have functions to `rename` and `copy` them. An important note: while it is generally important to check for errors
+in most operations, these operation almost demand checking for errors. Use of the default operator and error parameter
+will be well rewarded with working programs.
+
+The second set of functions deal with the "contents" of directories and files.
+
+A directory's purpose is too contain other files (directories are also files of a particular type).
+The only content operation is `open`, which returns a 'file entry' object that can be used to iterate
+through the directory contents as in this example.
+
+
+Files are a little richer and have operations to open them and to read from or write to them.
+
+File.open returns a file 'handle', which is used in all subsequent content operations on that file.
+When opening a file, the `mode` parameter states how you intend to use the file, whether for reading,
+writing, or appending.
+
+Reading can be done with file.read(handle, error) or with the slightly shorter, handle.read(error).
+Writing can also be done in a corresponding manner.
+
+A file handle maintains an internal current file offset, which tells it where the next read or write
+will occur. A file opened for reading or writing will start of with its offset at 0, the beginning of the file,
+whereas a file opened for append mode will start with an offset at the end of the file. The function `tell`
+returns the current offset and `seek` changes the offset. They are useful but infrequently used functions.
+
 
 GSL provides two kinds of file operations. The first set are input/output functions
 for working on file contents and the second involve functions that work on files stored
@@ -1504,17 +1523,30 @@ MODULE: GSL/fileio package
     Class: Directory
     
         Function: directory . open ([path],[error])
-            Opens directory at `path` for iteration. If `path` is not provided,
-            uses the current directory. Returns a directory object.            
+            Opens directory at `path` for iteration. `path` is opened relative 
+            to current directory. If `path` is not provided, uses the current  
+            directory. On success, returns a file entry for the first file in  
+            the directory. On error, returns an undefined value and sets       
+            `error`, if provided. Note: In addition to permission, type, or    
+            existence errors, open will fail if the directory is empty since an
+            empty directory has no entries.                                    
 
         Function: directory . setcwd (path,[error])
-            Changes current working directory to `path`. Returns result code.
+            Changes current working directory to `path`. Returns 0 on success.
+            Returns -1 on error and sets `error`, if provided.                
 
         Function: directory . create (path)
-            Creates directory `path`. Returns result code.
+            Creates directory `path`. On success returns 0. On error, returns  
+            -1 and sets `error`, if provided. Notes: Can create multiple levels
+            of directories, similar to 'mkdir -p' on unix. Will return success 
+            on directories already exist. Note that this is true even if the   
+            user does not access to said directory. Existence is all. If       
+            created, directories have permission 0775.                         
 
         Function: directory . delete (path,[error])
-            Deletes directory at `path`. Returns result code.
+            Removes directory at `path`. On success, returns 0. On error,
+            returns -1 and sets `error`, if provided. Note: will fail on 
+            non-empty directory.                                         
 
         Function: directory . resolve (path,[separator])
             Locates `path` relative to current directory. If the path looks   
@@ -1530,20 +1562,43 @@ MODULE: GSL/fileio package
     Class: File
     
         Function: file . open (filename,[mode],[error])
+            Opens `filename` with `mode` for reading or writing, depending on  
+            `mode`. If mode is 'r', the file is opened for reading. Default if 
+            mode is not provided. If mode is 'w', the file is opened for       
+            writing. Empties file first. If mode is 'a', the file is opened for
+            appending to existing content. On success, returns a file handle.  
+            On error, returns undefined and sets `error`, if provided.         
 
         Function: file . read (handle,[error])
+            Reads a line from file `handle` . On success, returns content read.
+            On error, returns undefined and sets `error`, if provided.         
 
         Function: file . write (handle,string,[error])
+            Writes `string` to file `handle`. On success, returns 0. On error,
+            returns -1 and sets `error`, if provided.                         
 
         Function: file . close (handle,[error])
+            Closes file `handle`. On success, returns 0. On error, returns -1
+            and sets `error`, if provided.                                   
 
         Function: file . tell (handle,[error])
+            Returns the current file offset of `handle`. The next `read` or 
+            `write` will start at that offset. On success, returns offset, a
+            number denoting the number of bytes into the file. On error,    
+            returns undefined and sets `error`, if provided.                
 
         Function: file . seek (handle,[offset],[error])
+            Moves current file offset to byte `offset` in file `handle`. If
+            `offset` is -1, seeks to end of file, else seeks to specified  
+            offset in file. On success, returns 0. On error, returns -1 and
+            sets `error`, if provided.                                     
 
         Function: file . slurp (filename,[error])
 
         Function: file . exists (filename,[error])
+            Tests for file (or directory) existence. Returns 1 if the file   
+            exists. Returns 0 if the file does not exist and sets `error`, if
+            provided.                                                        
 
         Function: file . timestamp (filename,[error])
 
@@ -1578,7 +1633,7 @@ MODULE: GSL/fileio package
 
 
 
-<A name="toc4-1377" title="gsl control" />
+<A name="toc4-1399" title="gsl control" />
 #### gsl control
 
     Class: GSL Control Class
@@ -1592,7 +1647,7 @@ MODULE: GSL/fileio package
             its output is returned as the result of this function. Uses the
             current template mode unless over-ridden by the optional argument.
 
-<A name="toc4-1391" title="math" />
+<A name="toc4-1413" title="math" />
 #### math
 
     Class: Math Functions
@@ -1621,13 +1676,13 @@ MODULE: GSL/fileio package
         Function: math . acosh (parm)
         Function: math . atanh (parm)
 
-<A name="toc4-1420" title="regexp" />
+<A name="toc4-1442" title="regexp" />
 #### regexp
 
     Class: Regular Expression Functions
         Function: regexp . match (pattern,subject,[match])
 
-<A name="toc4-1426" title="process management" />
+<A name="toc4-1448" title="process management" />
 #### process management
 
 MODULE: GSL/process management
@@ -1664,12 +1719,12 @@ package
 
 
 
-<A name="toc4-1431" title="script" />
+<A name="toc4-1453" title="script" />
 #### script
 
     Class: GSL Script Line
 
-<A name="toc4-1436" title="socket" />
+<A name="toc4-1458" title="socket" />
 #### socket
 
     Class: Socket
@@ -1682,7 +1737,7 @@ package
         Function: <sock handle> . read (buffer,[minimum],[timeout],[error])
         Function: <sock handle> . write (buffer,[timeout],[error])
 
-<A name="toc4-1449" title="string" />
+<A name="toc4-1471" title="string" />
 #### string
 
     Class: String Functions
@@ -1707,12 +1762,12 @@ package
         Function: string . soundex (string)
         Function: string . cntch (string,value)
 
-<A name="toc4-1474" title="symb" />
+<A name="toc4-1496" title="symb" />
 #### symb
 
     Class: Symbol
 
-<A name="toc4-1479" title="thrd" />
+<A name="toc4-1501" title="thrd" />
 #### thrd
 
     Class: Thread
@@ -1749,7 +1804,7 @@ package
     Class: Thread
         Function: <parsed item> . run ([error])
 
-<A name="toc4-1516" title="time" />
+<A name="toc4-1538" title="time" />
 #### time
 
     Class: Time Functions
@@ -1764,7 +1819,7 @@ package
         Function: date . picture ([date],[picture])
         Function: date . number (date)
 
-<A name="toc4-1531" title="XML" />
+<A name="toc4-1553" title="XML" />
 #### XML
 
     Class: XML
@@ -1812,10 +1867,10 @@ package
 
     Class: XML value
 
-<A name="toc3-1579" title="Script Commands" />
+<A name="toc3-1601" title="Script Commands" />
 ### Script Commands
 
-<A name="toc4-1582" title="Output File Manipulation" />
+<A name="toc4-1604" title="Output File Manipulation" />
 #### Output File Manipulation
 
 **.output**
@@ -1860,7 +1915,7 @@ Examples:
     things like $(abc).
     .endliteral
 
-<A name="toc4-1627" title="Control Structures" />
+<A name="toc4-1649" title="Control Structures" />
 #### Control Structures
 
 **.for**
@@ -1971,7 +2026,7 @@ Inside a `for` or `while` loop causes immediate iteration, skipping execution of
 
 Inside a `for` or `while` loop causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor` or `endwhile` statement.  If the scope is specified then the `for` loop corresponding to that scope is terminated.
 
-<A name="toc4-1738" title="Scope Manipulation" />
+<A name="toc4-1760" title="Scope Manipulation" />
 #### Scope Manipulation
 
 **.scope**
@@ -1986,7 +2041,7 @@ Opens a new scope corresponding to the specified data.
 
 Terminates a block opened with a .scope command, closing the scope. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .scope blocks for you.
 
-<A name="toc4-1753" title="Symbol Definition" />
+<A name="toc4-1775" title="Symbol Definition" />
 #### Symbol Definition
 
     .<data-specifier> [<operator>]= [ <expr> ]
@@ -2017,7 +2072,7 @@ Multiplies the value of the identifier x by 2.
 
 Does nothing if x is already defined; otherwise assigns it the value of y, or if y is undefined then the value of z, or if z is undefined, x remains undefined.
 
-<A name="toc4-1784" title="Structured Data Manipulation" />
+<A name="toc4-1806" title="Structured Data Manipulation" />
 #### Structured Data Manipulation
 
 **.new**
@@ -2095,7 +2150,7 @@ Examples:
 
 Sorts the specified items.  A scope is created with each item in turn and is used to evaluate the expression.  The result is then used to sort the items.  The `as` clause allows you to give the created scope a different name.  After execution, the specified items are in order and after any other children of the same parent.
 
-<A name="toc4-1862" title="Script Manipulation" />
+<A name="toc4-1884" title="Script Manipulation" />
 #### Script Manipulation
 
 **.include**
@@ -2125,7 +2180,7 @@ Turns template mode on or off.
 
 Terminates the block introduced by a `template` instruction.
 
-<A name="toc4-1892" title="Macros and Functions" />
+<A name="toc4-1914" title="Macros and Functions" />
 #### Macros and Functions
 
 Macros and functions are pieces of GSL which can be invoked with parameters. The only difference between a macro and as function is that macros are interpreted in template mode and functions in script mode.
@@ -2190,7 +2245,7 @@ Examples:
         .$(my.dest) = my.source
     .endfunction
 
-<A name="toc4-1957" title="Miscellaneous" />
+<A name="toc4-1979" title="Miscellaneous" />
 #### Miscellaneous
 
 **.echo**
@@ -2205,7 +2260,7 @@ Outputs the given expression to the standard output.
 
 Outputs the given expression to the standard output and halts GSL operation.
 
-<A name="toc4-1972" title="Examples" />
+<A name="toc4-1994" title="Examples" />
 #### Examples
 
 See examples in Examples directory

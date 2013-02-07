@@ -1266,13 +1266,7 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
 and an error occurs, the associated error text will be placed in the parameter and can be used
 as shown in this example.
 
-    dir = directory.open(".", error_text) ?
-
-    if defined(dir)
-     ...
-    else
-        abort "Error: " + error_text
-    endif
+.include doc/examples/error-parameter.gsl,code
 
 #### conv
 
@@ -1288,11 +1282,40 @@ as shown in this example.
 
 #### fileio
 
-#### Directories
+GSL provides three modules for dealing with directories and files; one directory module and two file modules.
+The first file module works with independent files and the second with files during a directory traversal.
+We will discuss the second set after the first because it will make more sense that way.
 
-TODO: Talk about Directories:
+Abstractedly, the modules have functions for working on, working with, and finding out about directories and files.
 
-##### Files
+In the first category, directories have the `create` and `delete` functions which make them appear and disappear, modulo
+file permissions and other errors.  Files also have the same functions, but `create` is spelled `open`. In addition,
+files have functions to `rename` and `copy` them. An important note: while it is generally important to check for errors
+in most operations, these operation almost demand checking for errors. Use of the default operator and error parameter
+will be well rewarded with working programs.
+
+The second set of functions deal with the "contents" of directories and files.
+
+A directory's purpose is too contain other files (directories are also files of a particular type).
+The only content operation is `open`, which returns a 'file entry' object that can be used to iterate
+through the directory contents as in this example.
+
+.include doc/examples/directory-iteration.gsl,code
+
+Files are a little richer and have operations to open them and to read from or write to them.
+
+File.open returns a file 'handle', which is used in all subsequent content operations on that file.
+When opening a file, the `mode` parameter states how you intend to use the file, whether for reading,
+writing, or appending.
+
+Reading can be done with file.read(handle, error) or with the slightly shorter, handle.read(error).
+Writing can also be done in a corresponding manner.
+
+A file handle maintains an internal current file offset, which tells it where the next read or write
+will occur. A file opened for reading or writing will start of with its offset at 0, the beginning of the file,
+whereas a file opened for append mode will start with an offset at the end of the file. The function `tell`
+returns the current offset and `seek` changes the offset. They are useful but infrequently used functions.
+
 
 GSL provides two kinds of file operations. The first set are input/output functions
 for working on file contents and the second involve functions that work on files stored

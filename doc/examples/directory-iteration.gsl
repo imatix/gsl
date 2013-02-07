@@ -1,0 +1,9 @@
+dir = directory.open(".", error_text) ?
+
+if defined(dir)
+  for dir.file as f
+      echo "file:$(f.name) has size: $(f.size)"
+  endfor
+else
+    abort "Error: " + error_text
+endif
