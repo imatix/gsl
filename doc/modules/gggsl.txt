@@ -3,12 +3,14 @@ MODULE: GSL/gsl control package
     Class: GSL Control Class
     
         Function: gsl . include (filename,[template])
-            Includes a GSL script file. Uses the current template mode unless
-            over-ridden by the optional argument.                            
+                Includes a GSL script file.
+    
+    Uses the current template mode unless over-ridden by the optional argument.
 
         Function: gsl . exec (command,[template])
-            Executes a GSL script. If the script does not open an output file,
-            its output is returned as the result of this function. Uses the   
-            current template mode unless over-ridden by the optional argument.
+                Executes a GSL script.  If the script does not open an output file,
+    its output is returned as the result of this function.
+    
+    Uses the current template mode unless over-ridden by the optional argument.
 
 

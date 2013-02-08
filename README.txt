@@ -1266,7 +1266,7 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
 and an error occurs, the associated error text will be placed in the parameter and can be used
 as shown in this example.
 
-.include doc/examples/error-parameter.gsl,code
+.pull doc/examples/error-parameter.gsl,code
 
 #### conv
 
@@ -1282,8 +1282,8 @@ as shown in this example.
 
 #### fileio
 
-GSL provides three modules for dealing with directories and files; one directory module and two file modules.
-The first file module works with independent files and the second with files during a directory traversal.
+GSL provides three modules for dealing with directories and files; one directory module and two file modules,
+one for working with independent files and the second for working with files during a directory traversal.
 We will discuss the second set after the first because it will make more sense that way.
 
 Abstractedly, the modules have functions for working on, working with, and finding out about directories and files.
@@ -1291,53 +1291,98 @@ Abstractedly, the modules have functions for working on, working with, and findi
 In the first category, directories have the `create` and `delete` functions which make them appear and disappear, modulo
 file permissions and other errors.  Files also have the same functions, but `create` is spelled `open`. In addition,
 files have functions to `rename` and `copy` them. An important note: while it is generally important to check for errors
-in most operations, these operation almost demand checking for errors. Use of the default operator and error parameter
+in most operations, these operations almost demand checking for errors. Use of the default operator and error parameter
 will be well rewarded with working programs.
 
 The second set of functions deal with the "contents" of directories and files.
 
 A directory's purpose is too contain other files (directories are also files of a particular type).
-The only content operation is `open`, which returns a 'file entry' object that can be used to iterate
-through the directory contents as in this example.
+The only content operation is `open`, which returns a 'directory entry' object that can be used to iterate
+through the directory contents.
 
-.include doc/examples/directory-iteration.gsl,code
+Files are a little richer and have operations to open them and to read from or write to them
+and to control where in the file to read or write.
 
-Files are a little richer and have operations to open them and to read from or write to them.
+File IO always begin with an open call, which returns a file handle.
 
-File.open returns a file 'handle', which is used in all subsequent content operations on that file.
-When opening a file, the `mode` parameter states how you intend to use the file, whether for reading,
-writing, or appending.
+The file handle is used in all subsequent content operations on that file. When the text
+refers to operations that affect the `handle`, keep in mind that this is short hand for the
+longer 'operations that affect the file that the handle represents'. The file is actually what
+is being worked on.
 
-Reading can be done with file.read(handle, error) or with the slightly shorter, handle.read(error).
-Writing can also be done in a corresponding manner.
+When opening a file, the `mode` parameter, a single letter, states how you intend to use the file,
+whether for 'r'eading, 'w'riting, or 'a'ppending.
 
-A file handle maintains an internal current file offset, which tells it where the next read or write
-will occur. A file opened for reading or writing will start of with its offset at 0, the beginning of the file,
-whereas a file opened for append mode will start with an offset at the end of the file. The function `tell`
-returns the current offset and `seek` changes the offset. They are useful but infrequently used functions.
+Reading can be done with file.read(handle, [error]).
+Writing is done in a corresponding manner.
+Reading can also be done with function `file.slurp`, which returns the contents of the file. It is a shortcut
+to a common operation.
 
+A file handle maintains an internal current file offset, which is a byte offset from the beginning of the file
+tells it where the next read or write should occur.
+A file opened for reading or writing will start of with an offset of 0,
+whereas a file opened for append mode will start with an offset corresponding to the end of the file.
+The offset changes to reflect any read or write operations on the file.
+This is actually more than one needs to know just to read or write a file.
+However, it is sometimes useful and necessary to skip around inside a file, which is what `tell` and `seek` do.
+The function `tell` returns the current offset and `seek` changes the offset.
 
-GSL provides two kinds of file operations. The first set are input/output functions
-for working on file contents and the second involve functions that work on files stored
-on disk.
-
-The IO operations always begin with an open call, which returns a file handle.
-A file can be opened for reading and/or writing, according to the specified mode.
-Once a file has been opened, it can read from or written to (depending on the specified mode).
-
-The file handle maintains an internal position during the read and write
-operations. The position is 0 when the file is opened, unless it is opened
-in append mode, in which case, the position is the end of file. The position
-changes as necessary after each read or write call. The `tell` function returns
-the current file position and the `seek` function changes the position. Changing
-the position affects subsequent reads or writes.
-
-`close` is used to close the file handle when you are done with the file.
+The final set of file functions manipulate files, file names and file metadata.
 
 
-The second set of file operations provide facilities to manipulate files,
-file names and file metadata.
+#### Directory Iteration
 
+As mentioned, previously, directories can be opened with the `directory.open` function, which returns a 'directory entry' object.
+The 'directory object' represents a tree structure with child elements corresponding to the contents of the directory and can be
+iterated with a for/endfor loop. A child element is either a 'directory entry' or a 'file entry', depending on the file type.
+Both file and directory entries have a name() function, which returns 'file' or 'directory', as appropriate.
+
+The loop 
+
+    for dir. as elt
+
+    endfor
+
+will allow access to all child elements, but, of course, the loop could be limited to files with
+
+     for dir.file
+     endfor
+
+or directories with
+
+    for dir.directory
+
+    endfor
+
+During iteration, the File Entry functions can be called on current item. These are similar to their corresponding File functions
+but do not take a `handle` parameter.
+
+The directory entry has the attributes:
+
+    - path
+    - name
+
+and the file entry has the following attributes:
+
+    - path
+    - name
+    - size
+    - time
+    - date
+
+Which return the appropriate values from the file (or directory, which is, of course, a file).
+
+A couple of interesting notes:
+
+If the directory entry `name` attribute is changed, the actual directory name is also changed.
+However, this operation does not return an error and cannot be recommended.
+
+The file entry's default attribute is `name` so `f.` is the same as `f.name`.
+
+File.open returns a File Entry object, so some of the file operations can be shortened a bit.
+For instance, file.read(handle) could also be written as handle.read(). 
+
+.pull doc/examples/directory-iteration.gsl,code
 
 .pull doc/modules/ggfile.txt
 

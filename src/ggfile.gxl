@@ -1011,6 +1011,7 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     <function name = "write" cname="filewrite" >
       <description>
         Writes `string` to file `handle`.
+
         On success, returns 0.
         On error, returns -1 and sets `error`, if provided.
       </description>
@@ -1040,6 +1041,7 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     <function name = "close" cname="fileclose" >
       <description>
         Closes file `handle`.
+
         On success, returns 0.
         On error, returns -1 and sets `error`, if provided.
       </description>
@@ -1069,9 +1071,7 @@ seek_the_file (FILE_ENTRY_ITEM *file,
         Returns the current file offset of `handle`.
         The next `read` or `write` will start at that offset.
         
-        On success, returns offset, a number denoting the
-        number of bytes into the file.
-
+        On success, returns offset, a number.
         On error, returns undefined and sets `error`, if provided.
       </description>
 
@@ -1097,13 +1097,15 @@ seek_the_file (FILE_ENTRY_ITEM *file,
 
     <function name = "seek" >
       <description>
-        Moves current file offset to byte `offset` in file `handle`.
+        Moves current file offset to `offset`, a number, in file `handle`.
 
-        If `offset` is -1, seeks to end of file, else seeks
+        If `offset` is -1, seeks to end of file, otherwise seeks
         to specified offset in file.
 
         On success, returns 0.
         On error, returns -1 and sets `error`, if provided.
+
+        Note: offset 0 is the beginning of the file.
       </description>
 
         <parameter name = "handle" pass = "value"       compulsory = "1" />
@@ -1129,6 +1131,13 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "slurp" cname="fileslurp" >
+      <description>
+        Reads the entire content of `filename`.
+
+        On success, returns data read.
+        On error, returns undefined and sets `error`, if provided.
+      </description>
+
         <parameter name = "filename" pass = "value"       compulsory = "1" />
         <parameter name = "error"    pass = "reference"   compulsory = "0" />
     <body>
@@ -1172,6 +1181,7 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     <function name = "exists" cname="fileexists" >
         <description>
             Tests for file (or directory) existence.
+
             Returns 1 if the file exists.
             Returns 0 if the file does not exist and sets `error`, if provided.
         </description>
@@ -1196,6 +1206,13 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "timestamp" >
+        <description>
+            Returns the modification date and time of `filename`,
+            a file or directory name, as a number in the format YYYYMMDDHHMMSS.
+
+            On success, returns a value.
+            On error, returns -1 and sets `error`, if provided.
+        </description>
         <parameter name = "filename" pass = "value"       compulsory = "1" />
         <parameter name = "error"    pass = "reference"   compulsory = "0" />
         <body>
@@ -1212,7 +1229,7 @@ seek_the_file (FILE_ENTRY_ITEM *file,
 
     if (timer)
         assign_number (& result-> value, (double) timer_to_date (timer) * 1000000
-                                     + (double) timer_to_time (timer));
+                                    + (double) timer_to_time (timer));
 
     return store_module_error (gsl_thread, context, error,
                                errno ? strerror (errno) : NULL);
@@ -1221,6 +1238,11 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "rename" cname="filerename" >
+      <description>
+        Renames file or directory `oldname` to `newname`.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
+      </description>
         <parameter name = "oldname" pass = "value"       compulsory = "1" />
         <parameter name = "newname" pass = "value"       compulsory = "1" />
         <parameter name = "error"   pass = "reference"   compulsory = "0" />
@@ -1244,6 +1266,12 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "delete" cname="filedelete" >
+      <description>
+        Deletes file `filename`.
+
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
+      </description>
         <parameter name = "filename" pass = "value"       compulsory = "1" />
         <parameter name = "error"    pass = "reference"   compulsory = "0" />
         <body>
@@ -1262,6 +1290,19 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "locate" cname="filelocate" >
+      <description>
+          Searches for `filename` in a specified set of directories.
+          If provided, `path` is first considered an environment variable
+          and used to find the corresponding value. If there is no such value,
+          `path` is used as is. If `path` is not provided, the environment variable
+          `PATH` is used instead. If path is a literal, it is expected to be a list
+          of directories separated by the default separator for the operating system.
+
+          The current directory is implicitly prepended to the list and searched first.
+
+          On success, returns the fully qualified path to the file.
+          On error, returns undefined and sets `error`, if provided.
+      </description>
         <parameter name = "filename" pass = "value"      compulsory = "1" />
         <parameter name = "path"     pass = "value"      compulsory = "0" />
         <parameter name = "error"    pass = "reference"  compulsory = "0" />
@@ -1290,6 +1331,20 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "copy" cname="filecopy" >
+      <description>
+        Copies file `src` to `dest` using `mode`.
+
+        `mode` determines how the file is copied;
+        'b' for binary mode, 't' for text mode.
+        The distinction only matters on DOS (and derivatives?).
+        'b' is the default.
+
+        On success, returns 1.
+        On error, returns -1 and sets `error`, if provided.
+
+        Note: if `dst` exists, returns 1 and skips the copy operation.
+        This could be considered a feature.
+      </description>
         <parameter name = "src"      pass = "value"      compulsory = "1" />
         <parameter name = "dest"     pass = "value"      compulsory = "1" />
         <parameter name = "mode"     pass = "value"      compulsory = "0" />
@@ -1316,6 +1371,12 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "basename" >
+      <description>
+        Removes dot and extension, if any, from `filename`.
+        If `filename` contains multiple extensions, removes the last one.
+        
+        Returns an appropriately shorn string or `filename`, unchanged.
+      </description>
         <parameter name = "filename" pass = "value" compulsory = "1" />
         <body>
   {
@@ -1447,6 +1508,11 @@ seek_the_file (FILE_ENTRY_ITEM *file,
 <!---------------------------------------------------------------------------->
 
     <function name = "open" >
+      <description>
+        Opens the file with `mode`; 'r', 'w', or 'a'.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
+      </description>
         <parameter name = "mode"     pass = "value"       compulsory = "0" />
         <parameter name = "error"    pass = "reference"   compulsory = "0" />
         <body>
@@ -1471,6 +1537,11 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "read" >
+      <description>
+        Reads a line from file.
+        On success, returns line read.
+        On error, returns undefined and sets `error`, if provided.
+      </description>
         <parameter name = "error"    pass = "reference"   compulsory = "0" />
         <body>
   {
@@ -1488,6 +1559,11 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "write" >
+      <description>
+        Writes the string to file.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
+      </description>
         <parameter name = "string"   pass = "value"       compulsory = "1" />
         <parameter name = "error"    pass = "reference"   compulsory = "0" />
         <body>
@@ -1507,6 +1583,11 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "close" >
+      <description>
+        Closes the file.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
+      </description>
         <parameter name = "error"    pass = "reference"   compulsory = "0" />
         <body>
   {
@@ -1541,6 +1622,11 @@ seek_the_file (FILE_ENTRY_ITEM *file,
     </function>
 
     <function name = "seek" >
+      <description>
+        Seeks to `offset`. See File.seek for details.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
+      </description>
         <parameter name = "offset" pass = "value"       compulsory = "0" />
         <parameter name = "error"  pass = "reference"   compulsory = "0" />
     <body>

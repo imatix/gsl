@@ -12,25 +12,26 @@ MODULE: GSL/diag package
             Shows number of memory deallocations. Should equal allocs.
 
         Function: diag . display (filename)
-            Writes the contents of the memory allocation list to the specified
-            file.                                                             
+            Writes the contents of the memory allocation list to the specified file.
 
         Function: diag . checkall ()
-            Checks all allocated memory blocks for corruption and terminates
-            the program if any are found.                                   
+                    Checks all allocated memory blocks for corruption and terminates
+       the program if any are found.
 
         Function: diag . raise (signal)
-            Send a signal corresponding to the numeric argument to the gsl
-            process. See signal(2) for numeric signal values.             
+                Send a signal corresponding to the numeric argument to the gsl process.
+    See signal(2) for numeric signal values.
 
         Function: diag . animate (value)
-            Control GSL finite state machine progress where applicable. Use
-            non-zero numeric argument to enable and a zero to disable.     
+                    Control GSL finite state machine progress where applicable.
+        Use non-zero numeric argument to enable and a zero to disable.
 
         Function: diag . console_set_mode (mode)
-            Sets console display mode; the argument can be one of: 0 - Output  
-            text exactly as specified. (Default). 1 - Prefix text by "yy/mm/dd 
-            hh:mm:ss " 2 - Prefix text by "hh:mm:ss " 3 - Same as #2 but output
-            is fully flushed                                                   
+                Sets console display mode; the argument can be one of:
+
+    0 - Output text exactly as specified. (Default).
+    1 - Prefix text by "yy/mm/dd hh:mm:ss "
+    2 - Prefix text by "hh:mm:ss "
+    3 - Same as #2 but output is fully flushed
 
 
