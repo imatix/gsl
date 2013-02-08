@@ -3,58 +3,159 @@ MODULE: GSL/fileio package
     Class: Directory
     
         Function: directory . open ([path],[error])
-            Opens directory at `path` for iteration. If `path` is not provided,
-            uses the current directory. Returns a directory object.            
+                      Opens directory at `path` for iteration.
+          `path` is opened relative to current directory.
+          If `path` is not provided, uses the current directory.
+          
+          On success, returns a file entry for the first file in the directory.
+          On error, returns an undefined value and sets `error`, if provided.
+
+          Note: In addition to permission, type, or existence errors, open will
+          fail if the directory is empty since an empty directory has no entries.
 
         Function: directory . setcwd (path,[error])
-            Changes current working directory to `path`. Returns result code.
+                    Changes current working directory to `path`.
+        Returns 0 on success.
+        Returns -1 on error and sets `error`, if provided.
 
         Function: directory . create (path)
-            Creates directory `path`. Returns result code.
+                    Creates directory `path`.
+        On success returns 0.
+        On error, returns -1 and sets `error`, if provided.
+
+        Notes:
+        Can create multiple levels of directories, similar to 'mkdir -p' on unix.
+        Will return success on directories already exist. Note that this is true
+        even if the user does not access to said directory. Existence is all.
+        If created, directories have permission 0775.
 
         Function: directory . delete (path,[error])
-            Deletes directory at `path`. Returns result code.
+                    Removes directory at `path`.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
+        Note: will fail on non-empty directory.
 
         Function: directory . resolve (path,[separator])
-            Locates `path` relative to current directory. If the path looks   
-            like an absolute directory, returns the cleaned up path. Otherwise
-            appends the path to the current directory and returns the cleaned 
-            up result. Cleans-up the returned path by appending a '/' if      
-            necessary, and resolving any '..' subpaths. If `separator`, a     
-            single character, is provided the resulting path components are   
-            separated by `separator` path components instead of the default   
-            separator (which depends on the operating system).                
+                  Locates `path` relative to current directory.
+
+      If the path looks like an absolute directory, returns the cleaned up path.
+      Otherwise appends the path to the current directory and returns the cleaned up result.
+      
+      Cleans-up the returned path by appending a '/' if necessary, and resolving any '..' subpaths.
+
+      If `separator`, a single character, is provided the resulting path components are separated by `separator`
+      path components instead of the default separator (which depends on the operating system).
 
 
     Class: File
     
         Function: file . open (filename,[mode],[error])
+                      Opens `filename` with `mode` for reading or writing, depending on `mode`.
+
+          If mode is 'r', the file is opened for reading. Default if mode is not provided.
+          If mode is 'w', the file is opened for writing. Empties file first.
+          If mode is 'a', the file is opened for appending to existing content.
+
+          On success, returns a file handle.
+          On error, returns undefined and sets `error`, if provided.
 
         Function: file . read (handle,[error])
+                    Reads a line from file `handle` .
+        On success, returns content read.
+        On error, returns undefined and sets `error`, if provided.
 
         Function: file . write (handle,string,[error])
+                    Writes `string` to file `handle`.
+
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
 
         Function: file . close (handle,[error])
+                    Closes file `handle`.
+
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
 
         Function: file . tell (handle,[error])
+                    Returns the current file offset of `handle`.
+        The next `read` or `write` will start at that offset.
+        
+        On success, returns offset, a number.
+        On error, returns undefined and sets `error`, if provided.
 
         Function: file . seek (handle,[offset],[error])
+                    Moves current file offset to `offset`, a number, in file `handle`.
+
+        If `offset` is -1, seeks to end of file, otherwise seeks
+        to specified offset in file.
+
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
+
+        Note: offset 0 is the beginning of the file.
 
         Function: file . slurp (filename,[error])
+                    Reads the entire content of `filename`.
+
+        On success, returns data read.
+        On error, returns undefined and sets `error`, if provided.
 
         Function: file . exists (filename,[error])
+                        Tests for file (or directory) existence.
+
+            Returns 1 if the file exists.
+            Returns 0 if the file does not exist and sets `error`, if provided.
 
         Function: file . timestamp (filename,[error])
+                        Returns the modification date and time of `filename`,
+            a file or directory name, as a number in the format YYYYMMDDHHMMSS.
+
+            On success, returns a value.
+            On error, returns -1 and sets `error`, if provided.
 
         Function: file . rename (oldname,newname,[error])
+                    Renames file or directory `oldname` to `newname`.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
 
         Function: file . delete (filename,[error])
+                    Deletes file `filename`.
+
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
 
         Function: file . locate (filename,[path],[error])
+                      Searches for `filename` in a specified set of directories.
+          If provided, `path` is first considered an environment variable
+          and used to find the corresponding value. If there is no such value,
+          `path` is used as is. If `path` is not provided, the environment variable
+          `PATH` is used instead. If path is a literal, it is expected to be a list
+          of directories separated by the default separator for the operating system.
+
+          The current directory is implicitly prepended to the list and searched first.
+
+          On success, returns the fully qualified path to the file.
+          On error, returns undefined and sets `error`, if provided.
 
         Function: file . copy (src,dest,[mode],[error])
+                    Copies file `src` to `dest` using `mode`.
+
+        `mode` determines how the file is copied;
+        'b' for binary mode, 't' for text mode.
+        The distinction only matters on DOS (and derivatives?).
+        'b' is the default.
+
+        On success, returns 1.
+        On error, returns -1 and sets `error`, if provided.
+
+        Note: if `dst` exists, returns 1 and skips the copy operation.
+        This could be considered a feature.
 
         Function: file . basename (filename)
+                    Removes dot and extension, if any, from `filename`.
+        If `filename` contains multiple extensions, removes the last one.
+        
+        Returns an appropriately shorn string or `filename`, unchanged.
 
 
     Class: Directory
@@ -63,15 +164,30 @@ MODULE: GSL/fileio package
     Class: File
     
         Function: <file entry> . open ([mode],[error])
+                    Opens the file with `mode`; 'r', 'w', or 'a'.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
 
         Function: <file entry> . read ([error])
+                    Reads a line from file.
+        On success, returns line read.
+        On error, returns undefined and sets `error`, if provided.
 
         Function: <file entry> . write (string,[error])
+                    Writes the string to file.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
 
         Function: <file entry> . close ([error])
+                    Closes the file.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
 
         Function: <file entry> . tell ([error])
 
         Function: <file entry> . seek ([offset],[error])
+                    Seeks to `offset`. See File.seek for details.
+        On success, returns 0.
+        On error, returns -1 and sets `error`, if provided.
 
 

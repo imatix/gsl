@@ -49,7 +49,7 @@ $(compulsory??''?'[')$(name:)$(compulsory??''?']')$(!last()??','?)\
 .        endfor
 )
 .        if defined (-> description)
-            $(string.trim(->description.):justify,block                       )
+            $(string.trim(->description.))
 .        endif
 
 .    endfor

@@ -1,0 +1,5 @@
+dir = directory.open(".", error_text) ?
+
+if ! defined(dir)
+   abort "E: cannot open directory: " + error_text
+endif

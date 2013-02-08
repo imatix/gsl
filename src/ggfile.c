@@ -1862,7 +1862,7 @@ file_timestamp (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, T
 
     if (timer)
         assign_number (& result-> value, (double) timer_to_date (timer) * 1000000
-                                     + (double) timer_to_time (timer));
+                                   + (double) timer_to_time (timer) / 100);
 
     return store_module_error (gsl_thread, context, error,
                                errno ? strerror (errno) : NULL);

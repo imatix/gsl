@@ -3,44 +3,43 @@ MODULE: GSL/thrd package
     Class: Thread
     
         Function: thread . parse (command,[error])
-            Parses the command, placing any error message in the parameter     
-            'error'. Errors can also be recovered via thread class attributes. 
-            If successful, returns an object of type 'parsed item' which can   
-            then be run as many times as necessary, saving the need to re-parse
-            each time.                                                         
+                Parses the command, placing any error message in the parameter 'error'.
+    Errors can also be recovered via thread class attributes.
+    If successful, returns an object of type 'parsed item' which can
+    then be run as many times as necessary, saving the need to re-parse
+    each time.
 
         Function: thread . new (command,[error])
-            Parses and runs the command, placing any error message in the     
-            parameter 'error'. Errors can also be recovered via thread class  
-            and child thread object attributes. If the parsing was successful,
-            returns an object of type 'child thread'.                         
+                Parses and runs the command, placing any error message in the parameter
+    'error'.   Errors can also be recovered via thread class and child thread
+    object attributes.   If the parsing was successful, returns an object
+    of type 'child thread'.
 
         Function: thread . sleep (csecs)
-            Puts the current thread to sleep for the specified number of
-            centiseconds. Returns -1 if csecs is invalid.               
+                Puts the current thread to sleep for the specified number of centiseconds.
+    Returns -1 if csecs is invalid.
 
         Function: thread . receive ([receive])
-            Receives a message from the thread's message queue. If the queue is
-            empty, the thread sleeps until a message is available. Places a    
-            reference to the sending thread in the first parameter. Places     
-            arbitrary values from the message into successive parameters.      
+                Receives a message from the thread's message queue.  If the queue is empty,
+    the thread sleeps until a message is available.
+
+    Places a reference to the sending thread in the first parameter.  Places
+    arbitrary values from the message into successive parameters.
 
 
     Class: Thread
     
         Function: <remote thread> . send ()
-            Sends a message with an arbitrary number of arguments to the
-            thread.                                                     
+                Sends a message with an arbitrary number of arguments to the thread.
 
 
     Class: Thread
     
         Function: <child thread> . interrupt ()
-            Shuts down the thread.
+                Shuts down the thread.
 
         Function: <child thread> . send ()
-            Sends a message with an arbitrary number of arguments to the
-            thread.                                                     
+                Sends a message with an arbitrary number of arguments to the thread.
 
 
     Class: Thread

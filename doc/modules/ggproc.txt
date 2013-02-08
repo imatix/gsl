@@ -4,30 +4,36 @@ package
     Class: Process
     
         Function: proc . new (command,[workdir],[inname],[outname],[errname])
-            Creates a process object. The command is a native system command.
-            Does not execute the command. The `command` argument names a file
-            to execute along with possible arguments. The command will be    
-            searched for in the directories specified by the PATH environment
-            variable. If `workdir` is provided, a chdir will be performed    
-            before the process is run. If `inname`, `outname`, `errname` are 
-            provided, the stdin, stdout, and stderr for the process will be  
-            respectively redirected to the named files. Returns the process  
-            object.                                                          
+                Creates a process object.  The command is a native system command.  Does
+    not execute the command.
+
+    The `command` argument names a file to execute along with possible arguments.
+    The command will be searched for in the directories specified by the
+    PATH environment variable.
+
+    If `workdir` is provided, a chdir will be performed before the process is run.
+
+    If `inname`, `outname`, `errname` are provided,
+    the stdin, stdout, and stderr for the process will be
+    respectively redirected to the named files.
+
+    Returns the process object.
 
 
     Class: Process handle
     
         Function: <proc handle> . setenv (name,[value])
-            Sets an environment variable for the process. Can only be called
-            before the process is started with proc_handle.run ()           
+                Sets an environment variable for the process.  Can only be called before
+    the process is started with proc_handle.run ()
 
         Function: <proc handle> . getenv (name)
-            Gets an environment variable from the process. Can only be called
-            before the process is started with proc_handle.run ()            
+                Gets an environment variable from the process.
+    Can only be called before the process is started with proc_handle.run ()
 
         Function: <proc handle> . run ([error])
-            Runs a process created with proc.new () Returns -1 if there was an
-            error creating the object. Also places an error message into the  
-            parameter error.                                                  
+                Runs a process created with proc.new ()
+
+    Returns -1 if there was an error creating the object.
+    Also places an error message into the parameter error.
 
 
