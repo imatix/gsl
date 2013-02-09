@@ -251,8 +251,8 @@ static void display_welcome_if_not_quiet (void)
 
 static void display_command_line_syntax (void)
 {
-    printf ("syntax: gslgen -<option> ... -<attr>[:<value>] ... <filename> ...\n");
-    printf ("    or: gslgen -a -<option> ... -<attr>[:<value>] <filename> <arg> ...\n");
+    printf ("syntax: gsl -<option> ... -<attr>[:<value>] ... <filename> ...\n");
+    printf ("    or: gsl -a -<option> ... -<attr>[:<value>] <filename> <arg> ...\n");
     printf ("    Options:\n");
     printf ("        -a   argument: Pass arguments following filename to GSL script\n");
     printf ("        -q   quiet:    suppress routine messages\n");
