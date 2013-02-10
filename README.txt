@@ -1329,7 +1329,6 @@ The function `tell` returns the current offset and `seek` changes the offset.
 
 The final set of file functions manipulate files, file names and file metadata.
 
-
 #### Directory Iteration
 
 As mentioned, previously, directories can be opened with the `directory.open` function, which returns a 'directory entry' object.
@@ -1355,34 +1354,43 @@ or directories with
     endfor
 
 During iteration, the File Entry functions can be called on current item. These are similar to their corresponding File functions
-but do not take a `handle` parameter.
+but do not take a `handle` parameter. Note that the `open` function reads all directory entries at start so any changes to the file
+system until the next open call. Also, iteration is only defined over files and directories; non file or directory entries are ignored.
+The open call will fail if the target is not a directory or it cannot find any valid files or directories in the target directory.
+
+Direction iteration will only return
 
 The directory entry has the attributes:
 
-    - path
-    - name
+- path
+- name
 
 and the file entry has the following attributes:
 
-    - path
-    - name
-    - size
-    - time
-    - date
+- path
+- name
+- size
+- time
+- date
+
 
 Which return the appropriate values from the file (or directory, which is, of course, a file).
 
-A couple of interesting notes:
+The following example shows some of the attributes in use:
+
+.pull doc/examples/directory-iteration.gsl,code
+
+Note that:
+
 
 If the directory entry `name` attribute is changed, the actual directory name is also changed.
 However, this operation does not return an error and cannot be recommended.
 
-The file entry's default attribute is `name` so `f.` is the same as `f.name`.
+The file entry's default attribute is `name` so `f.` is the same as `f.name`. Directory entries don't
+have this default attribute so it's only useful when working with file entries.
 
 File.open returns a File Entry object, so some of the file operations can be shortened a bit.
 For instance, file.read(handle) could also be written as handle.read(). 
-
-.pull doc/examples/directory-iteration.gsl,code
 
 .pull doc/modules/ggfile.txt
 

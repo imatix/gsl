@@ -62,28 +62,28 @@
 &emsp;<a href="#toc4-1326">diag</a>
 &emsp;<a href="#toc4-1331">environment</a>
 &emsp;<a href="#toc4-1336">fileio</a>
-&emsp;<a href="#toc4-1387">Directory Iteration</a>
-&emsp;<a href="#toc4-1445">gsl control</a>
-&emsp;<a href="#toc4-1459">math</a>
-&emsp;<a href="#toc4-1488">regexp</a>
-&emsp;<a href="#toc4-1494">process management</a>
-&emsp;<a href="#toc4-1499">script</a>
-&emsp;<a href="#toc4-1504">socket</a>
-&emsp;<a href="#toc4-1517">string</a>
-&emsp;<a href="#toc4-1542">symb</a>
-&emsp;<a href="#toc4-1547">thrd</a>
-&emsp;<a href="#toc4-1584">time</a>
-&emsp;<a href="#toc4-1599">XML</a>
-&emsp;<a href="#toc3-1647">Script Commands</a>
-&emsp;<a href="#toc4-1650">Output File Manipulation</a>
-&emsp;<a href="#toc4-1695">Control Structures</a>
-&emsp;<a href="#toc4-1806">Scope Manipulation</a>
-&emsp;<a href="#toc4-1821">Symbol Definition</a>
-&emsp;<a href="#toc4-1852">Structured Data Manipulation</a>
-&emsp;<a href="#toc4-1930">Script Manipulation</a>
-&emsp;<a href="#toc4-1960">Macros and Functions</a>
-&emsp;<a href="#toc4-2025">Miscellaneous</a>
-&emsp;<a href="#toc4-2040">Examples</a>
+&emsp;<a href="#toc4-1386">Directory Iteration</a>
+&emsp;<a href="#toc4-1453">gsl control</a>
+&emsp;<a href="#toc4-1467">math</a>
+&emsp;<a href="#toc4-1496">regexp</a>
+&emsp;<a href="#toc4-1502">process management</a>
+&emsp;<a href="#toc4-1507">script</a>
+&emsp;<a href="#toc4-1512">socket</a>
+&emsp;<a href="#toc4-1525">string</a>
+&emsp;<a href="#toc4-1550">symb</a>
+&emsp;<a href="#toc4-1555">thrd</a>
+&emsp;<a href="#toc4-1592">time</a>
+&emsp;<a href="#toc4-1607">XML</a>
+&emsp;<a href="#toc3-1655">Script Commands</a>
+&emsp;<a href="#toc4-1658">Output File Manipulation</a>
+&emsp;<a href="#toc4-1703">Control Structures</a>
+&emsp;<a href="#toc4-1814">Scope Manipulation</a>
+&emsp;<a href="#toc4-1829">Symbol Definition</a>
+&emsp;<a href="#toc4-1860">Structured Data Manipulation</a>
+&emsp;<a href="#toc4-1938">Script Manipulation</a>
+&emsp;<a href="#toc4-1968">Macros and Functions</a>
+&emsp;<a href="#toc4-2033">Miscellaneous</a>
+&emsp;<a href="#toc4-2048">Examples</a>
 
 <A name="toc2-10" title="Overview" />
 ## Overview
@@ -1518,8 +1518,7 @@ The function `tell` returns the current offset and `seek` changes the offset.
 
 The final set of file functions manipulate files, file names and file metadata.
 
-
-<A name="toc4-1387" title="Directory Iteration" />
+<A name="toc4-1386" title="Directory Iteration" />
 #### Directory Iteration
 
 As mentioned, previously, directories can be opened with the `directory.open` function, which returns a 'directory entry' object.
@@ -1545,32 +1544,29 @@ or directories with
     endfor
 
 During iteration, the File Entry functions can be called on current item. These are similar to their corresponding File functions
-but do not take a `handle` parameter.
+but do not take a `handle` parameter. Note that the `open` function reads all directory entries at start so any changes to the file
+system until the next open call. Also, iteration is only defined over files and directories; non file or directory entries are ignored.
+The open call will fail if the target is not a directory or it cannot find any valid files or directories in the target directory.
+
+Direction iteration will only return
 
 The directory entry has the attributes:
 
-    - path
-    - name
+- path
+- name
 
 and the file entry has the following attributes:
 
-    - path
-    - name
-    - size
-    - time
-    - date
+- path
+- name
+- size
+- time
+- date
+
 
 Which return the appropriate values from the file (or directory, which is, of course, a file).
 
-A couple of interesting notes:
-
-If the directory entry `name` attribute is changed, the actual directory name is also changed.
-However, this operation does not return an error and cannot be recommended.
-
-The file entry's default attribute is `name` so `f.` is the same as `f.name`.
-
-File.open returns a File Entry object, so some of the file operations can be shortened a bit.
-For instance, file.read(handle) could also be written as handle.read(). 
+The following example shows some of the attributes in use:
 
     dir = directory.open(".", error_text) ?
     
@@ -1581,6 +1577,18 @@ For instance, file.read(handle) could also be written as handle.read().
     else
         abort "Error: " + error_text
     endif
+
+Note that:
+
+
+If the directory entry `name` attribute is changed, the actual directory name is also changed.
+However, this operation does not return an error and cannot be recommended.
+
+The file entry's default attribute is `name` so `f.` is the same as `f.name`. Directory entries don't
+have this default attribute so it's only useful when working with file entries.
+
+File.open returns a File Entry object, so some of the file operations can be shortened a bit.
+For instance, file.read(handle) could also be written as handle.read(). 
 
 MODULE: GSL/fileio package
 
@@ -1777,7 +1785,7 @@ MODULE: GSL/fileio package
 
 
 
-<A name="toc4-1445" title="gsl control" />
+<A name="toc4-1453" title="gsl control" />
 #### gsl control
 
     Class: GSL Control Class
@@ -1791,7 +1799,7 @@ MODULE: GSL/fileio package
             its output is returned as the result of this function. Uses the
             current template mode unless over-ridden by the optional argument.
 
-<A name="toc4-1459" title="math" />
+<A name="toc4-1467" title="math" />
 #### math
 
     Class: Math Functions
@@ -1820,13 +1828,13 @@ MODULE: GSL/fileio package
         Function: math . acosh (parm)
         Function: math . atanh (parm)
 
-<A name="toc4-1488" title="regexp" />
+<A name="toc4-1496" title="regexp" />
 #### regexp
 
     Class: Regular Expression Functions
         Function: regexp . match (pattern,subject,[match])
 
-<A name="toc4-1494" title="process management" />
+<A name="toc4-1502" title="process management" />
 #### process management
 
 MODULE: GSL/process management
@@ -1869,12 +1877,12 @@ package
 
 
 
-<A name="toc4-1499" title="script" />
+<A name="toc4-1507" title="script" />
 #### script
 
     Class: GSL Script Line
 
-<A name="toc4-1504" title="socket" />
+<A name="toc4-1512" title="socket" />
 #### socket
 
     Class: Socket
@@ -1887,7 +1895,7 @@ package
         Function: <sock handle> . read (buffer,[minimum],[timeout],[error])
         Function: <sock handle> . write (buffer,[timeout],[error])
 
-<A name="toc4-1517" title="string" />
+<A name="toc4-1525" title="string" />
 #### string
 
     Class: String Functions
@@ -1912,12 +1920,12 @@ package
         Function: string . soundex (string)
         Function: string . cntch (string,value)
 
-<A name="toc4-1542" title="symb" />
+<A name="toc4-1550" title="symb" />
 #### symb
 
     Class: Symbol
 
-<A name="toc4-1547" title="thrd" />
+<A name="toc4-1555" title="thrd" />
 #### thrd
 
     Class: Thread
@@ -1954,7 +1962,7 @@ package
     Class: Thread
         Function: <parsed item> . run ([error])
 
-<A name="toc4-1584" title="time" />
+<A name="toc4-1592" title="time" />
 #### time
 
     Class: Time Functions
@@ -1969,7 +1977,7 @@ package
         Function: date . picture ([date],[picture])
         Function: date . number (date)
 
-<A name="toc4-1599" title="XML" />
+<A name="toc4-1607" title="XML" />
 #### XML
 
     Class: XML
@@ -2017,10 +2025,10 @@ package
 
     Class: XML value
 
-<A name="toc3-1647" title="Script Commands" />
+<A name="toc3-1655" title="Script Commands" />
 ### Script Commands
 
-<A name="toc4-1650" title="Output File Manipulation" />
+<A name="toc4-1658" title="Output File Manipulation" />
 #### Output File Manipulation
 
 **.output**
@@ -2065,7 +2073,7 @@ Examples:
     things like $(abc).
     .endliteral
 
-<A name="toc4-1695" title="Control Structures" />
+<A name="toc4-1703" title="Control Structures" />
 #### Control Structures
 
 **.for**
@@ -2176,7 +2184,7 @@ Inside a `for` or `while` loop causes immediate iteration, skipping execution of
 
 Inside a `for` or `while` loop causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor` or `endwhile` statement.  If the scope is specified then the `for` loop corresponding to that scope is terminated.
 
-<A name="toc4-1806" title="Scope Manipulation" />
+<A name="toc4-1814" title="Scope Manipulation" />
 #### Scope Manipulation
 
 **.scope**
@@ -2191,7 +2199,7 @@ Opens a new scope corresponding to the specified data.
 
 Terminates a block opened with a .scope command, closing the scope. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .scope blocks for you.
 
-<A name="toc4-1821" title="Symbol Definition" />
+<A name="toc4-1829" title="Symbol Definition" />
 #### Symbol Definition
 
     .<data-specifier> [<operator>]= [ <expr> ]
@@ -2222,7 +2230,7 @@ Multiplies the value of the identifier x by 2.
 
 Does nothing if x is already defined; otherwise assigns it the value of y, or if y is undefined then the value of z, or if z is undefined, x remains undefined.
 
-<A name="toc4-1852" title="Structured Data Manipulation" />
+<A name="toc4-1860" title="Structured Data Manipulation" />
 #### Structured Data Manipulation
 
 **.new**
@@ -2300,7 +2308,7 @@ Examples:
 
 Sorts the specified items.  A scope is created with each item in turn and is used to evaluate the expression.  The result is then used to sort the items.  The `as` clause allows you to give the created scope a different name.  After execution, the specified items are in order and after any other children of the same parent.
 
-<A name="toc4-1930" title="Script Manipulation" />
+<A name="toc4-1938" title="Script Manipulation" />
 #### Script Manipulation
 
 **.include**
@@ -2330,7 +2338,7 @@ Turns template mode on or off.
 
 Terminates the block introduced by a `template` instruction.
 
-<A name="toc4-1960" title="Macros and Functions" />
+<A name="toc4-1968" title="Macros and Functions" />
 #### Macros and Functions
 
 Macros and functions are pieces of GSL which can be invoked with parameters. The only difference between a macro and as function is that macros are interpreted in template mode and functions in script mode.
@@ -2395,7 +2403,7 @@ Examples:
         .$(my.dest) = my.source
     .endfunction
 
-<A name="toc4-2025" title="Miscellaneous" />
+<A name="toc4-2033" title="Miscellaneous" />
 #### Miscellaneous
 
 **.echo**
@@ -2410,7 +2418,7 @@ Outputs the given expression to the standard output.
 
 Outputs the given expression to the standard output and halts GSL operation.
 
-<A name="toc4-2040" title="Examples" />
+<A name="toc4-2048" title="Examples" />
 #### Examples
 
 See examples in Examples directory

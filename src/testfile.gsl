@@ -6,10 +6,10 @@
 
 in  = file.open ("testfile.gsl", "r")
 s = ""
-line = file.read (in)
-while defined (line)
-    s += line + "\n"
-    line = file.read (in)?
+xline = file.read (in)
+while defined (xline)
+    s += xline + "\n"
+    xline = file.read (in)?
 endwhile
 ret = file.close (in)
 
