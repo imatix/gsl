@@ -1,0 +1,79 @@
+.template 0
+
+diag.console_set_mode(0)
+
+function runshell(testname, element, basedir)
+    if count($(my.element)) = 0
+       return
+    endif
+    sh = "$(my.basedir).sh"
+    output sh
+    ># test: $(my.testname) - $(my.element)
+    for $(my.element) as elt
+    >$(elt.:left)
+    endfor
+    close
+    p = proc.new("sh $(sh)")
+    p.setenv("BASE", my.basedir)
+    p.run(err)
+    file.delete(sh)
+    if err ?
+      echo "shell error: $(my.testname) : $(err)"
+    endif
+endfunction
+
+function is (actual, expect)
+
+ if my.actual <> my.expect
+    echo "test $(name) failed: expected: $(my.expect), got: $(my.actual)"
+   global.fail_count += 1
+ else
+    global.pass_count += 1
+ endif
+endfunction
+
+global.fail_count = 0
+global.pass_count = 0
+
+for test
+
+    echo "Running test: $(.name)"
+
+    basedir = "/tmp/gsl-testdir-$(math.ceil(1000 + math.rand() * 1000))"
+    
+    if defined(->setup.message)
+       echo "Setting up test [$(.name)] - $(->setup.message)"
+    endif
+
+    runshell(.name, "setup", basedir)
+
+    for case
+       .name = "[$(test.name)][$(index())]"
+
+       dir = directory.open(basedir, err) ?
+
+       if defined(dir)
+           if when ?= "open"
+             is("success", expect)
+           elsif when ?= "count"
+             is(count(dir.$(filter)), expect)
+           else
+               echo "unhandled test outcome: [$(name)] missing when attrib"
+           endif
+       else
+           if when = "open"
+              is("error", expect)
+           else
+             echo "unhandled test outcome: [$(name)] open failed on $(basedir): $(err). Missing when attrib"
+           endif
+       endif
+    endfor
+
+    runshell(.name, "cleanup", basedir)
+endfor
+
+echo "$(global.pass_count + global.fail_count %3d) tests"
+echo "$(global.pass_count %3d) passed"
+echo "$(global.fail_count %3d) failed"
+
+.endtemplate

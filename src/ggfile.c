@@ -261,6 +261,10 @@ typedef struct _DIRECTORY_ENTRY_ITEM {
     char
         *path,
         *name;
+    VALUE
+        *first_child,
+        *sibling;
+
 } DIRECTORY_ENTRY_ITEM;
 
 typedef struct {
@@ -281,6 +285,8 @@ typedef struct {
         *handle;
     char
         *error_msg;
+    VALUE
+        *sibling;
 } FILE_ENTRY_ITEM;
 
 /*  last_context is used so that the directory and file classes can share a  */
@@ -295,89 +301,250 @@ static char
 
 #define FILE_NOT_OPEN_MESSAGE "File not open"
 
-static void
-get_directory_entry (DIRECTORY_ENTRY_ITEM *parent,
-                     DIRST *dirst,
-                     const char *name,
-                     Bool ignorecase,
-                     CLASS_DESCRIPTOR **class,
-                     void **item)
+
+/* directory.open has been modified to read all directory entries at start      */
+/* in order to detect and report errors that would otherwise appear during      */
+/* iteration, such as unreadable files or directories. Rather than storing,     */
+/* and passing around a dirst object that is read upon request, the entries     */
+/* are maintained as a linked list and the list traversed, with each iteration  */
+/* step. Since the traversal starts with the previous node, this ends up being  */
+/* an O(n) operation.                                                           */
+
+/* The DIRECTORY_ENTRY_ITEM structure has sibling and first_child members       */
+/* while FILE_ENTRY_ITEM has a sibling member. The first_child member is a bit  */
+/* redundant, if technically correct since we are dealing with a directory list */
+/* and not a tree. Oh well.  The first DIRECTORY_ENTRY_ITEM                     */
+/* actually represents the parent directory, which is the target of the open    */
+/* call. Its first_child member points to the first entry in the directory,     */
+/* and its sibling member, in turn, points to the next one.                     */
+/* Gyepi Sam - Feb 9, 2013                                                      */
+
+
+/* find first item of required type or first item if type is unspecified.  */    
+static int 
+get_directory_entry(VALUE *current,
+                    const char *name,
+                    Bool ignorecase,
+                    CLASS_DESCRIPTOR **class,
+                    void **item)
 {
     Bool
         getdir,
         getfile;
-    DIRECTORY_ENTRY_ITEM
-        *directory;
-    FILE_ENTRY_ITEM
-        *file;
     int
-        rc = TRUE;
+        rc = -1;
+
 
     if (streq (name, ""))
-      {
+    {
         getdir  = TRUE;
         getfile = TRUE;
-      }
+    }
     else
-      {
+    {
         getfile = matches (name, "file");
         getdir  = matches (name, "directory");
-      }
+    }
 
-    if (! (getfile || getdir))
-        rc = FALSE;
-
-    while (rc)
+    if (getfile || getdir)
       {
-        if ((dirst-> file_attrs & ATTR_SUBDIR) != 0 ? getdir : getfile)
-            break;
-        rc = read_dir (dirst);
-      }
+        while (current)
+         {
+         if (current-> c == &directory_entry_class)
+           {
+             if (!getdir)
+               {
+                 current = ((DIRECTORY_ENTRY_ITEM *) current-> i)-> sibling;
+                 continue;
+               }
+           }
+         else if (current-> c ==  &file_entry_class)
+           {
+             if (!getfile)
+               {
+                 current = ((FILE_ENTRY_ITEM *) current-> i)-> sibling;
+                 continue;
+               }
+           }
+         else
+           {
+            /* Added a new entry type ? */
+            abort();
+           }
 
-    if (rc)
-      {
-        if ((dirst-> file_attrs & ATTR_SUBDIR) != 0)
-          {
-            directory = memt_alloc (NULL, sizeof (DIRECTORY_ENTRY_ITEM));
-            directory-> path      = memt_alloc (NULL, strlen (dirst-> dir_name) + 2);
-            directory-> name      = memt_strdup (NULL, dirst-> file_name);
-            directory-> dirst     = dirst;
-            directory-> links     = 0;
-            directory-> parent    = parent;
-            directory-> exists    = TRUE;
+         *class = current-> c;
+         *item  = current-> i;
+         rc = 0;
+         break;
+       }
+    }
 
-            xstrcpy (directory-> path,
-                     dirst-> dir_name, "/", NULL);
+    return rc;
+}
 
-            *class = & directory_entry_class;
-            *item  =   directory;
-          }
+static VALUE *
+link_directory_entry (DIRECTORY_ENTRY_ITEM *parent, VALUE *prev_entry, CLASS_DESCRIPTOR *class, void *item)
+{
+
+  VALUE 
+    *new_entry;
+
+  new_entry = memt_alloc (NULL, sizeof(VALUE));
+  init_value (new_entry);
+  assign_pointer (new_entry, class, item);
+
+  if (parent-> first_child == NULL)
+    parent-> first_child = new_entry;
+
+  if (prev_entry)
+    {
+      if (prev_entry->c == &directory_entry_class)
+        ((DIRECTORY_ENTRY_ITEM *) prev_entry-> i)->sibling = new_entry;
+      else if (prev_entry->c == &file_entry_class)
+        ((FILE_ENTRY_ITEM *) prev_entry-> i)->sibling = new_entry;
+    }
+
+  return new_entry;
+}
+
+static DIRECTORY_ENTRY_ITEM *
+build_directory_entries(char *pathname, char **error_msg)
+{
+
+  DIRST
+    *dirst;
+
+  DIRECTORY_ENTRY_ITEM
+    *parent, 
+    *directory;
+
+  FILE_ENTRY_ITEM
+    *file;
+
+  VALUE 
+    *last_value = NULL;
+
+  int
+     rc;
+
+  char
+      *curpath;
+
+
+  dirst = memt_alloc (NULL, sizeof (DIRST));
+  rc = open_dir (dirst, pathname);
+    
+  if (!rc)
+    {
+      /* errno disambiguates between
+         an abnormal error (real problem) and a normal error (no files in dir) */
+
+      if (errno)
+        {
+            *error_msg = xstrcpy(NULL, pathname, "/", dirst->file_name, ": ",  strerror(errno), NULL);
+        }
+      else
+        {
+            *error_msg = xstrcpy(NULL, pathname, "/: is empty", NULL);        
+        }
+
+      close_dir (dirst);
+      mem_free (dirst);
+      
+      return NULL;
+    }
+
+
+  /* The parent represents the original directory  */
+  parent = memt_alloc (NULL, sizeof (DIRECTORY_ENTRY_ITEM));
+  curpath =  strip_file_name (pathname);
+  parent-> path      = xstrcpy (NULL, curpath, "/", NULL);
+  parent-> name      = memt_strdup (NULL, strip_file_path (pathname));
+  parent-> dirst     = NULL;
+  parent-> links     = 0;
+  parent-> parent    = NULL;
+  parent-> first_child  = NULL;
+  parent-> sibling   = NULL;
+  parent-> exists    = TRUE;
+
+  /* build a list of the directory children now so any
+     file access problems show up here and not during an iteration.    */
+
+  for(;;)
+    {
+    
+#if (defined (__UNIX__))
+      if (dirst-> file_mode & S_IFDIR)
+#else
+      if ((dirst-> file_attrs & ATTR_SUBDIR) != 0)
+#endif
+        {
+          directory = memt_alloc (NULL, sizeof (DIRECTORY_ENTRY_ITEM));
+          directory-> path      = xstrcpy (NULL, dirst-> dir_name, "/", NULL);
+          directory-> name      = memt_strdup (NULL, dirst-> file_name);
+          directory-> dirst     = NULL;
+          directory-> links     = 0;
+          directory-> parent    = parent;
+          directory-> first_child  = NULL;
+          directory-> sibling  = NULL;
+          directory-> exists    = TRUE;
+                
+          last_value = link_directory_entry (parent, last_value,
+                                            & directory_entry_class, directory);
+        }
+#if (defined (__UNIX__))
+        else if (dirst-> file_mode & S_IFREG)
+#else
         else
+#endif
+        {
+
+          file = memt_alloc (NULL, sizeof (FILE_ENTRY_ITEM));
+          file-> path      = xstrcpy (NULL, dirst-> dir_name, "/", NULL);
+          file-> name      = memt_strdup (NULL, dirst-> file_name);
+          file-> size      = dirst-> file_size;
+          file-> timestamp = dirst-> file_time;
+          file-> dirst     = NULL;
+          file-> links     = 0;
+          file-> parent    = parent;
+          file-> sibling  = NULL;
+          file-> handle    = NULL;
+          file-> error_msg = NULL;
+
+          last_value = link_directory_entry (parent, last_value,
+                                            & file_entry_class, file);
+        }
+      
+      rc = read_dir(dirst);
+
+      if (!rc)
+        {
+        /* disambiguate, again */
+        if (errno)
           {
-            file = memt_alloc (NULL, sizeof (FILE_ENTRY_ITEM));
-            file-> path      = memt_alloc (NULL, strlen (dirst-> dir_name) + 2);
-            file-> name      = memt_strdup (NULL, dirst-> file_name);
-            file-> size      = dirst-> file_size;
-            file-> timestamp = dirst-> file_time;
-            file-> dirst     = dirst;
-            file-> links     = 0;
-            file-> parent    = parent;
-            file-> handle    = NULL;
-            file-> error_msg = NULL;
-
-            xstrcpy (file-> path,
-                     dirst-> dir_name, "/", NULL);
-
-            *class = & file_entry_class;
-            *item  =   file;
+              *error_msg = xstrcpy(NULL, parent->path,
+                                   dirst->file_name, ": ", strerror(errno), NULL);
+              directory_entry_destroy(parent);
+              parent = NULL;
           }
-      }
-    else
-      {
+        else if (parent-> first_child == NULL)
+          {
+              *error_msg = xstrcpy(NULL, pathname, "/: has no files or directories", NULL);        
+              directory_entry_destroy(parent);
+              parent = NULL;
+         }
+
         close_dir (dirst);
         mem_free (dirst);
+        
+        return parent;
       }
+    }
+
+  /* unreachable, but makes the compiler happy */
+  return parent;
 }
+
 
 static int
 store_module_error (THREAD       *gsl_thread,
@@ -457,6 +624,7 @@ create_file_entry (const char *filename,
     file-> links     = 0;
     file-> dirst     = NULL;
     file-> parent    = NULL;
+    file-> sibling   = NULL;
     file-> path      = memt_alloc (NULL, strlen (curpath) + 2);
     xstrcpy (file-> path, curpath, "/", NULL);
     file-> name      = memt_strdup (NULL, strip_file_path (fullname));
@@ -675,12 +843,19 @@ static int directory_entry_destroy (void *item)
     if (directory
     &&  --directory-> links <= 0)
       {
-        mem_free (directory-> path);
-        mem_free (directory-> name);
-        if (directory-> dirst)
+        if (directory-> path)
+            mem_free (directory-> path);
+        if (directory-> name)
+            mem_free (directory-> name);
+        if (directory-> first_child)
           {
-            close_dir (directory-> dirst);
-            mem_free  (directory-> dirst);
+            destroy_value(directory-> first_child);
+            mem_free(directory-> first_child);
+          }
+        if (directory-> sibling)
+          {
+            destroy_value(directory-> sibling);
+            mem_free(directory-> sibling);
           }
         mem_free (directory);
       }
@@ -796,15 +971,9 @@ static int directory_entry_first_child (void *olditem, const char *name, Bool ig
     
     DIRECTORY_ENTRY_ITEM
         *directory = olditem;
-    DIRST
-        *dirst;
 
     ASSERT (directory);
-
-    dirst = directory-> dirst;
-    directory-> dirst = NULL;
-    get_directory_entry (directory, dirst, name, ignorecase, class, item);
-    return 0;
+    return get_directory_entry(directory-> first_child, name, ignorecase, class, item);
     
 }
 
@@ -813,28 +982,9 @@ static int directory_entry_next_sibling (void *olditem, const char *name, Bool i
     
     DIRECTORY_ENTRY_ITEM
         *directory = olditem;
-    DIRST
-        *dirst;
-    int
-        rc;
 
     ASSERT (directory);
-
-    dirst = directory-> dirst;
-    directory-> dirst = NULL;
-    rc = read_dir (dirst);
-
-    if (rc)
-      {
-        get_directory_entry (directory-> parent, dirst, name, ignorecase, class, item);
-        return 0;
-      }
-    else
-      {
-        close_dir (dirst);
-        mem_free (dirst);
-        return -1;
-      }
+    return get_directory_entry(directory-> sibling, name, ignorecase, class, item);
     
 }
 
@@ -868,11 +1018,10 @@ static int directory_entry_create (const char *name, void *parent, void *sibling
 
     directory = memt_alloc (NULL, sizeof (DIRECTORY_ENTRY_ITEM));
     directory-> parent    = parent;
-    directory-> path = memt_alloc (NULL,
-                                   strlen (directory-> parent-> path)
-                                 + strlen (directory-> parent-> name) + 2);
-    xstrcpy (directory-> path, directory-> parent-> path,
-                               directory-> parent-> name, "/", NULL);
+    directory-> sibling   = NULL;
+    directory-> first_child = NULL;
+    directory-> path      = xstrcpy (NULL, directory-> parent-> path,
+                                           directory-> parent-> name, "/", NULL);
     directory-> name      = NULL;
     directory-> dirst     = NULL;
     directory-> links     = 0;
@@ -909,7 +1058,7 @@ static void * directory_entry_copy (void *item, CLASS_DESCRIPTOR *to_class, cons
     &&  new_item
     &&  new_class-> put_attr)
       {
-        value. s = ((DIRECTORY_ENTRY_ITEM *) item)-> name;
+        value. s = mem_strdup (((DIRECTORY_ENTRY_ITEM *) item)-> name);
         rc = new_class-> put_attr (new_item,
                                    "name", & value,
                                    FALSE);
@@ -991,10 +1140,10 @@ static int file_entry_destroy (void *item)
       {
         mem_free (file-> path);
         mem_free (file-> name);
-        if (file-> dirst)
+        if (file-> sibling)
           {
-            close_dir (file-> dirst);
-            mem_free  (file-> dirst);
+            destroy_value (file-> sibling);
+            mem_free(file-> sibling);
           }
         if (file-> handle)
             file_close (file-> handle);
@@ -1080,28 +1229,9 @@ static int file_entry_next_sibling (void *olditem, const char *name, Bool ignore
     
     FILE_ENTRY_ITEM
         *file = olditem;
-    DIRST
-        *dirst;
-    int
-        rc;
 
     ASSERT (file);
-
-    dirst = file-> dirst;
-    file-> dirst = NULL;
-    rc = read_dir (dirst);
-
-    if (rc)
-      {
-        get_directory_entry (file-> parent, dirst, name, ignorecase, class, item);
-        return 0;
-      }
-    else
-      {
-        close_dir (dirst);
-        mem_free (dirst);
-        return -1;
-      }
+    return get_directory_entry(file-> sibling, name, ignorecase, class, item);
     
 }
 
@@ -1135,13 +1265,14 @@ directory_open (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, T
     char
         *curpath,
         *pathname,
-        *lastchar;
-    DIRST
-        *dirst;
-    int
-        rc;
+        *lastchar,
+        *error_msg;
+
     DIRECTORY_ENTRY_ITEM
         *directory;
+
+    int
+        rc;
 
     ASSERT (context);
 
@@ -1154,34 +1285,27 @@ directory_open (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, T
         *lastchar = 0;
     curpath = strip_file_name (pathname);
 
-    dirst = memt_alloc (NULL, sizeof (DIRST));
-
-    errno = 0;
-    rc = open_dir (dirst, pathname);
-
-    if (rc)
+    error_msg = NULL;
+    directory = build_directory_entries (pathname, &error_msg);
+    
+    if (directory)
       {
-        directory = memt_alloc (NULL, sizeof (DIRECTORY_ENTRY_ITEM));
-        curpath =  strip_file_name (pathname);
-        directory-> path      = memt_alloc (NULL, strlen (curpath) + 2);
-        xstrcpy (directory-> path, curpath, "/", NULL);
-        directory-> name      = memt_strdup (NULL, strip_file_path (pathname));
-        directory-> dirst     = dirst;
-        directory-> links     = 0;
-        directory-> parent    = NULL;
-        directory-> exists    = TRUE;
-
         assign_pointer (& result-> value, & directory_entry_class, directory);
+      }
+    
+    mem_free (pathname);
+
+    if (error_msg)
+      {
+      rc = store_module_error (gsl_thread, context, error, error_msg);
+      mem_free(error_msg);
       }
     else
       {
-        close_dir (dirst);
-        mem_free (dirst);
+        rc = store_module_error (gsl_thread, context, error, NULL);
       }
-    mem_free (pathname);
 
-    return store_module_error (gsl_thread, context, error,
-                               errno ? strerror (errno) : NULL);
+    return rc;
   }
         
     return 0;  /*  Just in case  */

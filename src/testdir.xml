@@ -1,0 +1,112 @@
+<!-- Test cases for updates to directory.open().
+     All file system related errors should occur during open.
+     All supported operations (iteration over files, directories or both)
+     should work  -->
+
+<tests>
+    <test name="directory does not exist">
+        <case when="open" expect="error" />
+    </test>
+
+    <test name="directory is not a file">
+        <setup>touch $BASE</setup>
+        <case when="open" expect="error" />
+        <cleanup>rm $BASE</cleanup>
+    </test>
+
+    <test name="directory is empty">
+        <setup>mkdir $BASE</setup>
+        <case when="open" expect="error" />
+        <cleanup>rm -rf $BASE</cleanup>
+    </test>
+
+    <test name="directory has one bad file">
+        <setup>
+            mkdir $BASE;
+            ln -sf target-does-not-exist $BASE/link-source 
+        </setup>
+        <case when="open" expect="error" />
+        <cleanup>
+            rm -rf $BASE
+        </cleanup>
+    </test>
+
+    <test name="directory has one skipped item">
+        <setup>
+            mkdir $BASE;
+            mknod $BASE/a-real-pipe p
+        </setup>
+        <case when="open" expect="error" />
+        <cleanup>
+            rm -rf $BASE
+        </cleanup>
+    </test>
+
+
+    <test name="directory has one good file">
+        <setup>
+            mkdir $BASE;
+            touch $BASE/a-real-file
+        </setup>
+        <case expect="1" when="count" filter="file" />
+        <cleanup>
+            rm -rf $BASE
+        </cleanup>
+    </test>
+
+    <test name="directory has one good directory">
+        <setup>
+            mkdir $BASE;
+            mkdir $BASE/a-real-directory
+        </setup>
+        <case expect="1" when="count" filter="directory" />
+        <cleanup>
+            rm -rf $BASE
+        </cleanup>
+    </test>
+
+    <test name="directory has 2 mixed content">
+        <setup>
+            mkdir $BASE;
+            mkdir $BASE/a-real-directory
+            touch $BASE/a-real-file
+        </setup>
+        <case expect="2" when="count" filter="" />
+        <case expect="1" when="count" filter="file" />
+        <case expect="1" when="count" filter="directory" />
+        <cleanup>
+            rm -rf $BASE
+        </cleanup>
+    </test>
+
+    <test name="directory has 2 mixed content + 1 skipped item">
+        <setup>
+            mkdir $BASE;
+            mkdir $BASE/a-real-directory
+            touch $BASE/a-real-file
+            mknod $BASE/a-real-pipe p
+        </setup>
+        <case expect="2" when="count" filter="" />
+        <case expect="1" when="count" filter="file" />
+        <case expect="1" when="count" filter="directory" />
+        <cleanup>
+            rm -rf $BASE
+        </cleanup>
+    </test>
+    <test name="directory has lots of mixed + skipped content">
+        <setup message="This could take a while ...">
+            mkdir $BASE;
+            for i in `seq 0 999` ; do
+                mkdir $BASE/a-real-directory-$i
+                touch $BASE/a-real-file-$i
+                mknod $BASE/a-real-pipe-$i p
+            done
+        </setup>
+        <case expect="2000" when="count" filter="" />
+        <case expect="1000" when="count" filter="file" />
+        <case expect="1000" when="count" filter="directory" />
+        <cleanup>
+            rm -rf $BASE
+        </cleanup>
+    </test>
+</tests>
