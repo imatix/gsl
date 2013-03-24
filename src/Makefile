@@ -38,6 +38,7 @@ OBJ = .o
 LIB = .a
 EXE =
 CC  = ./c -q
+CCLIBS = -lpcre
 
 #   Reset the suffixes that will be considered to just our own list.
 #
@@ -68,7 +69,7 @@ libgsl$(LIB): ggobjt$(OBJ) ggcomm$(OBJ) ggscop$(OBJ) ggcode$(OBJ) ggcodem$(OBJ) 
 	$(CC) -r libgsl$(LIB) ggobjt$(OBJ) ggcomm$(OBJ) ggscop$(OBJ) ggcode$(OBJ) ggcodem$(OBJ) ggpars$(OBJ) ggparsm$(OBJ) ggconv$(OBJ) ggdiag$(OBJ) ggenvt$(OBJ) ggfile$(OBJ) gggsl$(OBJ) ggmath$(OBJ) ggpcre$(OBJ) ggproc$(OBJ) ggscrp$(OBJ) ggsock$(OBJ) ggstrn$(OBJ) ggsymb$(OBJ) ggthrd$(OBJ) ggtime$(OBJ) ggxml$(OBJ) sflbits$(OBJ) sflcvds$(OBJ) sflcvts$(OBJ) sflfile$(OBJ) sfllbuf$(OBJ) sflnode$(OBJ) sflsock$(OBJ) sfltron$(OBJ) smtlog$(OBJ) smtmsg$(OBJ) smtsimu$(OBJ) smttst2$(OBJ) sflcomp$(OBJ) sflcvns$(OBJ) sfldate$(OBJ) sflfind$(OBJ) sfllist$(OBJ) sflprint$(OBJ) sflsort$(OBJ) sfluid$(OBJ) smtoper$(OBJ) smtslot$(OBJ) smttst3$(OBJ) sflcons$(OBJ) sflcvsb$(OBJ) sfldes$(OBJ) sflfort$(OBJ) sflmail$(OBJ) sflproc$(OBJ) sflstr$(OBJ) sflxml$(OBJ) smtpipe$(OBJ) smtsmtp$(OBJ) smtxlog$(OBJ) sflconv$(OBJ) sflcvsd$(OBJ) sfldescr$(OBJ) sflheap$(OBJ) sflmath$(OBJ) sflscrit$(OBJ) sflsymb$(OBJ) sflxmll$(OBJ) smtpop$(OBJ) smtsock$(OBJ) sflcryp$(OBJ) sflcvsn$(OBJ) sfldir$(OBJ) sflhttp$(OBJ) sflmem$(OBJ) sflsearch$(OBJ) sflsyst$(OBJ) sflxmls$(OBJ) smtrdns$(OBJ) smttime$(OBJ) sflcvbs$(OBJ) sflcvst$(OBJ) sflenv$(OBJ) sflini$(OBJ) sflmesg$(OBJ) sflsha$(OBJ) sfltok$(OBJ) smtecho$(OBJ) smtrdnsl$(OBJ) smttran$(OBJ) sflcvdp$(OBJ) sflcvtp$(OBJ) sflexdr$(OBJ) sfllang$(OBJ) sflmime$(OBJ) sflslot$(OBJ) sfltree$(OBJ) smtlib$(OBJ) smtserv$(OBJ) smttst1$(OBJ)
 gsl$(OBJ): gsl.c ggpriv.h ggcomm.h ggpars.h ggscop.h ggcode.h ggobjt.h version.h sflbits.h sfldescr.h sflfind.h sflini.h sflmem.h sflprocx.h sflstr.h sfluid.h smthead.h smtserv.h sflcomp.h sfldes.h sflfort.h sfllang.h sflmesg.h sflsearch.h sflsymb.h sflxml.h smtlib.h smtsimu.h sflcons.h sfldir.h sfl.h sfllbuf.h sflmime.h sflsha.h sflsyst.h sflxmll.h smtmem.h smtsslm.h sflconv.h sflenv.h sflhead.h sfllist.h sflnode.h sflslot.h sfltok.h sflxmls.h smtmsg.h smttime.h sflcryp.h sflexdr.h sflheap.h sflmail.h sflprint.h sflsock.h sfltree.h smt3.h smtpriv.h smtxlog.h sfldate.h sflfile.h sflhttp.h sflmath.h sflproc.h sflsort.h sfltron.h smtdefn.h smtrdnsl.h
 gsl$(EXE): gsl$(OBJ) libgsl$(LIB)
-	$(CC) -L -lpcre gsl
+	$(CC) -L gsl
 ggobjt$(OBJ):    ggobjt.c
 ggcomm$(OBJ):    ggcomm.c
 ggscop$(OBJ):    ggscop.c
