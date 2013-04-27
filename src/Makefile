@@ -38,7 +38,7 @@ OBJ = .o
 LIB = .a
 EXE =
 CC  = ./c -q
-CCLIBS = -lpcre
+export CCLIBS = -lpcre
 
 #   Reset the suffixes that will be considered to just our own list.
 #
