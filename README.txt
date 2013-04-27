@@ -8,6 +8,10 @@
 
 ## Overview
 
+### Contributing
+
+We use the C4.1 process, see: https://rfc.zeromq.org/spec:22.
+
 ### Scope and Goals
 
 GSL/4.1 is a code construction tool.  It will generate code in all languages and for all purposes.  If this sounds too good to be true, welcome to 1996, when we invented these techniques.  Magic is simply technology that is twenty years ahead of its time. In addition to code construction, GSL has been used to generate database schema definitions, user interfaces, reports, system administration tools and much more.
