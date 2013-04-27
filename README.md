@@ -1,4 +1,3 @@
-
 <A name="toc1-2" title="GSL/4.1 - a Universal Code Generator" />
 # GSL/4.1 - a Universal Code Generator
 
@@ -87,6 +86,10 @@
 
 <A name="toc2-10" title="Overview" />
 ## Overview
+
+### Contributing
+
+We use the C4.1 process, see: https://rfc.zeromq.org/spec:22.
 
 <A name="toc3-13" title="Scope and Goals" />
 ### Scope and Goals
