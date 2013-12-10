@@ -162,7 +162,11 @@ if [ "$CCNAME" = "gcc" ]; then
     #  If your build is failing because of missing libraries then
     #  either you are missing development packages, or are on a non-standard/old
     #  system and should add a special case.
-    STDLIBS="-lrt -lcrypt -lpthread -lm"
+    if [ "$UTYPE" = "Darwin" ]; then
+        STDLIBS="-lcrypto -lpthread -lm"
+    else
+        STDLIBS="-lrt -lcrypt -lpthread -lm"
+    fi
 
     #
     #  Linux-specific subsection
