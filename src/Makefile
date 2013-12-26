@@ -39,7 +39,7 @@ INSTALL = /usr/bin/install -c
 prefix = ${DESTDIR}/usr
 exec_prefix = ${prefix}
 mandir = ${prefix}/share/man/man8
-bindir = ${exec_prefix}/usr/local/bin
+bindir = ${exec_prefix}/local/bin
 
 #   Default values for object, library, and executable extensions.
 #
