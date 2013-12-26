@@ -1,0 +1,8 @@
+.template 0
+if defined(options->code->BEGIN)
+   echo "not empty"
+	>$(options->code->BEGIN.)
+else
+   echo "is empty"
+endif
+endtemplate
