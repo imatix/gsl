@@ -32,6 +32,15 @@
 #   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 #   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+
+INSTALL = /usr/bin/install -c
+
+# Installation directories, good for DEbian Packaging
+prefix = ${DESTDIR}/usr
+exec_prefix = ${prefix}
+mandir = ${prefix}/share/man/man8
+bindir = ${exec_prefix}/usr/local/bin
+
 #   Default values for object, library, and executable extensions.
 #
 OBJ = .o
@@ -169,6 +178,7 @@ smtxlog$(OBJ):   smtxlog.c
 everything: libgsl$(LIB) gsl$(EXE)
 	./gsl -v
 install:
-	cp gsl /usr/local/bin
+	$(INSTALL) -m 755 -d $(bindir)
+	$(INSTALL) -m 755 gsl $(bindir)
 clean:
 	rm *.o *.a gsl
