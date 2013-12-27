@@ -35,7 +35,7 @@
 
 INSTALL = /usr/bin/install -c
 
-# Installation directories, good for DEbian Packaging
+# Installation directories, good for Debian Packaging
 prefix = ${DESTDIR}/usr
 exec_prefix = ${prefix}
 mandir = ${prefix}/share/man/man8
@@ -46,6 +46,7 @@ bindir = ${exec_prefix}/local/bin
 OBJ = .o
 LIB = .a
 EXE =
+DBG =
 CC  = ./c -q
 export CCLIBS = -lpcre
 
@@ -60,13 +61,18 @@ export CCLIBS = -lpcre
 #   with the iMatix c script without any arguments.
 #
 .c$(OBJ):
-	$(CC) $<
+	$(CC) $(DBG) $<
 
 #
 #   Default rule -- all depends on everything.
 #   We do this so that we can define the rule at the end.
 #
 all: everything
+
+# debug build
+debug: DBG = -DDEBUG -g
+debug: everything
+
 #
 #   The following targets are not files. Mark them as such.
 #
