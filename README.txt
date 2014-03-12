@@ -1251,35 +1251,61 @@ switches
 
 GSL provides many built-in functions and uses `modules` to group related functions.
 
-Functions are listed under their module name. Each function listing shows the arguments
-it accepts. Optional arguments are shown with square brackets '[]'. 
+Functions are listed under their module name. Each function listing shows the arguments it accepts. Optional arguments are shown with square brackets '[]'. 
 
-If an optional argument is provided, then previous arguments must also be provided.
-For example, the function `directory.open([name], [error])` accepts two optional arguments.
-If the `error` argument is provided, then the `name` argument must also be provided.
+If an optional argument is provided, then previous arguments must also be provided. For example, the function `directory.open([name], [error])` accepts two optional arguments. If the `error` argument is provided, then the `name` argument must also be provided.
 
 Some functions take no arguments.
 
-If a function is given an incorrect number of errors GSL will print an error on the console 
-and terminate.
+If a function is given an incorrect number of errors GSL will print an error on the console and terminate.
 
-If the provided arguments are of the wrong type or otherwise incorrect, the functions
-will return an undefined result, which can be handled with the default operator and tested
-with the defined() function.
+If the provided arguments are of the wrong type or otherwise incorrect, the functions will return an undefined result, which can be handled with the default operator and tested with the defined() function.
 
-Some functions accept an optional parameter, listed as `error`. If the parameter is provided,
-and an error occurs, the associated error text will be placed in the parameter and can be used
-as shown in this example.
+Some functions accept an optional parameter, listed as `error`. If the parameter is provided, and an error occurs, the associated error text will be placed in the parameter and can be used as shown in this example.
 
 .pull doc/examples/error-parameter.gsl,code
 
-#### global
+#### Global Functions
 
-    defined (value)
-    
+    alias (item)
+        To be explained.
+
+    class (item)
+        To be explained.
+
     count (item, condition)
         In condition, count. refers to item being counted
 
+    defined (value)
+        True if value is defined.
+
+    first ()
+        True if current item is first in list.
+        
+    index (item)
+        Return index in current selection.
+        
+    item (item)
+        Return item number in original list.
+        
+    last ()
+        True if current item is last in list.
+        
+    macro (name)
+        True if name is a defined macro / function.
+        
+    name ()
+        To be explained.
+        
+    scope ()
+        To be explained.
+        
+    total ()
+        To be explained.
+
+    which ()
+        To be explained.
+        
 #### conv
 
 .pull doc/modules/ggconv.txt
@@ -1294,41 +1320,25 @@ as shown in this example.
 
 #### fileio
 
-GSL provides three modules for dealing with directories and files; one directory module and two file modules,
-one for working with independent files and the second for working with files during a directory traversal.
-We will discuss the second set after the first because it will make more sense that way.
+GSL provides three modules for dealing with directories and files; one directory module and two file modules, one for working with independent files and the second for working with files during a directory traversal. We will discuss the second set after the first because it will make more sense that way.
 
 Abstractedly, the modules have functions for working on, working with, and finding out about directories and files.
 
-In the first category, directories have the `create` and `delete` functions which make them appear and disappear, modulo
-file permissions and other errors.  Files also have the same functions, but `create` is spelled `open`. In addition,
-files have functions to `rename` and `copy` them. An important note: while it is generally important to check for errors
-in most operations, these operations almost demand checking for errors. Use of the default operator and error parameter
-will be well rewarded with working programs.
+In the first category, directories have the `create` and `delete` functions which make them appear and disappear, modulo file permissions and other errors.  Files also have the same functions, but `create` is spelled `open`. In addition, files have functions to `rename` and `copy` them. An important note: while it is generally important to check for errors in most operations, these operations almost demand checking for errors. Use of the default operator and error parameter will be well rewarded with working programs.
 
 The second set of functions deal with the "contents" of directories and files.
 
-A directory's purpose is too contain other files (directories are also files of a particular type).
-The only content operation is `open`, which returns a 'directory entry' object that can be used to iterate
-through the directory contents.
+A directory's purpose is too contain other files (directories are also files of a particular type). The only content operation is `open`, which returns a 'directory entry' object that can be used to iterate through the directory contents.
 
-Files are a little richer and have operations to open them and to read from or write to them
-and to control where in the file to read or write.
+Files are a little richer and have operations to open them and to read from or write to them and to control where in the file to read or write.
 
 File IO always begin with an open call, which returns a file handle.
 
-The file handle is used in all subsequent content operations on that file. When the text
-refers to operations that affect the `handle`, keep in mind that this is short hand for the
-longer 'operations that affect the file that the handle represents'. The file is actually what
-is being worked on.
+The file handle is used in all subsequent content operations on that file. When the text refers to operations that affect the `handle`, keep in mind that this is short hand for the longer 'operations that affect the file that the handle represents'. The file is actually what is being worked on.
 
-When opening a file, the `mode` parameter, a single letter, states how you intend to use the file,
-whether for 'r'eading, 'w'riting, or 'a'ppending.
+When opening a file, the `mode` parameter, a single letter, states how you intend to use the file, whether for 'r'eading, 'w'riting, or 'a'ppending.
 
-Reading can be done with file.read(handle, [error]).
-Writing is done in a corresponding manner.
-Reading can also be done with function `file.slurp`, which returns the contents of the file. It is a shortcut
-to a common operation.
+Reading can be done with file.read(handle, [error]). Writing is done in a corresponding manner. Reading can also be done with function `file.slurp`, which returns the contents of the file. It is a shortcut to a common operation.
 
 A file handle maintains an internal current file offset, which is a byte offset from the beginning of the file
 tells it where the next read or write should occur.
