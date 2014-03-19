@@ -3451,7 +3451,7 @@ lazy_creat (char *path, int mode)
 #if (defined (SMT_TRACE))
     trace ("lazy_create: path=%s", path);
 #endif
-    rc = _open (path, O_CREAT | O_WRONLY | O_TRUNC | O_NONBLOCK | O_BINARY,
+    rc = open (path, O_CREAT | O_WRONLY | O_TRUNC | O_NONBLOCK | O_BINARY,
                mode);
 
     set_io_completed (rc);
@@ -3509,7 +3509,7 @@ lazy_creat_text (char *path, int mode)
 #if (defined (SMT_TRACE))
     trace ("lazy_create_text: path=%s", path);
 #endif
-    rc = _open (path, O_CREAT | O_WRONLY | O_TRUNC | O_NONBLOCK, mode);
+    rc = open (path, O_CREAT | O_WRONLY | O_TRUNC | O_NONBLOCK, mode);
     set_io_completed (rc);
     return (rc);
 }
@@ -3544,7 +3544,7 @@ lazy_open (char *path, int flags)
 #if (defined (SMT_TRACE))
     trace ("lazy_open: path=%s", path);
 #endif
-    rc = _open (path, flags | O_NONBLOCK | O_BINARY, S_IREAD | S_IWRITE);
+    rc = open (path, flags | O_NONBLOCK | O_BINARY, S_IREAD | S_IWRITE);
     set_io_completed (rc);
     return (rc);
 }
@@ -3572,7 +3572,7 @@ lazy_open_text (char *path, int flags)
 #if (defined (SMT_TRACE))
     trace ("lazy_open_text: path=%s", path);
 #endif
-    rc = _open (path, flags | O_NONBLOCK, S_IREAD | S_IWRITE);
+    rc = open (path, flags | O_NONBLOCK, S_IREAD | S_IWRITE);
     set_io_completed (rc);
     return (rc);
 }
@@ -3601,7 +3601,7 @@ lazy_read (int handle, char *buffer, size_t count)
 #if (defined (SMT_TRACE))
     trace ("lazy_read: handle=%d bytes=%d", handle, count);
 #endif
-    rc = _read (handle, buffer, count);
+    rc = read (handle, buffer, count);
     set_io_completed (rc);
     return (rc);
 }
@@ -3628,7 +3628,7 @@ lazy_write (int handle, char *buffer, size_t count)
 #if (defined (SMT_TRACE))
     trace ("lazy_write: handle=%d bytes=%d", handle, count);
 #endif
-    rc = _write (handle, buffer, count);
+    rc = write (handle, buffer, count);
     set_io_completed (rc);
     return (rc);
 }
@@ -3655,7 +3655,7 @@ lazy_close (int handle)
 #if (defined (SMT_TRACE))
     trace ("lazy_close: handle=%d", handle);
 #endif
-    rc = _close (handle);
+    rc = close (handle);
     set_io_completed (rc);
     return (rc);
 }

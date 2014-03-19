@@ -1083,7 +1083,7 @@ open_transfer_file (THREAD *thread, char mode)
           }
         else
         if (tcb-> start_slice > 0)      /*  Position at start of slice?      */
-            _lseek (tcb-> stream, tcb-> start_slice, SEEK_SET);
+            lseek (tcb-> stream, tcb-> start_slice, SEEK_SET);
       }
 }
 
