@@ -480,6 +480,22 @@ typedef struct {                        /*  Variable-size descriptor         */
     typedef __int64 int64_t;
 #endif
 
+/*  A number of CRT functions deprecated on Windows                          */
+#if (defined (__WINDOWS__))
+#   undef close
+#   define close(a) _close(a)
+#   undef lseek
+#   define lseek(a, b, c) _lseek(a, b, c)
+#   undef strdup
+#   define strdup(a) _strdup(a)
+#   undef open
+#   define open(a, b, c) _open(a, b, c)
+#   undef read
+#   define read(a, b, c) _read(a, b, c)
+#   undef write
+#   define write(a, b, c) _write(a, b, c)
+#endif
+
 /*  On most systems, 'timezone' is an external long variable.  On a few, it
  *  is a function that returns a string.  We define TIMEZONE to be the long
  *  value.                                                                   */
