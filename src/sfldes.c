@@ -395,6 +395,7 @@ qbyte sfldes_skb [8][64] = {
     0x00002820L, 0x04002820L, 0x00042820L, 0x04042820L,
     0x00002822L, 0x04002822L, 0x00042822L, 0x04042822L } };
 
+
 static int des_encrypt_block (qbyte *input, qbyte *output, des_keys *ks,
                         int encrypt);
 static int des_set_key (des_cblock *key, des_keys *schedule);
