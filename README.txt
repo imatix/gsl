@@ -1340,14 +1340,9 @@ When opening a file, the `mode` parameter, a single letter, states how you inten
 
 Reading can be done with file.read(handle, [error]). Writing is done in a corresponding manner. Reading can also be done with function `file.slurp`, which returns the contents of the file. It is a shortcut to a common operation.
 
-A file handle maintains an internal current file offset, which is a byte offset from the beginning of the file
-tells it where the next read or write should occur.
-A file opened for reading or writing will start of with an offset of 0,
-whereas a file opened for append mode will start with an offset corresponding to the end of the file.
-The offset changes to reflect any read or write operations on the file.
-This is actually more than one needs to know just to read or write a file.
-However, it is sometimes useful and necessary to skip around inside a file, which is what `tell` and `seek` do.
-The function `tell` returns the current offset and `seek` changes the offset.
+A file handle maintains an internal current file offset, which is a byte offset from the beginning of the file tells it where the next read or write should occur. A file opened for reading or writing will start of with an offset of 0, whereas a file opened for append mode will start with an offset corresponding to the end of the file.
+
+The offset changes to reflect any read or write operations on the file. This is actually more than one needs to know just to read or write a file. However, it is sometimes useful and necessary to skip around inside a file, which is what `tell` and `seek` do. The function `tell` returns the current offset and `seek` changes the offset.
 
 The final set of file functions manipulate files, file names and file metadata.
 
@@ -1394,7 +1389,6 @@ and the file entry has the following attributes:
 - size
 - time
 - date
-
 
 Which return the appropriate values from the file (or directory, which is, of course, a file).
 
