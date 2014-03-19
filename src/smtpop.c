@@ -1749,7 +1749,7 @@ const char *handle_message_body (char **attach_list)
 
                 /* it seems decode_base64 can't deal when in and out buffer
                  * are the same ---> we use a tmp buffer */
-                tmp_buf = strdup (part_info->ptr_body);
+                tmp_buf = _strdup (part_info->ptr_body);
                 ASSERT (tmp_buf);
                 new_size = decode_base64 (part_info->ptr_body,
                                           tmp_buf,

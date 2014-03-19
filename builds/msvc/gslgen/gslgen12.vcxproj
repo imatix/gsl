@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AD4A2E37-0B82-457C-995E-B9FA74A43472}</ProjectGuid>
+    <ProjectName>gslgen12</ProjectName>
+    <RootNamespace>gslgen</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Configuration">
+    <PlatformToolset>v100</PlatformToolset>
+    <Linkage-pcre>static</Linkage-pcre>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(ProjectDir)properties\Project.props" />
+    <Import Project="$(ProjectDir)..\properties\Win32.props" />
+    <Import Project="$(ProjectDir)..\properties\Debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(ProjectDir)properties\Project.props" />
+    <Import Project="$(ProjectDir)..\properties\Win32.props" />
+    <Import Project="$(ProjectDir)..\properties\Release.props" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\console.gsl" />
+    <None Include="..\..\..\src\ggcode.d" />
+    <None Include="..\..\..\src\ggcode.i" />
+    <None Include="..\..\..\src\ggcode.l" />
+    <None Include="..\..\..\src\ggconv.gxl" />
+    <None Include="..\..\..\src\ggdiag.gxl" />
+    <None Include="..\..\..\src\ggdoc.gsl" />
+    <None Include="..\..\..\src\ggenvt.gxl" />
+    <None Include="..\..\..\src\ggfile.gxl" />
+    <None Include="..\..\..\src\ggfunc.inc" />
+    <None Include="..\..\..\src\gggsl.d" />
+    <None Include="..\..\..\src\gggsl.gxl" />
+    <None Include="..\..\..\src\gggsl.i" />
+    <None Include="..\..\..\src\ggmacro.gsl" />
+    <None Include="..\..\..\src\ggmath.gxl" />
+    <None Include="..\..\..\src\ggobjt.gsl" />
+    <None Include="..\..\..\src\ggpars.d" />
+    <None Include="..\..\..\src\ggpars.i" />
+    <None Include="..\..\..\src\ggpars.l" />
+    <None Include="..\..\..\src\ggpcre.gxl" />
+    <None Include="..\..\..\src\ggproc.gxl" />
+    <None Include="..\..\..\src\ggreport.gsl" />
+    <None Include="..\..\..\src\ggscrp.d" />
+    <None Include="..\..\..\src\ggscrp.gxl" />
+    <None Include="..\..\..\src\ggscrp.i" />
+    <None Include="..\..\..\src\ggsock.d" />
+    <None Include="..\..\..\src\ggsock.gxl" />
+    <None Include="..\..\..\src\ggsock.i" />
+    <None Include="..\..\..\src\ggstrn.gxl" />
+    <None Include="..\..\..\src\ggsymb.gxl" />
+    <None Include="..\..\..\src\ggthrd.d" />
+    <None Include="..\..\..\src\ggthrd.gxl" />
+    <None Include="..\..\..\src\ggthrd.i" />
+    <None Include="..\..\..\src\ggtime.gxl" />
+    <None Include="..\..\..\src\ggxml.gxl" />
+    <None Include="..\..\..\src\gsl.d" />
+    <None Include="..\..\..\src\gsl.i" />
+    <None Include="..\..\..\src\gsl.l" />
+    <None Include="..\..\..\src\sflcvst.d" />
+    <None Include="..\..\..\src\sflcvst.i" />
+    <None Include="..\..\..\src\sflproco.imp" />
+    <None Include="..\..\..\src\sflprocu.imp" />
+    <None Include="..\..\..\src\sflprocv.imp" />
+    <None Include="..\..\..\src\sflprocw.imp" />
+    <None Include="..\..\..\src\sflprocx.imp" />
+    <None Include="..\..\..\src\sflscrit.d" />
+    <None Include="..\..\..\src\sflscrit.i" />
+    <None Include="..\..\..\src\smtecho.d" />
+    <None Include="..\..\..\src\smtecho.i" />
+    <None Include="..\..\..\src\smtlog.d" />
+    <None Include="..\..\..\src\smtlog.i" />
+    <None Include="..\..\..\src\smtoper.d" />
+    <None Include="..\..\..\src\smtoper.i" />
+    <None Include="..\..\..\src\smtpipe.d" />
+    <None Include="..\..\..\src\smtpipe.i" />
+    <None Include="..\..\..\src\smtpop.d" />
+    <None Include="..\..\..\src\smtpop.i" />
+    <None Include="..\..\..\src\smtrdns.d" />
+    <None Include="..\..\..\src\smtrdns.i" />
+    <None Include="..\..\..\src\smtsimu.d" />
+    <None Include="..\..\..\src\smtsimu.i" />
+    <None Include="..\..\..\src\smtslot.d" />
+    <None Include="..\..\..\src\smtslot.i" />
+    <None Include="..\..\..\src\smtsmtp.d" />
+    <None Include="..\..\..\src\smtsmtp.i" />
+    <None Include="..\..\..\src\smtsock.d" />
+    <None Include="..\..\..\src\smtsock.i" />
+    <None Include="..\..\..\src\smttran.d" />
+    <None Include="..\..\..\src\smttran.i" />
+    <None Include="..\..\..\src\smttst1.d" />
+    <None Include="..\..\..\src\smttst1.i" />
+    <None Include="..\..\..\src\smttst2.d" />
+    <None Include="..\..\..\src\smttst2.i" />
+    <None Include="..\..\..\src\smttst3.d" />
+    <None Include="..\..\..\src\smttst3.i" />
+    <None Include="..\..\..\src\smtxlog.d" />
+    <None Include="..\..\..\src\smtxlog.i" />
+    <None Include="..\..\..\src\sysclia.d" />
+    <None Include="..\..\..\src\sysclia.i" />
+    <None Include="..\..\..\src\sysmana.d" />
+    <None Include="..\..\..\src\sysmana.i" />
+    <None Include="..\..\..\src\testall.gsl" />
+    <None Include="..\..\..\src\testall.inc" />
+    <None Include="..\..\..\src\testchi2.gsl" />
+    <None Include="..\..\..\src\testconv.gsl" />
+    <None Include="..\..\..\src\testdate.gsl" />
+    <None Include="..\..\..\src\testdb.gsl" />
+    <None Include="..\..\..\src\testdir.gsl" />
+    <None Include="..\..\..\src\testdir2.gsl" />
+    <None Include="..\..\..\src\testecho.gsl" />
+    <None Include="..\..\..\src\testfile.gsl" />
+    <None Include="..\..\..\src\testmath.gsl" />
+    <None Include="..\..\..\src\testscope.gsl" />
+    <None Include="..\..\..\src\testsort.gsl" />
+    <None Include="..\..\..\src\teststr.gsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\ggcode.c" />
+    <ClCompile Include="..\..\..\src\ggcodem.c" />
+    <ClCompile Include="..\..\..\src\ggcomm.c" />
+    <ClCompile Include="..\..\..\src\ggconv.c" />
+    <ClCompile Include="..\..\..\src\ggdiag.c" />
+    <ClCompile Include="..\..\..\src\ggenvt.c" />
+    <ClCompile Include="..\..\..\src\ggfile.c" />
+    <ClCompile Include="..\..\..\src\gggsl.c" />
+    <ClCompile Include="..\..\..\src\ggmath.c" />
+    <ClCompile Include="..\..\..\src\ggobjt.c" />
+    <ClCompile Include="..\..\..\src\ggpars.c" />
+    <ClCompile Include="..\..\..\src\ggparsm.c" />
+    <ClCompile Include="..\..\..\src\ggpcre.c" />
+    <ClCompile Include="..\..\..\src\ggproc.c" />
+    <ClCompile Include="..\..\..\src\ggscop.c" />
+    <ClCompile Include="..\..\..\src\ggscrp.c" />
+    <ClCompile Include="..\..\..\src\ggsock.c" />
+    <ClCompile Include="..\..\..\src\ggstrn.c" />
+    <ClCompile Include="..\..\..\src\ggsymb.c" />
+    <ClCompile Include="..\..\..\src\ggthrd.c" />
+    <ClCompile Include="..\..\..\src\ggtime.c" />
+    <ClCompile Include="..\..\..\src\ggxml.c" />
+    <ClCompile Include="..\..\..\src\gsl.c" />
+    <ClCompile Include="..\..\..\src\sflbits.c" />
+    <ClCompile Include="..\..\..\src\sflcomp.c" />
+    <ClCompile Include="..\..\..\src\sflcons.c" />
+    <ClCompile Include="..\..\..\src\sflconv.c" />
+    <ClCompile Include="..\..\..\src\sflcryp.c" />
+    <ClCompile Include="..\..\..\src\sflcvbs.c" />
+    <ClCompile Include="..\..\..\src\sflcvdp.c" />
+    <ClCompile Include="..\..\..\src\sflcvds.c" />
+    <ClCompile Include="..\..\..\src\sflcvns.c" />
+    <ClCompile Include="..\..\..\src\sflcvsb.c" />
+    <ClCompile Include="..\..\..\src\sflcvsd.c" />
+    <ClCompile Include="..\..\..\src\sflcvsn.c" />
+    <ClCompile Include="..\..\..\src\sflcvst.c" />
+    <ClCompile Include="..\..\..\src\sflcvtp.c" />
+    <ClCompile Include="..\..\..\src\sflcvts.c" />
+    <ClCompile Include="..\..\..\src\sfldate.c" />
+    <ClCompile Include="..\..\..\src\sfldes.c" />
+    <ClCompile Include="..\..\..\src\sfldescr.c" />
+    <ClCompile Include="..\..\..\src\sfldir.c" />
+    <ClCompile Include="..\..\..\src\sflenv.c" />
+    <ClCompile Include="..\..\..\src\sflexdr.c" />
+    <ClCompile Include="..\..\..\src\sflfile.c" />
+    <ClCompile Include="..\..\..\src\sflfind.c" />
+    <ClCompile Include="..\..\..\src\sflfort.c" />
+    <ClCompile Include="..\..\..\src\sflheap.c" />
+    <ClCompile Include="..\..\..\src\sflhttp.c" />
+    <ClCompile Include="..\..\..\src\sflini.c" />
+    <ClCompile Include="..\..\..\src\sfllang.c" />
+    <ClCompile Include="..\..\..\src\sfllbuf.c" />
+    <ClCompile Include="..\..\..\src\sfllist.c" />
+    <ClCompile Include="..\..\..\src\sflmail.c" />
+    <ClCompile Include="..\..\..\src\sflmath.c" />
+    <ClCompile Include="..\..\..\src\sflmem.c" />
+    <ClCompile Include="..\..\..\src\sflmesg.c" />
+    <ClCompile Include="..\..\..\src\sflmime.c" />
+    <ClCompile Include="..\..\..\src\sflnode.c" />
+    <ClCompile Include="..\..\..\src\sflprint.c" />
+    <ClCompile Include="..\..\..\src\sflproc.c" />
+    <ClCompile Include="..\..\..\src\sflscrit.c" />
+    <ClCompile Include="..\..\..\src\sflsearch.c" />
+    <ClCompile Include="..\..\..\src\sflsha.c" />
+    <ClCompile Include="..\..\..\src\sflslot.c" />
+    <ClCompile Include="..\..\..\src\sflsock.c" />
+    <ClCompile Include="..\..\..\src\sflsort.c" />
+    <ClCompile Include="..\..\..\src\sflstr.c" />
+    <ClCompile Include="..\..\..\src\sflsymb.c" />
+    <ClCompile Include="..\..\..\src\sflsyst.c" />
+    <ClCompile Include="..\..\..\src\sfltok.c" />
+    <ClCompile Include="..\..\..\src\sfltree.c" />
+    <ClCompile Include="..\..\..\src\sfltron.c" />
+    <ClCompile Include="..\..\..\src\sfluid.c" />
+    <ClCompile Include="..\..\..\src\sflxml.c" />
+    <ClCompile Include="..\..\..\src\sflxmll.c" />
+    <ClCompile Include="..\..\..\src\sflxmls.c" />
+    <ClCompile Include="..\..\..\src\smtecho.c" />
+    <ClCompile Include="..\..\..\src\smtlib.c" />
+    <ClCompile Include="..\..\..\src\smtlog.c" />
+    <ClCompile Include="..\..\..\src\smtmsg.c" />
+    <ClCompile Include="..\..\..\src\smtoper.c" />
+    <ClCompile Include="..\..\..\src\smtpipe.c" />
+    <ClCompile Include="..\..\..\src\smtpop.c" />
+    <ClCompile Include="..\..\..\src\smtrdns.c" />
+    <ClCompile Include="..\..\..\src\smtrdnsl.c" />
+    <ClCompile Include="..\..\..\src\smtserv.c" />
+    <ClCompile Include="..\..\..\src\smtsimu.c" />
+    <ClCompile Include="..\..\..\src\smtslot.c" />
+    <ClCompile Include="..\..\..\src\smtsmtp.c" />
+    <ClCompile Include="..\..\..\src\smtsock.c" />
+    <ClCompile Include="..\..\..\src\smttime.c" />
+    <ClCompile Include="..\..\..\src\smttran.c" />
+    <ClCompile Include="..\..\..\src\smttst1.c" />
+    <ClCompile Include="..\..\..\src\smttst2.c" />
+    <ClCompile Include="..\..\..\src\smttst3.c" />
+    <ClCompile Include="..\..\..\src\smtxlog.c" />
+    <None Include="..\..\..\src\syscli.c" />
+    <ClCompile Include="..\..\..\src\sysclia.c" />
+    <None Include="..\..\..\src\sysman.c" />
+    <ClCompile Include="..\..\..\src\sysmana.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\ggcode.h" />
+    <ClInclude Include="..\..\..\src\ggcodem.h" />
+    <ClInclude Include="..\..\..\src\ggcomm.h" />
+    <ClInclude Include="..\..\..\src\ggconv.h" />
+    <ClInclude Include="..\..\..\src\ggdiag.h" />
+    <ClInclude Include="..\..\..\src\ggenvt.h" />
+    <ClInclude Include="..\..\..\src\ggfile.h" />
+    <ClInclude Include="..\..\..\src\gggsl.h" />
+    <ClInclude Include="..\..\..\src\gghead.h" />
+    <ClInclude Include="..\..\..\src\ggmath.h" />
+    <ClInclude Include="..\..\..\src\ggobjt.h" />
+    <ClInclude Include="..\..\..\src\ggpars.h" />
+    <ClInclude Include="..\..\..\src\ggparsm.h" />
+    <ClInclude Include="..\..\..\src\ggpcre.h" />
+    <ClInclude Include="..\..\..\src\ggpriv.h" />
+    <ClInclude Include="..\..\..\src\ggproc.h" />
+    <ClInclude Include="..\..\..\src\ggscop.h" />
+    <ClInclude Include="..\..\..\src\ggscrp.h" />
+    <ClInclude Include="..\..\..\src\ggsock.h" />
+    <ClInclude Include="..\..\..\src\ggstrn.h" />
+    <ClInclude Include="..\..\..\src\ggsymb.h" />
+    <ClInclude Include="..\..\..\src\ggthrd.h" />
+    <ClInclude Include="..\..\..\src\ggtime.h" />
+    <ClInclude Include="..\..\..\src\ggxml.h" />
+    <ClInclude Include="..\..\..\src\gsl.h" />
+    <ClInclude Include="..\..\..\src\prelude.h" />
+    <ClInclude Include="..\..\..\src\sfl.h" />
+    <ClInclude Include="..\..\..\src\sflbits.h" />
+    <ClInclude Include="..\..\..\src\sflcomp.h" />
+    <ClInclude Include="..\..\..\src\sflcons.h" />
+    <ClInclude Include="..\..\..\src\sflconv.h" />
+    <ClInclude Include="..\..\..\src\sflcryp.h" />
+    <ClInclude Include="..\..\..\src\sfldate.h" />
+    <ClInclude Include="..\..\..\src\sfldes.h" />
+    <ClInclude Include="..\..\..\src\sfldescr.h" />
+    <ClInclude Include="..\..\..\src\sfldir.h" />
+    <ClInclude Include="..\..\..\src\sflenv.h" />
+    <ClInclude Include="..\..\..\src\sflexdr.h" />
+    <ClInclude Include="..\..\..\src\sflfile.h" />
+    <ClInclude Include="..\..\..\src\sflfind.h" />
+    <ClInclude Include="..\..\..\src\sflfort.h" />
+    <ClInclude Include="..\..\..\src\sflhead.h" />
+    <ClInclude Include="..\..\..\src\sflheap.h" />
+    <ClInclude Include="..\..\..\src\sflhttp.h" />
+    <ClInclude Include="..\..\..\src\sflini.h" />
+    <ClInclude Include="..\..\..\src\sfllang.h" />
+    <ClInclude Include="..\..\..\src\sfllbuf.h" />
+    <ClInclude Include="..\..\..\src\sfllist.h" />
+    <ClInclude Include="..\..\..\src\sflmail.h" />
+    <ClInclude Include="..\..\..\src\sflmath.h" />
+    <ClInclude Include="..\..\..\src\sflmem.h" />
+    <ClInclude Include="..\..\..\src\sflmesg.h" />
+    <ClInclude Include="..\..\..\src\sflmime.h" />
+    <ClInclude Include="..\..\..\src\sflnode.h" />
+    <ClInclude Include="..\..\..\src\sflprint.h" />
+    <ClInclude Include="..\..\..\src\sflproc.h" />
+    <ClInclude Include="..\..\..\src\sflprocx.h" />
+    <ClInclude Include="..\..\..\src\sflsearch.h" />
+    <ClInclude Include="..\..\..\src\sflsha.h" />
+    <ClInclude Include="..\..\..\src\sflslot.h" />
+    <ClInclude Include="..\..\..\src\sflsock.h" />
+    <ClInclude Include="..\..\..\src\sflsort.h" />
+    <ClInclude Include="..\..\..\src\sflstr.h" />
+    <ClInclude Include="..\..\..\src\sflsymb.h" />
+    <ClInclude Include="..\..\..\src\sflsyst.h" />
+    <ClInclude Include="..\..\..\src\sfltok.h" />
+    <ClInclude Include="..\..\..\src\sfltree.h" />
+    <ClInclude Include="..\..\..\src\sfltron.h" />
+    <ClInclude Include="..\..\..\src\sfluid.h" />
+    <ClInclude Include="..\..\..\src\sflxml.h" />
+    <ClInclude Include="..\..\..\src\sflxmll.h" />
+    <ClInclude Include="..\..\..\src\sflxmls.h" />
+    <ClInclude Include="..\..\..\src\smt3.h" />
+    <ClInclude Include="..\..\..\src\smtdefn.h" />
+    <ClInclude Include="..\..\..\src\smthead.h" />
+    <ClInclude Include="..\..\..\src\smtlib.h" />
+    <ClInclude Include="..\..\..\src\smtmem.h" />
+    <ClInclude Include="..\..\..\src\smtmsg.h" />
+    <ClInclude Include="..\..\..\src\smtpriv.h" />
+    <ClInclude Include="..\..\..\src\smtrdnsl.h" />
+    <ClInclude Include="..\..\..\src\smtserv.h" />
+    <ClInclude Include="..\..\..\src\smtsimu.h" />
+    <ClInclude Include="..\..\..\src\smtsslm.h" />
+    <ClInclude Include="..\..\..\src\smttime.h" />
+    <ClInclude Include="..\..\..\src\smtxlog.h" />
+    <ClInclude Include="..\..\..\src\sysman.h" />
+    <ClInclude Include="..\..\..\src\version.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\..\..\src\ggcode.xml" />
+    <Xml Include="..\..\..\src\ggpars.xml" />
+    <Xml Include="..\..\..\src\testdir.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

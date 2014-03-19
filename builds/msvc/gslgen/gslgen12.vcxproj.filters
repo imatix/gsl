@@ -1,0 +1,912 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{0e17197f-d7cb-4df2-922b-a441067bff97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{a925b524-78e6-4814-a1df-1baab5f6c03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interpreters">
+      <UniqueIdentifier>{53330cd9-bad5-4c2b-8b79-b109c11640cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gsl">
+      <UniqueIdentifier>{c4450da9-e5c0-4881-a1f3-3fdb6209f21a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gxl">
+      <UniqueIdentifier>{a56230c1-2166-4db1-8d4c-32900e3c4999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\data">
+      <UniqueIdentifier>{5b11e9ba-c31e-443e-8633-9ba4f944e879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\platforms">
+      <UniqueIdentifier>{b5296258-58af-44ad-83bb-e218c2521642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\headers">
+      <UniqueIdentifier>{308762bf-3d46-41e5-8dfd-59193ffd271c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\exclude">
+      <UniqueIdentifier>{78bea760-c1c4-4276-a977-f1dac4928e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="other">
+      <UniqueIdentifier>{e295a921-1a92-413c-824e-e377c92f0a73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{538542d1-20cb-4f83-8e47-4d634b43c9c5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\ggcode.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggcodem.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggcomm.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggconv.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggdiag.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggenvt.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggfile.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\gggsl.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggmath.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggobjt.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggpars.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggparsm.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggscop.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggscrp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggsock.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggstrn.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggsymb.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggthrd.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggtime.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggxml.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\gsl.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflbits.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcomp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcons.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflconv.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcryp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvbs.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvdp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvds.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvns.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvsd.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvsb.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvsn.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvst.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvtp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflcvts.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfldate.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfldes.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfldescr.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfldir.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflenv.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflexdr.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflfile.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflfind.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflfort.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflheap.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflhttp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflini.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfllang.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfllbuf.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfllist.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflmail.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflmath.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflmem.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflmesg.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflmime.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflnode.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflprint.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflproc.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflscrit.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflsearch.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflsha.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflslot.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflsock.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflsort.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflstr.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflsymb.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflsyst.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfltok.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfltree.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfltron.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sfluid.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflxml.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflxmll.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sflxmls.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtecho.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtlib.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtlog.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtmsg.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtoper.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtpipe.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtpop.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtrdns.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtrdnsl.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtserv.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtsimu.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtslot.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtsmtp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtsock.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smttime.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smttran.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smttst1.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smttst2.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smttst3.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\smtxlog.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sysclia.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sysmana.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggpcre.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ggproc.c">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\ggcode.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggcodem.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggcomm.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggconv.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggdiag.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggenvt.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggfile.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\gggsl.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\gghead.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggmath.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggobjt.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggpars.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggparsm.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggpcre.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggpriv.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggproc.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggscop.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggscrp.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggsock.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggstrn.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggsymb.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggthrd.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggtime.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ggxml.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\gsl.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\prelude.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfl.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflbits.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflcomp.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflcons.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflconv.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflcryp.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfldate.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfldes.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfldescr.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfldir.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflenv.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflexdr.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflfile.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflfind.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflfort.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflhead.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflheap.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflhttp.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflini.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfllang.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfllbuf.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfllist.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflmail.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflmath.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflmem.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflmesg.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflmime.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflnode.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflprint.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflproc.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflprocx.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflsearch.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflsha.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflslot.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflsock.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflsort.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflstr.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflsymb.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflsyst.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfltok.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfltree.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfltron.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sfluid.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflxml.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflxmll.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sflxmls.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smt3.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtdefn.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smthead.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtlib.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtmem.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtmsg.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtpriv.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtrdnsl.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtserv.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtsimu.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtsslm.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smttime.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\smtxlog.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sysman.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\version.h">
+      <Filter>include\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\ggcode.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\gggsl.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\ggpars.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\ggscrp.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\ggsock.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\ggthrd.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\gsl.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\sflcvst.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\sflscrit.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtecho.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtlog.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtoper.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtpipe.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtpop.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtrdns.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtsimu.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtslot.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtsmtp.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtsock.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smttran.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smttst1.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smttst2.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smttst3.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\smtxlog.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\sysclia.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\sysmana.i">
+      <Filter>interpreters</Filter>
+    </None>
+    <None Include="..\..\..\src\ggfunc.inc">
+      <Filter>include</Filter>
+    </None>
+    <None Include="..\..\..\src\console.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggmacro.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggreport.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testchi2.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testconv.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testdate.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testdb.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testdir.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testdir2.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testecho.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testfile.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testmath.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testscope.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testsort.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\teststr.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggdoc.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggconv.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggdiag.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggenvt.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggfile.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\gggsl.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggmath.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggpcre.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggproc.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggscrp.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggsock.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggstrn.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggsymb.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggthrd.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggtime.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggxml.gxl">
+      <Filter>gxl</Filter>
+    </None>
+    <None Include="..\..\..\src\ggobjt.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\testall.gsl">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\gggsl.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\ggpars.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\ggscrp.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\ggsock.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\ggthrd.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\gsl.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\ggcode.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\sflcvst.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtecho.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtlog.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtoper.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtpipe.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtpop.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtrdns.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtslot.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtsmtp.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtsock.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smttran.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smttst1.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smttst2.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtxlog.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smttst3.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\sysmana.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\sysclia.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\smtsimu.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\sflscrit.d">
+      <Filter>include\data</Filter>
+    </None>
+    <None Include="..\..\..\src\sflproco.imp">
+      <Filter>include\platforms</Filter>
+    </None>
+    <None Include="..\..\..\src\sflprocu.imp">
+      <Filter>include\platforms</Filter>
+    </None>
+    <None Include="..\..\..\src\sflprocv.imp">
+      <Filter>include\platforms</Filter>
+    </None>
+    <None Include="..\..\..\src\sflprocw.imp">
+      <Filter>include\platforms</Filter>
+    </None>
+    <None Include="..\..\..\src\sflprocx.imp">
+      <Filter>include\platforms</Filter>
+    </None>
+    <None Include="..\..\..\src\testall.inc">
+      <Filter>gsl</Filter>
+    </None>
+    <None Include="..\..\..\src\syscli.c">
+      <Filter>src\exclude</Filter>
+    </None>
+    <None Include="..\..\..\src\sysman.c">
+      <Filter>src\exclude</Filter>
+    </None>
+    <None Include="..\..\..\src\ggcode.l">
+      <Filter>other</Filter>
+    </None>
+    <None Include="..\..\..\src\ggpars.l">
+      <Filter>other</Filter>
+    </None>
+    <None Include="..\..\..\src\gsl.l">
+      <Filter>other</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\..\..\src\ggcode.xml">
+      <Filter>other</Filter>
+    </Xml>
+    <Xml Include="..\..\..\src\ggpars.xml">
+      <Filter>other</Filter>
+    </Xml>
+    <Xml Include="..\..\..\src\testdir.xml">
+      <Filter>other</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

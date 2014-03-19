@@ -250,7 +250,7 @@ static qbyte des_SPtrans [8][64] = {
     0x00000020L, 0x08208000L, 0x00208020L, 0x00000000L,
     0x08000000L, 0x08200020L, 0x00008000L, 0x00208020L } };
 
-qbyte des_skb [8][64] = {
+qbyte sfldes_skb [8][64] = {
     /*  For C bits (numbered as per FIPS 46) 1 2 3 4 5 6                     */
   { 0x00000000L, 0x00000010L, 0x20000000L, 0x20000010L,
     0x00010000L, 0x00010010L, 0x20010000L, 0x20010010L,
@@ -394,7 +394,6 @@ qbyte des_skb [8][64] = {
     0x00000822L, 0x04000822L, 0x00040822L, 0x04040822L,
     0x00002820L, 0x04002820L, 0x00042820L, 0x04042820L,
     0x00002822L, 0x04002822L, 0x00042822L, 0x04042822L } };
-
 
 static int des_encrypt_block (qbyte *input, qbyte *output, des_keys *ks,
                         int encrypt);
@@ -627,16 +626,16 @@ des_set_key (des_cblock *key, des_keys *schedule)
 
         /*  Could be a few less shifts but I am to lazy at this point in     */
         /*  time to investigate                                              */
-        s = des_skb [0] [(word) ((c)        & 0x3f                      )] |
-            des_skb [1] [(word) (((c >>  6) & 0x03) | ((c >>  7) & 0x3c))] |
-            des_skb [2] [(word) (((c >> 13) & 0x0f) | ((c >> 14) & 0x30))] |
-            des_skb [3] [(word) (((c >> 20) & 0x01) | ((c >> 21) & 0x06)   |
+        s = sfldes_skb[0][(word)((c)& 0x3f)] |
+            sfldes_skb[1][(word)(((c >> 6) & 0x03) | ((c >> 7) & 0x3c))] |
+            sfldes_skb[2][(word)(((c >> 13) & 0x0f) | ((c >> 14) & 0x30))] |
+            sfldes_skb[3][(word)(((c >> 20) & 0x01) | ((c >> 21) & 0x06) |
                                                       ((c >> 22) & 0x38))];
 
-        t = des_skb [4] [(word) (((d)       & 0x3f)                     )] |
-            des_skb [5] [(word) (((d >>  7) & 0x03) | ((d >>  8) & 0x3c))] |
-            des_skb [6] [(word) (((d >> 15) & 0x3f)                     )] |
-            des_skb [7] [(word) (((d >> 21) & 0x0f) | ((d >> 22) & 0x30))];
+        t = sfldes_skb[4][(word)(((d)& 0x3f))] |
+            sfldes_skb[5][(word)(((d >> 7) & 0x03) | ((d >> 8) & 0x3c))] |
+            sfldes_skb[6][(word)(((d >> 15) & 0x3f))] |
+            sfldes_skb[7][(word)(((d >> 21) & 0x0f) | ((d >> 22) & 0x30))];
 
         /*  Table contained 0213 4657                                        */
         *(k++) = ((t << 16) | (s & 0x0000ffffL)) & 0xffffffffL;
