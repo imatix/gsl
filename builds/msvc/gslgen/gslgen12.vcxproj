@@ -40,6 +40,9 @@
     <Import Project="$(ProjectDir)..\properties\Release.props" />
   </ImportGroup>
   <ItemGroup>
+    <None Include="..\..\..\packaging\nuget\package.bat" />
+    <None Include="..\..\..\packaging\nuget\package.config" />
+    <None Include="..\..\..\packaging\nuget\package.gsl" />
     <None Include="..\..\..\src\console.gsl" />
     <None Include="..\..\..\src\ggcode.d" />
     <None Include="..\..\..\src\ggcode.i" />
