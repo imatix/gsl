@@ -34,6 +34,9 @@
     <Filter Include="resource">
       <UniqueIdentifier>{538542d1-20cb-4f83-8e47-4d634b43c9c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="packaging">
+      <UniqueIdentifier>{8f0ab193-1887-4208-9ed7-a48ed89d3386}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\ggcode.c">
@@ -891,6 +894,15 @@
     </None>
     <None Include="..\..\..\src\gsl.l">
       <Filter>other</Filter>
+    </None>
+    <None Include="..\..\..\packaging\nuget\package.gsl">
+      <Filter>packaging</Filter>
+    </None>
+    <None Include="..\..\..\packaging\nuget\package.bat">
+      <Filter>packaging</Filter>
+    </None>
+    <None Include="..\..\..\packaging\nuget\package.config">
+      <Filter>packaging</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
