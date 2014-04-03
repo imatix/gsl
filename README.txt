@@ -40,6 +40,21 @@ To build from git on a UNIX-like box, and install into /usr/local/bin:
 To show command-line help:
 
     ./gsl
+    
+#### Building on FreeBSD 10 
+
+Install GNU Make and GNU Compiler. For example, with `pkg`, `pkg install gmake gcc`. Then edit `src/Makefile` and add "-lm" to `src/Makefile` where you see CCLIBS configured. It may look similar to:
+
+    export CCLIBS = -lpcre
+    
+You want to add the math library:
+
+    export CCLIBS = -lpcre -lm
+
+Cd to `src` and run:
+
+    CCNAME=gcc47 gmake
+    gmake install
 
 ### This Document
 
