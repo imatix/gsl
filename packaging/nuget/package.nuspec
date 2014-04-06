@@ -8,16 +8,16 @@
     <metadata minClientVersion="2.5">
         <id>gslgen</id>
         <version>4.1.0.1</version>
-        <title>A source code generator for all languages.</title>
+        <title>gslgen</title>
         <authors>Pieter Hintjens and others</authors>
         <owners>Eric Voskuil</owners>
         <licenseUrl>https://raw.github.com/imatix/gsl/master/COPYING</licenseUrl>
         <projectUrl>https://github.com/imatix/gsl</projectUrl>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
-        <description>GSLGen is a single file executable tool that will generate code in all languages and for all purposes. GSL is a simple language and you'll not have any difficulty understanding its syntax.</description>
+        <description>GSLGen is a single file executable tool for generating or transforming source code in all languages. GSL is a simple language and you'll not have any difficulty understanding its syntax.</description>
         <summary>GSLGen is a code construction tool based on GSL/4.1.</summary>
         <releaseNotes>Built from: https://github.com/imatix/gsl/commit/142362f2271c02f62405ded5c93db3eefc4065ed</releaseNotes>
-        <copyright>© 1991-2010 iMatix Corporation</copyright>
+        <copyright>GPL v3</copyright>
         <tags>gsl, codegen, T4, template, iMatix, model</tags>
     </metadata>
     <files>
