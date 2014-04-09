@@ -22,6 +22,7 @@
         <licenseUrl>https://raw.github.com/imatix/gsl/master/COPYING</licenseUrl>
         <projectUrl>https://github.com/imatix/gsl</projectUrl>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <developmentDependency>true</developmentDependency>
         <description>GSLGen is a single file executable tool for generating or transforming source code in all languages. GSL is a simple language and you'll not have any difficulty understanding its syntax.</description>
         <summary>GSLGen is a code construction tool based on GSL/4.1.</summary>
         <releaseNotes>Built from: https://github.com/imatix/gsl/commit/142362f2271c02f62405ded5c93db3eefc4065ed</releaseNotes>
