@@ -128,6 +128,11 @@ static void insert_data_specifier_node            (THREAD *thread,
 
 #define AGENT_NAME      "GGPARS"        /*  Our public name                  */
 
+/*- Global variables that control parsing -----------------------------------*/
+
+char g_esc_symbol = '\\';
+char g_sub_symbol = '$';
+
 /*- Global variables used in this source file only --------------------------*/
 
 static int priority[] = {
@@ -639,7 +644,7 @@ void generate_text_event (char quote)
         tcb-> token_width = 0;
 
         while ((tcb-> the_token = tcb-> script_line [tcb-> script_ptr++]) != '\0')
-            if (tcb-> the_token == '\\')
+            if (tcb-> the_token == g_sub_symbol)
               {
                 script_ptr = tcb-> script_ptr;
                 while (tcb-> script_line [script_ptr] == ' ')
@@ -654,7 +659,7 @@ void generate_text_event (char quote)
                   }
               }
             else
-                if (((tcb-> the_token == '$')  /*  Substitute?  */
+                if (((tcb-> the_token == g_sub_symbol)  /*  Substitute?  */
                 &&   (tcb-> script_line [tcb-> script_ptr] == '('))
                 ||   (tcb-> the_token == quote)
                 ||   (tcb-> the_token == ' '))
@@ -675,7 +680,7 @@ void generate_extend_event (void)
         script_ptr;
         
     if ((the_next_event == _LR_NULL_EVENT)
-    &&  (tcb-> the_token == '\\'))
+    &&  (tcb-> the_token == g_sub_symbol))
       {
         script_ptr = tcb-> script_ptr;
         while (tcb-> script_line [++script_ptr] == ' ');
@@ -803,7 +808,7 @@ void generate_literal_event (void)
         tcb-> token_width = 0;
 
         while ((tcb-> the_token = tcb-> script_line [tcb-> script_ptr++]) != '\0')
-            if (tcb-> the_token == '\\')      /*  Ignore next char unless EOL      */
+            if (tcb-> the_token == g_sub_symbol)      /*  Ignore next char unless EOL      */
               {
                 script_ptr = tcb-> script_ptr;
                 while (tcb-> script_line [script_ptr] == ' ')
@@ -1258,7 +1263,7 @@ void generate_extra_literal_event (void)
         tcb-> token_width = 0;
 
         while ((tcb-> the_token = tcb-> script_line [tcb-> script_ptr++]) != '\0')
-            if (tcb-> the_token == '\\')    /*  Ignore next char unless EOL  */
+            if (tcb-> the_token == g_sub_symbol)    /*  Ignore next char unless EOL  */
               {
                 script_ptr = tcb-> script_ptr;
                 while (tcb-> script_line [script_ptr] == ' ')
@@ -1404,7 +1409,7 @@ void generate_modifier_text_event (void)
             ||  (tcb-> the_token == ')'))             /*  Close?  */
                 break;
             else
-            if (tcb-> the_token == '\\')
+            if (tcb-> the_token == g_sub_symbol)
               {
                 script_ptr = tcb-> script_ptr;
                 while (tcb-> script_line [script_ptr] == ' ')
@@ -1419,7 +1424,7 @@ void generate_modifier_text_event (void)
                   }
               }
             else
-                if (((tcb-> the_token == '$')  /*  Substitute?  */
+                if (((tcb-> the_token == g_sub_symbol)  /*  Substitute?  */
                 &&   (tcb-> script_line [tcb-> script_ptr] == '('))
                 ||   (tcb-> the_token == ' '))
                     break;
