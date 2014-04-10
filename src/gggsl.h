@@ -24,6 +24,10 @@ typedef struct {
         shuffle;                       /*  Min whitespace size for shuffle   */
     char
         *terminator;                   /*  Line terminator string            */
+    char
+        *escape;                       /*  Escape symbol, if not '\'         */
+    char
+        *substitute;                   /*  Substitute symbol, if not '$'     */
     int
         argc;                          /*  Command line arguments            */
     char

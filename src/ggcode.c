@@ -503,6 +503,10 @@ prepare_gsl_control_block (THREAD *thread, SYMTAB *switches)
                                                                "shuffle"));
     tcb-> gsl-> terminator = mem_strdup (string_value (switch_value (switches,
                                                                      "terminator")));
+    tcb-> gsl-> escape = mem_strdup (string_value (switch_value (switches,
+                                                                     "escape")));
+    tcb-> gsl-> substitute = mem_strdup (string_value (switch_value (switches,
+                                                                     "substitute")));
     tcb-> gsl-> input_file = mem_strdup (string_value (switch_value (switches,
                                                                      "filename")));
 
@@ -1365,8 +1369,6 @@ MODULE copy_line_to_output (THREAD *thread)
           }
 
         output_the_line (line, tcb-> gsl-> cobol);
-/*        if (tcb-> gsl-> terminator && tcb-> gsl-> terminator [0])
-            send_text_to_output (tcb-> gsl-> terminator);  JS 2004-11-15 */
       }
 }
 
@@ -3740,7 +3742,7 @@ MODULE evaluate_text_node (THREAD *thread)
     in = (char *) tcb-> script_node-> op1;
     while (in)
       {
-        ptr = strchr (in, '\\');
+        ptr = strchr (in, g_escape [0]);
         if (ptr)
           {
             length += ptr - in + 1;
@@ -3761,7 +3763,7 @@ MODULE evaluate_text_node (THREAD *thread)
     in = (char *) tcb-> script_node-> op1;
     while (in)
       {
-        ptr = strchr (in, '\\');
+        ptr = strchr (in, g_escape [0]);
         if (ptr)
           {
             memcpy (out, in, ptr - in);

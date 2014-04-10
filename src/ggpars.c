@@ -130,8 +130,8 @@ static void insert_data_specifier_node            (THREAD *thread,
 
 /*- Global variables that control parsing -----------------------------------*/
 
-char g_esc_symbol = '\\';
-char g_sub_symbol = '$';
+char *g_escape = "\\";
+char *g_substitute = "$(";
 
 /*- Global variables used in this source file only --------------------------*/
 
@@ -615,7 +615,7 @@ MODULE get_template_token (THREAD *thread)
     the_next_event = _LR_NULL_EVENT;
 
     generate_text_event ('\0');
-    generate_simple_token_event ("$(", substitute_event);
+    generate_simple_token_event (g_substitute, substitute_event);
     generate_extend_event ();
     generate_end_of_line_event ();
 
@@ -644,7 +644,7 @@ void generate_text_event (char quote)
         tcb-> token_width = 0;
 
         while ((tcb-> the_token = tcb-> script_line [tcb-> script_ptr++]) != '\0')
-            if (tcb-> the_token == g_sub_symbol)
+            if (tcb-> the_token == g_escape [0])
               {
                 script_ptr = tcb-> script_ptr;
                 while (tcb-> script_line [script_ptr] == ' ')
@@ -659,7 +659,7 @@ void generate_text_event (char quote)
                   }
               }
             else
-                if (((tcb-> the_token == g_sub_symbol)  /*  Substitute?  */
+                if (((tcb-> the_token == g_substitute [0])
                 &&   (tcb-> script_line [tcb-> script_ptr] == '('))
                 ||   (tcb-> the_token == quote)
                 ||   (tcb-> the_token == ' '))
@@ -680,7 +680,7 @@ void generate_extend_event (void)
         script_ptr;
         
     if ((the_next_event == _LR_NULL_EVENT)
-    &&  (tcb-> the_token == g_sub_symbol))
+    &&  (tcb-> the_token == g_escape [0]))
       {
         script_ptr = tcb-> script_ptr;
         while (tcb-> script_line [++script_ptr] == ' ');
@@ -735,7 +735,7 @@ MODULE get_script_command_token (THREAD *thread)
     generate_simple_token_event ("/*", open_comment_event);
     generate_sign_event ();
     generate_number_event ();
-    generate_simple_token_event ("$(", substitute_event);
+    generate_simple_token_event (g_substitute, substitute_event);
     generate_extend_event ();
     generate_end_of_line_event ();
     generate_literal_event ();
@@ -808,7 +808,8 @@ void generate_literal_event (void)
         tcb-> token_width = 0;
 
         while ((tcb-> the_token = tcb-> script_line [tcb-> script_ptr++]) != '\0')
-            if (tcb-> the_token == g_sub_symbol)      /*  Ignore next char unless EOL      */
+            /*  Ignore next char unless EOL      */
+            if (tcb-> the_token == g_escape [0])   
               {
                 script_ptr = tcb-> script_ptr;
                 while (tcb-> script_line [script_ptr] == ' ')
@@ -957,7 +958,7 @@ MODULE get_expression_token (THREAD *thread)
     generate_number_event ();
     generate_simple_token_event ("'", quote_event);
     generate_simple_token_event ("\"", quote_event);
-    generate_simple_token_event ("$(", substitute_event);
+    generate_simple_token_event (g_substitute, substitute_event);
     generate_simple_token_event ("<<", incoming_event);
     generate_extend_event ();
     generate_end_of_line_event ();
@@ -992,7 +993,7 @@ MODULE get_script_token (THREAD *thread)
     generate_number_event ();
     generate_simple_token_event ("'", quote_event);
     generate_simple_token_event ("\"", quote_event);
-    generate_simple_token_event ("$(", substitute_event);
+    generate_simple_token_event (g_substitute, substitute_event);
     generate_simple_token_event ("<<", incoming_event);
     generate_extend_event ();
     generate_end_of_line_event ();
@@ -1263,7 +1264,8 @@ void generate_extra_literal_event (void)
         tcb-> token_width = 0;
 
         while ((tcb-> the_token = tcb-> script_line [tcb-> script_ptr++]) != '\0')
-            if (tcb-> the_token == g_sub_symbol)    /*  Ignore next char unless EOL  */
+            /*  Ignore next char unless EOL  */
+            if (tcb-> the_token == g_escape [0])
               {
                 script_ptr = tcb-> script_ptr;
                 while (tcb-> script_line [script_ptr] == ' ')
@@ -1305,7 +1307,7 @@ MODULE get_quoted_token (THREAD *thread)
     tcb-> the_token      = tcb-> script_line [tcb-> script_ptr];
     the_next_event = _LR_NULL_EVENT;
 
-    generate_simple_token_event ("$(", substitute_event);
+    generate_simple_token_event (g_substitute, substitute_event);
     generate_extend_event ();
     if (the_next_event == _LR_NULL_EVENT)
       {
@@ -1385,7 +1387,7 @@ MODULE get_modifier_token (THREAD *thread)
     generate_simple_token_event (":", pretty_event);
     generate_simple_token_event ("%", format_event);
     generate_simple_token_event (")", close_event);
-    generate_simple_token_event ("$(", substitute_event);
+    generate_simple_token_event (g_substitute, substitute_event);
     generate_extend_event ();
     generate_modifier_text_event ();
 
@@ -1409,7 +1411,7 @@ void generate_modifier_text_event (void)
             ||  (tcb-> the_token == ')'))             /*  Close?  */
                 break;
             else
-            if (tcb-> the_token == g_sub_symbol)
+            if (tcb-> the_token == g_escape [0])
               {
                 script_ptr = tcb-> script_ptr;
                 while (tcb-> script_line [script_ptr] == ' ')
@@ -1424,7 +1426,7 @@ void generate_modifier_text_event (void)
                   }
               }
             else
-                if (((tcb-> the_token == g_sub_symbol)  /*  Substitute?  */
+                if (((tcb-> the_token == g_substitute [0])
                 &&   (tcb-> script_line [tcb-> script_ptr] == '('))
                 ||   (tcb-> the_token == ' '))
                     break;

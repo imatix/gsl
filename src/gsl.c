@@ -268,6 +268,8 @@ static void define_standard_values (void)
     sym_assume_symbol (switches, "shuffle",     "2");
     sym_assume_symbol (switches, "ignorecase",  "1");
     sym_assume_symbol (switches, "terminator",  "\n");
+    sym_assume_symbol (switches, "escape",      "\\");
+    sym_assume_symbol (switches, "substitute",  "$(");
 }
 
 
@@ -334,6 +336,10 @@ static void read_xml_or_gsl_file (void)
     if (!switch_quiet)
         coprintf ("%s I: Processing %s...", me, filename);
 
+    //  We have to set g_escape and g_substitute now
+    g_escape = sym_get_value (switches, "escape", g_escape);
+    g_substitute = sym_get_value (switches, "substitute", g_substitute);
+
     ch = strrchr (filename, '.');
     if (ch)
       {
@@ -380,7 +386,7 @@ void
 prepare_gsl_file (char *filename)
 {
     xml_source = NULL;
-    sym_assume_symbol (switches, "script",   filename);
+    sym_assume_symbol (switches, "script", filename);
     if (! sym_lookup_symbol (switches, "template"))
         sym_assume_symbol (switches, "template", "0");
 }
