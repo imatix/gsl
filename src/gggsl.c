@@ -241,6 +241,8 @@ static int gsl_destroy (void *item)
     if (--gsl-> links == 0)
       {
         mem_free (gsl-> terminator);
+        mem_free (gsl-> escape);
+        mem_free (gsl-> substitute);
         for (i = 0; i < gsl-> argc; i++)
             mem_free (gsl-> argv [i]);
         mem_free (gsl-> argv);
@@ -314,6 +316,20 @@ static VALUE * gsl_get_attr (void *item, const char *name, Bool ignorecase)
       {
 
     assign_string (& value, gsl-> terminator);
+        
+      }
+    else
+    if (matches (name, "escape"))
+      {
+
+    assign_string (& value, gsl-> escape);
+        
+      }
+    else
+    if (matches (name, "substitute"))
+      {
+
+    assign_string (& value, gsl-> substitute);
         
       }
     else
@@ -425,6 +441,24 @@ static int gsl_put_attr (void *item, const char *name, VALUE *value, Bool ignore
 
     mem_free (gsl-> terminator);
     gsl-> terminator = memt_strdup (NULL, string_value (value));
+        
+      }
+    else
+    if (matches (name, "escape"))
+      {
+
+    mem_free (gsl-> escape);
+    gsl-> escape = memt_strdup (NULL, string_value (value));
+    g_escape = gsl->escape;
+        
+      }
+    else
+    if (matches (name, "substitute"))
+      {
+
+    mem_free (gsl-> substitute);
+    gsl-> substitute = memt_strdup (NULL, string_value (value));
+    g_substitute = gsl->substitute;
         
       }
 
@@ -579,6 +613,8 @@ static int gsl_class_init (CLASS_DESCRIPTOR **class, void **item, THREAD *gsl_th
     gsl-> line        = NULL;
     gsl-> shuffle     = 2;
     gsl-> terminator  = NULL;
+    gsl-> escape      = NULL;
+    gsl-> substitute  = NULL;
     gsl-> argc        = 0;
     gsl-> argv        = NULL;
     gsl-> switches    = NULL;

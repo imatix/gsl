@@ -30,6 +30,10 @@ typedef        void *              JOBID;
 
 typedef Bool (SCRIPT_READ) (JOBID job, char *text);
 
+/*- Globals that control parsing symbols ------------------------------------*/
+
+extern char *g_escape;           /*  By default, '\\'                        */
+extern char *g_substitute;       /*  By default, '$('                        */
 
 /*- Macros ------------------------------------------------------------------*/
 

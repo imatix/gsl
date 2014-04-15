@@ -1,0 +1,7 @@
+# run with -escape:~ and -substitute:#
+echo "[" + [gsl].escape + "]"
+echo "[" + [gsl].substitute + "]"
+a = "12345"
+echo "#(a)"
+echo "this should ~
+be on one line"

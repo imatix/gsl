@@ -34,6 +34,10 @@ typedef struct {
         shuffle;                       /*  Min whitespace size for shuffle   */
     char
         *terminator;                   /*  Line terminator string            */
+    char
+        *escape;                       /*  Escape symbol, if not '\'         */
+    char
+        *substitute;                   /*  Substitute symbol, if not '$'     */
     int
         argc;                          /*  Command line arguments            */
     char
@@ -82,6 +86,8 @@ extern char
     gsl-> line        = NULL;
     gsl-> shuffle     = 2;
     gsl-> terminator  = NULL;
+    gsl-> escape      = NULL;
+    gsl-> substitute  = NULL;
     gsl-> argc        = 0;
     gsl-> argv        = NULL;
     gsl-> switches    = NULL;
@@ -108,6 +114,8 @@ extern char
     if (--gsl-> links == 0)
       {
         mem_free (gsl-> terminator);
+        mem_free (gsl-> escape);
+        mem_free (gsl-> substitute);
         for (i = 0; i &lt; gsl-> argc; i++)
             mem_free (gsl-> argv [i]);
         mem_free (gsl-> argv);
@@ -158,6 +166,12 @@ extern char
         </attr>
         <attr name = "terminator">
     assign_string (& value, gsl-> terminator);
+        </attr>
+        <attr name = "escape">
+    assign_string (& value, gsl-> escape);
+        </attr>
+        <attr name = "substitute">
+    assign_string (& value, gsl-> substitute);
         </attr>
         <attr name = "switches">
     /*  Build value manually rather than use assign_pointer because   */
@@ -225,6 +239,16 @@ extern char
         <attr name = "terminator">
     mem_free (gsl-> terminator);
     gsl-> terminator = memt_strdup (NULL, string_value (value));
+        </attr>
+        <attr name = "escape">
+    mem_free (gsl-> escape);
+    gsl-> escape = memt_strdup (NULL, string_value (value));
+    g_escape = gsl->escape;
+        </attr>
+        <attr name = "substitute">
+    mem_free (gsl-> substitute);
+    gsl-> substitute = memt_strdup (NULL, string_value (value));
+    g_substitute = gsl->substitute;
         </attr>
         <finish>
     else

@@ -425,6 +425,10 @@ typedef        void *              JOBID;
 
 typedef Bool (SCRIPT_READ) (JOBID job, char *text);
 
+/*- Globals that control parsing symbols ------------------------------------*/
+
+extern char *g_escape;           /*  By default, '\\'                        */
+extern char *g_substitute;       /*  By default, '$('                        */
 
 /*- Macros ------------------------------------------------------------------*/
 
@@ -1066,6 +1070,10 @@ typedef struct {
         shuffle;                       /*  Min whitespace size for shuffle   */
     char
         *terminator;                   /*  Line terminator string            */
+    char
+        *escape;                       /*  Escape symbol, if not '\'         */
+    char
+        *substitute;                   /*  Substitute symbol, if not '$'     */
     int
         argc;                          /*  Command line arguments            */
     char

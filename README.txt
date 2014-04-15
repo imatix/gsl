@@ -1222,6 +1222,20 @@ GSL helps you make neat COBOL code by automatically filling the first six charac
 
 GSL uses as its line terminator the value of of the attribute `terminator` of the gsl scope.  The default value is "\n" but it could also be set to "\r\n", for example.
 
+#### Escape Symbol
+
+GSL uses the backslash "\" as its default escape symbol, mainly due to its POSIX / C roots. This can be very annoying in templates that have a lot of backslashes. You can override the escape symbol by changing the [gsl].escape attribute, or using the -escape:X command-line switch.
+
+Note that this takes effect for the next script loaded, so you cannot use this in a script to modify how that script itself is processed. You can use it before e.g. including a script.
+
+#### Substitute Symbol
+
+GSL uses the string "$(" to open a substitution sequence. You can use any string instead, by changing the [gsl].substitute attribute, or using the -substitute:X command-line switch.
+
+Note that this takes effect for the next script loaded, so you cannot use this in a script to modify how that script itself is processed. You can use it before e.g. including a script.
+
+Note also that the closing symbol is always ")" and you cannot override this.
+
 #### Arguments
 
 If GSL is invoked with a `-a` switch, all arguments following the first are treated as arguments to the first script, rather than as further arguments to GSL, as would otherwise be the case.  So if you type:
