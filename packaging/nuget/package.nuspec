@@ -7,7 +7,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
     <metadata minClientVersion="2.5">
         <id>gsl</id>
-        <version>4.1.0.0</version>
+        <version>4.1.0.1</version>
         <title>gsl</title>
         <authors>Pieter Hintjens and others</authors>
         <owners>Eric Voskuil</owners>
