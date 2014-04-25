@@ -187,7 +187,7 @@ system_devicename (const char *supplied_filename)
 
     is_devicefile = TRUE;
 
-    fh = CreateFile(supplied_filename, GENERIC_READ, FILE_SHARE_READ, NULL,
+    fh = CreateFileA(supplied_filename, GENERIC_READ, FILE_SHARE_READ, NULL,
                     OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (fh != INVALID_HANDLE_VALUE)
@@ -633,7 +633,7 @@ file_delete (
         return (-1);                    /*  Not allowed on device names      */
 #endif
 
-    rc = !DeleteFile (filename);
+    rc = !DeleteFileA (filename);
     if (rc && errno == EACCES)
       {
         /*  Under WinNT and Win95, a delete of a freshly-created file can
@@ -641,7 +641,7 @@ file_delete (
          *  short delay.  Ugly but it seems to work.
          */
         Sleep (200);
-        rc = !DeleteFile (filename);
+        rc = !DeleteFileA (filename);
       }
     return (rc);
 #else
@@ -688,7 +688,7 @@ file_mode (const char *filename)
         return (0);                     /*  Not allowed on device names      */
 #endif
         
-    dwfa = GetFileAttributes (filename);
+    dwfa = GetFileAttributesA (filename);
     if (dwfa == 0xffffffff)
         return (0);
 
@@ -2079,7 +2079,7 @@ file_is_legal (
     const char *arg_filename)
 {
 #if (defined (WIN32))
-    static WIN32_FIND_DATA
+    static WIN32_FIND_DATAA
         found;
     HANDLE
         handle;
@@ -2116,7 +2116,7 @@ file_is_legal (
       {
         slash     = strrchr (filename, '\\');
         component = slash? slash + 1: filename;
-        handle    = FindFirstFile (filename, &found);
+        handle    = FindFirstFileA (filename, &found);
 
         if (handle != INVALID_HANDLE_VALUE
         &&  strneq (component, ".")

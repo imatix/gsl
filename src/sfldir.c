@@ -130,7 +130,7 @@ open_dir (
 
 #elif (defined (WIN32))
     strcat (dir_spec, "\\*");
-    if ((dir-> _dir_handle = (void *)FindFirstFile (dir_spec, &dir-> _dir_entry))
+    if ((dir-> _dir_handle = (void *)FindFirstFileA (dir_spec, &dir-> _dir_entry))
                            == INVALID_HANDLE_VALUE)
 
 #elif (defined (_MSC_VER))
@@ -336,7 +336,7 @@ read_dir (
     else
 
 #elif (defined (WIN32))
-    if (FindNextFile (dir-> _dir_handle, &dir-> _dir_entry))
+    if (FindNextFileA (dir-> _dir_handle, &dir-> _dir_entry))
         return (populate_entry (dir));
     else
 
@@ -1210,7 +1210,7 @@ get_curdir (void)
     getcwd (curdir, PATH_MAX, 0);
 
 #elif (defined (WIN32))
-    GetCurrentDirectory (PATH_MAX, curdir);
+    GetCurrentDirectoryA (PATH_MAX, curdir);
     strconvch (curdir, '\\', '/');
 
 #elif (defined (GATES_FILESYSTEM))
@@ -1262,7 +1262,7 @@ set_curdir (
 
 #   if (defined (WIN32))
     /* The drive letter does not need to be changed separately in Win32.    */
-    feedback = !SetCurrentDirectory (copy_path);
+    feedback = !SetCurrentDirectoryA (copy_path);
 
 #   elif (defined (__TURBOC__))
     feedback = chdir (copy_path);
@@ -1383,7 +1383,7 @@ make_dir (
             rc = mkdir (path, 0775);    /*  User RWE Group RWE World RE      */
 
 #elif (defined (WIN32))
-            if (CreateDirectory (path, NULL))
+            if (CreateDirectoryA (path, NULL))
                 rc = 0;
             else
                 rc = -1;
@@ -1441,7 +1441,7 @@ remove_dir (
       {
         strconvch (copy_path, '/', '\\');
 #   if (defined (WIN32))
-        if (RemoveDirectory (copy_path))
+        if (RemoveDirectoryA (copy_path))
             rc = 0;
         else
             rc = -1;

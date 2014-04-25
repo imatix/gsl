@@ -145,7 +145,7 @@ typedef struct
 
 #elif (defined (WIN32))                 /*  Win32:                           */
     HANDLE  _dir_handle;                /*    a directory handle             */
-    WIN32_FIND_DATA _dir_entry;         /*    and a file descriptor          */
+    WIN32_FIND_DATAA _dir_entry;        /*    and a file descriptor          */
 
 #elif (defined (_MSC_VER))              /*  MSC Win16                        */
     long    _dir_handle;                /*    a directory handle             */

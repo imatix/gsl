@@ -430,7 +430,7 @@ get_login (void)
         user_name_max = 255;
     static char
         user_name [256];
-    if (!GetUserName (user_name, &user_name_max))
+    if (!GetUserNameA (user_name, &user_name_max))
         strncpy (user_name, "unknown", sizeof (user_name));
     return (user_name);
 

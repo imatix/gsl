@@ -60,7 +60,7 @@
         *full_filename,                 /*  Full filename of program to run  */
         *full_command,                  /*  Full command string              */
         **envv;                         /*  Environment for program          */
-    STARTUPINFO
+    STARTUPINFOA
         newinfo = {0},                  /*  Specification for new process    */
         curinfo;                        /*  Specification of cur process     */
     PROCESS_INFORMATION
@@ -92,12 +92,12 @@
     if (procinfo-> error == 0
     &&  procinfo-> username && *procinfo-> username)
       {
-        if (LogonUser (procinfo-> username,
-                       procinfo-> groupname,
-                       procinfo-> password,
-                       LOGON32_LOGON_INTERACTIVE,
-                       LOGON32_PROVIDER_DEFAULT,
-                       &logon_token) == FALSE)
+        if (LogonUserA (procinfo-> username,
+                        procinfo-> groupname,
+                        procinfo-> password,
+                        LOGON32_LOGON_INTERACTIVE,
+                        LOGON32_PROVIDER_DEFAULT,
+                        &logon_token) == FALSE)
             procinfo-> error = EPERM;
       }
 
@@ -128,7 +128,7 @@
 
     /*  Build full command from arglist                                      */
     full_command = arglist_value (arglist);
-    GetShortPathName (full_command, full_command, strlen (full_command) + 1);
+    GetShortPathNameA (full_command, full_command, strlen (full_command) + 1);
     
     process = mem_alloc (sizeof (PROC_HANDLE));
     process-> process = NULL;
@@ -136,7 +136,7 @@
     /*  Convert environment to a Windows-type packed block of strings        */
     process-> envd = strt2descr (envv);
 
-    GetStartupInfo (&curinfo);
+    GetStartupInfoA (&curinfo);
     newinfo.cb          = sizeof (newinfo);
     newinfo.dwFlags     = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
     newinfo.wShowWindow = SW_HIDE;
@@ -161,7 +161,7 @@
 
     if (logon_token)
       {
-        CreateProcessAsUser (
+        CreateProcessAsUserA (
             logon_token,                /*  Token for user logon             */
             NULL,                       /*  Name of executable module        */
             full_command,               /*  Command line string              */
@@ -176,7 +176,7 @@
         CloseHandle (logon_token);
       }
     else
-        CreateProcess (
+        CreateProcessA (
             NULL,                       /*  Name of executable module        */
             full_command,               /*  Command line string              */
             NULL,                       /*  Process security attributes      */
