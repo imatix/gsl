@@ -1,26 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <_PropertySheetDisplayName>Debug Configuration</_PropertySheetDisplayName>
-    <TargetName>$(RootNamespace)_d</TargetName>
-    <LinkIncremental>true</LinkIncremental>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <!-- RootNamespace is used to deconflict output files from differing project versions. -->
+    <IntDir>$(ProjectDir)..\..\..\..\obj\$(PlatformName)\$(Configuration)\$(RootNamespace)\</IntDir>
+    <OutDir>$(ProjectDir)..\..\..\..\bin\$(PlatformName)\Debug\$(RootNamespace)\</OutDir>
   </PropertyGroup>
   
   <ItemDefinitionGroup>
-    <ClCompile>
+    <ClCompile><DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <MinimalRebuild>false</MinimalRebuild>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(ProjectDir)..\..\..\..\bin\$(PlatformName)\Debug\$(RootNamespace)\$(TargetName).imp.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   
