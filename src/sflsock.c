@@ -1914,7 +1914,7 @@ get_host_file (void)
         name [LINE_MAX + 1];
 
     strclr (name);
-    GetWindowsDirectory (name, LINE_MAX);
+    GetWindowsDirectoryA (name, LINE_MAX);
     version_info.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
     if (GetVersionEx (&version_info))
         /*  On Windows NT the hosts file is well-hidden; on Win95 it's
@@ -2005,9 +2005,9 @@ get_name_server (struct sockaddr_in *ns_address, int ns_max)
     else
         key = "SYSTEM\\CurrentControlSet\\Services\\Vxd\\Mstcp\\Parameters";
 
-    if (RegOpenKeyEx (HKEY_LOCAL_MACHINE, key, 0,
+    if (RegOpenKeyExA (HKEY_LOCAL_MACHINE, key, 0,
         KEY_QUERY_VALUE, &hkey) == ERROR_SUCCESS
-    &&  RegQueryValueEx (hkey, "NameServer", NULL, (LPDWORD) &type,
+    &&  RegQueryValueExA (hkey, "NameServer", NULL, (LPDWORD) &type,
         (LPBYTE) registry_value, (LPDWORD) &size) == ERROR_SUCCESS)
       {
         address_list = tok_split (registry_value);

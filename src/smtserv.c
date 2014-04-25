@@ -226,17 +226,17 @@ service_begin (
     char
         *p_char;
 
-    SERVICE_TABLE_ENTRY 
+    SERVICE_TABLE_ENTRYA 
         dispatch_table [] = {
-        { NULL, (LPSERVICE_MAIN_FUNCTION) service_main },
+        { NULL, (LPSERVICE_MAIN_FUNCTIONA) service_main },
         { NULL, NULL }
     };
 
     /*  Change to the correct working directory, where config file stands    */
-    GetModuleFileName (NULL, buffer, LINE_MAX);
+    GetModuleFileNameA (NULL, buffer, LINE_MAX);
     if ((p_char = strrchr (buffer, '\\')) != NULL)
         *p_char = '\0';
-    SetCurrentDirectory (buffer);
+    SetCurrentDirectoryA (buffer);
 #endif
 
     rc = init_resources (argv[0], appl_version, init_fct, term_fct);
@@ -305,7 +305,7 @@ service_begin (
         ||  win_version == WINDOWS_2000)
           {
             log_printf ("%s: initialising service ...", application_name);
-            if (!StartServiceCtrlDispatcher (dispatch_table))
+            if (!StartServiceCtrlDispatcherA (dispatch_table))
                 add_to_message_log ("StartServiceCtrlDispatcher failed");
           }
       }
@@ -371,7 +371,7 @@ add_to_message_log (char *message)
         error_code = GetLastError();
 
         /* Use event logging to log the error.                               */
-        event_source_handle = RegisterEventSource (NULL, service_name);
+        event_source_handle = RegisterEventSourceA (NULL, service_name);
 
         sprintf (message_buffer, "%s error: %d", service_name, error_code);
         strings [0] = message_buffer;
@@ -379,15 +379,15 @@ add_to_message_log (char *message)
 
         if (event_source_handle)
           {
-            ReportEvent (event_source_handle,/* handle of event source       */
-                EVENTLOG_ERROR_TYPE,         /* event type                   */
-                0,                           /* event category               */
-                0,                           /* event ID                     */
-                NULL,                        /* current user's SID           */
-                2,                           /* strings in variable strings  */
-                0,                           /* no bytes of raw data         */
-                strings,                     /* array of error strings       */
-                NULL);                       /* no raw data                  */
+            ReportEventA (event_source_handle,/* handle of event source       */
+                EVENTLOG_ERROR_TYPE,          /* event type                   */
+                0,                            /* event category               */
+                0,                            /* event ID                     */
+                NULL,                         /* current user's SID           */
+                2,                            /* strings in variable strings  */
+                0,                            /* no bytes of raw data         */
+                strings,                      /* array of error strings       */
+                NULL);                        /* no raw data                  */
 
             DeregisterEventSource (event_source_handle);
           }
@@ -529,7 +529,7 @@ get_last_error_text (char *buffer, int size)
         buffer [0] = '\0';
     else
       {
-        temp [lstrlen (temp) - 2] = '\0'; /*remove cr and newline character   */
+        temp [lstrlenA (temp) - 2] = '\0'; /*remove cr and newline character   */
         sprintf (buffer, "%s (0x%x)", temp, last_error);
       }
     if (temp)
@@ -592,8 +592,8 @@ hide_window (void)
         title [255];
     HWND
         win;
-    GetConsoleTitle  (title, 254);
-    win = FindWindow (NULL,title);
+    GetConsoleTitleA  (title, 254);
+    win = FindWindowA (NULL,title);
     if (win)
         SetWindowPos (win, NULL, 0, 0, 0, 0, SWP_HIDEWINDOW);
 }
@@ -653,7 +653,7 @@ install_service (void)
     static char
         path [512];
 
-    if (GetModuleFileName( NULL, path, 512 ) == 0)
+    if (GetModuleFileNameA ( NULL, path, 512 ) == 0)
       {
         log_printf ("%s: cannot install '%s': %s",
                  application_name, service_name, 
@@ -668,7 +668,7 @@ install_service (void)
                 );
     if (manager)
       {
-        service = CreateService (
+        service = CreateServiceA (
                     manager,                   /* SCManager database         */
                     service_name,              /* short name for service     */
                     service_display_name,      /* name to display            */
@@ -872,14 +872,14 @@ remove_service (void)
         service,
         manager;
 
-    manager = OpenSCManager(
+    manager = OpenSCManagerA (
                         NULL,                  /* machine (NULL == local)    */
                         NULL,                  /* database (NULL == default) */
                         SC_MANAGER_ALL_ACCESS  /* access required            */
                         );
     if (manager)
       {
-        service = OpenService (manager, service_name, SERVICE_ALL_ACCESS);
+        service = OpenServiceA (manager, service_name, SERVICE_ALL_ACCESS);
         if (service)
           {
             /*  Try to stop the service                                      */
@@ -1078,7 +1078,7 @@ service_main (int argc, char **argv)
 {
     /* Register our service control handler:                                 */
     service_status_handle 
-        = RegisterServiceCtrlHandler (service_name, service_control);
+        = RegisterServiceCtrlHandlerA (service_name, service_control);
     if (!service_status_handle)
         return;
 
@@ -1302,22 +1302,22 @@ set_win95_service (Bool add)
     static char
         path [LINE_MAX + 1];
 
-    feedback = RegCreateKeyEx (HKEY_LOCAL_MACHINE, REGISTRY_RUN, 
+    feedback = RegCreateKeyExA (HKEY_LOCAL_MACHINE, REGISTRY_RUN, 
         0, REG_NONE, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &key, &disp);
 
     if (feedback == ERROR_SUCCESS)
       {
         if (add)
           {
-            GetModuleFileName (NULL, path, LINE_MAX);
-            feedback = RegSetValueEx (key, "kserver", 0, REG_SZ,
-                                     (CONST BYTE *) path, strlen (path) + 1);
+            GetModuleFileNameA (NULL, path, LINE_MAX);
+            feedback = RegSetValueExA (key, "kserver", 0, REG_SZ,
+                                      (CONST BYTE *) path, strlen (path) + 1);
             log_printf ("kserver: service '%s' installed", service_name);
             coputs   ("Restart windows to run service...");
           }
         else
           {
-            feedback = RegDeleteValue (key, "kserver");
+            feedback = RegDeleteValueA (key, "kserver");
             log_printf ("Updater: service '%s' uninstalled", service_name);
           }
         RegCloseKey (key);

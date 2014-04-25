@@ -68,7 +68,7 @@ sys_assert (const char *File, unsigned Line)
 
     /*  If WM_QUIT is in the queue the message box won't show                */
     quit = PeekMessage (&msg, NULL, WM_QUIT, WM_QUIT, PM_REMOVE);
-    rc   = MessageBox  (NULL, buffer, "Assertion failed!",
+    rc   = MessageBoxA (NULL, buffer, "Assertion failed!",
                         MB_TASKMODAL | MB_ICONHAND | MB_ABORTRETRYIGNORE);
     mem_free (buffer);
     if (quit)
