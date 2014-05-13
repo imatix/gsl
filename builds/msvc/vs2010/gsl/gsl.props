@@ -8,14 +8,14 @@
   </PropertyGroup>
 
   <!-- Configuration -->
-  
+
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\gsl\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(RepoRoot)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      
+
       <!-- workaround for pcre packaging bug -->
       <PreprocessorDefinitions Condition="'$(Linkage-pcre)' == 'ltcg'">PCRE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -23,18 +23,12 @@
 
   <!-- Dependencies -->
 
-  <PropertyGroup Condition="$(Configuration.IndexOf('DEXE')) != -1">
-    <Linkage-pcre>dynamic</Linkage-pcre>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.IndexOf('LEXE')) != -1">
-    <Linkage-pcre>ltcg</Linkage-pcre>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.IndexOf('SEXE')) != -1">
-    <Linkage-pcre>static</Linkage-pcre>
+  <PropertyGroup>
+    <Linkage-pcre>$(DefaultLinkage)</Linkage-pcre>
   </PropertyGroup>
 
   <!-- Messages -->
-  
+
   <Target Name="OptionsInfo" BeforeTargets="PrepareForBuild">
     <Message Text="UTFwidth-pcre     : $(UTFwidth-pcre)" Importance="high"/>
   </Target>
