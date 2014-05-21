@@ -22,11 +22,17 @@
   </ItemDefinitionGroup>
 
   <!-- Dependencies -->
-
-  <PropertyGroup>
-    <Linkage-pcre>$(DefaultLinkage)</Linkage-pcre>
+  
+  <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
+    <Linkage-pcre>dynamic</Linkage-pcre>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
+    <Linkage-pcre>ltcg</Linkage-pcre>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
+    <Linkage-pcre>static</Linkage-pcre>
+  </PropertyGroup>
+  
   <!-- Messages -->
 
   <Target Name="OptionsInfo" BeforeTargets="PrepareForBuild">
