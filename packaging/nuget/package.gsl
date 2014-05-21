@@ -29,9 +29,14 @@
         <releaseNotes>https://github.com/imatix/gsl</releaseNotes>
         <copyright>GPL v3</copyright>
         <tags>gsl, gslgen, codegen, T4, template, iMatix, model</tags>
+        <dependencies>
+.for dependency
+            <dependency id="$(id)" version="$(version)" />
+.endfor
+        </dependencies>
     </metadata>
     <files>
-        <file src="..\\..\\bin\\Win32\\Release\\gsl11\\$(package.target).exe" target="tools\\$(package.target).exe" />
+        <file src="..\\..\\bin\\Win32\\Release\\v110\\static\\$(package.target).exe" target="tools\\$(package.target).exe" />
     </files>
 <!--
 #################################################################
