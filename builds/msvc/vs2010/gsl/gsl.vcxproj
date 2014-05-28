@@ -368,13 +368,13 @@
     <ResourceCompile Include="..\..\resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="..\..\..\..\..\..\nuget\pcre.redist.8.33.0.1\build\native\pcre.redist.targets" Condition="Exists('..\..\..\..\..\..\nuget\pcre.redist.8.33.0.1\build\native\pcre.redist.targets')" />
+  <Import Project="..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets" Condition="Exists('..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\pcre.redist.8.33.0.1\build\native\pcre.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\pcre.redist.8.33.0.1\build\native\pcre.redist.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\pcre.8.33.0.1\build\native\pcre.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\pcre.8.33.0.1\build\native\pcre.targets'))" />
+    <Error Condition="!Exists('..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\pcre.8.33.0.1\build\native\pcre.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\pcre.8.33.0.1\build\native\pcre.targets'))" />
   </Target>
-  <Import Project="..\..\..\..\..\..\nuget\pcre.8.33.0.1\build\native\pcre.targets" Condition="Exists('..\..\..\..\..\..\nuget\pcre.8.33.0.1\build\native\pcre.targets')" />
+  <Import Project="..\packages\pcre.8.33.0.1\build\native\pcre.targets" Condition="Exists('..\packages\pcre.8.33.0.1\build\native\pcre.targets')" />
 </Project>
