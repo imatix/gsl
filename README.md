@@ -2440,6 +2440,10 @@ Examples:
     .function assign (dest, source)
         .$(my.dest) = my.source
     .endfunction
+    
+    .function increment (value)
+        .return = my.value + 1
+    .endfunction
 
 <A name="toc4-2067" title="Miscellaneous" />
 #### Miscellaneous
