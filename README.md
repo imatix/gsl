@@ -1132,7 +1132,10 @@ Neat
 :    Neat Case Modification
 
 Camel
-:    CamelCase
+:    camelCase
+
+Pascal
+:   PascalCase
 
 no
 :    No case modification
