@@ -1459,6 +1459,9 @@ MODULE copy_output_buffer_to_output (THREAD *thread)
                                 tcb-> gsl-> shuffle,
                                 TRUE,
                                 &error_text);
+    destroy_result (tcb-> output_buffer);
+    tcb-> output_buffer = NULL;
+
     if (! line)
       {
         report_error (error_event, "%s", error_text);

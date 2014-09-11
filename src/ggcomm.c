@@ -1374,6 +1374,9 @@ next_operand (RESULT_NODE *r, int *indent)
         *p;
 
     p = r-> parent;
+    if (!p)
+        return NULL;
+    
     while (p-> parent
        && ((! p-> script_node)
        ||  (  p-> script_node-> type     == GG_OPERATOR

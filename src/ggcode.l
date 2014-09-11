@@ -231,6 +231,7 @@ Coding:
           + After-Executing-Line
           + Dialog-Return
     (--) Output                             ->
+          + Copy-Output-Buffer-To-Output
           + Create-Result-Root
           + Call-Evaluate-Op1
           + Raise-Exception-If-Error-Occurred
@@ -240,6 +241,7 @@ Coding:
           + After-Executing-Line
           + Dialog-Return
     (--) Append                             ->
+          + Copy-Output-Buffer-To-Output
           + Create-Result-Root
           + Call-Evaluate-Op1
           + Raise-Exception-If-Error-Occurred
@@ -305,6 +307,7 @@ Coding:
           + After-Executing-Line
           + Dialog-Return
     (--) Close                              -> 
+          + Copy-Output-Buffer-To-Output
           + Close-Output-File
           + After-Executing-Line
           + Dialog-Return
