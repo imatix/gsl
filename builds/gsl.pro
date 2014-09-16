@@ -1,7 +1,7 @@
 TEMPLATE = app
 
 CONFIG += console
-CONFIG -= app_bundle
+CONFIG -= app_bundle qt
 
 macx: QMAKE_CFLAGS_WARN_ON += \
     -Wno-unused-parameter \
