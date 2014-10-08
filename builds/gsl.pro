@@ -3,6 +3,9 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle qt
 
+win32-msvc*: DEFINES += _CRT_SECURE_NO_WARNINGS
+win32: LIBS += -lAdvapi32 -lUser32
+
 macx: QMAKE_CFLAGS_WARN_ON += \
     -Wno-unused-parameter \
     -Wno-missing-field-initializers \
