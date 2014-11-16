@@ -1410,10 +1410,10 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
         To be explained.
 
     class (item)
-        To be explained.
+        Returns the class name for the scope of item.
 
     count (item, condition)
-        In condition, count. refers to item being counted
+        In condition, count. refers to item being counted.
 
     defined (value)
         True if value is defined.
