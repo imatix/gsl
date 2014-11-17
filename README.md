@@ -2451,7 +2451,7 @@ Examples:
     .endfunction
     .
     .global.counter=5
-    .decrementbyref("counter")
+    .incrementbyref ("counter")
     .echo global.counter
     6
 
