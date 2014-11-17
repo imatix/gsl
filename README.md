@@ -2434,7 +2434,7 @@ Examples:
     .    echo my.text
     .    echo echotwice.text
     .endmacro
-    ...
+    .
     .echotwice ("Hello")
 
     .function recursive (N)
@@ -2446,10 +2446,6 @@ Examples:
     .    echo my.localvar
     .endfunction
 
-    .function assign (dest, source)
-    .    $(my.dest) = my.source
-    .endfunction
-    
     .function increment (value)
     .    return my.value + 1
     .endfunction
