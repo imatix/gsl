@@ -2435,20 +2435,42 @@ Examples:
     .    echo echotwice.text
     .endmacro
     .
-    .echotwice ("Hello")
-
-    .function recursive (N)
-    .    my.localvar = my.N - 1
-    .    if (my.localvar > 0)
-    .       echo my.N
-    .       recursive (my.localvar)
-    .    endif
-    .    echo my.localvar
-    .endfunction
+    .echotwice ("Hello World!")
+    Hello World!
+    Hello World!
 
     .function increment (value)
     .    return my.value + 1
     .endfunction
+    .
+    .increment (5)
+    6
+    
+    .function incrementbyref (n)
+    .    $(my.n) = $(my.n) + 1
+    .endfunction
+    .
+    .global.counter=5
+    .decrementbyref("counter")
+    .echo global.counter
+    6
+
+    .function recursive (N)
+    .    echo my.N
+    .    my.localvar = my.N - 1
+    .    if (my.localvar > 0)
+    .        recursive (my.localvar)
+    .    endif
+    .    echo my.localvar
+    .endfunction
+    .
+    .recursive (3)
+    3
+    2
+    1
+    0
+    1
+    2
 
 <A name="toc4-2067" title="Miscellaneous" />
 #### Miscellaneous
