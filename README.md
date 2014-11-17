@@ -2386,7 +2386,9 @@ Macros and functions are pieces of GSL which can be invoked with parameters. The
 
 Just like other data, macros and functions are attached to scopes, and can only be used within that scope.
 
-When a macro or function executes, an unstacked scope is opened with the same name as the macro or function.  An unstacked alias to this scope called `my` is also created.  Parameters accessed via the `my` alias are flattened and parameters accessed via the macro or function name scope are not.  The `my` alias can also be used for local variables, thus enabling full recursion.
+When a macro or function executes, an unstacked scope is opened with the same name as the macro or function.  An unstacked alias to this scope called `my` is also created.  Parameters accessed via the `my` alias are flattened and parameters accessed via the macro or function name scope are not.
+
+The macro or function-named scope and the `my alias` can also be used for local variables, thus enabling full recursion.
 
 **.macro**
 
@@ -2436,8 +2438,12 @@ Examples:
     .echotwice ("Hello")
 
     .function recursive (N)
-    .    recursive.localvar = my.N - 1
-    .    recursive (localvar)
+    .    my.localvar = my.N - 1
+    .    if (my.localvar > 0)
+    .       echo my.N
+    .       recursive (my.localvar)
+    .    endif
+    .    echo my.localvar
     .endfunction
 
     .function assign (dest, source)
