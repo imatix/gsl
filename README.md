@@ -2386,7 +2386,7 @@ Macros and functions are pieces of GSL which can be invoked with parameters. The
 
 Just like other data, macros and functions are attached to scopes, and can only be used within that scope.
 
-When a macro or function executes, an unstacked scope is opened with the same name as the macro or function.  An unstacked alias to this scope called `my` is also created.  This scope holds the parameter values, and can also be used for local variables.  Full recursion can thus be achieved.
+When a macro or function executes, an unstacked scope is opened with the same name as the macro or function.  An unstacked alias to this scope called `my` is also created.  Parameters accessed via the `my` alias are flattened and parameters accessed via the macro or function name scope are not.  The `my` alias can also be used for local variables, thus enabling full recursion.
 
 **.macro**
 
@@ -2420,7 +2420,7 @@ Terminates a function definition.
 
     .[<scope> .] <function-name> [([<expr>] [, [<expr>]])] ...)]
 
-A macro or function can also be invoked as an expression.  In this case, the value of is that returned, or is undefined if there is no `.return` statement.
+A macro or function can also be invoked as an expression.  In this case, the expression value is that which is returned, or is undefined if there is no `.return` statement.
 
 This creates a special scope with the name of the macro or function, and attributes corresponding to the parameters value of the parameters.  This scope does not count in numeric scope specifications and cannot have children.  It can be used to define local variables, but must in this case be specified by name.
 
@@ -2430,22 +2430,22 @@ Examples:
 
     .macro echotwice (text)
     .    echo my.text
-    .    echo my.text
+    .    echo echotwice.text
     .endmacro
     ...
     .echotwice ("Hello")
 
     .function recursive (N)
-        recursive.localvar = my.N - 1
-        recursive (localvar)
+    .    recursive.localvar = my.N - 1
+    .    recursive (localvar)
     .endfunction
 
     .function assign (dest, source)
-        .$(my.dest) = my.source
+    .    $(my.dest) = my.source
     .endfunction
     
     .function increment (value)
-        .return = my.value + 1
+    .    return my.value + 1
     .endfunction
 
 <A name="toc4-2067" title="Miscellaneous" />
