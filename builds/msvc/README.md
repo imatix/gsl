@@ -4,4 +4,4 @@ The Visual Studio project files expect your NuGet repository to exist in a parti
 
 There is a [NuGet GSL](https://www.nuget.org/packages/gsl/) package made from these sources. It includes only the 32 bit executable `gsl.exe` built using the **Visual Studio 2012** solution. The purpose of this package is to allow use of the tool on any version of Windows without the need to build from sources.
 
-The Nuget package can be downloaded from within Visual Studio, using the **NuGet Package Manager**, or [directly](https://www.nuget.org/api/v2/package/gsl/4.1.0.1). If downloaded directly the executable can be extracted from the package by opening the package and selecting `File > Export`.
+The NuGet package can be downloaded from within Visual Studio, using the **NuGet Package Manager**, or [directly](https://www.nuget.org/api/v2/package/gsl/4.1.0.1). If downloaded directly the executable can be extracted from the package by opening the package and selecting `File > Export`.
