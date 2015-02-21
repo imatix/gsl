@@ -1517,6 +1517,13 @@ For instance, file.read(handle) could also be written as handle.read().
         Function: string . justify (string,width,[prefix])
         Function: string . certify (number,[language])
         Function: string . replace (strbuf,strpattern)
+            Parses the parameter 'strpattern' into a sequence of ',' separated
+            replacements of the form 'search|replace', and then performs global
+            replacement of those 'search' strings with the 'replace' counterpart.
+            This function is limited to an output 4 times the size of the input strbuf.
+        Function: string . search_replace (strbuf,strsearch,strreplace)
+            Searches the parameter 'strbuf' for the first occurrence of 'strsearch',
+            replacing it with 'strreplace'.
         Function: string . match (string1,string2)
         Function: string . prefixed (string,prefix)
         Function: string . prefix (string,delims)
