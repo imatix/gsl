@@ -291,6 +291,54 @@ node_is_countable (int argn, RESULT_NODE **argv,
 
 <!-------------------------------------------------------------------------->
 
+<function name = "search_replace" >
+    <parameter name = "strbuf"  pass = "value" compulsory = "1" />
+    <parameter name = "search"  pass = "value" compulsory = "1" />
+    <parameter name = "replace" pass = "value" compulsory = "1" />
+<body>
+  {
+    char
+        *strbuf_,
+        *search_,
+        *replace_,
+        *replace_location,
+        *output;
+    size_t
+        search_length,
+        replace_length,
+        result_length;
+
+    strbuf_ = string_value (&strbuf->value);
+    search_ = string_value (&search->value);
+    search_length = strlen (search_);
+    replace_ = string_value (&replace->value);
+    replace_length = strlen (replace_);
+
+    replace_location = strstr (strbuf_, search_);
+    if (replace_location == NULL)
+    {
+        result-> value. s    = strdup(strbuf_);
+        result-> value. type = TYPE_STRING;
+    }
+    else
+    {
+        result_length = strlen (strbuf_) - search_length + replace_length;
+        output = mem_alloc (result_length + 1);
+        result-> value. s    = output;
+        result-> value. type = TYPE_STRING;
+
+        strncpy (output, strbuf_, replace_location-strbuf_);
+        output += replace_location - strbuf_;
+
+        strcpy (output, replace_);
+        output += replace_length;
+
+        strcpy (output, replace_location + search_length);
+    }
+  }
+</body>
+</function>
+
 <function name = "replace" >
     <parameter name = "strbuf"     pass = "value" compulsory = "1" />
     <parameter name = "strpattern" pass = "value" compulsory = "1" />
