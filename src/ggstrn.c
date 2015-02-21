@@ -35,6 +35,8 @@ string_justify (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, T
 static int
 string_certify (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, THREAD *gsl_thread);
 static int
+string_search_replace (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, THREAD *gsl_thread);
+static int
 string_replace (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, THREAD *gsl_thread);
 static int
 string_match (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, THREAD *gsl_thread);
@@ -83,6 +85,7 @@ static GSL_FUNCTION string_functions [] =
     {"prefix",         2, 2, 1, (void *) &parm_list_v, 1, string_prefix},
     {"prefixed",       2, 2, 1, (void *) &parm_list_v, 1, string_prefixed},
     {"replace",        2, 2, 1, (void *) &parm_list_v, 1, string_replace},
+    {"search_replace", 3, 3, 1, (void *) &parm_list_v, 1, string_search_replace},
     {"soundex",        1, 1, 1, (void *) &parm_list_v, 1, string_soundex},
     {"substr",         1, 4, 1, (void *) &parm_list_v, 1, string_substr},
     {"trim",           1, 1, 1, (void *) &parm_list_v, 1, string_trim}};
@@ -496,6 +499,92 @@ string_certify (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, T
 
     result-> value. type = TYPE_STRING;
     result-> value. s    = mem_strdup (buffer);
+  }
+
+    return 0;  /*  Just in case  */
+}
+
+
+static int
+string_search_replace (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, THREAD *gsl_thread)
+{
+    RESULT_NODE *strbuf  = argc > 0 ? argv [0] : NULL;
+    RESULT_NODE *search  = argc > 1 ? argv [1] : NULL;
+    RESULT_NODE *replace = argc > 2 ? argv [2] : NULL;
+
+    if (! strbuf)
+      {
+        strcpy (object_error, "Missing argument: strbuf");
+        return -1;
+      }
+    if (strbuf-> value. type == TYPE_UNDEFINED)
+      {
+        result-> culprit = strbuf-> culprit;
+        strbuf-> culprit = NULL;
+        return 0;
+      }
+    if (! search)
+      {
+        strcpy (object_error, "Missing argument: search");
+        return -1;
+      }
+    if (search-> value. type == TYPE_UNDEFINED)
+      {
+        result-> culprit = search-> culprit;
+        search-> culprit = NULL;
+        return 0;
+      }
+    if (! replace)
+      {
+        strcpy (object_error, "Missing argument: replace");
+        return -1;
+      }
+    if (replace-> value. type == TYPE_UNDEFINED)
+      {
+        result-> culprit = replace-> culprit;
+        replace-> culprit = NULL;
+        return 0;
+      }
+
+  {
+    char
+        *strbuf_,
+        *search_,
+        *replace_,
+        *replace_location,
+        *output;
+    size_t
+        search_length,
+        replace_length,
+        result_length;
+
+    strbuf_ = string_value (&strbuf->value);
+    search_ = string_value (&search->value);
+    search_length = strlen (search_);
+    replace_ = string_value (&replace->value);
+    replace_length = strlen (replace_);
+
+    replace_location = strstr (strbuf_, search_);
+    if (replace_location == NULL)
+    {
+        result-> value. s    = strdup(strbuf_);
+        result-> value. type = TYPE_STRING;
+    }
+    else
+    {
+        result_length = strlen (strbuf_) - search_length + replace_length;
+        output = mem_alloc (result_length + 1);
+        result-> value. s    = output;
+        result-> value. type = TYPE_STRING;
+
+        strncpy (output, strbuf_, replace_location-strbuf_);
+        output += replace_location - strbuf_;
+
+        strcpy (output, replace_);
+        output += replace_length;
+
+        strcpy (output, replace_location + search_length);
+    }
   }
 
     return 0;  /*  Just in case  */

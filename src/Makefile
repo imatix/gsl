@@ -36,10 +36,10 @@
 INSTALL = /usr/bin/install -c
 
 # Installation directories, good for Debian Packaging
-prefix = ${DESTDIR}/usr
-exec_prefix = ${prefix}
+DESTDIR ?= /usr/local
+prefix = ${DESTDIR}
 mandir = ${prefix}/share/man/man8
-bindir = ${exec_prefix}/local/bin
+bindir = ${prefix}/bin
 
 # Default values for object, library, and executable extensions.
 #
