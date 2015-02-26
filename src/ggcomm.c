@@ -198,19 +198,22 @@ init_value (VALUE *value)
 void
 destroy_value (VALUE *value)
 {
-    if (value-> s)
-        mem_strfree (& value-> s);
-    if (value-> b)
+    if (value)
       {
-        mem_free (value-> b);
-        value-> b = NULL;
-      }
-    if (value-> i)
-      {
-        if (value-> c-> destroy)
-            value-> c-> destroy (value-> i);
-        value-> c = NULL;
-        value-> i = NULL;
+        if (value-> s)
+            mem_strfree (& value-> s);
+        if (value-> b)
+          {
+            mem_free (value-> b);
+            value-> b = NULL;
+          }
+        if (value-> i)
+          {
+            if (value-> c-> destroy)
+                value-> c-> destroy (value-> i);
+            value-> c = NULL;
+            value-> i = NULL;
+          }
       }
 }
 
