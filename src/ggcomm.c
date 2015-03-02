@@ -198,22 +198,19 @@ init_value (VALUE *value)
 void
 destroy_value (VALUE *value)
 {
-    if (value)
+    if (value-> s)
+        mem_strfree (& value-> s);
+    if (value-> b)
       {
-        if (value-> s)
-            mem_strfree (& value-> s);
-        if (value-> b)
-          {
-            mem_free (value-> b);
-            value-> b = NULL;
-          }
-        if (value-> i)
-          {
-            if (value-> c-> destroy)
-                value-> c-> destroy (value-> i);
-            value-> c = NULL;
-            value-> i = NULL;
-          }
+        mem_free (value-> b);
+        value-> b = NULL;
+      }
+    if (value-> i)
+      {
+        if (value-> c-> destroy)
+            value-> c-> destroy (value-> i);
+        value-> c = NULL;
+        value-> i = NULL;
       }
 }
 
@@ -398,7 +395,7 @@ destroy_result (RESULT_NODE *node)
             mem_free (node-> value. s);
         if (node-> value. b)
             mem_free (node-> value. b);
-        if (node-> value. type == TYPE_POINTER
+        if (node-> value. c
         &&  node-> value. c-> destroy)
             node-> value. c-> destroy (node-> value. i);
 

@@ -5128,7 +5128,7 @@ pop_the_result_node (void)
 {
     if (tcb-> node_stack)
       {
-        destroy_value (& tcb-> result_node-> value);
+//        destroy_value (& tcb-> result_node-> value);
               
         tcb-> result_node = tcb-> node_stack;
         tcb-> node_stack  = tcb-> node_stack-> next;
