@@ -4,4 +4,6 @@
 *.user
 *.aps
 *.log
+*/packages/
 !build
+build/pcre.*/
