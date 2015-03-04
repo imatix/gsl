@@ -108,12 +108,12 @@ strndupl (
       {
         copy = malloc (length + 1);
         if (copy)
-	  {
-	    if (length)
+          {
+        if (length)
                 strncpy (copy, string, (length + 1));
 
-	    copy [length] = '\0';
-	  }
+        copy [length] = '\0';
+          }
       }
     else
         copy = NULL;
@@ -681,15 +681,17 @@ strconvchs (
             
     result = mem_alloc (strlen (string) + (strlen (to) - 1) * from_count + 1);
     index  = 0;
-    while (*string) {
-        if (*string == from) {
+    while (*string)
+	  {
+        if (*string == from)
+		  {
             strcpy (result + index, to);
             index += strlen (to);
-        }
+          }
         else
             result [index++] = *string;
         string++;
-    }
+      }
     result [index] = '\0';
     return (result);
 }
@@ -1628,35 +1630,41 @@ searchreplace (
         strbase = found + fnd_len;
     }
 
-    if (count > 0) {
+    if (count > 0)
+	  {
         delta = ins_len - fnd_len;
-        if (delta == 0) {
+        if (delta == 0)
+		  {
             /* easier case: we can just replace to_fnd by to_ins             */
             FORLIST (node, *list)
                 strncpy (node->str, to_ins, ins_len);
-        }
+          }
         else
-        if (delta > 0) {
+        if (delta > 0)
+		  {
             /* buf length will increase                                      */
-            for (node = list->prev; node != list; node = node->prev) {
+            for (node = list->prev; node != list; node = node->prev)
+			  {
                 unchanged = node->str + fnd_len;
                 unchanged_len = (node->next == list)
                               ? &strterm (buf) - unchanged  + 1
                               : node->next->str - unchanged;
                 ASSERT (count);
                 count--;
-                if (buf_len + delta < max_length) {
+                if (buf_len + delta < max_length)
+				  {
                     replace = node->str + (count * delta);
                     memmove (replace + ins_len, unchanged, unchanged_len);
                     strncpy (replace, to_ins, ins_len);
                     buf_len += delta;
+                  }
               }
-           }
-        }
+          }
         else {
             /* buf length will decrease                                      */
             replace = list->next->str;
-            FORLIST (node, *list) {
+            FORLIST (node, *list) 
+			  {
                 unchanged = node->str + fnd_len;
                 unchanged_len = (node->next == list)
                               ? &strterm (buf) - unchanged + 1
@@ -1665,9 +1673,9 @@ searchreplace (
                 memmove (replace + ins_len, unchanged, unchanged_len);
                 replace += ins_len + unchanged_len;
                 buf_len -= delta;
-            } 
-        }
-    }
+              }
+          }
+      }
     /* otherwise (found_count == 0), there is nothing to do */
     
     list_destroy (list);
@@ -2175,20 +2183,23 @@ xstrlcpy(char *dst, const char *src, size_t siz)
     register size_t n = siz;
 
     /*  Copy as many bytes as will fit                                       */
-    if (n != 0 && --n != 0) {
-        do {
+    if (n != 0 && --n != 0)
+	  {
+        do
+		  {
             if ((*d++ = *s++) == 0)
                 break;
-        } while (--n != 0);
-    }
+          } while (--n != 0);
+      }
 
     /*  Not enough room in dst, add NUL and traverse rest of src             */
-    if (n == 0) {
+    if (n == 0)
+	  {
         if (siz != 0)
             *d = '\0';                  /*  NUL-terminate dst                */
         while (*s++)
             ;
-    }
+      }
 
     return(s - src - 1);                /*  count does not include NUL       */
 }

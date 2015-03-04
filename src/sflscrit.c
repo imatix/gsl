@@ -174,68 +174,68 @@ toalpha (char ansichar)
         int to;
     }
     conversion [] = {
-        { 192, 'A' }, 	/*  capital A grave                À  */
-        { 193, 'A' }, 	/*  capital A acute                Á  */
-        { 194, 'A' }, 	/*  capital A circumflex           Â  */
-        { 195, 'A' }, 	/*  capital A tilde                Ã  */
-        { 196, 'A' }, 	/*  capital A dieresis or umlaut   Ä  */
-        { 197, 'A' }, 	/*  capital A ring                 Å  */
-        { 198, 'A' }, 	/*  capital AE ligature            Æ  */
-        { 199, 'C' }, 	/*  capital C cedilla              Ç  */
-        { 200, 'E' }, 	/*  capital E grave                È  */
-        { 201, 'E' }, 	/*  capital E acute                É  */
-        { 202, 'E' }, 	/*  capital E circumflex           Ê  */
-        { 203, 'E' }, 	/*  capital E dieresis or umlaut   Ë  */
-        { 204, 'I' }, 	/*  capital I grave                Ì  */
-        { 205, 'I' }, 	/*  capital I acute                Í  */
-        { 206, 'I' }, 	/*  capital I circumflex           Î  */
-        { 207, 'I' }, 	/*  capital I dieresis or umlaut   Ï  */
-        { 208, 'O' }, 	/*  capital ETH                    Ð  */
-        { 209, 'N' }, 	/*  capital N tilde                Ñ  */
-        { 210, 'O' }, 	/*  capital O grave                Ò  */
-        { 211, 'O' }, 	/*  capital O acute                Ó  */
-        { 212, 'O' }, 	/*  capital O circumflex           Ô  */
-        { 213, 'O' }, 	/*  capital O tilde                Õ  */
-        { 214, 'O' }, 	/*  capital O dieresis or umlaut   Ö  */
-        { 216, 'O' }, 	/*  capital O slash                Ø  */
-        { 217, 'U' }, 	/*  capital U grave                Ù  */
-        { 218, 'U' }, 	/*  capital U acute                Ú  */
-        { 219, 'U' }, 	/*  capital U circumflex           Û  */
-        { 220, 'U' }, 	/*  capital U dieresis or umlaut   Ü  */
-        { 221, 'Y' }, 	/*  capital Y acute                Ý  */
-        { 222, 'P' }, 	/*  capital THORN                  Þ  */
-        { 223, 's' }, 	/*  small sharp s, sz ligature     ß  */
-        { 224, 'a' }, 	/*  small a grave                  à  */
-        { 225, 'a' }, 	/*  small a acute                  á  */
-        { 226, 'a' }, 	/*  small a circumflex             â  */
-        { 227, 'a' }, 	/*  small a tilde                  ã  */
-        { 228, 'a' }, 	/*  small a dieresis or umlaut     ä  */
-        { 229, 'a' }, 	/*  small a ring                   å  */
-        { 230, 'a' }, 	/*  small ae ligature              æ  */
-        { 231, 'c' }, 	/*  small c cedilla                ç  */
-        { 232, 'e' }, 	/*  small e grave                  è  */
-        { 233, 'e' }, 	/*  small e acute                  é  */
-        { 234, 'e' }, 	/*  small e circumflex             ê  */
-        { 235, 'e' }, 	/*  small e dieresis or umlaut     ë  */
-        { 236, 'i' }, 	/*  small i grave                  ì  */
-        { 237, 'i' }, 	/*  small i acute                  í  */
-        { 238, 'i' }, 	/*  small i circumflex             î  */
-        { 239, 'i' }, 	/*  small i dieresis or umlaut     ï  */
-        { 240, 'o' }, 	/*  small eth                      ð  */
-        { 241, 'n' }, 	/*  small n tilde                  ñ  */
-        { 242, 'o' }, 	/*  small o grave                  ò  */
-        { 243, 'o' }, 	/*  small o acute                  ó  */
-        { 244, 'o' }, 	/*  small o circumflex             ô  */
-        { 245, 'o' }, 	/*  small o tilde                  õ  */
-        { 246, 'o' }, 	/*  small o dieresis or umlaut     ö  */
-        { 248, 'o' }, 	/*  small o slash                  ø  */
-        { 249, 'u' }, 	/*  small u grave                  ù  */
-        { 250, 'u' }, 	/*  small u acute                  ú  */
-        { 251, 'u' }, 	/*  small u circumflex             û  */
-        { 252, 'u' }, 	/*  small u dieresis or umlaut     ü  */
-        { 253, 'y' }, 	/*  small y acute                  ý  */
-        { 254, 'p' }, 	/*  small thorn                    þ  */
-        { 255, 'y' }  	/*  small y dieresis or umlaut     ÿ  */
+        { 192, 'A' },     /*  capital A grave                À  */
+        { 193, 'A' },     /*  capital A acute                Á  */
+        { 194, 'A' },     /*  capital A circumflex           Â  */
+        { 195, 'A' },     /*  capital A tilde                Ã  */
+        { 196, 'A' },     /*  capital A dieresis or umlaut   Ä  */
+        { 197, 'A' },     /*  capital A ring                 Å  */
+        { 198, 'A' },     /*  capital AE ligature            Æ  */
+        { 199, 'C' },     /*  capital C cedilla              Ç  */
+        { 200, 'E' },     /*  capital E grave                È  */
+        { 201, 'E' },     /*  capital E acute                É  */
+        { 202, 'E' },     /*  capital E circumflex           Ê  */
+        { 203, 'E' },     /*  capital E dieresis or umlaut   Ë  */
+        { 204, 'I' },     /*  capital I grave                Ì  */
+        { 205, 'I' },     /*  capital I acute                Í  */
+        { 206, 'I' },     /*  capital I circumflex           Î  */
+        { 207, 'I' },     /*  capital I dieresis or umlaut   Ï  */
+        { 208, 'O' },     /*  capital ETH                    Ð  */
+        { 209, 'N' },     /*  capital N tilde                Ñ  */
+        { 210, 'O' },     /*  capital O grave                Ò  */
+        { 211, 'O' },     /*  capital O acute                Ó  */
+        { 212, 'O' },     /*  capital O circumflex           Ô  */
+        { 213, 'O' },     /*  capital O tilde                Õ  */
+        { 214, 'O' },     /*  capital O dieresis or umlaut   Ö  */
+        { 216, 'O' },     /*  capital O slash                Ø  */
+        { 217, 'U' },     /*  capital U grave                Ù  */
+        { 218, 'U' },     /*  capital U acute                Ú  */
+        { 219, 'U' },     /*  capital U circumflex           Û  */
+        { 220, 'U' },     /*  capital U dieresis or umlaut   Ü  */
+        { 221, 'Y' },     /*  capital Y acute                Ý  */
+        { 222, 'P' },     /*  capital THORN                  Þ  */
+        { 223, 's' },     /*  small sharp s, sz ligature     ß  */
+        { 224, 'a' },     /*  small a grave                  à  */
+        { 225, 'a' },     /*  small a acute                  á  */
+        { 226, 'a' },     /*  small a circumflex             â  */
+        { 227, 'a' },     /*  small a tilde                  ã  */
+        { 228, 'a' },     /*  small a dieresis or umlaut     ä  */
+        { 229, 'a' },     /*  small a ring                   å  */
+        { 230, 'a' },     /*  small ae ligature              æ  */
+        { 231, 'c' },     /*  small c cedilla                ç  */
+        { 232, 'e' },     /*  small e grave                  è  */
+        { 233, 'e' },     /*  small e acute                  é  */
+        { 234, 'e' },     /*  small e circumflex             ê  */
+        { 235, 'e' },     /*  small e dieresis or umlaut     ë  */
+        { 236, 'i' },     /*  small i grave                  ì  */
+        { 237, 'i' },     /*  small i acute                  í  */
+        { 238, 'i' },     /*  small i circumflex             î  */
+        { 239, 'i' },     /*  small i dieresis or umlaut     ï  */
+        { 240, 'o' },     /*  small eth                      ð  */
+        { 241, 'n' },     /*  small n tilde                  ñ  */
+        { 242, 'o' },     /*  small o grave                  ò  */
+        { 243, 'o' },     /*  small o acute                  ó  */
+        { 244, 'o' },     /*  small o circumflex             ô  */
+        { 245, 'o' },     /*  small o tilde                  õ  */
+        { 246, 'o' },     /*  small o dieresis or umlaut     ö  */
+        { 248, 'o' },     /*  small o slash                  ø  */
+        { 249, 'u' },     /*  small u grave                  ù  */
+        { 250, 'u' },     /*  small u acute                  ú  */
+        { 251, 'u' },     /*  small u circumflex             û  */
+        { 252, 'u' },     /*  small u dieresis or umlaut     ü  */
+        { 253, 'y' },     /*  small y acute                  ý  */
+        { 254, 'p' },     /*  small thorn                    þ  */
+        { 255, 'y' }      /*  small y dieresis or umlaut     ÿ  */
     };
     static int
         table [256];

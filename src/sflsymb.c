@@ -430,7 +430,7 @@ sym_exec_all (
           {
             alldone = FALSE;
             break;
-    	  }
+          }
       }
 
     if (alldone)

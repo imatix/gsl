@@ -396,11 +396,11 @@ int smtp_send_mail_ex (
    if ( smtp->strHtmlMessageBody && *smtp->strHtmlMessageBody )
        xstrcat (strOut, "MIME-Version: 1.0\r\n",
                 "Content-Type: multipart/alternative; boundary=\"", 
-	            message_boundary,"\"\r\n", NULL);
+                message_boundary,"\"\r\n", NULL);
    else
        xstrcat (strOut, "MIME-Version: 1.0\r\n",
                 "Content-Type: Multipart/Mixed; boundary=\"", 
-	            message_boundary,"\"\r\n", NULL);
+                message_boundary,"\"\r\n", NULL);
 
    send_data (socket_handle, strOut);
 

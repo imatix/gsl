@@ -194,27 +194,27 @@ static byte
  */
 #define buf_update_cur_line(_BUF_)                                            \
   {                                                                           \
-    if ((_BUF_)->state == BUF_READY )                                        \
+    if ((_BUF_)->state == BUF_READY )                                         \
       {                                                                       \
-        ASSERT ((_BUF_)->char_nbr > 0);                                      \
-        if ((_BUF_)->cur_line[(_BUF_)->char_nbr-1] == '\n')                 \
+        ASSERT ((_BUF_)->char_nbr > 0);                                       \
+        if ((_BUF_)->cur_line[(_BUF_)->char_nbr-1] == '\n')                   \
           {                                                                   \
-            (_BUF_)->char_nbr  = 0;                                          \
-            (_BUF_)->vchar_nbr = -1;                                         \
-            (_BUF_)->line_nbr++;                                             \
+            (_BUF_)->char_nbr  = 0;                                           \
+            (_BUF_)->vchar_nbr = -1;                                          \
+            (_BUF_)->line_nbr++;                                              \
           }                                                                   \
-        (_BUF_)->cur_line[(_BUF_)->char_nbr] = (_BUF_)->page[(_BUF_)->cur];\
-        (_BUF_)->char_nbr++;                                                 \
-        (_BUF_)->vchar_nbr++;                                                \
-        if ((_BUF_)->char_nbr >= BUFFER_SIZE)                                \
-            (_BUF_)->char_nbr = 1;                                           \
+        (_BUF_)->cur_line[(_BUF_)->char_nbr] = (_BUF_)->page[(_BUF_)->cur];   \
+        (_BUF_)->char_nbr++;                                                  \
+        (_BUF_)->vchar_nbr++;                                                 \
+        if ((_BUF_)->char_nbr >= BUFFER_SIZE)                                 \
+            (_BUF_)->char_nbr = 1;                                            \
       }                                                                       \
     else                                                                      \
       {                                                                       \
-        (_BUF_)->cur_line[0] = 0;                                            \
-        (_BUF_)->line_nbr    = -1;                                           \
-        (_BUF_)->char_nbr    = 0;                                            \
-        (_BUF_)->vchar_nbr   = 0;                                            \
+        (_BUF_)->cur_line[0] = 0;                                             \
+        (_BUF_)->line_nbr    = -1;                                            \
+        (_BUF_)->char_nbr    = 0;                                             \
+        (_BUF_)->vchar_nbr   = 0;                                             \
       }                                                                       \
   }
 
@@ -222,48 +222,48 @@ static byte
  *  must be called _after_ the position is updated, so we get correct offset.
  */
 #define buf_check_for_tab_start(_BUF_)                                        \
-    if (((_BUF_)->page[(_BUF_)->cur]) == '\t')                              \
+    if (((_BUF_)->page[(_BUF_)->cur]) == '\t')                                \
         (_BUF_)->tab_spaces = 8 - ((_BUF_)->vchar_nbr & 7);
 
 #define buf_next(_BUF_)                                                       \
   {                                                                           \
-    if ((_BUF_)->tab_spaces)                                                 \
+    if ((_BUF_)->tab_spaces)                                                  \
       {                                                                       \
-        (_BUF_)->tab_spaces--;                                               \
-        (_BUF_)->vchar_nbr++;                                                \
+        (_BUF_)->tab_spaces--;                                                \
+        (_BUF_)->vchar_nbr++;                                                 \
       }                                                                       \
     else                                                                      \
       {                                                                       \
-        _BUF_->cur++;                                                        \
+        _BUF_->cur++;                                                         \
         if (buf_page_fault (_BUF_))                                           \
             buf_load_page (_BUF_);                                            \
         buf_update_cur_line (_BUF_);                                          \
         buf_check_for_tab_start (_BUF_);                                      \
-        if ((_BUF_)->tab_spaces)                                             \
-            (_BUF_)->tab_spaces--;                                           \
+        if ((_BUF_)->tab_spaces)                                              \
+            (_BUF_)->tab_spaces--;                                            \
      }                                                                        \
   }
 
 #define buf_get_next(_BUF_, _RES_)                                            \
   {                                                                           \
-    if ((_BUF_)->tab_spaces)                                                 \
+    if ((_BUF_)->tab_spaces)                                                  \
       {                                                                       \
-        (_BUF_)->tab_spaces--;                                               \
-        (_BUF_)->vchar_nbr++;                                                \
+        (_BUF_)->tab_spaces--;                                                \
+        (_BUF_)->vchar_nbr++;                                                 \
         _RES_ = ' ';                                                          \
       }                                                                       \
     else                                                                      \
       {                                                                       \
-        _BUF_->cur++;                                                        \
+        _BUF_->cur++;                                                         \
         if ((buf_page_fault(_BUF_)) && (buf_load_page(_BUF_) != BUF_READY))   \
             _RES_ = 0;                                                        \
         else                                                                  \
-            _RES_ = (_BUF_)->page[(_BUF_)->cur];                            \
+            _RES_ = (_BUF_)->page[(_BUF_)->cur];                              \
         buf_update_cur_line (_BUF_);                                          \
         buf_check_for_tab_start (_BUF_);                                      \
-        if ((_BUF_)->tab_spaces)                                             \
+        if ((_BUF_)->tab_spaces)                                              \
           {                                                                   \
-            (_BUF_)->tab_spaces--;                                           \
+            (_BUF_)->tab_spaces--;                                            \
             _RES_ = ' ';                                                      \
           }                                                                   \
       }                                                                       \
@@ -271,7 +271,7 @@ static byte
 
 /*  If the current character is a tab, we return a space; otherwise as is    */
 #define buf_get_current(_BUF_)                                                \
-    (((_BUF_)->page[(_BUF_)->cur]) == '\t'                                  \
+    (((_BUF_)->page[(_BUF_)->cur]) == '\t'                                    \
      ? ' ' : ((_BUF_)->page[(_BUF_)->cur]))
 
 /*  This is a hack which means that if the '<' is the last byte of the       */
@@ -838,7 +838,7 @@ xml_load_file (XML_ITEM   **item,
             res = XML_LOADERROR;        /*  unexpected char were found       */
             break;
           }
-        if (buf->state == BUF_END)     /*  we processed the entire file     */
+        if (buf->state == BUF_END)     /*  we processed the entire file      */
             break;
         CHECK_BUF_STATE_AND_BREAK_ON_ERROR(7);
         if (!allow_extended && (xml_first_child(*item) != NULL))
@@ -920,31 +920,36 @@ xml_load_item_string (XML_BUFFER *buf, XML_ITEM **item, Bool allow_extended)
         return (XML_FILEERROR);
 
     init_charmaps ();
-    if ((!*item) && (res == XML_NOERROR)) {
+    if ((!*item) && (res == XML_NOERROR))
+	  {
         *item = xml_new (NULL, "root", "");
         ASSERT (*item);
-    }
-    while (res == XML_NOERROR) {
+      }
+    while (res == XML_NOERROR)
+	  {
         buf_seek_next (buf, '<', &non_white_skipped);
-        if (non_white_skipped) {
+        if (non_white_skipped)
+		  {
             res = XML_LOADERROR;
             break;
-        }
+          }
         if (buf->state == BUF_END)  /*  we processed the entire string   */
             break;
         CHECK_BUF_STATE_AND_BREAK_ON_ERROR(7);
 
-        if (!allow_extended && (xml_first_child (*item) != NULL)) {
+        if (!allow_extended && (xml_first_child (*item) != NULL))
+		  {
             res = XML_LOADERROR;   /* root has children                 */
             break;
-        }
+          }
         buf_next (buf);
         res = xml_load_item (*item, buf);
-        if (res == XML_END_ITEM) {
+        if (res == XML_END_ITEM)
+		  {
             set_error (buf, "Unexpected character: /");
             res = XML_LOADERROR;
-        }
-    }
+          }
+      }
     if (buf)
         dispose_xml_buffer (buf);
 
@@ -996,11 +1001,12 @@ SYMTAB *xml_load_symtab (SYMTAB *load_symtab, XML_ITEM *xml_root, const char *pa
     ASSERT (xml_root);
     if (load_symtab)                    /*  Use specified symbol table       */
         symtab = load_symtab;           /*    or create a new one            */
-    else {
+    else
+	  {
         symtab = sym_create_table ();
         if (symtab == NULL)
             return (NULL);              /*  Quit if insufficient memory      */
-    }
+      }
 
     /*  Add the file information to the symbol table                         */
     sym_assume_symbol (symtab, "filename", 
@@ -1021,10 +1027,12 @@ SYMTAB *xml_load_symtab (SYMTAB *load_symtab, XML_ITEM *xml_root, const char *pa
     /*  Traverse the subtree. Each item in the subtree becomes a section,
      *  each item in a section gets loaded into the symbol table. */
     envtab = env2symb ();
-    FORCHILDREN (xml_section, xml_subtree) {
+    FORCHILDREN (xml_section, xml_subtree)
+	  {
         sym_assume_symbol (symtab, xml_item_name (xml_section), "");
 
-        FORCHILDREN (xml_item, xml_section) {
+        FORCHILDREN (xml_item, xml_section)
+		  {
             name = xstrcpy (NULL, xml_item_name (xml_section), ":",
                             xml_item_name (xml_item), NULL);
             xml_value = xml_item_child_value (xml_item);
@@ -1038,8 +1046,8 @@ SYMTAB *xml_load_symtab (SYMTAB *load_symtab, XML_ITEM *xml_root, const char *pa
             mem_free (name);
             mem_free (value);
             mem_free (xml_value);
-        }
-    }
+          }
+      }
 
     sym_delete_table (envtab);
     sym_sort_table (symtab, NULL);      /*  Sort table by symbol name        */
@@ -1070,22 +1078,27 @@ SYMTAB *xml_load_symtab_file (SYMTAB *load_symtab, const char *filename, const c
     ASSERT (filename);
     if (load_symtab)                    /*  Use specified symbol table       */
         symtab = load_symtab;           /*    or create a new one            */
-    else {
+    else
+	  {
         symtab = sym_create_table ();
         if (symtab == NULL)
             return (NULL);              /*  Quit if insufficient memory      */
-    }
+      }
 
     /*  Attempt to load XML from file                                        */
     result = xml_load (&xml_root, NULL, filename);
-    if (result != XML_NOERROR) {
-        if (result == XML_FILEERROR) {
+    if (result != XML_NOERROR)
+	  {
+        if (result == XML_FILEERROR)
+		  {
             return (symtab);            /*  File not found; empty table      */
-        } else {
+          } 
+		else
+		  {
             sym_delete_table (symtab);  /*  Other error                      */
             return NULL;
-        }
-    }
+          }
+      }
 
     /*  Populate symbol table                                                */
     symtab = xml_load_symtab (symtab, xml_root, path);
@@ -1115,7 +1128,8 @@ static XML_BUFFER *xml_buffer_new (void)
         *buffer;
 
     buffer = mem_alloc (sizeof (XML_BUFFER));
-    if (buffer) {
+    if (buffer)
+	  {
         buffer->fd           = NULL;
         buffer->fname        = NULL;
         buffer->cur          = 0;
@@ -1129,7 +1143,7 @@ static XML_BUFFER *xml_buffer_new (void)
         buffer->vchar_nbr    = 0;
         buffer->fname        = NULL;
         buffer->tab_spaces   = 0;
-    }
+      }
     return (buffer);
 }
 
@@ -1143,14 +1157,16 @@ init_xml_buffer_from_file (const char * name)
 
     ASSERT (name);
     file = fopen (name, "rt");
-    if (file) {
+    if (file)
+	  {
         buffer = xml_buffer_new ();
-        if (buffer) {
+        if (buffer)
+		  {
             buffer->fd = file;
             buf_load_page     (buffer);
             XML_BUF_INVARIANT (buffer);
-        }
-    }
+          }
+      }
     return buffer;
 }
 
@@ -1161,12 +1177,13 @@ init_xml_buffer_from_string (const char *xml_string)
         *buffer = NULL;
 
     buffer = xml_buffer_new ();
-    if (buffer) {
+    if (buffer)
+	  {
         buffer->page   = mem_strdup (xml_string);
         buffer->pageln = strlen (xml_string);
         buffer->page_alloc = TRUE;
         XML_BUF_INVARIANT (buffer);
-    }
+      }
     return buffer;
 }
 
@@ -1177,11 +1194,12 @@ init_xml_buffer_from_descr (const DESCR *descr)
         *buffer = NULL;
 
     buffer = xml_buffer_new ();
-    if (buffer) {
+    if (buffer)
+	  {
         buffer->page   = (char *) descr->data;
         buffer->pageln = descr->size;
         XML_BUF_INVARIANT (buffer);
-    }
+      }
     return buffer;
 }
 
@@ -1224,7 +1242,7 @@ buf_seek_next (XML_BUFFER *buf,
     XML_BUF_INVARIANT(buf);
 
     if (buf->state != BUF_READY)
-	return buf->state;
+    return buf->state;
 
     if (non_white_skipped)
         *non_white_skipped = FALSE;
@@ -1239,16 +1257,16 @@ buf_seek_next (XML_BUFFER *buf,
             *non_white_skipped = TRUE;
           }
 
-	buf_next (buf);
-	if (buf->state != BUF_READY)
-	    break;
+        buf_next (buf);
+        if (buf->state != BUF_READY)
+            break;
       }
 
     if (buf->state != BUF_READY)
-	return buf->state;
+        return buf->state;
 
     if (ch == wanted)
-	return BUF_READY;
+        return BUF_READY;
 
     /*  In theory this code is unreachable, but just in case... */
     buf->state = BUF_UNEXPECTED_ERROR;
@@ -1274,11 +1292,13 @@ buf_load_page (XML_BUFFER * buf)
               {
                 /*  It's the first load. We allocate a memory page */
                 buf->page = (char *) mem_alloc (MAX_BUF_SIZE);
-                if (buf->page) {
+                if (buf->page)
+				  {
                     memset (buf->page, 0, MAX_BUF_SIZE);
                     buf->page_alloc = TRUE;
-                }
-                else {
+                  }
+                else
+				  {
                     buf->state = BUF_UNEXPECTED_ERROR;
                     return BUF_UNEXPECTED_ERROR;
                   }
@@ -1308,7 +1328,9 @@ buf_load_page (XML_BUFFER * buf)
  * returns XML_NOERROR on success
  *         XML_FILEERROR on io error
  *         XML_LOADERROR on xml syntax error
- * on success, buffer is currently pointing to the next non white char after the end of the previously loaded item
+ * on success, buffer is currently pointing to the next
+ * non-white char after the end of the previously
+ * loaded item
  * --------------------------------------------------*/
 static int
 xml_load_item (XML_ITEM  *item, XML_BUFFER *buf)
@@ -1346,12 +1368,14 @@ xml_load_item (XML_ITEM  *item, XML_BUFFER *buf)
           {
             /*  This is either a comment or a DOCTYPE declaration.           */
             buf_get_next (buf, c);
-            if (c == '-') {
+            if (c == '-')
+			  {
                 buf_get_next (buf, c);
-                if (c != '-') {
+                if (c != '-')
+				  {
                     set_error (buf, "'--' expected");
                     return XML_LOADERROR;
-                }
+                  }
 
                 /*  It is a comment. Skip everything until the next occurence
                  *  of '-->'
@@ -1372,13 +1396,15 @@ xml_load_item (XML_ITEM  *item, XML_BUFFER *buf)
                   }
                 if (found)
                     buf_next(buf);
-            }
-            else if (c == 'D') {
+              }
+            else if (c == 'D')
+			  {
                 item_name = buf_get_name (buf);
-                if (!item_name || !strcmp (item_name, "OCTYPE")) {
+                if (!item_name || !strcmp (item_name, "OCTYPE"))
+				  {
                     set_error (buf, "'--' or DOCTYPE declaration expected");
                     return XML_LOADERROR;
-                }
+                  }
                 mem_free (item_name);
 
                 /*  It is a DOCTYPE declaration. Skip everything until the
@@ -1386,16 +1412,18 @@ xml_load_item (XML_ITEM  *item, XML_BUFFER *buf)
                  */
                 buf_seek_next (buf, '>', NULL);
                 CHECK_BUF_STATE;
-                if (res != XML_NOERROR) {
+                if (res != XML_NOERROR)
+				  {
                     set_error (buf, "'>' expected");
                     return res;
-                }
+                  }
                 buf_next (buf);
-            }
-            else {
+              }
+            else
+			  {
                 set_error (buf, "'--' or DOCTYPE declaration expected");
                 return XML_LOADERROR;
-            }
+              }
             return res;
           }
         if (c == '?')
@@ -1501,30 +1529,32 @@ xml_load_item (XML_ITEM  *item, XML_BUFFER *buf)
                             /*  not an error. end tag has been found.        */
                             end_item_name = buf_get_name (buf);
 
-                            if (strcmp (item_name, end_item_name) == 0) {
+                            if (strcmp (item_name, end_item_name) == 0)
+							  {
                                 res = XML_NOERROR;
 
                                 /* Skip optional white space at end of name */
                                 /* Then check for '>" at end of end tag.    */
-                                            if (buf_seek_next_nonwhite(buf) == BUF_READY)
-                                {
-                                    if (buf_get_current(buf) == '>') {
-                                            buf_next(buf);
-                                    }
+                                if (buf_seek_next_nonwhite(buf) == BUF_READY)
+                                  {
+                                    if (buf_get_current(buf) == '>')
+                                      {
+                                        buf_next(buf);
+                                      }
+                                    else
+                                      {
+                                        res = XML_LOADERROR;
+                                        set_error (buf, "Expected '>' to close end tag, got '%c'", buf_get_current(buf));
+                                      }
+                                  }
                                 else
-                                {
+                                  {
                                     res = XML_LOADERROR;
-                                    set_error (buf, "Expected '>' to close end tag, got '%c'", buf_get_current(buf));
-                                }
-                                }
-                                else
-                                {
-                                res = XML_LOADERROR;
-                                                set_error (buf, "Expected '>' to close end tag, ran out of data");
-                                }
-                            }
+                                    set_error (buf, "Expected '>' to close end tag, ran out of data");
+                                  }
+                              }
                             else
-                            {
+                              {
                                 res = XML_LOADERROR;
                                 set_error (buf, "Incorrect closing tag name: %s (expected %s)", end_item_name, item_name);
                               }
@@ -1570,20 +1600,20 @@ buf_seek_next_nonwhite (XML_BUFFER * buf)
     XML_BUF_INVARIANT(buf);
 
     if (buf->state != BUF_READY)
-	return buf->state;
+        return buf->state;
 
     while ((ch = buf_get_current (buf)) && is_space (ch))
       {
-	buf_next (buf);
-	if (buf->state != BUF_READY)
-	    break;
+        buf_next (buf);
+        if (buf->state != BUF_READY)
+            break;
       }
 
     if (buf->state != BUF_READY)
-	return buf->state;
+        return buf->state;
 
     if (! is_space (ch))
-	return BUF_READY;
+        return BUF_READY;
 
     /*  In theory this code is unreachable, but just in case... */
     buf->state = BUF_UNEXPECTED_ERROR;
@@ -1597,7 +1627,7 @@ buf_seek_next_nonwhite (XML_BUFFER * buf)
     ASSERT (res_size <= res_alloc_size);                                      \
     if (res_size >= res_alloc_size)                                           \
       {                                                                       \
-        /* res is, or could become, full (or NULL) -->we increase its size*/ \
+        /* res is, or could become, full (or NULL) -->we increase its size*/  \
         if (!res_alloc_size)                                                  \
           {                                                                   \
             res_alloc_size = STRING_BUF_SIZE;                                 \
@@ -1648,9 +1678,10 @@ buf_seek_next_nonwhite (XML_BUFFER * buf)
                 else                                                          \
                   {                                                           \
                     APPEND ('&');                                             \
-                    for (idx=0; idx<metasize; idx++) {                        \
+                    for (idx=0; idx<metasize; idx++)                          \
+                      {                                                       \
                         APPEND (metachar[idx]);                               \
-                    }                                                         \
+                      }                                                       \
                     APPEND (';');                                             \
                   }                                                           \
                 buf_get_next(buf, c);                                         \
@@ -1871,10 +1902,11 @@ set_error (XML_BUFFER *buf,
 
 #ifdef _DEBUG_
     #define my_assert(_COND_)                                       \
-        if (! (_COND_)) {                                           \
+        if (! (_COND_))                                             \
+          {                                                         \
             printf ("\nmy_ASSERT (%d)\n", LineNr);                  \
             ASSERT (_COND_);                                        \
-        }
+          }
 
     void invariant (XML_BUFFER * buf, int LineNr)
     {

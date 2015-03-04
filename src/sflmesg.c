@@ -150,7 +150,7 @@ static void read_msg (int msgid)
     if (msgfile == NULL)
       {
         snprintf (msgline, sizeof (msgline), 
-		           "** Message %d not found - file not open **\n",
+                   "** Message %d not found - file not open **\n",
                            msgid);
         return;                         /*  Message not found in file        */
       }
@@ -158,7 +158,7 @@ static void read_msg (int msgid)
       {
         if (!file_read (msgfile, msgline))
             strncpy (msgline, "0000 .", sizeof (msgline)); /*  "." signals   */
-	                                                   /* end of file    */
+                                                       /* end of file    */
       }
     else
       {
@@ -170,7 +170,7 @@ static void read_msg (int msgid)
             if (!file_read (msgfile, msgline))
               {
                 snprintf (msgline, sizeof (msgline), 
-			           "0000 ** Message %d not found **\n", msgid);
+                       "0000 ** Message %d not found **\n", msgid);
                 break;                  /*  Message not found in file        */
               }
             if ((isdigit (*msgline))

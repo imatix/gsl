@@ -150,7 +150,7 @@ conv_number_str (
     else 
       {
         /*  If fraction is provided, fill out to whole + fraction            */
-	    if (strlen (number) < (size_t) decs_wanted + 1)
+        if (strlen (number) < (size_t) decs_wanted + 1)
          {
             strpad (padded, '0', decs_wanted + 1);
             strcpy (padded + (decs_wanted - strlen (number) + 1), number);

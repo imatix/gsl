@@ -844,13 +844,13 @@ void smttime_term (void);
       {                                                                      \
         if (_accept)                                                         \
             event_send (_reply_to, NULL, _accept,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+		        NULL, 0, NULL, NULL, NULL, 0);                               \
       }                                                                      \
     else                                                                     \
       {                                                                      \
         if (_reject)                                                         \
             event_send (_reply_to, NULL, _reject,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+		        NULL, 0, NULL, NULL, NULL, 0);                               \
       }
 
 /*  Send event - wakeup                                                      */
@@ -892,13 +892,13 @@ void smttime_term (void);
       {                                                                      \
         if (_accept)                                                         \
             event_send (_reply_to, NULL, _accept,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+		        NULL, 0, NULL, NULL, NULL, 0);                               \
       }                                                                      \
     else                                                                     \
       {                                                                      \
         if (_reject)                                                         \
             event_send (_reply_to, NULL, _reject,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+		        NULL, 0, NULL, NULL, NULL, 0);                               \
       }
 
 /*  Send event - clock                                                       */
@@ -946,13 +946,13 @@ void smttime_term (void);
       {                                                                      \
         if (_accept)                                                         \
             event_send (_reply_to, NULL, _accept,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+		        NULL, 0, NULL, NULL, NULL, 0);                               \
       }                                                                      \
     else                                                                     \
       {                                                                      \
         if (_reject)                                                         \
             event_send (_reply_to, NULL, _reject,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+		        NULL, 0, NULL, NULL, NULL, 0);                               \
       }
 
 /*  Send event - flush                                                       */
@@ -1119,7 +1119,7 @@ free_smtlib_shutdown (
 
 extern char *SMTLIB_SHUTDOWN;
 
-#define declare_smtlib_shutdown(_event, _priority)                             \
+#define declare_smtlib_shutdown(_event, _priority)                            \
     method_declare (agent, SMTLIB_SHUTDOWN, _event, _priority)
 
 /*  Send event - shutdown                                                    */
@@ -1134,11 +1134,11 @@ lsend_smtlib_shutdown (
           word _timeout,
     const word  signal);            /*  Signal that provoked shutdown    */
 
-#define send_smtlib_shutdown(_to,                                              \
-            signal)                                                          \
-       lsend_smtlib_shutdown(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtlib_shutdown(_to,                                             \
+            signal)                                                           \
+       lsend_smtlib_shutdown(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             signal)
 
 
@@ -1152,23 +1152,23 @@ lsend_smtlib_shutdown (
 
 extern char *SMTLOG_PLAIN;
 
-#define declare_smtlog_plain(_event, _priority)                                \
+#define declare_smtlog_plain(_event, _priority)                               \
     method_declare (agent, SMTLOG_PLAIN, _event, _priority)
 
 /*  Send event - plain                                                       */
 
-#define lsend_smtlog_plain(_to, _from,                                         \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTLOG_PLAIN,                                              \
-                    NULL, 0,                                                 \
+#define lsend_smtlog_plain(_to, _from,                                        \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTLOG_PLAIN,                                             \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtlog_plain(_to)                                                 \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTLOG_PLAIN,                                              \
-                    NULL, 0,                                                 \
+#define send_smtlog_plain(_to)                                                \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTLOG_PLAIN,                                             \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -1178,23 +1178,23 @@ extern char *SMTLOG_PLAIN;
 
 extern char *SMTLOG_STAMP;
 
-#define declare_smtlog_stamp(_event, _priority)                                \
+#define declare_smtlog_stamp(_event, _priority)                               \
     method_declare (agent, SMTLOG_STAMP, _event, _priority)
 
 /*  Send event - stamp                                                       */
 
-#define lsend_smtlog_stamp(_to, _from,                                         \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTLOG_STAMP,                                              \
-                    NULL, 0,                                                 \
+#define lsend_smtlog_stamp(_to, _from,                                        \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTLOG_STAMP,                                             \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtlog_stamp(_to)                                                 \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTLOG_STAMP,                                              \
-                    NULL, 0,                                                 \
+#define send_smtlog_stamp(_to)                                                \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTLOG_STAMP,                                             \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -1204,23 +1204,23 @@ extern char *SMTLOG_STAMP;
 
 extern char *SMTLOG_CLOSE;
 
-#define declare_smtlog_close(_event, _priority)                                \
+#define declare_smtlog_close(_event, _priority)                               \
     method_declare (agent, SMTLOG_CLOSE, _event, _priority)
 
 /*  Send event - close                                                       */
 
-#define lsend_smtlog_close(_to, _from,                                         \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTLOG_CLOSE,                                              \
-                    NULL, 0,                                                 \
+#define lsend_smtlog_close(_to, _from,                                        \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTLOG_CLOSE,                                             \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtlog_close(_to)                                                 \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTLOG_CLOSE,                                              \
-                    NULL, 0,                                                 \
+#define send_smtlog_close(_to)                                                \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTLOG_CLOSE,                                             \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -1248,7 +1248,7 @@ free_smtlog_filename (
 
 extern char *SMTLOG_CYCLE;
 
-#define declare_smtlog_cycle(_event, _priority)                                \
+#define declare_smtlog_cycle(_event, _priority)                               \
     method_declare (agent, SMTLOG_CYCLE, _event, _priority)
 
 /*  Send event - cycle                                                       */
@@ -1263,11 +1263,11 @@ lsend_smtlog_cycle (
           word _timeout,
     const char *filename);          /*                                   */
 
-#define send_smtlog_cycle(_to,                                                 \
-            filename)                                                        \
-       lsend_smtlog_cycle(_to,                                                 \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtlog_cycle(_to,                                                \
+            filename)                                                         \
+       lsend_smtlog_cycle(_to,                                                \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             filename)
 
 /*---------------------------------------------------------------------------
@@ -1276,7 +1276,7 @@ lsend_smtlog_cycle (
 
 extern char *SMTLOG_OPEN;
 
-#define declare_smtlog_open(_event, _priority)                                 \
+#define declare_smtlog_open(_event, _priority)                                \
     method_declare (agent, SMTLOG_OPEN, _event, _priority)
 
 /*  Send event - open                                                        */
@@ -1291,11 +1291,11 @@ lsend_smtlog_open (
           word _timeout,
     const char *filename);          /*                                   */
 
-#define send_smtlog_open(_to,                                                  \
-            filename)                                                        \
-       lsend_smtlog_open(_to,                                                  \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtlog_open(_to,                                                 \
+            filename)                                                         \
+       lsend_smtlog_open(_to,                                                 \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             filename)
 
 /*---------------------------------------------------------------------------
@@ -1304,7 +1304,7 @@ lsend_smtlog_open (
 
 extern char *SMTLOG_APPEND;
 
-#define declare_smtlog_append(_event, _priority)                               \
+#define declare_smtlog_append(_event, _priority)                              \
     method_declare (agent, SMTLOG_APPEND, _event, _priority)
 
 /*  Send event - append                                                      */
@@ -1319,11 +1319,11 @@ lsend_smtlog_append (
           word _timeout,
     const char *filename);          /*                                   */
 
-#define send_smtlog_append(_to,                                                \
-            filename)                                                        \
-       lsend_smtlog_append(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtlog_append(_to,                                               \
+            filename)                                                         \
+       lsend_smtlog_append(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             filename)
 
 
@@ -1351,7 +1351,7 @@ free_smtlog_text (
 
 extern char *SMTLOG_PUT;
 
-#define declare_smtlog_put(_event, _priority)                                  \
+#define declare_smtlog_put(_event, _priority)                                 \
     method_declare (agent, SMTLOG_PUT, _event, _priority)
 
 /*  Send event - put                                                         */
@@ -1366,11 +1366,11 @@ lsend_smtlog_put (
           word _timeout,
     const char *text);              /*                                   */
 
-#define send_smtlog_put(_to,                                                   \
-            text)                                                            \
-       lsend_smtlog_put(_to,                                                   \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtlog_put(_to,                                                  \
+            text)                                                             \
+       lsend_smtlog_put(_to,                                                  \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             text)
 
 
@@ -1420,7 +1420,7 @@ free_smtxlog_open (
 
 extern char *SMTXLOG_OPEN;
 
-#define declare_smtxlog_open(_event, _priority)                                \
+#define declare_smtxlog_open(_event, _priority)                               \
     method_declare (agent, SMTXLOG_OPEN, _event, _priority)
 
 /*  Send event - open                                                        */
@@ -1444,29 +1444,29 @@ lsend_smtxlog_open (
     const char *cycle_lines,        /*  For size-based cycling           */
     const char *cycle_argument);    /*  For other cycle methods          */
 
-#define send_smtxlog_open(_to,                                                 \
-            log_path,                                                        \
-            log_file,                                                        \
-            log_format,                                                      \
-            cycle_when,                                                      \
-            cycle_how,                                                       \
-            cycle_time,                                                      \
-            cycle_date,                                                      \
-            cycle_size,                                                      \
-            cycle_lines,                                                     \
-            cycle_argument)                                                  \
-       lsend_smtxlog_open(_to,                                                 \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            log_path,                                                        \
-            log_file,                                                        \
-            log_format,                                                      \
-            cycle_when,                                                      \
-            cycle_how,                                                       \
-            cycle_time,                                                      \
-            cycle_date,                                                      \
-            cycle_size,                                                      \
-            cycle_lines,                                                     \
+#define send_smtxlog_open(_to,                                                \
+            log_path,                                                         \
+            log_file,                                                         \
+            log_format,                                                       \
+            cycle_when,                                                       \
+            cycle_how,                                                        \
+            cycle_time,                                                       \
+            cycle_date,                                                       \
+            cycle_size,                                                       \
+            cycle_lines,                                                      \
+            cycle_argument)                                                   \
+       lsend_smtxlog_open(_to,                                                \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            log_path,                                                         \
+            log_file,                                                         \
+            log_format,                                                       \
+            cycle_when,                                                       \
+            cycle_how,                                                        \
+            cycle_time,                                                       \
+            cycle_date,                                                       \
+            cycle_size,                                                       \
+            cycle_lines,                                                      \
             cycle_argument)
 
 
@@ -1498,7 +1498,7 @@ free_smtxlog_log (
 
 extern char *SMTXLOG_LOG;
 
-#define declare_smtxlog_log(_event, _priority)                                 \
+#define declare_smtxlog_log(_event, _priority)                                \
     method_declare (agent, SMTXLOG_LOG, _event, _priority)
 
 /*  Send event - log                                                         */
@@ -1515,15 +1515,15 @@ lsend_smtxlog_log (
     const word  value_size,         /*  Value size                       */
     const void *value);             /*  Value to log                     */
 
-#define send_smtxlog_log(_to,                                                  \
-            file_name,                                                       \
-            value_size,                                                      \
-            value)                                                           \
-       lsend_smtxlog_log(_to,                                                  \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            file_name,                                                       \
-            value_size,                                                      \
+#define send_smtxlog_log(_to,                                                 \
+            file_name,                                                        \
+            value_size,                                                       \
+            value)                                                            \
+       lsend_smtxlog_log(_to,                                                 \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            file_name,                                                        \
+            value_size,                                                       \
             value)
 
 
@@ -1551,7 +1551,7 @@ free_smtxlog_put (
 
 extern char *SMTXLOG_PUT;
 
-#define declare_smtxlog_put(_event, _priority)                                 \
+#define declare_smtxlog_put(_event, _priority)                                \
     method_declare (agent, SMTXLOG_PUT, _event, _priority)
 
 /*  Send event - put                                                         */
@@ -1566,11 +1566,11 @@ lsend_smtxlog_put (
           word _timeout,
     const char *message);           /*  Line of text to log              */
 
-#define send_smtxlog_put(_to,                                                  \
-            message)                                                         \
-       lsend_smtxlog_put(_to,                                                  \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtxlog_put(_to,                                                 \
+            message)                                                          \
+       lsend_smtxlog_put(_to,                                                 \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             message)
 
 
@@ -1580,23 +1580,23 @@ lsend_smtxlog_put (
 
 extern char *SMTXLOG_CYCLE;
 
-#define declare_smtxlog_cycle(_event, _priority)                               \
+#define declare_smtxlog_cycle(_event, _priority)                              \
     method_declare (agent, SMTXLOG_CYCLE, _event, _priority)
 
 /*  Send event - cycle                                                       */
 
-#define lsend_smtxlog_cycle(_to, _from,                                        \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTXLOG_CYCLE,                                             \
-                    NULL, 0,                                                 \
+#define lsend_smtxlog_cycle(_to, _from,                                       \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTXLOG_CYCLE,                                            \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtxlog_cycle(_to)                                                \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTXLOG_CYCLE,                                             \
-                    NULL, 0,                                                 \
+#define send_smtxlog_cycle(_to)                                               \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTXLOG_CYCLE,                                            \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -1606,23 +1606,23 @@ extern char *SMTXLOG_CYCLE;
 
 extern char *SMTXLOG_CLEAR;
 
-#define declare_smtxlog_clear(_event, _priority)                               \
+#define declare_smtxlog_clear(_event, _priority)                              \
     method_declare (agent, SMTXLOG_CLEAR, _event, _priority)
 
 /*  Send event - clear                                                       */
 
-#define lsend_smtxlog_clear(_to, _from,                                        \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTXLOG_CLEAR,                                             \
-                    NULL, 0,                                                 \
+#define lsend_smtxlog_clear(_to, _from,                                       \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTXLOG_CLEAR,                                            \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtxlog_clear(_to)                                                \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTXLOG_CLEAR,                                             \
-                    NULL, 0,                                                 \
+#define send_smtxlog_clear(_to)                                               \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTXLOG_CLEAR,                                            \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -1632,23 +1632,23 @@ extern char *SMTXLOG_CLEAR;
 
 extern char *SMTXLOG_CLOSE;
 
-#define declare_smtxlog_close(_event, _priority)                               \
+#define declare_smtxlog_close(_event, _priority)                              \
     method_declare (agent, SMTXLOG_CLOSE, _event, _priority)
 
 /*  Send event - close                                                       */
 
-#define lsend_smtxlog_close(_to, _from,                                        \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTXLOG_CLOSE,                                             \
-                    NULL, 0,                                                 \
+#define lsend_smtxlog_close(_to, _from,                                       \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTXLOG_CLOSE,                                            \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtxlog_close(_to)                                                \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTXLOG_CLOSE,                                             \
-                    NULL, 0,                                                 \
+#define send_smtxlog_close(_to)                                               \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTXLOG_CLOSE,                                            \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -1682,7 +1682,7 @@ free_smtoper_set_log (
 
 extern char *SMTOPER_SET_LOG;
 
-#define declare_smtoper_set_log(_event, _priority)                             \
+#define declare_smtoper_set_log(_event, _priority)                            \
     method_declare (agent, SMTOPER_SET_LOG, _event, _priority)
 
 /*  Send event - set log                                                     */
@@ -1698,13 +1698,13 @@ lsend_smtoper_set_log (
     const char *agent_name,         /*  Name of logging agent            */
     const char *thread_name);       /*  Name of logging thread           */
 
-#define send_smtoper_set_log(_to,                                              \
-            agent_name,                                                      \
-            thread_name)                                                     \
-       lsend_smtoper_set_log(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            agent_name,                                                      \
+#define send_smtoper_set_log(_to,                                             \
+            agent_name,                                                       \
+            thread_name)                                                      \
+       lsend_smtoper_set_log(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            agent_name,                                                       \
             thread_name)
 
 
@@ -1732,7 +1732,7 @@ free_smtoper_message (
 
 extern char *SMTOPER_ERROR;
 
-#define declare_smtoper_error(_event, _priority)                               \
+#define declare_smtoper_error(_event, _priority)                              \
     method_declare (agent, SMTOPER_ERROR, _event, _priority)
 
 /*  Send event - error                                                       */
@@ -1747,11 +1747,11 @@ lsend_smtoper_error (
           word _timeout,
     const char *text);              /*  Text of message                  */
 
-#define send_smtoper_error(_to,                                                \
-            text)                                                            \
-       lsend_smtoper_error(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtoper_error(_to,                                               \
+            text)                                                             \
+       lsend_smtoper_error(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             text)
 
 /*---------------------------------------------------------------------------
@@ -1760,7 +1760,7 @@ lsend_smtoper_error (
 
 extern char *SMTOPER_WARNING;
 
-#define declare_smtoper_warning(_event, _priority)                             \
+#define declare_smtoper_warning(_event, _priority)                            \
     method_declare (agent, SMTOPER_WARNING, _event, _priority)
 
 /*  Send event - warning                                                     */
@@ -1775,11 +1775,11 @@ lsend_smtoper_warning (
           word _timeout,
     const char *text);              /*  Text of message                  */
 
-#define send_smtoper_warning(_to,                                              \
-            text)                                                            \
-       lsend_smtoper_warning(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtoper_warning(_to,                                             \
+            text)                                                             \
+       lsend_smtoper_warning(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             text)
 
 /*---------------------------------------------------------------------------
@@ -1788,7 +1788,7 @@ lsend_smtoper_warning (
 
 extern char *SMTOPER_INFO;
 
-#define declare_smtoper_info(_event, _priority)                                \
+#define declare_smtoper_info(_event, _priority)                               \
     method_declare (agent, SMTOPER_INFO, _event, _priority)
 
 /*  Send event - info                                                        */
@@ -1803,11 +1803,11 @@ lsend_smtoper_info (
           word _timeout,
     const char *text);              /*  Text of message                  */
 
-#define send_smtoper_info(_to,                                                 \
-            text)                                                            \
-       lsend_smtoper_info(_to,                                                 \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtoper_info(_to,                                                \
+            text)                                                             \
+       lsend_smtoper_info(_to,                                                \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             text)
 
 
@@ -1817,23 +1817,23 @@ lsend_smtoper_info (
 
 extern char *SMTOPER_ENABLE;
 
-#define declare_smtoper_enable(_event, _priority)                              \
+#define declare_smtoper_enable(_event, _priority)                             \
     method_declare (agent, SMTOPER_ENABLE, _event, _priority)
 
 /*  Send event - enable                                                      */
 
-#define lsend_smtoper_enable(_to, _from,                                       \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTOPER_ENABLE,                                            \
-                    NULL, 0,                                                 \
+#define lsend_smtoper_enable(_to, _from,                                      \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTOPER_ENABLE,                                           \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtoper_enable(_to)                                               \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTOPER_ENABLE,                                            \
-                    NULL, 0,                                                 \
+#define send_smtoper_enable(_to)                                              \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTOPER_ENABLE,                                           \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -1843,23 +1843,23 @@ extern char *SMTOPER_ENABLE;
 
 extern char *SMTOPER_DISABLE;
 
-#define declare_smtoper_disable(_event, _priority)                             \
+#define declare_smtoper_disable(_event, _priority)                            \
     method_declare (agent, SMTOPER_DISABLE, _event, _priority)
 
 /*  Send event - disable                                                     */
 
-#define lsend_smtoper_disable(_to, _from,                                      \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTOPER_DISABLE,                                           \
-                    NULL, 0,                                                 \
+#define lsend_smtoper_disable(_to, _from,                                     \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTOPER_DISABLE,                                          \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtoper_disable(_to)                                              \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTOPER_DISABLE,                                           \
-                    NULL, 0,                                                 \
+#define send_smtoper_disable(_to)                                             \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTOPER_DISABLE,                                          \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -1868,17 +1868,17 @@ extern char *SMTOPER_DISABLE;
  *---------------------------------------------------------------------------*/
 
 typedef struct {
-    qbyte ip_address;                   /*  IP address in network order      */
-    char *ip_string;                    /*  Alternative address in string format  */
-    qbyte request_tag;                  /*  User-defined request tag         */
+    qbyte ip_address;              /*  IP address in network order           */
+    char *ip_string;               /*  Alternative address in string format  */
+    qbyte request_tag;             /*  User-defined request tag              */
 } struct_smtrdns_get_host_name;
 
 int
 put_smtrdns_get_host_name (
           byte **_buffer,
-    const qbyte ip_address,             /*  IP address in network order      */
-    const char *ip_string,              /*  Alternative address in string format  */
-    const qbyte request_tag);           /*  User-defined request tag         */
+    const qbyte ip_address,        /*  IP address in network order           */
+    const char *ip_string,         /*  Alternative address in string format  */
+    const qbyte request_tag);      /*  User-defined request tag              */
 
 int
 get_smtrdns_get_host_name (
@@ -1895,7 +1895,7 @@ free_smtrdns_get_host_name (
 
 extern char *SMTRDNS_GET_HOST_NAME;
 
-#define declare_smtrdns_get_host_name(_event, _priority)                       \
+#define declare_smtrdns_get_host_name(_event, _priority)                      \
     method_declare (agent, SMTRDNS_GET_HOST_NAME, _event, _priority)
 
 /*  Send event - get host name                                               */
@@ -1912,15 +1912,15 @@ lsend_smtrdns_get_host_name (
     const char *ip_string,          /*  Alternative address in string format  */
     const qbyte request_tag);       /*  User-defined request tag         */
 
-#define send_smtrdns_get_host_name(_to,                                        \
-            ip_address,                                                      \
-            ip_string,                                                       \
-            request_tag)                                                     \
-       lsend_smtrdns_get_host_name(_to,                                        \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            ip_address,                                                      \
-            ip_string,                                                       \
+#define send_smtrdns_get_host_name(_to,                                       \
+            ip_address,                                                       \
+            ip_string,                                                        \
+            request_tag)                                                      \
+       lsend_smtrdns_get_host_name(_to,                                       \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            ip_address,                                                       \
+            ip_string,                                                        \
             request_tag)
 
 
@@ -1950,7 +1950,7 @@ free_smtrdns_get_host_ip (
 
 extern char *SMTRDNS_GET_HOST_IP;
 
-#define declare_smtrdns_get_host_ip(_event, _priority)                         \
+#define declare_smtrdns_get_host_ip(_event, _priority)                        \
     method_declare (agent, SMTRDNS_GET_HOST_IP, _event, _priority)
 
 /*  Send event - get host ip                                                 */
@@ -1966,13 +1966,13 @@ lsend_smtrdns_get_host_ip (
     const char *host_name,          /*  Host name to look-up             */
     const qbyte request_tag);       /*  User-defined request tag         */
 
-#define send_smtrdns_get_host_ip(_to,                                          \
-            host_name,                                                       \
-            request_tag)                                                     \
-       lsend_smtrdns_get_host_ip(_to,                                          \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            host_name,                                                       \
+#define send_smtrdns_get_host_ip(_to,                                         \
+            host_name,                                                        \
+            request_tag)                                                      \
+       lsend_smtrdns_get_host_ip(_to,                                         \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            host_name,                                                        \
             request_tag)
 
 
@@ -2004,7 +2004,7 @@ free_smtrdns_host_name (
 
 extern char *SMTRDNS_HOST_NAME;
 
-#define declare_smtrdns_host_name(_event, _priority)                           \
+#define declare_smtrdns_host_name(_event, _priority)                          \
     method_declare (agent, SMTRDNS_HOST_NAME, _event, _priority)
 
 /*  Send event - host name                                                   */
@@ -2021,15 +2021,15 @@ lsend_smtrdns_host_name (
     const char *host_name,          /*  Host name                        */
     const qbyte request_tag);       /*  User-defined request tag         */
 
-#define send_smtrdns_host_name(_to,                                            \
-            ip_address,                                                      \
-            host_name,                                                       \
-            request_tag)                                                     \
-       lsend_smtrdns_host_name(_to,                                            \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            ip_address,                                                      \
-            host_name,                                                       \
+#define send_smtrdns_host_name(_to,                                           \
+            ip_address,                                                       \
+            host_name,                                                        \
+            request_tag)                                                      \
+       lsend_smtrdns_host_name(_to,                                           \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            ip_address,                                                       \
+            host_name,                                                        \
             request_tag)
 
 
@@ -2061,7 +2061,7 @@ free_smtrdns_host_ip (
 
 extern char *SMTRDNS_HOST_IP;
 
-#define declare_smtrdns_host_ip(_event, _priority)                             \
+#define declare_smtrdns_host_ip(_event, _priority)                            \
     method_declare (agent, SMTRDNS_HOST_IP, _event, _priority)
 
 /*  Send event - host ip                                                     */
@@ -2078,15 +2078,15 @@ lsend_smtrdns_host_ip (
     const char *host_name,          /*  Host name                        */
     const qbyte request_tag);       /*  User-defined request tag         */
 
-#define send_smtrdns_host_ip(_to,                                              \
-            ip_address,                                                      \
-            host_name,                                                       \
-            request_tag)                                                     \
-       lsend_smtrdns_host_ip(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            ip_address,                                                      \
-            host_name,                                                       \
+#define send_smtrdns_host_ip(_to,                                             \
+            ip_address,                                                       \
+            host_name,                                                        \
+            request_tag)                                                      \
+       lsend_smtrdns_host_ip(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            ip_address,                                                       \
+            host_name,                                                        \
             request_tag)
 
 
@@ -2096,23 +2096,23 @@ lsend_smtrdns_host_ip (
 
 extern char *SMTRDNS_HOST_ERROR;
 
-#define declare_smtrdns_host_error(_event, _priority)                          \
+#define declare_smtrdns_host_error(_event, _priority)                         \
     method_declare (agent, SMTRDNS_HOST_ERROR, _event, _priority)
 
 /*  Send event - host error                                                  */
 
-#define lsend_smtrdns_host_error(_to, _from,                                   \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTRDNS_HOST_ERROR,                                        \
-                    NULL, 0,                                                 \
+#define lsend_smtrdns_host_error(_to, _from,                                  \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTRDNS_HOST_ERROR,                                       \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtrdns_host_error(_to)                                           \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTRDNS_HOST_ERROR,                                        \
-                    NULL, 0,                                                 \
+#define send_smtrdns_host_error(_to)                                          \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTRDNS_HOST_ERROR,                                       \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -2122,23 +2122,23 @@ extern char *SMTRDNS_HOST_ERROR;
 
 extern char *SMTRDNS_HOST_END;
 
-#define declare_smtrdns_host_end(_event, _priority)                            \
+#define declare_smtrdns_host_end(_event, _priority)                           \
     method_declare (agent, SMTRDNS_HOST_END, _event, _priority)
 
 /*  Send event - host end                                                    */
 
-#define lsend_smtrdns_host_end(_to, _from,                                     \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTRDNS_HOST_END,                                          \
-                    NULL, 0,                                                 \
+#define lsend_smtrdns_host_end(_to, _from,                                    \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTRDNS_HOST_END,                                         \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtrdns_host_end(_to)                                             \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTRDNS_HOST_END,                                          \
-                    NULL, 0,                                                 \
+#define send_smtrdns_host_end(_to)                                            \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTRDNS_HOST_END,                                         \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -2148,23 +2148,23 @@ extern char *SMTRDNS_HOST_END;
 
 extern char *SMTRDNS_HOST_TIMEOUT;
 
-#define declare_smtrdns_host_timeout(_event, _priority)                        \
+#define declare_smtrdns_host_timeout(_event, _priority)                       \
     method_declare (agent, SMTRDNS_HOST_TIMEOUT, _event, _priority)
 
 /*  Send event - host timeout                                                */
 
-#define lsend_smtrdns_host_timeout(_to, _from,                                 \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTRDNS_HOST_TIMEOUT,                                      \
-                    NULL, 0,                                                 \
+#define lsend_smtrdns_host_timeout(_to, _from,                                \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTRDNS_HOST_TIMEOUT,                                     \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtrdns_host_timeout(_to)                                         \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTRDNS_HOST_TIMEOUT,                                      \
-                    NULL, 0,                                                 \
+#define send_smtrdns_host_timeout(_to)                                        \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTRDNS_HOST_TIMEOUT,                                     \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -2196,7 +2196,7 @@ free_smtslot_specification (
 
 extern char *SMTSLOT_SPECIFY;
 
-#define declare_smtslot_specify(_event, _priority)                             \
+#define declare_smtslot_specify(_event, _priority)                            \
     method_declare (agent, SMTSLOT_SPECIFY, _event, _priority)
 
 /*  Send event - specify                                                     */
@@ -2211,11 +2211,11 @@ lsend_smtslot_specify (
           word _timeout,
     const char *times);             /*  Time slot specification          */
 
-#define send_smtslot_specify(_to,                                              \
-            times)                                                           \
-       lsend_smtslot_specify(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtslot_specify(_to,                                             \
+            times)                                                            \
+       lsend_smtslot_specify(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             times)
 
 
@@ -2225,23 +2225,23 @@ lsend_smtslot_specify (
 
 extern char *SMTSLOT_RESET;
 
-#define declare_smtslot_reset(_event, _priority)                               \
+#define declare_smtslot_reset(_event, _priority)                              \
     method_declare (agent, SMTSLOT_RESET, _event, _priority)
 
 /*  Send event - reset                                                       */
 
-#define lsend_smtslot_reset(_to, _from,                                        \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTSLOT_RESET,                                             \
-                    NULL, 0,                                                 \
+#define lsend_smtslot_reset(_to, _from,                                       \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTSLOT_RESET,                                            \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtslot_reset(_to)                                                \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTSLOT_RESET,                                             \
-                    NULL, 0,                                                 \
+#define send_smtslot_reset(_to)                                               \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTSLOT_RESET,                                            \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -2251,23 +2251,23 @@ extern char *SMTSLOT_RESET;
 
 extern char *SMTSLOT_ON;
 
-#define declare_smtslot_on(_event, _priority)                                  \
+#define declare_smtslot_on(_event, _priority)                                 \
     method_declare (agent, SMTSLOT_ON, _event, _priority)
 
 /*  Send event - on                                                          */
 
-#define lsend_smtslot_on(_to, _from,                                           \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTSLOT_ON,                                                \
-                    NULL, 0,                                                 \
+#define lsend_smtslot_on(_to, _from,                                          \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTSLOT_ON,                                               \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtslot_on(_to)                                                   \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTSLOT_ON,                                                \
-                    NULL, 0,                                                 \
+#define send_smtslot_on(_to)                                                  \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTSLOT_ON,                                               \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -2277,23 +2277,23 @@ extern char *SMTSLOT_ON;
 
 extern char *SMTSLOT_OFF;
 
-#define declare_smtslot_off(_event, _priority)                                 \
+#define declare_smtslot_off(_event, _priority)                                \
     method_declare (agent, SMTSLOT_OFF, _event, _priority)
 
 /*  Send event - off                                                         */
 
-#define lsend_smtslot_off(_to, _from,                                          \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTSLOT_OFF,                                               \
-                    NULL, 0,                                                 \
+#define lsend_smtslot_off(_to, _from,                                         \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTSLOT_OFF,                                              \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtslot_off(_to)                                                  \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTSLOT_OFF,                                               \
-                    NULL, 0,                                                 \
+#define send_smtslot_off(_to)                                                 \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTSLOT_OFF,                                              \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -2303,23 +2303,23 @@ extern char *SMTSLOT_OFF;
 
 extern char *SMTSLOT_FINISH;
 
-#define declare_smtslot_finish(_event, _priority)                              \
+#define declare_smtslot_finish(_event, _priority)                             \
     method_declare (agent, SMTSLOT_FINISH, _event, _priority)
 
 /*  Send event - finish                                                      */
 
-#define lsend_smtslot_finish(_to, _from,                                       \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTSLOT_FINISH,                                            \
-                    NULL, 0,                                                 \
+#define lsend_smtslot_finish(_to, _from,                                      \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTSLOT_FINISH,                                           \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtslot_finish(_to)                                               \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTSLOT_FINISH,                                            \
-                    NULL, 0,                                                 \
+#define send_smtslot_finish(_to)                                              \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTSLOT_FINISH,                                           \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -2347,7 +2347,7 @@ free_smtslot_error (
 
 extern char *SMTSLOT_ERROR;
 
-#define declare_smtslot_error(_event, _priority)                               \
+#define declare_smtslot_error(_event, _priority)                              \
     method_declare (agent, SMTSLOT_ERROR, _event, _priority)
 
 /*  Send event - error                                                       */
@@ -2362,11 +2362,11 @@ lsend_smtslot_error (
           word _timeout,
     const char *message);           /*  Error message                    */
 
-#define send_smtslot_error(_to,                                                \
-            message)                                                         \
-       lsend_smtslot_error(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtslot_error(_to,                                               \
+            message)                                                          \
+       lsend_smtslot_error(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             message)
 
 
@@ -2376,23 +2376,23 @@ lsend_smtslot_error (
 
 extern char *SMTSLOT_SWITCH_ON;
 
-#define declare_smtslot_switch_on(_event, _priority)                           \
+#define declare_smtslot_switch_on(_event, _priority)                          \
     method_declare (agent, SMTSLOT_SWITCH_ON, _event, _priority)
 
 /*  Send event - switch on                                                   */
 
-#define lsend_smtslot_switch_on(_to, _from,                                    \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTSLOT_SWITCH_ON,                                         \
-                    NULL, 0,                                                 \
+#define lsend_smtslot_switch_on(_to, _from,                                   \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTSLOT_SWITCH_ON,                                        \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtslot_switch_on(_to)                                            \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTSLOT_SWITCH_ON,                                         \
-                    NULL, 0,                                                 \
+#define send_smtslot_switch_on(_to)                                           \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTSLOT_SWITCH_ON,                                        \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -2402,23 +2402,23 @@ extern char *SMTSLOT_SWITCH_ON;
 
 extern char *SMTSLOT_SWITCH_OFF;
 
-#define declare_smtslot_switch_off(_event, _priority)                          \
+#define declare_smtslot_switch_off(_event, _priority)                         \
     method_declare (agent, SMTSLOT_SWITCH_OFF, _event, _priority)
 
 /*  Send event - switch off                                                  */
 
-#define lsend_smtslot_switch_off(_to, _from,                                   \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTSLOT_SWITCH_OFF,                                        \
-                    NULL, 0,                                                 \
+#define lsend_smtslot_switch_off(_to, _from,                                  \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTSLOT_SWITCH_OFF,                                       \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtslot_switch_off(_to)                                           \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTSLOT_SWITCH_OFF,                                        \
-                    NULL, 0,                                                 \
+#define send_smtslot_switch_off(_to)                                          \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTSLOT_SWITCH_OFF,                                       \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -2430,7 +2430,7 @@ typedef struct {
     dbyte timeout;                      /*  Timeout in seconds, zero = none  */
     qbyte socket;                       /*  Socket to read from              */
     dbyte max_size;                     /*  Size of receiving buffer         */
-    dbyte min_size;                     /*  Minimum data to read, zero = all  */
+    dbyte min_size;                     /*  Minimum data to read, zero = all */
     void *tag;                          /*  User-defined request tag         */
 } struct_smtsock_read;
 
@@ -2440,7 +2440,7 @@ put_smtsock_read (
     const dbyte timeout,                /*  Timeout in seconds, zero = none  */
     const qbyte socket,                 /*  Socket to read from              */
     const dbyte max_size,               /*  Size of receiving buffer         */
-    const dbyte min_size,               /*  Minimum data to read, zero = all  */
+    const dbyte min_size,               /*  Minimum data to read, zero = all */
     const void *tag);                   /*  User-defined request tag         */
 
 int
@@ -2458,7 +2458,7 @@ free_smtsock_read (
 
 extern char *SMTSOCK_READ;
 
-#define declare_smtsock_read(_event, _priority)                                \
+#define declare_smtsock_read(_event, _priority)                               \
     method_declare (agent, SMTSOCK_READ, _event, _priority)
 
 /*  Send event - read                                                        */
@@ -2474,22 +2474,22 @@ lsend_smtsock_read (
     const dbyte timeout,            /*  Timeout in seconds, zero = none  */
     const qbyte socket,             /*  Socket to read from              */
     const dbyte max_size,           /*  Size of receiving buffer         */
-    const dbyte min_size,           /*  Minimum data to read, zero = all  */
+    const dbyte min_size,           /*  Minimum data to read, zero = all */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_read(_to,                                                 \
-            timeout,                                                         \
-            socket,                                                          \
-            max_size,                                                        \
-            min_size,                                                        \
-            tag)                                                             \
-       lsend_smtsock_read(_to,                                                 \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
-            max_size,                                                        \
-            min_size,                                                        \
+#define send_smtsock_read(_to,                                                \
+            timeout,                                                          \
+            socket,                                                           \
+            max_size,                                                         \
+            min_size,                                                         \
+            tag)                                                              \
+       lsend_smtsock_read(_to,                                                \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            max_size,                                                         \
+            min_size,                                                         \
             tag)
 
 /*---------------------------------------------------------------------------
@@ -2498,7 +2498,7 @@ lsend_smtsock_read (
 
 extern char *SMTSOCK_READR;
 
-#define declare_smtsock_readr(_event, _priority)                               \
+#define declare_smtsock_readr(_event, _priority)                              \
     method_declare (agent, SMTSOCK_READR, _event, _priority)
 
 /*  Send event - readr                                                       */
@@ -2517,19 +2517,19 @@ lsend_smtsock_readr (
     const dbyte min_size,           /*  Minimum data to read, zero = all  */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_readr(_to,                                                \
-            timeout,                                                         \
-            socket,                                                          \
-            max_size,                                                        \
-            min_size,                                                        \
-            tag)                                                             \
-       lsend_smtsock_readr(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
-            max_size,                                                        \
-            min_size,                                                        \
+#define send_smtsock_readr(_to,                                               \
+            timeout,                                                          \
+            socket,                                                           \
+            max_size,                                                         \
+            min_size,                                                         \
+            tag)                                                              \
+       lsend_smtsock_readr(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            max_size,                                                         \
+            min_size,                                                         \
             tag)
 
 
@@ -2567,7 +2567,7 @@ free_smtsock_write (
 
 extern char *SMTSOCK_WRITE;
 
-#define declare_smtsock_write(_event, _priority)                               \
+#define declare_smtsock_write(_event, _priority)                              \
     method_declare (agent, SMTSOCK_WRITE, _event, _priority)
 
 /*  Send event - write                                                       */
@@ -2587,21 +2587,21 @@ lsend_smtsock_write (
     const Bool  reply,              /*  Whether OK reply is required     */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_write(_to,                                                \
-            timeout,                                                         \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
-            reply,                                                           \
-            tag)                                                             \
-       lsend_smtsock_write(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
-            reply,                                                           \
+#define send_smtsock_write(_to,                                               \
+            timeout,                                                          \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
+            reply,                                                            \
+            tag)                                                              \
+       lsend_smtsock_write(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
+            reply,                                                            \
             tag)
 
 
@@ -2635,7 +2635,7 @@ free_smtsock_close (
 
 extern char *SMTSOCK_CLOSE;
 
-#define declare_smtsock_close(_event, _priority)                               \
+#define declare_smtsock_close(_event, _priority)                              \
     method_declare (agent, SMTSOCK_CLOSE, _event, _priority)
 
 /*  Send event - close                                                       */
@@ -2653,17 +2653,17 @@ lsend_smtsock_close (
     const Bool  reply,              /*  Whether OK reply is required     */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_close(_to,                                                \
-            timeout,                                                         \
-            socket,                                                          \
-            reply,                                                           \
-            tag)                                                             \
-       lsend_smtsock_close(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
-            reply,                                                           \
+#define send_smtsock_close(_to,                                               \
+            timeout,                                                          \
+            socket,                                                           \
+            reply,                                                            \
+            tag)                                                              \
+       lsend_smtsock_close(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            reply,                                                            \
             tag)
 
 
@@ -2671,7 +2671,7 @@ typedef struct {
     dbyte timeout;                      /*  Timeout in seconds, zero = none  */
     qbyte socket;                       /*  Socket to read from              */
     qbyte max_size;                     /*  Size of receiving buffer         */
-    qbyte min_size;                     /*  Minimum data to read, zero = all  */
+    qbyte min_size;                     /*  Minimum data to read, zero = all */
     void *tag;                          /*  User-defined request tag         */
 } struct_smtsock_readh;
 
@@ -2681,7 +2681,7 @@ put_smtsock_readh (
     const dbyte timeout,                /*  Timeout in seconds, zero = none  */
     const qbyte socket,                 /*  Socket to read from              */
     const qbyte max_size,               /*  Size of receiving buffer         */
-    const qbyte min_size,               /*  Minimum data to read, zero = all  */
+    const qbyte min_size,               /*  Minimum data to read, zero = all */
     const void *tag);                   /*  User-defined request tag         */
 
 int
@@ -2699,7 +2699,7 @@ free_smtsock_readh (
 
 extern char *SMTSOCK_READH;
 
-#define declare_smtsock_readh(_event, _priority)                               \
+#define declare_smtsock_readh(_event, _priority)                              \
     method_declare (agent, SMTSOCK_READH, _event, _priority)
 
 /*  Send event - readh                                                       */
@@ -2715,22 +2715,22 @@ lsend_smtsock_readh (
     const dbyte timeout,            /*  Timeout in seconds, zero = none  */
     const qbyte socket,             /*  Socket to read from              */
     const qbyte max_size,           /*  Size of receiving buffer         */
-    const qbyte min_size,           /*  Minimum data to read, zero = all  */
+    const qbyte min_size,           /*  Minimum data to read, zero = all */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_readh(_to,                                                \
-            timeout,                                                         \
-            socket,                                                          \
-            max_size,                                                        \
-            min_size,                                                        \
-            tag)                                                             \
-       lsend_smtsock_readh(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
-            max_size,                                                        \
-            min_size,                                                        \
+#define send_smtsock_readh(_to,                                               \
+            timeout,                                                          \
+            socket,                                                           \
+            max_size,                                                         \
+            min_size,                                                         \
+            tag)                                                              \
+       lsend_smtsock_readh(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            max_size,                                                         \
+            min_size,                                                         \
             tag)
 
 /*---------------------------------------------------------------------------
@@ -2739,7 +2739,7 @@ lsend_smtsock_readh (
 
 extern char *SMTSOCK_READRH;
 
-#define declare_smtsock_readrh(_event, _priority)                              \
+#define declare_smtsock_readrh(_event, _priority)                             \
     method_declare (agent, SMTSOCK_READRH, _event, _priority)
 
 /*  Send event - readrh                                                      */
@@ -2755,22 +2755,22 @@ lsend_smtsock_readrh (
     const dbyte timeout,            /*  Timeout in seconds, zero = none  */
     const qbyte socket,             /*  Socket to read from              */
     const qbyte max_size,           /*  Size of receiving buffer         */
-    const qbyte min_size,           /*  Minimum data to read, zero = all  */
+    const qbyte min_size,           /*  Minimum data to read, zero = all */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_readrh(_to,                                               \
-            timeout,                                                         \
-            socket,                                                          \
-            max_size,                                                        \
-            min_size,                                                        \
-            tag)                                                             \
-       lsend_smtsock_readrh(_to,                                               \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
-            max_size,                                                        \
-            min_size,                                                        \
+#define send_smtsock_readrh(_to,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            max_size,                                                         \
+            min_size,                                                         \
+            tag)                                                              \
+       lsend_smtsock_readrh(_to,                                              \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            max_size,                                                         \
+            min_size,                                                         \
             tag)
 
 
@@ -2808,7 +2808,7 @@ free_smtsock_writeh (
 
 extern char *SMTSOCK_WRITEH;
 
-#define declare_smtsock_writeh(_event, _priority)                              \
+#define declare_smtsock_writeh(_event, _priority)                             \
     method_declare (agent, SMTSOCK_WRITEH, _event, _priority)
 
 /*  Send event - writeh                                                      */
@@ -2828,21 +2828,21 @@ lsend_smtsock_writeh (
     const Bool  reply,              /*  Whether OK reply is required     */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_writeh(_to,                                               \
-            timeout,                                                         \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
-            reply,                                                           \
-            tag)                                                             \
-       lsend_smtsock_writeh(_to,                                               \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
-            reply,                                                           \
+#define send_smtsock_writeh(_to,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
+            reply,                                                            \
+            tag)                                                              \
+       lsend_smtsock_writeh(_to,                                              \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
+            reply,                                                            \
             tag)
 
 
@@ -2874,7 +2874,7 @@ free_smtsock_input (
 
 extern char *SMTSOCK_INPUT;
 
-#define declare_smtsock_input(_event, _priority)                               \
+#define declare_smtsock_input(_event, _priority)                              \
     method_declare (agent, SMTSOCK_INPUT, _event, _priority)
 
 /*  Send event - input                                                       */
@@ -2891,15 +2891,15 @@ lsend_smtsock_input (
     const qbyte socket,             /*  Socket to wait on                */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_input(_to,                                                \
-            timeout,                                                         \
-            socket,                                                          \
-            tag)                                                             \
-       lsend_smtsock_input(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
+#define send_smtsock_input(_to,                                               \
+            timeout,                                                          \
+            socket,                                                           \
+            tag)                                                              \
+       lsend_smtsock_input(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
             tag)
 
 
@@ -2931,7 +2931,7 @@ free_smtsock_output (
 
 extern char *SMTSOCK_OUTPUT;
 
-#define declare_smtsock_output(_event, _priority)                              \
+#define declare_smtsock_output(_event, _priority)                             \
     method_declare (agent, SMTSOCK_OUTPUT, _event, _priority)
 
 /*  Send event - output                                                      */
@@ -2948,15 +2948,15 @@ lsend_smtsock_output (
     const qbyte socket,             /*  Socket to wait on                */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_output(_to,                                               \
-            timeout,                                                         \
-            socket,                                                          \
-            tag)                                                             \
-       lsend_smtsock_output(_to,                                               \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
+#define send_smtsock_output(_to,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            tag)                                                              \
+       lsend_smtsock_output(_to,                                              \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
             tag)
 
 
@@ -2996,7 +2996,7 @@ free_smtsock_connect (
 
 extern char *SMTSOCK_CONNECT;
 
-#define declare_smtsock_connect(_event, _priority)                             \
+#define declare_smtsock_connect(_event, _priority)                            \
     method_declare (agent, SMTSOCK_CONNECT, _event, _priority)
 
 /*  Send event - connect                                                     */
@@ -3017,36 +3017,36 @@ lsend_smtsock_connect (
     const qbyte address,            /*  32-bit host address, or 0        */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_connect(_to,                                              \
-            timeout,                                                         \
-            type,                                                            \
-            host,                                                            \
-            service,                                                         \
-            port,                                                            \
-            address,                                                         \
-            tag)                                                             \
-       lsend_smtsock_connect(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            type,                                                            \
-            host,                                                            \
-            service,                                                         \
-            port,                                                            \
-            address,                                                         \
+#define send_smtsock_connect(_to,                                             \
+            timeout,                                                          \
+            type,                                                             \
+            host,                                                             \
+            service,                                                          \
+            port,                                                             \
+            address,                                                          \
+            tag)                                                              \
+       lsend_smtsock_connect(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            type,                                                             \
+            host,                                                             \
+            service,                                                          \
+            port,                                                             \
+            address,                                                          \
             tag)
 
 
 typedef struct {
     qbyte socket;                       /*  Socket for operation             */
-    Bool  alltypes;                     /*  All request types, or just read?  */
+    Bool  alltypes;                     /*  All request types, or just read? */
 } struct_smtsock_flush;
 
 int
 put_smtsock_flush (
           byte **_buffer,
     const qbyte socket,                 /*  Socket for operation             */
-    const Bool  alltypes);              /*  All request types, or just read?  */
+    const Bool  alltypes);              /*  All request types, or just read? */
 
 int
 get_smtsock_flush (
@@ -3063,7 +3063,7 @@ free_smtsock_flush (
 
 extern char *SMTSOCK_FLUSH;
 
-#define declare_smtsock_flush(_event, _priority)                               \
+#define declare_smtsock_flush(_event, _priority)                              \
     method_declare (agent, SMTSOCK_FLUSH, _event, _priority)
 
 /*  Send event - flush                                                       */
@@ -3076,16 +3076,16 @@ lsend_smtsock_flush (
           char *_reject,
           char *_expire,
           word _timeout,
-    const qbyte socket,             /*  Socket for operation             */
+    const qbyte socket,             /*  Socket for operation              */
     const Bool  alltypes);          /*  All request types, or just read?  */
 
-#define send_smtsock_flush(_to,                                                \
-            socket,                                                          \
-            alltypes)                                                        \
-       lsend_smtsock_flush(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
+#define send_smtsock_flush(_to,                                               \
+            socket,                                                           \
+            alltypes)                                                         \
+       lsend_smtsock_flush(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
             alltypes)
 
 
@@ -3117,7 +3117,7 @@ free_smtsock_read_reply (
 
 extern char *SMTSOCK_READ_OK;
 
-#define declare_smtsock_read_ok(_event, _priority)                             \
+#define declare_smtsock_read_ok(_event, _priority)                            \
     method_declare (agent, SMTSOCK_READ_OK, _event, _priority)
 
 /*  Send event - read ok                                                     */
@@ -3134,15 +3134,15 @@ lsend_smtsock_read_ok (
     const void *data,               /*  Block of data read               */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_read_ok(_to,                                              \
-            size,                                                            \
-            data,                                                            \
-            tag)                                                             \
-       lsend_smtsock_read_ok(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
-            data,                                                            \
+#define send_smtsock_read_ok(_to,                                             \
+            size,                                                             \
+            data,                                                             \
+            tag)                                                              \
+       lsend_smtsock_read_ok(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
+            data,                                                             \
             tag)
 
 /*---------------------------------------------------------------------------
@@ -3151,7 +3151,7 @@ lsend_smtsock_read_ok (
 
 extern char *SMTSOCK_READ_CLOSED;
 
-#define declare_smtsock_read_closed(_event, _priority)                         \
+#define declare_smtsock_read_closed(_event, _priority)                        \
     method_declare (agent, SMTSOCK_READ_CLOSED, _event, _priority)
 
 /*  Send event - read closed                                                 */
@@ -3168,15 +3168,15 @@ lsend_smtsock_read_closed (
     const void *data,               /*  Block of data read               */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_read_closed(_to,                                          \
-            size,                                                            \
-            data,                                                            \
-            tag)                                                             \
-       lsend_smtsock_read_closed(_to,                                          \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
-            data,                                                            \
+#define send_smtsock_read_closed(_to,                                         \
+            size,                                                             \
+            data,                                                             \
+            tag)                                                              \
+       lsend_smtsock_read_closed(_to,                                         \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
+            data,                                                             \
             tag)
 
 /*---------------------------------------------------------------------------
@@ -3185,7 +3185,7 @@ lsend_smtsock_read_closed (
 
 extern char *SMTSOCK_READ_TIMEOUT;
 
-#define declare_smtsock_read_timeout(_event, _priority)                        \
+#define declare_smtsock_read_timeout(_event, _priority)                       \
     method_declare (agent, SMTSOCK_READ_TIMEOUT, _event, _priority)
 
 /*  Send event - read timeout                                                */
@@ -3202,15 +3202,15 @@ lsend_smtsock_read_timeout (
     const void *data,               /*  Block of data read               */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_read_timeout(_to,                                         \
-            size,                                                            \
-            data,                                                            \
-            tag)                                                             \
-       lsend_smtsock_read_timeout(_to,                                         \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
-            data,                                                            \
+#define send_smtsock_read_timeout(_to,                                        \
+            size,                                                             \
+            data,                                                             \
+            tag)                                                              \
+       lsend_smtsock_read_timeout(_to,                                        \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
+            data,                                                             \
             tag)
 
 
@@ -3242,7 +3242,7 @@ free_smtsock_readh_reply (
 
 extern char *SMTSOCK_READH_OK;
 
-#define declare_smtsock_readh_ok(_event, _priority)                            \
+#define declare_smtsock_readh_ok(_event, _priority)                           \
     method_declare (agent, SMTSOCK_READH_OK, _event, _priority)
 
 /*  Send event - readh ok                                                    */
@@ -3259,15 +3259,15 @@ lsend_smtsock_readh_ok (
     const byte *data,               /*  Block of data read               */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_readh_ok(_to,                                             \
-            size,                                                            \
-            data,                                                            \
-            tag)                                                             \
-       lsend_smtsock_readh_ok(_to,                                             \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
-            data,                                                            \
+#define send_smtsock_readh_ok(_to,                                            \
+            size,                                                             \
+            data,                                                             \
+            tag)                                                              \
+       lsend_smtsock_readh_ok(_to,                                            \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
+            data,                                                             \
             tag)
 
 /*---------------------------------------------------------------------------
@@ -3276,7 +3276,7 @@ lsend_smtsock_readh_ok (
 
 extern char *SMTSOCK_READH_CLOSED;
 
-#define declare_smtsock_readh_closed(_event, _priority)                        \
+#define declare_smtsock_readh_closed(_event, _priority)                       \
     method_declare (agent, SMTSOCK_READH_CLOSED, _event, _priority)
 
 /*  Send event - readh closed                                                */
@@ -3293,15 +3293,15 @@ lsend_smtsock_readh_closed (
     const byte *data,               /*  Block of data read               */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_readh_closed(_to,                                         \
-            size,                                                            \
-            data,                                                            \
-            tag)                                                             \
-       lsend_smtsock_readh_closed(_to,                                         \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
-            data,                                                            \
+#define send_smtsock_readh_closed(_to,                                        \
+            size,                                                             \
+            data,                                                             \
+            tag)                                                              \
+       lsend_smtsock_readh_closed(_to,                                        \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
+            data,                                                             \
             tag)
 
 /*---------------------------------------------------------------------------
@@ -3310,7 +3310,7 @@ lsend_smtsock_readh_closed (
 
 extern char *SMTSOCK_READH_TIMEOUT;
 
-#define declare_smtsock_readh_timeout(_event, _priority)                       \
+#define declare_smtsock_readh_timeout(_event, _priority)                      \
     method_declare (agent, SMTSOCK_READH_TIMEOUT, _event, _priority)
 
 /*  Send event - readh timeout                                               */
@@ -3327,15 +3327,15 @@ lsend_smtsock_readh_timeout (
     const byte *data,               /*  Block of data read               */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_readh_timeout(_to,                                        \
-            size,                                                            \
-            data,                                                            \
-            tag)                                                             \
-       lsend_smtsock_readh_timeout(_to,                                        \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
-            data,                                                            \
+#define send_smtsock_readh_timeout(_to,                                       \
+            size,                                                             \
+            data,                                                             \
+            tag)                                                              \
+       lsend_smtsock_readh_timeout(_to,                                       \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
+            data,                                                             \
             tag)
 
 
@@ -3365,7 +3365,7 @@ free_smtsock_connect_ok (
 
 extern char *SMTSOCK_CONNECT_OK;
 
-#define declare_smtsock_connect_ok(_event, _priority)                          \
+#define declare_smtsock_connect_ok(_event, _priority)                         \
     method_declare (agent, SMTSOCK_CONNECT_OK, _event, _priority)
 
 /*  Send event - connect ok                                                  */
@@ -3381,13 +3381,13 @@ lsend_smtsock_connect_ok (
     const qbyte socket,             /*  New socket                       */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_connect_ok(_to,                                           \
-            socket,                                                          \
-            tag)                                                             \
-       lsend_smtsock_connect_ok(_to,                                           \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
+#define send_smtsock_connect_ok(_to,                                          \
+            socket,                                                           \
+            tag)                                                              \
+       lsend_smtsock_connect_ok(_to,                                          \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
             tag)
 
 
@@ -3415,7 +3415,7 @@ free_smtsock_reply (
 
 extern char *SMTSOCK_OK;
 
-#define declare_smtsock_ok(_event, _priority)                                  \
+#define declare_smtsock_ok(_event, _priority)                                 \
     method_declare (agent, SMTSOCK_OK, _event, _priority)
 
 /*  Send event - ok                                                          */
@@ -3430,11 +3430,11 @@ lsend_smtsock_ok (
           word _timeout,
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_ok(_to,                                                   \
-            tag)                                                             \
-       lsend_smtsock_ok(_to,                                                   \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtsock_ok(_to,                                                  \
+            tag)                                                              \
+       lsend_smtsock_ok(_to,                                                  \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             tag)
 
 /*---------------------------------------------------------------------------
@@ -3443,7 +3443,7 @@ lsend_smtsock_ok (
 
 extern char *SMTSOCK_CLOSED;
 
-#define declare_smtsock_closed(_event, _priority)                              \
+#define declare_smtsock_closed(_event, _priority)                             \
     method_declare (agent, SMTSOCK_CLOSED, _event, _priority)
 
 /*  Send event - closed                                                      */
@@ -3458,11 +3458,11 @@ lsend_smtsock_closed (
           word _timeout,
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_closed(_to,                                               \
-            tag)                                                             \
-       lsend_smtsock_closed(_to,                                               \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtsock_closed(_to,                                              \
+            tag)                                                              \
+       lsend_smtsock_closed(_to,                                              \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             tag)
 
 /*---------------------------------------------------------------------------
@@ -3471,7 +3471,7 @@ lsend_smtsock_closed (
 
 extern char *SMTSOCK_TIMEOUT;
 
-#define declare_smtsock_timeout(_event, _priority)                             \
+#define declare_smtsock_timeout(_event, _priority)                            \
     method_declare (agent, SMTSOCK_TIMEOUT, _event, _priority)
 
 /*  Send event - timeout                                                     */
@@ -3486,11 +3486,11 @@ lsend_smtsock_timeout (
           word _timeout,
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_timeout(_to,                                              \
-            tag)                                                             \
-       lsend_smtsock_timeout(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtsock_timeout(_to,                                             \
+            tag)                                                              \
+       lsend_smtsock_timeout(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             tag)
 
 
@@ -3520,7 +3520,7 @@ free_smtsock_error (
 
 extern char *SMTSOCK_ERROR;
 
-#define declare_smtsock_error(_event, _priority)                               \
+#define declare_smtsock_error(_event, _priority)                              \
     method_declare (agent, SMTSOCK_ERROR, _event, _priority)
 
 /*  Send event - error                                                       */
@@ -3536,13 +3536,13 @@ lsend_smtsock_error (
     const char *message,            /*  Error message                    */
     const void *tag);               /*  User-defined request tag         */
 
-#define send_smtsock_error(_to,                                                \
-            message,                                                         \
-            tag)                                                             \
-       lsend_smtsock_error(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            message,                                                         \
+#define send_smtsock_error(_to,                                               \
+            message,                                                          \
+            tag)                                                              \
+       lsend_smtsock_error(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            message,                                                          \
             tag)
 
 
@@ -3580,7 +3580,7 @@ free_smttran_putb (
 
 extern char *SMTTRAN_PUT_BLOCK;
 
-#define declare_smttran_put_block(_event, _priority)                           \
+#define declare_smttran_put_block(_event, _priority)                          \
     method_declare (agent, SMTTRAN_PUT_BLOCK, _event, _priority)
 
 /*  Send event - put block                                                   */
@@ -3598,17 +3598,17 @@ lsend_smttran_put_block (
     const void *data,               /*  Block of data to send            */
     const char *pipe);              /*  Transfer pipe, if any            */
 
-#define send_smttran_put_block(_to,                                            \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
-            pipe)                                                            \
-       lsend_smttran_put_block(_to,                                            \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
+#define send_smttran_put_block(_to,                                           \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
+            pipe)                                                             \
+       lsend_smttran_put_block(_to,                                           \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
             pipe)
 
 
@@ -3638,7 +3638,7 @@ free_smttran_getb (
 
 extern char *SMTTRAN_GET_BLOCK;
 
-#define declare_smttran_get_block(_event, _priority)                           \
+#define declare_smttran_get_block(_event, _priority)                          \
     method_declare (agent, SMTTRAN_GET_BLOCK, _event, _priority)
 
 /*  Send event - get block                                                   */
@@ -3654,13 +3654,13 @@ lsend_smttran_get_block (
     const qbyte socket,             /*  Socket for input                 */
     const char *pipe);              /*  Transfer pipe, if any            */
 
-#define send_smttran_get_block(_to,                                            \
-            socket,                                                          \
-            pipe)                                                            \
-       lsend_smttran_get_block(_to,                                            \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
+#define send_smttran_get_block(_to,                                           \
+            socket,                                                           \
+            pipe)                                                             \
+       lsend_smttran_get_block(_to,                                           \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
             pipe)
 
 
@@ -3694,7 +3694,7 @@ free_smttran_puth (
 
 extern char *SMTTRAN_PUT_HUGE;
 
-#define declare_smttran_put_huge(_event, _priority)                            \
+#define declare_smttran_put_huge(_event, _priority)                           \
     method_declare (agent, SMTTRAN_PUT_HUGE, _event, _priority)
 
 /*  Send event - put huge                                                    */
@@ -3712,17 +3712,17 @@ lsend_smttran_put_huge (
     const byte *data,               /*  Block of data to send            */
     const char *pipe);              /*  Transfer pipe, if any            */
 
-#define send_smttran_put_huge(_to,                                             \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
-            pipe)                                                            \
-       lsend_smttran_put_huge(_to,                                             \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
+#define send_smttran_put_huge(_to,                                            \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
+            pipe)                                                             \
+       lsend_smttran_put_huge(_to,                                            \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
             pipe)
 
 
@@ -3752,7 +3752,7 @@ free_smttran_geth (
 
 extern char *SMTTRAN_GET_HUGE;
 
-#define declare_smttran_get_huge(_event, _priority)                            \
+#define declare_smttran_get_huge(_event, _priority)                           \
     method_declare (agent, SMTTRAN_GET_HUGE, _event, _priority)
 
 /*  Send event - get huge                                                    */
@@ -3768,13 +3768,13 @@ lsend_smttran_get_huge (
     const qbyte socket,             /*  Socket for input                 */
     const char *pipe);              /*  Transfer pipe, if any            */
 
-#define send_smttran_get_huge(_to,                                             \
-            socket,                                                          \
-            pipe)                                                            \
-       lsend_smttran_get_huge(_to,                                             \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
+#define send_smttran_get_huge(_to,                                            \
+            socket,                                                           \
+            pipe)                                                             \
+       lsend_smttran_get_huge(_to,                                            \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
             pipe)
 
 
@@ -3812,7 +3812,7 @@ free_smttran_putf (
 
 extern char *SMTTRAN_PUT_FILE;
 
-#define declare_smttran_put_file(_event, _priority)                            \
+#define declare_smttran_put_file(_event, _priority)                           \
     method_declare (agent, SMTTRAN_PUT_FILE, _event, _priority)
 
 /*  Send event - put file                                                    */
@@ -3832,21 +3832,21 @@ lsend_smttran_put_file (
     const qbyte end,                /*  Ending offset; 0 = end           */
     const char *pipe);              /*  Transfer pipe, if any            */
 
-#define send_smttran_put_file(_to,                                             \
-            socket,                                                          \
-            filename,                                                        \
-            filetype,                                                        \
-            start,                                                           \
-            end,                                                             \
-            pipe)                                                            \
-       lsend_smttran_put_file(_to,                                             \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
-            filename,                                                        \
-            filetype,                                                        \
-            start,                                                           \
-            end,                                                             \
+#define send_smttran_put_file(_to,                                            \
+            socket,                                                           \
+            filename,                                                         \
+            filetype,                                                         \
+            start,                                                            \
+            end,                                                              \
+            pipe)                                                             \
+       lsend_smttran_put_file(_to,                                            \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
+            filename,                                                         \
+            filetype,                                                         \
+            start,                                                            \
+            end,                                                              \
             pipe)
 
 
@@ -3888,7 +3888,7 @@ free_smttran_getf (
 
 extern char *SMTTRAN_GET_FILE;
 
-#define declare_smttran_get_file(_event, _priority)                            \
+#define declare_smttran_get_file(_event, _priority)                           \
     method_declare (agent, SMTTRAN_GET_FILE, _event, _priority)
 
 /*  Send event - get file                                                    */
@@ -3910,25 +3910,25 @@ lsend_smttran_get_file (
     const qbyte maxsize,            /*  Max. size, -1 = no limit         */
     const char *pipe);              /*  Transfer pipe, if any            */
 
-#define send_smttran_get_file(_to,                                             \
-            socket,                                                          \
-            filename,                                                        \
-            filetype,                                                        \
-            start,                                                           \
-            end,                                                             \
-            append,                                                          \
-            maxsize,                                                         \
-            pipe)                                                            \
-       lsend_smttran_get_file(_to,                                             \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
-            filename,                                                        \
-            filetype,                                                        \
-            start,                                                           \
-            end,                                                             \
-            append,                                                          \
-            maxsize,                                                         \
+#define send_smttran_get_file(_to,                                            \
+            socket,                                                           \
+            filename,                                                         \
+            filetype,                                                         \
+            start,                                                            \
+            end,                                                              \
+            append,                                                           \
+            maxsize,                                                          \
+            pipe)                                                             \
+       lsend_smttran_get_file(_to,                                            \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
+            filename,                                                         \
+            filetype,                                                         \
+            start,                                                            \
+            end,                                                              \
+            append,                                                           \
+            maxsize,                                                          \
             pipe)
 
 
@@ -3956,7 +3956,7 @@ free_smttran_putb_ok (
 
 extern char *SMTTRAN_PUTB_OK;
 
-#define declare_smttran_putb_ok(_event, _priority)                             \
+#define declare_smttran_putb_ok(_event, _priority)                            \
     method_declare (agent, SMTTRAN_PUTB_OK, _event, _priority)
 
 /*  Send event - putb ok                                                     */
@@ -3971,11 +3971,11 @@ lsend_smttran_putb_ok (
           word _timeout,
     const dbyte size);              /*  Amount of transmitted data       */
 
-#define send_smttran_putb_ok(_to,                                              \
-            size)                                                            \
-       lsend_smttran_putb_ok(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smttran_putb_ok(_to,                                             \
+            size)                                                             \
+       lsend_smttran_putb_ok(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             size)
 
 
@@ -4005,7 +4005,7 @@ free_smttran_getb_ok (
 
 extern char *SMTTRAN_GETB_OK;
 
-#define declare_smttran_getb_ok(_event, _priority)                             \
+#define declare_smttran_getb_ok(_event, _priority)                            \
     method_declare (agent, SMTTRAN_GETB_OK, _event, _priority)
 
 /*  Send event - getb ok                                                     */
@@ -4021,13 +4021,13 @@ lsend_smttran_getb_ok (
     const word  size,               /*  Amount of data received          */
     const void *data);              /*  Block of data received           */
 
-#define send_smttran_getb_ok(_to,                                              \
-            size,                                                            \
-            data)                                                            \
-       lsend_smttran_getb_ok(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
+#define send_smttran_getb_ok(_to,                                             \
+            size,                                                             \
+            data)                                                             \
+       lsend_smttran_getb_ok(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
             data)
 
 
@@ -4055,7 +4055,7 @@ free_smttran_puth_ok (
 
 extern char *SMTTRAN_PUTH_OK;
 
-#define declare_smttran_puth_ok(_event, _priority)                             \
+#define declare_smttran_puth_ok(_event, _priority)                            \
     method_declare (agent, SMTTRAN_PUTH_OK, _event, _priority)
 
 /*  Send event - puth ok                                                     */
@@ -4070,11 +4070,11 @@ lsend_smttran_puth_ok (
           word _timeout,
     const qbyte size);              /*  Amount of transmitted data       */
 
-#define send_smttran_puth_ok(_to,                                              \
-            size)                                                            \
-       lsend_smttran_puth_ok(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smttran_puth_ok(_to,                                             \
+            size)                                                             \
+       lsend_smttran_puth_ok(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             size)
 
 
@@ -4104,7 +4104,7 @@ free_smttran_geth_ok (
 
 extern char *SMTTRAN_GETH_OK;
 
-#define declare_smttran_geth_ok(_event, _priority)                             \
+#define declare_smttran_geth_ok(_event, _priority)                            \
     method_declare (agent, SMTTRAN_GETH_OK, _event, _priority)
 
 /*  Send event - geth ok                                                     */
@@ -4120,13 +4120,13 @@ lsend_smttran_geth_ok (
     const qbyte size,               /*  Amount of data received          */
     const byte *data);              /*  Block of data received           */
 
-#define send_smttran_geth_ok(_to,                                              \
-            size,                                                            \
-            data)                                                            \
-       lsend_smttran_geth_ok(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
+#define send_smttran_geth_ok(_to,                                             \
+            size,                                                             \
+            data)                                                             \
+       lsend_smttran_geth_ok(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
             data)
 
 
@@ -4154,7 +4154,7 @@ free_smttran_putf_ok (
 
 extern char *SMTTRAN_PUTF_OK;
 
-#define declare_smttran_putf_ok(_event, _priority)                             \
+#define declare_smttran_putf_ok(_event, _priority)                            \
     method_declare (agent, SMTTRAN_PUTF_OK, _event, _priority)
 
 /*  Send event - putf ok                                                     */
@@ -4169,11 +4169,11 @@ lsend_smttran_putf_ok (
           word _timeout,
     const qbyte size);              /*  Amount of transmitted data       */
 
-#define send_smttran_putf_ok(_to,                                              \
-            size)                                                            \
-       lsend_smttran_putf_ok(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smttran_putf_ok(_to,                                             \
+            size)                                                             \
+       lsend_smttran_putf_ok(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             size)
 
 
@@ -4201,7 +4201,7 @@ free_smttran_getf_ok (
 
 extern char *SMTTRAN_GETF_OK;
 
-#define declare_smttran_getf_ok(_event, _priority)                             \
+#define declare_smttran_getf_ok(_event, _priority)                            \
     method_declare (agent, SMTTRAN_GETF_OK, _event, _priority)
 
 /*  Send event - getf ok                                                     */
@@ -4216,11 +4216,11 @@ lsend_smttran_getf_ok (
           word _timeout,
     const qbyte size);              /*  Amount of transmitted data       */
 
-#define send_smttran_getf_ok(_to,                                              \
-            size)                                                            \
-       lsend_smttran_getf_ok(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smttran_getf_ok(_to,                                             \
+            size)                                                             \
+       lsend_smttran_getf_ok(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             size)
 
 
@@ -4252,7 +4252,7 @@ free_smttran_pipe_create (
 
 extern char *SMTTRAN_PIPE_CREATE;
 
-#define declare_smttran_pipe_create(_event, _priority)                         \
+#define declare_smttran_pipe_create(_event, _priority)                        \
     method_declare (agent, SMTTRAN_PIPE_CREATE, _event, _priority)
 
 /*  Send event - pipe create                                                 */
@@ -4269,15 +4269,15 @@ lsend_smttran_pipe_create (
     const qbyte input_rate,         /*  Input rate, bytes/s              */
     const qbyte output_rate);       /*  Output rate, bytes/s             */
 
-#define send_smttran_pipe_create(_to,                                          \
-            name,                                                            \
-            input_rate,                                                      \
-            output_rate)                                                     \
-       lsend_smttran_pipe_create(_to,                                          \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            name,                                                            \
-            input_rate,                                                      \
+#define send_smttran_pipe_create(_to,                                         \
+            name,                                                             \
+            input_rate,                                                       \
+            output_rate)                                                      \
+       lsend_smttran_pipe_create(_to,                                         \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            name,                                                             \
+            input_rate,                                                       \
             output_rate)
 
 
@@ -4287,23 +4287,23 @@ lsend_smttran_pipe_create (
 
 extern char *SMTTRAN_CLEAR_PIPES;
 
-#define declare_smttran_clear_pipes(_event, _priority)                         \
+#define declare_smttran_clear_pipes(_event, _priority)                        \
     method_declare (agent, SMTTRAN_CLEAR_PIPES, _event, _priority)
 
 /*  Send event - clear pipes                                                 */
 
-#define lsend_smttran_clear_pipes(_to, _from,                                  \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTTRAN_CLEAR_PIPES,                                       \
-                    NULL, 0,                                                 \
+#define lsend_smttran_clear_pipes(_to, _from,                                 \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTTRAN_CLEAR_PIPES,                                      \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smttran_clear_pipes(_to)                                          \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTTRAN_CLEAR_PIPES,                                       \
-                    NULL, 0,                                                 \
+#define send_smttran_clear_pipes(_to)                                         \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTTRAN_CLEAR_PIPES,                                      \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -4313,23 +4313,23 @@ extern char *SMTTRAN_CLEAR_PIPES;
 
 extern char *SMTTRAN_COMMIT;
 
-#define declare_smttran_commit(_event, _priority)                              \
+#define declare_smttran_commit(_event, _priority)                             \
     method_declare (agent, SMTTRAN_COMMIT, _event, _priority)
 
 /*  Send event - commit                                                      */
 
-#define lsend_smttran_commit(_to, _from,                                       \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTTRAN_COMMIT,                                            \
-                    NULL, 0,                                                 \
+#define lsend_smttran_commit(_to, _from,                                      \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTTRAN_COMMIT,                                           \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smttran_commit(_to)                                               \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTTRAN_COMMIT,                                            \
-                    NULL, 0,                                                 \
+#define send_smttran_commit(_to)                                              \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTTRAN_COMMIT,                                           \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -4339,23 +4339,23 @@ extern char *SMTTRAN_COMMIT;
 
 extern char *SMTTRAN_CLOSED;
 
-#define declare_smttran_closed(_event, _priority)                              \
+#define declare_smttran_closed(_event, _priority)                             \
     method_declare (agent, SMTTRAN_CLOSED, _event, _priority)
 
 /*  Send event - closed                                                      */
 
-#define lsend_smttran_closed(_to, _from,                                       \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTTRAN_CLOSED,                                            \
-                    NULL, 0,                                                 \
+#define lsend_smttran_closed(_to, _from,                                      \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTTRAN_CLOSED,                                           \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smttran_closed(_to)                                               \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTTRAN_CLOSED,                                            \
-                    NULL, 0,                                                 \
+#define send_smttran_closed(_to)                                              \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTTRAN_CLOSED,                                           \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -4383,7 +4383,7 @@ free_smttran_error (
 
 extern char *SMTTRAN_ERROR;
 
-#define declare_smttran_error(_event, _priority)                               \
+#define declare_smttran_error(_event, _priority)                              \
     method_declare (agent, SMTTRAN_ERROR, _event, _priority)
 
 /*  Send event - error                                                       */
@@ -4398,11 +4398,11 @@ lsend_smttran_error (
           word _timeout,
     const char *reason);            /*  Error message                    */
 
-#define send_smttran_error(_to,                                                \
-            reason)                                                          \
-       lsend_smttran_error(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smttran_error(_to,                                               \
+            reason)                                                           \
+       lsend_smttran_error(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             reason)
 
 
@@ -4436,7 +4436,7 @@ free_smtupm_message (
 
 extern char *SMTUPM_PUT_BLOCK;
 
-#define declare_smtupm_put_block(_event, _priority)                            \
+#define declare_smtupm_put_block(_event, _priority)                          \
     method_declare (agent, SMTUPM_PUT_BLOCK, _event, _priority)
 
 /*  Send event - put block                                                   */
@@ -4452,13 +4452,13 @@ lsend_smtupm_put_block (
     const dbyte ident,              /*                                   */
     const char *string);            /*                                   */
 
-#define send_smtupm_put_block(_to,                                             \
-            ident,                                                           \
-            string)                                                          \
-       lsend_smtupm_put_block(_to,                                             \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            ident,                                                           \
+#define send_smtupm_put_block(_to,                                            \
+            ident,                                                            \
+            string)                                                           \
+       lsend_smtupm_put_block(_to,                                            \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            ident,                                                            \
             string)
 
 
@@ -4494,7 +4494,7 @@ free_smtpop_connection (
 
 extern char *SMTPOP_CONNECT;
 
-#define declare_smtpop_connect(_event, _priority)                              \
+#define declare_smtpop_connect(_event, _priority)                             \
     method_declare (agent, SMTPOP_CONNECT, _event, _priority)
 
 /*  Send event - connect                                                     */
@@ -4511,15 +4511,15 @@ lsend_smtpop_connect (
     const char *user,               /*  user name                        */
     const char *password);          /*  user password                    */
 
-#define send_smtpop_connect(_to,                                               \
-            server,                                                          \
-            user,                                                            \
-            password)                                                        \
-       lsend_smtpop_connect(_to,                                               \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            server,                                                          \
-            user,                                                            \
+#define send_smtpop_connect(_to,                                              \
+            server,                                                           \
+            user,                                                             \
+            password)                                                         \
+       lsend_smtpop_connect(_to,                                              \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            server,                                                           \
+            user,                                                             \
             password)
 
 
@@ -4549,7 +4549,7 @@ free_smtpop_connect_ok (
 
 extern char *SMTPOP_CONNECT_OK;
 
-#define declare_smtpop_connect_ok(_event, _priority)                           \
+#define declare_smtpop_connect_ok(_event, _priority)                          \
     method_declare (agent, SMTPOP_CONNECT_OK, _event, _priority)
 
 /*  Send event - connect_ok                                                  */
@@ -4565,13 +4565,13 @@ lsend_smtpop_connect_ok (
     const qbyte msg_cnt,            /*  count of new messages on server  */
     const qbyte msg_size);          /*  messages total size (bytes)      */
 
-#define send_smtpop_connect_ok(_to,                                            \
-            msg_cnt,                                                         \
-            msg_size)                                                        \
-       lsend_smtpop_connect_ok(_to,                                            \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            msg_cnt,                                                         \
+#define send_smtpop_connect_ok(_to,                                           \
+            msg_cnt,                                                          \
+            msg_size)                                                         \
+       lsend_smtpop_connect_ok(_to,                                           \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            msg_cnt,                                                          \
             msg_size)
 
 
@@ -4601,7 +4601,7 @@ free_smtpop_error (
 
 extern char *SMTPOP_ERROR;
 
-#define declare_smtpop_error(_event, _priority)                                \
+#define declare_smtpop_error(_event, _priority)                               \
     method_declare (agent, SMTPOP_ERROR, _event, _priority)
 
 /*  Send event - error                                                       */
@@ -4617,13 +4617,13 @@ lsend_smtpop_error (
     const char *reason,             /*  why connection failed            */
     const dbyte code);              /*                                   */
 
-#define send_smtpop_error(_to,                                                 \
-            reason,                                                          \
-            code)                                                            \
-       lsend_smtpop_error(_to,                                                 \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            reason,                                                          \
+#define send_smtpop_error(_to,                                                \
+            reason,                                                           \
+            code)                                                             \
+       lsend_smtpop_error(_to,                                                \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            reason,                                                           \
             code)
 
 
@@ -4633,23 +4633,23 @@ lsend_smtpop_error (
 
 extern char *SMTPOP_GET_SESSION_INFO;
 
-#define declare_smtpop_get_session_info(_event, _priority)                     \
+#define declare_smtpop_get_session_info(_event, _priority)                    \
     method_declare (agent, SMTPOP_GET_SESSION_INFO, _event, _priority)
 
 /*  Send event - get_session_info                                            */
 
-#define lsend_smtpop_get_session_info(_to, _from,                              \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTPOP_GET_SESSION_INFO,                                   \
-                    NULL, 0,                                                 \
+#define lsend_smtpop_get_session_info(_to, _from,                             \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTPOP_GET_SESSION_INFO,                                  \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtpop_get_session_info(_to)                                      \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTPOP_GET_SESSION_INFO,                                   \
-                    NULL, 0,                                                 \
+#define send_smtpop_get_session_info(_to)                                     \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTPOP_GET_SESSION_INFO,                                  \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 /*---------------------------------------------------------------------------
@@ -4658,23 +4658,23 @@ extern char *SMTPOP_GET_SESSION_INFO;
 
 extern char *SMTPOP_QUIT;
 
-#define declare_smtpop_quit(_event, _priority)                                 \
+#define declare_smtpop_quit(_event, _priority)                                \
     method_declare (agent, SMTPOP_QUIT, _event, _priority)
 
 /*  Send event - quit                                                        */
 
-#define lsend_smtpop_quit(_to, _from,                                          \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTPOP_QUIT,                                               \
-                    NULL, 0,                                                 \
+#define lsend_smtpop_quit(_to, _from,                                         \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTPOP_QUIT,                                              \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtpop_quit(_to)                                                  \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTPOP_QUIT,                                               \
-                    NULL, 0,                                                 \
+#define send_smtpop_quit(_to)                                                 \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTPOP_QUIT,                                              \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 /*---------------------------------------------------------------------------
@@ -4683,23 +4683,23 @@ extern char *SMTPOP_QUIT;
 
 extern char *SMTPOP_QUIT_OK;
 
-#define declare_smtpop_quit_ok(_event, _priority)                              \
+#define declare_smtpop_quit_ok(_event, _priority)                             \
     method_declare (agent, SMTPOP_QUIT_OK, _event, _priority)
 
 /*  Send event - quit_ok                                                     */
 
-#define lsend_smtpop_quit_ok(_to, _from,                                       \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTPOP_QUIT_OK,                                            \
-                    NULL, 0,                                                 \
+#define lsend_smtpop_quit_ok(_to, _from,                                      \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTPOP_QUIT_OK,                                           \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtpop_quit_ok(_to)                                               \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTPOP_QUIT_OK,                                            \
-                    NULL, 0,                                                 \
+#define send_smtpop_quit_ok(_to)                                              \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTPOP_QUIT_OK,                                           \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -4729,7 +4729,7 @@ free_smtpop_session_info (
 
 extern char *SMTPOP_SESSION_INFO;
 
-#define declare_smtpop_session_info(_event, _priority)                         \
+#define declare_smtpop_session_info(_event, _priority)                        \
     method_declare (agent, SMTPOP_SESSION_INFO, _event, _priority)
 
 /*  Send event - session_info                                                */
@@ -4745,13 +4745,13 @@ lsend_smtpop_session_info (
     const qbyte count,              /*  message count                    */
     const qbyte size);              /*  messages total size in bytes     */
 
-#define send_smtpop_session_info(_to,                                          \
-            count,                                                           \
-            size)                                                            \
-       lsend_smtpop_session_info(_to,                                          \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            count,                                                           \
+#define send_smtpop_session_info(_to,                                         \
+            count,                                                            \
+            size)                                                             \
+       lsend_smtpop_session_info(_to,                                         \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            count,                                                            \
             size)
 
 
@@ -4781,7 +4781,7 @@ free_smtpop_msg_session_info (
 
 extern char *SMTPOP_MSG_SESSION_INFO;
 
-#define declare_smtpop_msg_session_info(_event, _priority)                     \
+#define declare_smtpop_msg_session_info(_event, _priority)                    \
     method_declare (agent, SMTPOP_MSG_SESSION_INFO, _event, _priority)
 
 /*  Send event - msg_session_info                                            */
@@ -4797,13 +4797,13 @@ lsend_smtpop_msg_session_info (
     const qbyte msg_id,             /*  requested message id             */
     const qbyte size);              /*  messages total size in bytes     */
 
-#define send_smtpop_msg_session_info(_to,                                      \
-            msg_id,                                                          \
-            size)                                                            \
-       lsend_smtpop_msg_session_info(_to,                                      \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            msg_id,                                                          \
+#define send_smtpop_msg_session_info(_to,                                     \
+            msg_id,                                                           \
+            size)                                                             \
+       lsend_smtpop_msg_session_info(_to,                                     \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            msg_id,                                                           \
             size)
 
 
@@ -4833,7 +4833,7 @@ free_smtpop_msg_id (
 
 extern char *SMTPOP_GET_MSG_HEADER;
 
-#define declare_smtpop_get_msg_header(_event, _priority)                       \
+#define declare_smtpop_get_msg_header(_event, _priority)                      \
     method_declare (agent, SMTPOP_GET_MSG_HEADER, _event, _priority)
 
 /*  Send event - get_msg_header                                              */
@@ -4846,16 +4846,16 @@ lsend_smtpop_get_msg_header (
           char *_reject,
           char *_expire,
           word _timeout,
-    const qbyte msg_id,             /*  message id, zero=all             */
-    const char *attach_dir);        /*  directory where attchment will be stored  */
+    const qbyte msg_id,        /*  message id, zero=all                      */
+    const char *attach_dir);   /*  directory where attchment will be stored  */
 
-#define send_smtpop_get_msg_header(_to,                                        \
-            msg_id,                                                          \
-            attach_dir)                                                      \
-       lsend_smtpop_get_msg_header(_to,                                        \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            msg_id,                                                          \
+#define send_smtpop_get_msg_header(_to,                                       \
+            msg_id,                                                           \
+            attach_dir)                                                       \
+       lsend_smtpop_get_msg_header(_to,                                       \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            msg_id,                                                           \
             attach_dir)
 
 /*---------------------------------------------------------------------------
@@ -4864,7 +4864,7 @@ lsend_smtpop_get_msg_header (
 
 extern char *SMTPOP_GET_MSG;
 
-#define declare_smtpop_get_msg(_event, _priority)                              \
+#define declare_smtpop_get_msg(_event, _priority)                             \
     method_declare (agent, SMTPOP_GET_MSG, _event, _priority)
 
 /*  Send event - get_msg                                                     */
@@ -4877,16 +4877,16 @@ lsend_smtpop_get_msg (
           char *_reject,
           char *_expire,
           word _timeout,
-    const qbyte msg_id,             /*  message id, zero=all             */
-    const char *attach_dir);        /*  directory where attchment will be stored  */
+    const qbyte msg_id,        /*  message id, zero=all             */
+    const char *attach_dir);   /*  directory where attchment will be stored  */
 
-#define send_smtpop_get_msg(_to,                                               \
-            msg_id,                                                          \
-            attach_dir)                                                      \
-       lsend_smtpop_get_msg(_to,                                               \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            msg_id,                                                          \
+#define send_smtpop_get_msg(_to,                                              \
+            msg_id,                                                           \
+            attach_dir)                                                       \
+       lsend_smtpop_get_msg(_to,                                              \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            msg_id,                                                           \
             attach_dir)
 
 /*---------------------------------------------------------------------------
@@ -4895,7 +4895,7 @@ lsend_smtpop_get_msg (
 
 extern char *SMTPOP_DELETE_MSG;
 
-#define declare_smtpop_delete_msg(_event, _priority)                           \
+#define declare_smtpop_delete_msg(_event, _priority)                          \
     method_declare (agent, SMTPOP_DELETE_MSG, _event, _priority)
 
 /*  Send event - delete_msg                                                  */
@@ -4911,13 +4911,13 @@ lsend_smtpop_delete_msg (
     const qbyte msg_id,             /*  message id, zero=all             */
     const char *attach_dir);        /*  directory where attchment will be stored  */
 
-#define send_smtpop_delete_msg(_to,                                            \
-            msg_id,                                                          \
-            attach_dir)                                                      \
-       lsend_smtpop_delete_msg(_to,                                            \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            msg_id,                                                          \
+#define send_smtpop_delete_msg(_to,                                           \
+            msg_id,                                                           \
+            attach_dir)                                                       \
+       lsend_smtpop_delete_msg(_to,                                           \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            msg_id,                                                           \
             attach_dir)
 
 /*---------------------------------------------------------------------------
@@ -4926,7 +4926,7 @@ lsend_smtpop_delete_msg (
 
 extern char *SMTPOP_DELETE_OK;
 
-#define declare_smtpop_delete_ok(_event, _priority)                            \
+#define declare_smtpop_delete_ok(_event, _priority)                           \
     method_declare (agent, SMTPOP_DELETE_OK, _event, _priority)
 
 /*  Send event - delete_ok                                                   */
@@ -4942,13 +4942,13 @@ lsend_smtpop_delete_ok (
     const qbyte msg_id,             /*  message id, zero=all             */
     const char *attach_dir);        /*  directory where attchment will be stored  */
 
-#define send_smtpop_delete_ok(_to,                                             \
-            msg_id,                                                          \
-            attach_dir)                                                      \
-       lsend_smtpop_delete_ok(_to,                                             \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            msg_id,                                                          \
+#define send_smtpop_delete_ok(_to,                                            \
+            msg_id,                                                           \
+            attach_dir)                                                       \
+       lsend_smtpop_delete_ok(_to,                                            \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            msg_id,                                                           \
             attach_dir)
 
 /*---------------------------------------------------------------------------
@@ -4957,7 +4957,7 @@ lsend_smtpop_delete_ok (
 
 extern char *SMTPOP_GET_MSG_INFO;
 
-#define declare_smtpop_get_msg_info(_event, _priority)                         \
+#define declare_smtpop_get_msg_info(_event, _priority)                        \
     method_declare (agent, SMTPOP_GET_MSG_INFO, _event, _priority)
 
 /*  Send event - get_msg_info                                                */
@@ -4973,13 +4973,13 @@ lsend_smtpop_get_msg_info (
     const qbyte msg_id,             /*  message id, zero=all             */
     const char *attach_dir);        /*  directory where attchment will be stored  */
 
-#define send_smtpop_get_msg_info(_to,                                          \
-            msg_id,                                                          \
-            attach_dir)                                                      \
-       lsend_smtpop_get_msg_info(_to,                                          \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            msg_id,                                                          \
+#define send_smtpop_get_msg_info(_to,                                         \
+            msg_id,                                                           \
+            attach_dir)                                                       \
+       lsend_smtpop_get_msg_info(_to,                                         \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            msg_id,                                                           \
             attach_dir)
 
 
@@ -5017,7 +5017,7 @@ free_smtpop_msg_header (
 
 extern char *SMTPOP_MSG_HEADER;
 
-#define declare_smtpop_msg_header(_event, _priority)                           \
+#define declare_smtpop_msg_header(_event, _priority)                          \
     method_declare (agent, SMTPOP_MSG_HEADER, _event, _priority)
 
 /*  Send event - msg_header                                                  */
@@ -5037,21 +5037,21 @@ lsend_smtpop_msg_header (
     const char *date,               /*  date the message was received    */
     const char *subject);           /*  guess what                       */
 
-#define send_smtpop_msg_header(_to,                                            \
-            msg_id,                                                          \
-            from,                                                            \
-            to,                                                              \
-            cc,                                                              \
-            date,                                                            \
-            subject)                                                         \
-       lsend_smtpop_msg_header(_to,                                            \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            msg_id,                                                          \
-            from,                                                            \
-            to,                                                              \
-            cc,                                                              \
-            date,                                                            \
+#define send_smtpop_msg_header(_to,                                           \
+            msg_id,                                                           \
+            from,                                                             \
+            to,                                                               \
+            cc,                                                               \
+            date,                                                             \
+            subject)                                                          \
+       lsend_smtpop_msg_header(_to,                                           \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            msg_id,                                                           \
+            from,                                                             \
+            to,                                                               \
+            cc,                                                               \
+            date,                                                             \
             subject)
 
 
@@ -5095,7 +5095,7 @@ free_smtpop_msg (
 
 extern char *SMTPOP_MSG;
 
-#define declare_smtpop_msg(_event, _priority)                                  \
+#define declare_smtpop_msg(_event, _priority)                                 \
     method_declare (agent, SMTPOP_MSG, _event, _priority)
 
 /*  Send event - msg                                                         */
@@ -5118,27 +5118,27 @@ lsend_smtpop_msg (
     const char *attachments,        /*  attachment names, separated by semi-colon  */
     const char *attach_dir);        /*  directory where attach have been stored  */
 
-#define send_smtpop_msg(_to,                                                   \
-            msg_id,                                                          \
-            from,                                                            \
-            to,                                                              \
-            cc,                                                              \
-            date,                                                            \
-            subject,                                                         \
-            body,                                                            \
-            attachments,                                                     \
-            attach_dir)                                                      \
-       lsend_smtpop_msg(_to,                                                   \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            msg_id,                                                          \
-            from,                                                            \
-            to,                                                              \
-            cc,                                                              \
-            date,                                                            \
-            subject,                                                         \
-            body,                                                            \
-            attachments,                                                     \
+#define send_smtpop_msg(_to,                                                  \
+            msg_id,                                                           \
+            from,                                                             \
+            to,                                                               \
+            cc,                                                               \
+            date,                                                             \
+            subject,                                                          \
+            body,                                                             \
+            attachments,                                                      \
+            attach_dir)                                                       \
+       lsend_smtpop_msg(_to,                                                  \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            msg_id,                                                           \
+            from,                                                             \
+            to,                                                               \
+            cc,                                                               \
+            date,                                                             \
+            subject,                                                          \
+            body,                                                             \
+            attachments,                                                      \
             attach_dir)
 
 
@@ -5178,7 +5178,7 @@ free_smtsmtp_message (
 
 extern char *SMTSMTP_SEND_MESSAGE;
 
-#define declare_smtsmtp_send_message(_event, _priority)                        \
+#define declare_smtsmtp_send_message(_event, _priority)                       \
     method_declare (agent, SMTSMTP_SEND_MESSAGE, _event, _priority)
 
 /*  Send event - send_message                                                */
@@ -5197,19 +5197,19 @@ lsend_smtsmtp_send_message (
     const char *dest_uids,          /*                                   */
     const char *subject);           /*                                   */
 
-#define send_smtsmtp_send_message(_to,                                         \
-            smtp_server,                                                     \
-            msg_body,                                                        \
-            sender_uid,                                                      \
-            dest_uids,                                                       \
-            subject)                                                         \
-       lsend_smtsmtp_send_message(_to,                                         \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            smtp_server,                                                     \
-            msg_body,                                                        \
-            sender_uid,                                                      \
-            dest_uids,                                                       \
+#define send_smtsmtp_send_message(_to,                                        \
+            smtp_server,                                                      \
+            msg_body,                                                         \
+            sender_uid,                                                       \
+            dest_uids,                                                        \
+            subject)                                                          \
+       lsend_smtsmtp_send_message(_to,                                        \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            smtp_server,                                                      \
+            msg_body,                                                         \
+            sender_uid,                                                       \
+            dest_uids,                                                        \
             subject)
 
 /*---------------------------------------------------------------------------
@@ -5218,7 +5218,7 @@ lsend_smtsmtp_send_message (
 
 extern char *SMTSMTP_OPEN_MESSAGE;
 
-#define declare_smtsmtp_open_message(_event, _priority)                        \
+#define declare_smtsmtp_open_message(_event, _priority)                       \
     method_declare (agent, SMTSMTP_OPEN_MESSAGE, _event, _priority)
 
 /*  Send event - open_message                                                */
@@ -5237,19 +5237,19 @@ lsend_smtsmtp_open_message (
     const char *dest_uids,          /*                                   */
     const char *subject);           /*                                   */
 
-#define send_smtsmtp_open_message(_to,                                         \
-            smtp_server,                                                     \
-            msg_body,                                                        \
-            sender_uid,                                                      \
-            dest_uids,                                                       \
-            subject)                                                         \
-       lsend_smtsmtp_open_message(_to,                                         \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            smtp_server,                                                     \
-            msg_body,                                                        \
-            sender_uid,                                                      \
-            dest_uids,                                                       \
+#define send_smtsmtp_open_message(_to,                                        \
+            smtp_server,                                                      \
+            msg_body,                                                         \
+            sender_uid,                                                       \
+            dest_uids,                                                        \
+            subject)                                                          \
+       lsend_smtsmtp_open_message(_to,                                        \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            smtp_server,                                                      \
+            msg_body,                                                         \
+            sender_uid,                                                       \
+            dest_uids,                                                        \
             subject)
 
 
@@ -5277,7 +5277,7 @@ free_smtsmtp_chunk (
 
 extern char *SMTSMTP_MESSAGE_CHUNK;
 
-#define declare_smtsmtp_message_chunk(_event, _priority)                       \
+#define declare_smtsmtp_message_chunk(_event, _priority)                      \
     method_declare (agent, SMTSMTP_MESSAGE_CHUNK, _event, _priority)
 
 /*  Send event - message chunk                                               */
@@ -5292,11 +5292,11 @@ lsend_smtsmtp_message_chunk (
           word _timeout,
     const char *chunk);             /*                                   */
 
-#define send_smtsmtp_message_chunk(_to,                                        \
-            chunk)                                                           \
-       lsend_smtsmtp_message_chunk(_to,                                        \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtsmtp_message_chunk(_to,                                       \
+            chunk)                                                            \
+       lsend_smtsmtp_message_chunk(_to,                                       \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             chunk)
 
 
@@ -5306,23 +5306,23 @@ lsend_smtsmtp_message_chunk (
 
 extern char *SMTSMTP_CLOSE_MESSAGE;
 
-#define declare_smtsmtp_close_message(_event, _priority)                       \
+#define declare_smtsmtp_close_message(_event, _priority)                      \
     method_declare (agent, SMTSMTP_CLOSE_MESSAGE, _event, _priority)
 
 /*  Send event - close_message                                               */
 
-#define lsend_smtsmtp_close_message(_to, _from,                                \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTSMTP_CLOSE_MESSAGE,                                     \
-                    NULL, 0,                                                 \
+#define lsend_smtsmtp_close_message(_to, _from,                               \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTSMTP_CLOSE_MESSAGE,                                    \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtsmtp_close_message(_to)                                        \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTSMTP_CLOSE_MESSAGE,                                     \
-                    NULL, 0,                                                 \
+#define send_smtsmtp_close_message(_to)                                       \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTSMTP_CLOSE_MESSAGE,                                    \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -5352,7 +5352,7 @@ free_smtsmtp_reply (
 
 extern char *SMTSMTP_OK;
 
-#define declare_smtsmtp_ok(_event, _priority)                                  \
+#define declare_smtsmtp_ok(_event, _priority)                                 \
     method_declare (agent, SMTSMTP_OK, _event, _priority)
 
 /*  Send event - ok                                                          */
@@ -5368,13 +5368,13 @@ lsend_smtsmtp_ok (
     const qbyte code,               /*  error code                       */
     const char *msg);               /*  error description                */
 
-#define send_smtsmtp_ok(_to,                                                   \
-            code,                                                            \
-            msg)                                                             \
-       lsend_smtsmtp_ok(_to,                                                   \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            code,                                                            \
+#define send_smtsmtp_ok(_to,                                                  \
+            code,                                                             \
+            msg)                                                              \
+       lsend_smtsmtp_ok(_to,                                                  \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            code,                                                             \
             msg)
 
 /*---------------------------------------------------------------------------
@@ -5383,7 +5383,7 @@ lsend_smtsmtp_ok (
 
 extern char *SMTSMTP_ERROR;
 
-#define declare_smtsmtp_error(_event, _priority)                               \
+#define declare_smtsmtp_error(_event, _priority)                              \
     method_declare (agent, SMTSMTP_ERROR, _event, _priority)
 
 /*  Send event - error                                                       */
@@ -5399,13 +5399,13 @@ lsend_smtsmtp_error (
     const qbyte code,               /*  error code                       */
     const char *msg);               /*  error description                */
 
-#define send_smtsmtp_error(_to,                                                \
-            code,                                                            \
-            msg)                                                             \
-       lsend_smtsmtp_error(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            code,                                                            \
+#define send_smtsmtp_error(_to,                                               \
+            code,                                                             \
+            msg)                                                              \
+       lsend_smtsmtp_error(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            code,                                                             \
             msg)
 
 
@@ -5443,7 +5443,7 @@ free_smttmtp_write (
 
 extern char *SMTTMTP_WRITE;
 
-#define declare_smttmtp_write(_event, _priority)                               \
+#define declare_smttmtp_write(_event, _priority)                              \
     method_declare (agent, SMTTMTP_WRITE, _event, _priority)
 
 /*  Send event - write                                                       */
@@ -5461,17 +5461,17 @@ lsend_smttmtp_write (
     const word  size,               /*  Amount of data to write          */
     const void *data);              /*  Block of data to write           */
 
-#define send_smttmtp_write(_to,                                                \
-            host,                                                            \
-            port,                                                            \
-            size,                                                            \
-            data)                                                            \
-       lsend_smttmtp_write(_to,                                                \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            host,                                                            \
-            port,                                                            \
-            size,                                                            \
+#define send_smttmtp_write(_to,                                               \
+            host,                                                             \
+            port,                                                             \
+            size,                                                             \
+            data)                                                             \
+       lsend_smttmtp_write(_to,                                               \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            host,                                                             \
+            port,                                                             \
+            size,                                                             \
             data)
 
 
@@ -5499,7 +5499,7 @@ free_smttmtp_listen (
 
 extern char *SMTTMTP_LISTEN;
 
-#define declare_smttmtp_listen(_event, _priority)                              \
+#define declare_smttmtp_listen(_event, _priority)                             \
     method_declare (agent, SMTTMTP_LISTEN, _event, _priority)
 
 /*  Send event - listen                                                      */
@@ -5514,11 +5514,11 @@ lsend_smttmtp_listen (
           word _timeout,
     const char *port);              /*                                   */
 
-#define send_smttmtp_listen(_to,                                               \
-            port)                                                            \
-       lsend_smttmtp_listen(_to,                                               \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smttmtp_listen(_to,                                              \
+            port)                                                             \
+       lsend_smttmtp_listen(_to,                                              \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             port)
 
 
@@ -5528,23 +5528,23 @@ lsend_smttmtp_listen (
 
 extern char *SMTTMTP_WRITE_OK;
 
-#define declare_smttmtp_write_ok(_event, _priority)                            \
+#define declare_smttmtp_write_ok(_event, _priority)                           \
     method_declare (agent, SMTTMTP_WRITE_OK, _event, _priority)
 
 /*  Send event - write ok                                                    */
 
-#define lsend_smttmtp_write_ok(_to, _from,                                     \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTTMTP_WRITE_OK,                                          \
-                    NULL, 0,                                                 \
+#define lsend_smttmtp_write_ok(_to, _from,                                    \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTTMTP_WRITE_OK,                                         \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smttmtp_write_ok(_to)                                             \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTTMTP_WRITE_OK,                                          \
-                    NULL, 0,                                                 \
+#define send_smttmtp_write_ok(_to)                                            \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTTMTP_WRITE_OK,                                         \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -5554,23 +5554,23 @@ extern char *SMTTMTP_WRITE_OK;
 
 extern char *SMTTMTP_LISTEN_OK;
 
-#define declare_smttmtp_listen_ok(_event, _priority)                           \
+#define declare_smttmtp_listen_ok(_event, _priority)                          \
     method_declare (agent, SMTTMTP_LISTEN_OK, _event, _priority)
 
 /*  Send event - listen ok                                                   */
 
-#define lsend_smttmtp_listen_ok(_to, _from,                                    \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTTMTP_LISTEN_OK,                                         \
-                    NULL, 0,                                                 \
+#define lsend_smttmtp_listen_ok(_to, _from,                                   \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTTMTP_LISTEN_OK,                                        \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smttmtp_listen_ok(_to)                                            \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTTMTP_LISTEN_OK,                                         \
-                    NULL, 0,                                                 \
+#define send_smttmtp_listen_ok(_to)                                           \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTTMTP_LISTEN_OK,                                        \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -5598,7 +5598,7 @@ free_smttmtp_error (
 
 extern char *SMTTMTP_WRITE_ERROR;
 
-#define declare_smttmtp_write_error(_event, _priority)                         \
+#define declare_smttmtp_write_error(_event, _priority)                        \
     method_declare (agent, SMTTMTP_WRITE_ERROR, _event, _priority)
 
 /*  Send event - write error                                                 */
@@ -5613,11 +5613,11 @@ lsend_smttmtp_write_error (
           word _timeout,
     const char *message);           /*                                   */
 
-#define send_smttmtp_write_error(_to,                                          \
-            message)                                                         \
-       lsend_smttmtp_write_error(_to,                                          \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smttmtp_write_error(_to,                                         \
+            message)                                                          \
+       lsend_smttmtp_write_error(_to,                                         \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             message)
 
 /*---------------------------------------------------------------------------
@@ -5626,7 +5626,7 @@ lsend_smttmtp_write_error (
 
 extern char *SMTTMTP_LISTEN_ERROR;
 
-#define declare_smttmtp_listen_error(_event, _priority)                        \
+#define declare_smttmtp_listen_error(_event, _priority)                       \
     method_declare (agent, SMTTMTP_LISTEN_ERROR, _event, _priority)
 
 /*  Send event - listen error                                                */
@@ -5641,11 +5641,11 @@ lsend_smttmtp_listen_error (
           word _timeout,
     const char *message);           /*                                   */
 
-#define send_smttmtp_listen_error(_to,                                         \
-            message)                                                         \
-       lsend_smttmtp_listen_error(_to,                                         \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smttmtp_listen_error(_to,                                        \
+            message)                                                          \
+       lsend_smttmtp_listen_error(_to,                                        \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             message)
 
 
@@ -5675,7 +5675,7 @@ free_smttmtp_incoming_message (
 
 extern char *SMTTMTP_INCOMING_DATA;
 
-#define declare_smttmtp_incoming_data(_event, _priority)                       \
+#define declare_smttmtp_incoming_data(_event, _priority)                      \
     method_declare (agent, SMTTMTP_INCOMING_DATA, _event, _priority)
 
 /*  Send event - incoming data                                               */
@@ -5691,13 +5691,13 @@ lsend_smttmtp_incoming_data (
     const word  size,               /*  Amount of data to write          */
     const void *data);              /*  Block of data read               */
 
-#define send_smttmtp_incoming_data(_to,                                        \
-            size,                                                            \
-            data)                                                            \
-       lsend_smttmtp_incoming_data(_to,                                        \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
+#define send_smttmtp_incoming_data(_to,                                       \
+            size,                                                             \
+            data)                                                             \
+       lsend_smttmtp_incoming_data(_to,                                       \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
             data)
 
 
@@ -5742,7 +5742,7 @@ free_smtssl_open (
 
 extern char *SMTSSL_OPEN;
 
-#define declare_smtssl_open(_event, _priority)                                 \
+#define declare_smtssl_open(_event, _priority)                                \
     method_declare (agent, SMTSSL_OPEN, _event, _priority)
 
 /*  Send event - open                                                        */
@@ -5757,11 +5757,11 @@ lsend_smtssl_open (
           word _timeout,
     const char *config);            /*  Configuration file to use        */
 
-#define send_smtssl_open(_to,                                                  \
-            config)                                                          \
-       lsend_smtssl_open(_to,                                                  \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtssl_open(_to,                                                 \
+            config)                                                           \
+       lsend_smtssl_open(_to,                                                 \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             config)
 
 
@@ -5789,7 +5789,7 @@ free_smtssl_open_ok (
 
 extern char *SMTSSL_OPEN_OK;
 
-#define declare_smtssl_open_ok(_event, _priority)                              \
+#define declare_smtssl_open_ok(_event, _priority)                             \
     method_declare (agent, SMTSSL_OPEN_OK, _event, _priority)
 
 /*  Send event - open ok                                                     */
@@ -5804,11 +5804,11 @@ lsend_smtssl_open_ok (
           word _timeout,
     const dbyte port);              /*  SSL port opened                  */
 
-#define send_smtssl_open_ok(_to,                                               \
-            port)                                                            \
-       lsend_smtssl_open_ok(_to,                                               \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtssl_open_ok(_to,                                              \
+            port)                                                             \
+       lsend_smtssl_open_ok(_to,                                              \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             port)
 
 
@@ -5818,23 +5818,23 @@ lsend_smtssl_open_ok (
 
 extern char *SMTSSL_CLOSE;
 
-#define declare_smtssl_close(_event, _priority)                                \
+#define declare_smtssl_close(_event, _priority)                               \
     method_declare (agent, SMTSSL_CLOSE, _event, _priority)
 
 /*  Send event - close                                                       */
 
-#define lsend_smtssl_close(_to, _from,                                         \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTSSL_CLOSE,                                              \
-                    NULL, 0,                                                 \
+#define lsend_smtssl_close(_to, _from,                                        \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTSSL_CLOSE,                                             \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtssl_close(_to)                                                 \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTSSL_CLOSE,                                              \
-                    NULL, 0,                                                 \
+#define send_smtssl_close(_to)                                                \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTSSL_CLOSE,                                             \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
@@ -5844,40 +5844,40 @@ extern char *SMTSSL_CLOSE;
 
 extern char *SMTSSL_RESTART;
 
-#define declare_smtssl_restart(_event, _priority)                              \
+#define declare_smtssl_restart(_event, _priority)                             \
     method_declare (agent, SMTSSL_RESTART, _event, _priority)
 
 /*  Send event - restart                                                     */
 
-#define lsend_smtssl_restart(_to, _from,                                       \
-    _accept, _reject, _expire, _timeout)                                     \
-        event_send (_to,                                                     \
-                    _from,                                                   \
-                    SMTSSL_RESTART,                                            \
-                    NULL, 0,                                                 \
+#define lsend_smtssl_restart(_to, _from,                                      \
+    _accept, _reject, _expire, _timeout)                                      \
+        event_send (_to,                                                      \
+                    _from,                                                    \
+                    SMTSSL_RESTART,                                           \
+                    NULL, 0,                                                  \
                     _accept, _reject, _expire, _timeout)
-#define send_smtssl_restart(_to)                                               \
-        event_send (_to,                                                     \
-                    &thread-> queue-> qid,                                   \
-                    SMTSSL_RESTART,                                            \
-                    NULL, 0,                                                 \
+#define send_smtssl_restart(_to)                                              \
+        event_send (_to,                                                      \
+                    &thread-> queue-> qid,                                    \
+                    SMTSSL_RESTART,                                           \
+                    NULL, 0,                                                  \
                     NULL, NULL, NULL, 0)
 
 
 typedef struct {
-    qbyte socket;                       /*  Socket handle for SSL connection  */
-    char *user;                         /*  User name                        */
-    char *cipher;                       /*  Cipher used                      */
-    dbyte verify;                       /*  Level of user verification       */
+    qbyte socket;                      /*  Socket handle for SSL connection  */
+    char *user;                        /*  User name                         */
+    char *cipher;                      /*  Cipher used                       */
+    dbyte verify;                      /*  Level of user verification        */
 } struct_smtssl_accepted;
 
 int
 put_smtssl_accepted (
           byte **_buffer,
-    const qbyte socket,                 /*  Socket handle for SSL connection  */
-    const char *user,                   /*  User name                        */
-    const char *cipher,                 /*  Cipher used                      */
-    const dbyte verify);                /*  Level of user verification       */
+    const qbyte socket,                /*  Socket handle for SSL connection  */
+    const char *user,                  /*  User name                         */
+    const char *cipher,                /*  Cipher used                       */
+    const dbyte verify);               /*  Level of user verification        */
 
 int
 get_smtssl_accepted (
@@ -5894,7 +5894,7 @@ free_smtssl_accepted (
 
 extern char *SMTSSL_ACCEPTED;
 
-#define declare_smtssl_accepted(_event, _priority)                             \
+#define declare_smtssl_accepted(_event, _priority)                            \
     method_declare (agent, SMTSSL_ACCEPTED, _event, _priority)
 
 /*  Send event - accepted                                                    */
@@ -5908,21 +5908,21 @@ lsend_smtssl_accepted (
           char *_expire,
           word _timeout,
     const qbyte socket,             /*  Socket handle for SSL connection  */
-    const char *user,               /*  User name                        */
-    const char *cipher,             /*  Cipher used                      */
-    const dbyte verify);            /*  Level of user verification       */
+    const char *user,               /*  User name                         */
+    const char *cipher,             /*  Cipher used                       */
+    const dbyte verify);            /*  Level of user verification        */
 
-#define send_smtssl_accepted(_to,                                              \
-            socket,                                                          \
-            user,                                                            \
-            cipher,                                                          \
-            verify)                                                          \
-       lsend_smtssl_accepted(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
-            user,                                                            \
-            cipher,                                                          \
+#define send_smtssl_accepted(_to,                                             \
+            socket,                                                           \
+            user,                                                             \
+            cipher,                                                           \
+            verify)                                                           \
+       lsend_smtssl_accepted(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
+            user,                                                             \
+            cipher,                                                           \
             verify)
 
 
@@ -5950,7 +5950,7 @@ free_smtssl_read_request (
 
 extern char *SMTSSL_READ_REQUEST;
 
-#define declare_smtssl_read_request(_event, _priority)                         \
+#define declare_smtssl_read_request(_event, _priority)                        \
     method_declare (agent, SMTSSL_READ_REQUEST, _event, _priority)
 
 /*  Send event - read request                                                */
@@ -5965,11 +5965,11 @@ lsend_smtssl_read_request (
           word _timeout,
     const qbyte size);              /*  Maximum size to read             */
 
-#define send_smtssl_read_request(_to,                                          \
-            size)                                                            \
-       lsend_smtssl_read_request(_to,                                          \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtssl_read_request(_to,                                         \
+            size)                                                             \
+       lsend_smtssl_read_request(_to,                                         \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             size)
 
 
@@ -6007,7 +6007,7 @@ free_smtssl_write_request (
 
 extern char *SMTSSL_WRITE_REQUEST;
 
-#define declare_smtssl_write_request(_event, _priority)                        \
+#define declare_smtssl_write_request(_event, _priority)                       \
     method_declare (agent, SMTSSL_WRITE_REQUEST, _event, _priority)
 
 /*  Send event - write request                                               */
@@ -6027,21 +6027,21 @@ lsend_smtssl_write_request (
     const Bool  reply,              /*  Whether OK reply is required     */
     const qbyte tag);               /*  User-defined request tag         */
 
-#define send_smtssl_write_request(_to,                                         \
-            timeout,                                                         \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
-            reply,                                                           \
-            tag)                                                             \
-       lsend_smtssl_write_request(_to,                                         \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            timeout,                                                         \
-            socket,                                                          \
-            size,                                                            \
-            data,                                                            \
-            reply,                                                           \
+#define send_smtssl_write_request(_to,                                        \
+            timeout,                                                          \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
+            reply,                                                            \
+            tag)                                                              \
+       lsend_smtssl_write_request(_to,                                        \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            timeout,                                                          \
+            socket,                                                           \
+            size,                                                             \
+            data,                                                             \
+            reply,                                                            \
             tag)
 
 
@@ -6075,7 +6075,7 @@ free_smtssl_put_slice (
 
 extern char *SMTSSL_PUT_SLICE;
 
-#define declare_smtssl_put_slice(_event, _priority)                            \
+#define declare_smtssl_put_slice(_event, _priority)                           \
     method_declare (agent, SMTSSL_PUT_SLICE, _event, _priority)
 
 /*  Send event - put slice                                                   */
@@ -6093,17 +6093,17 @@ lsend_smtssl_put_slice (
     const qbyte start,              /*  Starting offset; 0 = start       */
     const qbyte end);               /*  Ending offset; 0 = end           */
 
-#define send_smtssl_put_slice(_to,                                             \
-            socket,                                                          \
-            filename,                                                        \
-            start,                                                           \
-            end)                                                             \
-       lsend_smtssl_put_slice(_to,                                             \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
-            filename,                                                        \
-            start,                                                           \
+#define send_smtssl_put_slice(_to,                                            \
+            socket,                                                           \
+            filename,                                                         \
+            start,                                                            \
+            end)                                                              \
+       lsend_smtssl_put_slice(_to,                                            \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
+            filename,                                                         \
+            start,                                                            \
             end)
 
 
@@ -6131,7 +6131,7 @@ free_smtssl_error (
 
 extern char *SMTSSL_ERROR;
 
-#define declare_smtssl_error(_event, _priority)                                \
+#define declare_smtssl_error(_event, _priority)                               \
     method_declare (agent, SMTSSL_ERROR, _event, _priority)
 
 /*  Send event - error                                                       */
@@ -6146,11 +6146,11 @@ lsend_smtssl_error (
           word _timeout,
     const qbyte code);              /*  Error code                       */
 
-#define send_smtssl_error(_to,                                                 \
-            code)                                                            \
-       lsend_smtssl_error(_to,                                                 \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtssl_error(_to,                                                \
+            code)                                                             \
+       lsend_smtssl_error(_to,                                                \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             code)
 
 
@@ -6180,7 +6180,7 @@ free_smtssl_write_ok (
 
 extern char *SMTSSL_WRITE_OK;
 
-#define declare_smtssl_write_ok(_event, _priority)                             \
+#define declare_smtssl_write_ok(_event, _priority)                            \
     method_declare (agent, SMTSSL_WRITE_OK, _event, _priority)
 
 /*  Send event - write ok                                                    */
@@ -6196,13 +6196,13 @@ lsend_smtssl_write_ok (
     const qbyte socket,             /*  Socket used for i/o, or new socket  */
     const qbyte tag);               /*  User-defined request tag         */
 
-#define send_smtssl_write_ok(_to,                                              \
-            socket,                                                          \
-            tag)                                                             \
-       lsend_smtssl_write_ok(_to,                                              \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            socket,                                                          \
+#define send_smtssl_write_ok(_to,                                             \
+            socket,                                                           \
+            tag)                                                              \
+       lsend_smtssl_write_ok(_to,                                             \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            socket,                                                           \
             tag)
 
 
@@ -6232,7 +6232,7 @@ free_smtssl_read_ok (
 
 extern char *SMTSSL_READ_OK;
 
-#define declare_smtssl_read_ok(_event, _priority)                              \
+#define declare_smtssl_read_ok(_event, _priority)                             \
     method_declare (agent, SMTSSL_READ_OK, _event, _priority)
 
 /*  Send event - read ok                                                     */
@@ -6248,13 +6248,13 @@ lsend_smtssl_read_ok (
     const word  size,               /*  Size of result                   */
     const void *data);              /*  Read data                        */
 
-#define send_smtssl_read_ok(_to,                                               \
-            size,                                                            \
-            data)                                                            \
-       lsend_smtssl_read_ok(_to,                                               \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
-            size,                                                            \
+#define send_smtssl_read_ok(_to,                                              \
+            size,                                                             \
+            data)                                                             \
+       lsend_smtssl_read_ok(_to,                                              \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
+            size,                                                             \
             data)
 
 
@@ -6282,7 +6282,7 @@ free_smtssl_put_slice_ok (
 
 extern char *SMTSSL_PUT_SLICE_OK;
 
-#define declare_smtssl_put_slice_ok(_event, _priority)                         \
+#define declare_smtssl_put_slice_ok(_event, _priority)                        \
     method_declare (agent, SMTSSL_PUT_SLICE_OK, _event, _priority)
 
 /*  Send event - put slice ok                                                */
@@ -6297,11 +6297,11 @@ lsend_smtssl_put_slice_ok (
           word _timeout,
     const qbyte size);              /*  Amount of transmitted data       */
 
-#define send_smtssl_put_slice_ok(_to,                                          \
-            size)                                                            \
-       lsend_smtssl_put_slice_ok(_to,                                          \
-            &thread-> queue-> qid,                                           \
-            NULL, NULL, NULL, 0,                                             \
+#define send_smtssl_put_slice_ok(_to,                                         \
+            size)                                                             \
+       lsend_smtssl_put_slice_ok(_to,                                         \
+            &thread-> queue-> qid,                                            \
+            NULL, NULL, NULL, 0,                                              \
             size)
 
 

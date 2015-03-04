@@ -342,56 +342,56 @@ static void     convert_cur_char_as_reqd (uschar_t *c1, uschar_t *c2);
 static int      get_group (long number, int group_nbr);
 
 
-static void     en_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     en_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void	    en_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void en_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void en_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void en_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     fr_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     fr_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void     fr_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void fr_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void fr_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void fr_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void	    nl_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void 	nl_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void	    nl_output_group_separator (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr, int buffer_char_nbr);
-static void 	nl_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void nl_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void nl_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void nl_output_group_separator (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr, int buffer_char_nbr);
+static void nl_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     de_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     de_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void     de_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void de_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void de_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void de_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     es_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     es_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void     es_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void es_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void es_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void es_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     it_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     it_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void     it_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void it_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void it_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void it_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     pt_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     pt_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void     pt_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void pt_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void pt_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void pt_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     fb_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     fb_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void fb_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void fb_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     da_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     da_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void     da_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void da_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void da_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void da_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     no_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     no_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void     no_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void no_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void no_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void no_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     sv_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     sv_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void     sv_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void sv_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void sv_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void sv_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     is_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
-static void     is_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
-static void     is_output_group_separator (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr, int buffer_char_nbr);
-static void     is_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void is_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number, int *group_start);
+static void is_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
+static void is_output_group_separator (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr, int buffer_char_nbr);
+static void is_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value, int group_nbr);
 
-static void     rm_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number);
+static void rm_number_to_text_conversion (uschar_t *buffer, int buffer_size, int *buffer_char_nbr, long number);
 
 
 static int
@@ -968,7 +968,7 @@ certify_the_number (char *buf, int buffer_size, long number,
                 while (char_nbr < buffer_size - 1)
                     buffer [char_nbr++] = (uschar_t)' ';
 
-	            buffer_char_nbr++;
+                buffer_char_nbr++;
               }
           }
 
@@ -1019,40 +1019,40 @@ convert_number_to_full_text (uschar_t *buffer, int buffer_size,
 {
     if (lexcmp (language, "FR") == 0)
         fr_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "EN-GB") == 0)
         en_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "NL") == 0)
         nl_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "DE") == 0)
         de_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "ES") == 0)
         es_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "IT") == 0)
         it_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "PT") == 0)
         pt_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "FR-BE") == 0)
         fb_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "DA") == 0)
         da_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "NO") == 0)
         no_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "SV") == 0)
         sv_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "IS") == 0)
         is_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number, group_start);
-	else
+    else
     if (lexcmp (language, "RM") == 0)
         rm_number_to_text_conversion (buffer, buffer_size, buffer_char_nbr, number);
     else
@@ -1064,8 +1064,8 @@ static void
 append_name_to_string_delim (uschar_t *buffer, int buffer_size,
                              int *buffer_char_nbr, uschar_t *name)
 {
-	append_name_to_string (buffer, buffer_size, buffer_char_nbr, name);
-	(*buffer_char_nbr)++;
+    append_name_to_string (buffer, buffer_size, buffer_char_nbr, name);
+    (*buffer_char_nbr)++;
 }
 
 
@@ -1123,8 +1123,8 @@ en_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             en_output_group_hundreds  (group, &group_char_nbr, group_value, i);
             en_output_group_tens_ones (group, &group_char_nbr, group_value, i);
 
-	        if (i == 3 && group_value < 100 && *buffer_char_nbr > 0)
-		        append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("and"));
+            if (i == 3 && group_value < 100 && *buffer_char_nbr > 0)
+                append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("and"));
 
             append_group_to_string_delim (buffer, buffer_size, buffer_char_nbr, group, group_char_nbr);
             append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, EN_groups [i - 1]);
@@ -1187,14 +1187,14 @@ en_output_group_hundreds (uschar_t *group, int *group_char_nbr,
 
     if (hundreds > 0)
       {
-	    append_name_to_group (group, group_char_nbr, EN_units [hundreds]);
-    	(*group_char_nbr)++;
-	    append_name_to_group (group, group_char_nbr, T("hundred"));
-	    if (tens_ones > 0)
+        append_name_to_group (group, group_char_nbr, EN_units [hundreds]);
+        (*group_char_nbr)++;
+        append_name_to_group (group, group_char_nbr, T("hundred"));
+        if (tens_ones > 0)
           {
-    	    (*group_char_nbr)++;
-		    append_name_to_group (group, group_char_nbr, T("and"));
-    	    (*group_char_nbr)++;
+            (*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("and"));
+            (*group_char_nbr)++;
           }
       }
 }
@@ -1206,8 +1206,8 @@ static void
 append_name_to_group_delim (uschar_t *group, int *group_char_nbr,
                             uschar_t *name)
 {
-	append_name_to_group (group, group_char_nbr, name);
-	(*group_char_nbr)++;
+    append_name_to_group (group, group_char_nbr, name);
+    (*group_char_nbr)++;
 }
 #endif
 
@@ -1309,20 +1309,20 @@ en_output_group_tens_ones (uschar_t *group, int *group_char_nbr,
       {
         if (tens_ones < 20)
           {
-		    append_name_to_group (group, group_char_nbr, EN_units [tens_ones]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, EN_units [tens_ones]);
+            (*group_char_nbr)++;
           }
         else
           {
-		    append_name_to_group (group, group_char_nbr, EN_tens [tens - 1]);
+            append_name_to_group (group, group_char_nbr, EN_tens [tens - 1]);
             if (ones > 0)
-		      {
+              {
                 if (*group_char_nbr < GROUP_SIZE - 1)
                     group [(*group_char_nbr)++] = (uschar_t)'-';
 
-			    append_name_to_group (group, group_char_nbr, EN_units [ones]);
-            	(*group_char_nbr)++;
-		      }
+                append_name_to_group (group, group_char_nbr, EN_units [ones]);
+                (*group_char_nbr)++;
+              }
           }
       }
 }
@@ -1361,7 +1361,7 @@ fr_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             if (i == 1 && group_value > 1)
                 append_name_to_string (buffer, buffer_size, buffer_char_nbr, T("s"));
 
-	        (*buffer_char_nbr)++;
+            (*buffer_char_nbr)++;
           }
       }
 }
@@ -1381,22 +1381,22 @@ fr_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
       {
         if (hundreds == 1)
           {
-	        append_name_to_group (group, group_char_nbr, T("cent"));
-         	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("cent"));
+             (*group_char_nbr)++;
           }
         else
           {
-		    append_name_to_group (group, group_char_nbr, FR_units [hundreds]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, FR_units [hundreds]);
+            (*group_char_nbr)++;
             if (tens_ones > 0 || group_nbr < 3)
               {
-        	    append_name_to_group (group, group_char_nbr, T("cent"));
-            	(*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, T("cent"));
+                (*group_char_nbr)++;
               }
             else
               {
-	            append_name_to_group (group, group_char_nbr, T("cents"));
-            	(*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, T("cents"));
+                (*group_char_nbr)++;
               }
           }
       }
@@ -1420,8 +1420,8 @@ fr_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
       {
         if (tens_ones < 20)
           {
-		    append_name_to_group (group, group_char_nbr, FR_units [tens_ones]);
-	        (*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, FR_units [tens_ones]);
+            (*group_char_nbr)++;
           }
         else
           {
@@ -1433,9 +1433,9 @@ fr_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
              || tens_ones == 61
              || tens_ones == 71)
               {
-            	(*group_char_nbr)++;
-	            append_name_to_group (group, group_char_nbr, T("et"));
-        	    (*group_char_nbr)++;
+                (*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, T("et"));
+                (*group_char_nbr)++;
               }
             else
             if (ones > 0
@@ -1447,13 +1447,13 @@ fr_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
               }
             else
             if (tens_ones != 80)
-		        (*group_char_nbr)++;
+                (*group_char_nbr)++;
             if (tens_ones < 70)
               {
                 if (ones > 0)
                   {
-	                append_name_to_group (group, group_char_nbr, FR_units [ones]);
-                	(*group_char_nbr)++;
+                    append_name_to_group (group, group_char_nbr, FR_units [ones]);
+                    (*group_char_nbr)++;
                   }
               }
             else
@@ -1465,14 +1465,14 @@ fr_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
 
                 if (score > 0)
                   {
-		            append_name_to_group (group, group_char_nbr, FR_units [score]);
-                	(*group_char_nbr)++;
+                    append_name_to_group (group, group_char_nbr, FR_units [score]);
+                    (*group_char_nbr)++;
                   }
                 else
                 if (tens_ones == 80)
                   {
-		            append_name_to_group (group, group_char_nbr, T("s"));
-                	(*group_char_nbr)++;
+                    append_name_to_group (group, group_char_nbr, T("s"));
+                    (*group_char_nbr)++;
                   }
               }
           }
@@ -1502,11 +1502,11 @@ nl_number_to_text_conversion (uschar_t *buffer, int buffer_size,
         if (group_value > 0)
           {
             nl_output_group_hundreds (group, &group_char_nbr, group_value, i);
-	        nl_output_group_separator (group, &group_char_nbr, group_value, i, *buffer_char_nbr);
+            nl_output_group_separator (group, &group_char_nbr, group_value, i, *buffer_char_nbr);
             nl_output_group_tens_ones (group, &group_char_nbr, group_value, i);
 
-	        if (i == 1)
-		        group_char_nbr++;
+            if (i == 1)
+                group_char_nbr++;
             if (i == 2 && group_value == 1)
                 empty_group (group, &group_char_nbr);
 
@@ -1514,7 +1514,7 @@ nl_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             append_name_to_string (buffer, buffer_size, buffer_char_nbr, NL_groups [i - 1]);
 
             if (i == 1 || i == 2)
-		        (*buffer_char_nbr)++;
+                (*buffer_char_nbr)++;
 
           }
       }
@@ -1532,9 +1532,9 @@ nl_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
     if (hundreds > 0)
       {
         if (hundreds > 1)
-		    append_name_to_group (group, group_char_nbr, NL_units [hundreds]);
+            append_name_to_group (group, group_char_nbr, NL_units [hundreds]);
 
-	    append_name_to_group (group, group_char_nbr, T("honderd"));
+        append_name_to_group (group, group_char_nbr, T("honderd"));
       }
 }
 
@@ -1549,21 +1549,21 @@ nl_output_group_separator (uschar_t *group, int *group_char_nbr, int group_value
     tens_ones = GET_GROUP_TENS_ONES (group_value);
     hundreds  = GET_GROUP_HUNDREDS  (group_value);
 
-	if (tens_ones > 0 && tens_ones < 13)
-	  {
-		if (hundreds > 0)
+    if (tens_ones > 0 && tens_ones < 13)
+      {
+        if (hundreds > 0)
           {
-        	(*group_char_nbr)++;
-			append_name_to_group (group, group_char_nbr, T("en"));
-        	(*group_char_nbr)++;
+            (*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("en"));
+            (*group_char_nbr)++;
           }
-		else
-		if (group_nbr == 3 && buffer_char_nbr > 0)
+        else
+        if (group_nbr == 3 && buffer_char_nbr > 0)
           {
-			append_name_to_group (group, group_char_nbr, T("en"));
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("en"));
+            (*group_char_nbr)++;
           }
-	  }
+      }
 }
 
 
@@ -1579,19 +1579,19 @@ nl_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
     tens      = GET_GROUP_TENS      (group_value);
     tens_ones = GET_GROUP_TENS_ONES (group_value);
 
-	if (tens_ones > 0)
+    if (tens_ones > 0)
       {
         if (tens_ones < 20)
-		    append_name_to_group (group, group_char_nbr, NL_units [tens_ones]);
+            append_name_to_group (group, group_char_nbr, NL_units [tens_ones]);
         else
-	      {
+          {
             if (ones > 0)
-	          {
+              {
                 append_name_to_group (group, group_char_nbr, NL_units [ones]);
                 append_name_to_group (group, group_char_nbr, T("en"));
-	          }
+              }
             append_name_to_group (group, group_char_nbr, NL_tens [tens - 1]);
-	      }
+          }
       }
 }
 
@@ -1620,15 +1620,15 @@ de_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             de_output_group_hundreds (group, &group_char_nbr, group_value, i);
             de_output_group_tens_ones (group, &group_char_nbr, group_value, i);
 
-	        if (i == 1)
+            if (i == 1)
               {
                 if (group_value == 1)
                   {
                     append_name_to_group (group, &group_char_nbr, T("eine"));
-                	group_char_nbr++;
+                    group_char_nbr++;
                   }
                 else
-		            group_char_nbr++;
+                    group_char_nbr++;
               }
             if (i == 2 && group_value == 1)
                 empty_group (group, &group_char_nbr);
@@ -1660,9 +1660,9 @@ de_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
     if (hundreds > 0)
       {
         if (hundreds > 1)
-		    append_name_to_group (group, group_char_nbr, DE_units [hundreds]);
+            append_name_to_group (group, group_char_nbr, DE_units [hundreds]);
 
-	    append_name_to_group (group, group_char_nbr, T("hundert"));
+        append_name_to_group (group, group_char_nbr, T("hundert"));
       }
 }
 
@@ -1731,7 +1731,7 @@ es_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             if (i == 1 && group_value == 1)
               {
                 append_name_to_group (group, &group_char_nbr, T("un"));
-            	group_char_nbr++;
+                group_char_nbr++;
               }
             else
             if (i == 2 && group_value == 1)
@@ -1765,13 +1765,13 @@ es_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
       {
         if (group_value == 100)
           {
-    	    append_name_to_group (group, group_char_nbr, T("cien"));
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("cien"));
+            (*group_char_nbr)++;
           }
         else
           {
-    	    append_name_to_group (group, group_char_nbr, ES_hundreds [hundreds]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, ES_hundreds [hundreds]);
+            (*group_char_nbr)++;
           }
       }
 }
@@ -1793,26 +1793,26 @@ es_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
       {
         if (tens_ones < 21)
           {
-		    append_name_to_group (group, group_char_nbr, ES_units [tens_ones]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, ES_units [tens_ones]);
+            (*group_char_nbr)++;
           }
         else
           {
-		    append_name_to_group (group, group_char_nbr, ES_tens [tens - 1]);
+            append_name_to_group (group, group_char_nbr, ES_tens [tens - 1]);
             if (ones > 0)
               {
                 if (tens_ones > 30)
                   {
-    	            (*group_char_nbr)++;
-	                append_name_to_group (group, group_char_nbr, T("y"));
-                	(*group_char_nbr)++;
+                    (*group_char_nbr)++;
+                    append_name_to_group (group, group_char_nbr, T("y"));
+                    (*group_char_nbr)++;
                   }
 
                 append_name_to_group (group, group_char_nbr, ES_units [ones]);
-            	(*group_char_nbr)++;
+                (*group_char_nbr)++;
               }
             else
-		        (*group_char_nbr)++;
+                (*group_char_nbr)++;
           }
       }
 }
@@ -1844,8 +1844,8 @@ it_number_to_text_conversion (uschar_t *buffer, int buffer_size,
 
             if (i == 1 && group_value == 1)
               {
-	            append_name_to_group (group, &group_char_nbr, T("un"));
-            	group_char_nbr++;
+                append_name_to_group (group, &group_char_nbr, T("un"));
+                group_char_nbr++;
               }
             else
             if (i == 2 && group_value == 1)
@@ -1854,22 +1854,21 @@ it_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             append_group_to_string (buffer, buffer_size, buffer_char_nbr, group, group_char_nbr);
 
             if (i == 1)
-	      {
+			  {
                 if (group_value == 1)
                     append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("milione"));
                 else
                     append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("milioni"));
-              }
+			  }
             else
             if (i == 2)
-	      {
+			  {
                 if (group_value == 1)
                     append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("mille"));
                 else
                     append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("mila"));
-	      }
-
-          }
+			  }
+		  }
       }
 }
 
@@ -1885,10 +1884,10 @@ it_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
     if (hundreds > 0)
       {
         if (hundreds > 1)
-		    append_name_to_group (group, group_char_nbr, IT_units [hundreds]);
+            append_name_to_group (group, group_char_nbr, IT_units [hundreds]);
 
-	    append_name_to_group (group, group_char_nbr, T("cento"));
-    	(*group_char_nbr)++;
+        append_name_to_group (group, group_char_nbr, T("cento"));
+        (*group_char_nbr)++;
       }
 }
 
@@ -1905,26 +1904,26 @@ it_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
     tens      = GET_GROUP_TENS      (group_value);
     tens_ones = GET_GROUP_TENS_ONES (group_value);
 
-	if (tens_ones > 0)
+    if (tens_ones > 0)
       {
         if (tens_ones < 20)
           {
-		    append_name_to_group (group, group_char_nbr, IT_units [tens_ones]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, IT_units [tens_ones]);
+            (*group_char_nbr)++;
           }
         else
           {
-		    append_name_to_group (group, group_char_nbr, IT_tens [tens - 1]);
+            append_name_to_group (group, group_char_nbr, IT_tens [tens - 1]);
             if (ones > 0)
               {
                 if (ones == 1 || ones == 8)
-    		        (*group_char_nbr)--;
+                    (*group_char_nbr)--;
 
-	            append_name_to_group (group, group_char_nbr, IT_units [ones]);
-            	(*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, IT_units [ones]);
+                (*group_char_nbr)++;
               }
             else
-		        (*group_char_nbr)++;
+                (*group_char_nbr)++;
           }
       }
 }
@@ -1954,10 +1953,10 @@ pt_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             pt_output_group_hundreds (group, &group_char_nbr, group_value, i);
             pt_output_group_tens_ones (group, &group_char_nbr, group_value, i);
 
-	        if (i == 2 && group_value == 1)
+            if (i == 2 && group_value == 1)
                 empty_group (group, &group_char_nbr);
             else
-		        group_char_nbr++;
+                group_char_nbr++;
 
             append_group_to_string (buffer, buffer_size, buffer_char_nbr, group, group_char_nbr);
 
@@ -1968,16 +1967,15 @@ pt_number_to_text_conversion (uschar_t *buffer, int buffer_size,
                 else
                     append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("milhoes"));
                 if (get_group (number, 2) > 0 || get_group (number, 3) > 0)
-    	            append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("e"));
+                    append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("e"));
              }
             else
             if (i == 2)
               {
-	            append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("mil"));
+                append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("mil"));
                 if (get_group (number, 3) > 0)
-    	            append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("e"));
+                    append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("e"));
               }
-
           }
       }
 }
@@ -1996,15 +1994,15 @@ pt_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
     if (hundreds > 0)
       {
         if (group_value == 100)
-    	    append_name_to_group (group, group_char_nbr, T("cem"));
+            append_name_to_group (group, group_char_nbr, T("cem"));
         else
-    	    append_name_to_group (group, group_char_nbr, PT_hundreds [hundreds]);
+            append_name_to_group (group, group_char_nbr, PT_hundreds [hundreds]);
 
         if (tens_ones > 0)
           {
-        	(*group_char_nbr)++;
-	        append_name_to_group (group, group_char_nbr, T("e"));
-        	(*group_char_nbr)++;
+            (*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("e"));
+            (*group_char_nbr)++;
           }
       }
 }
@@ -2031,9 +2029,9 @@ pt_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
             append_name_to_group (group, group_char_nbr, PT_tens [tens - 1]);
             if (ones > 0)
               {
-            	(*group_char_nbr)++;
-	            append_name_to_group (group, group_char_nbr, T("e"));
-    	        (*group_char_nbr)++;
+                (*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, T("e"));
+                (*group_char_nbr)++;
                 append_name_to_group (group, group_char_nbr, PT_units [ones]);
               }
           }
@@ -2074,7 +2072,7 @@ fb_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             if (i == 1 && group_value > 1)
                 append_name_to_string (buffer, buffer_size, buffer_char_nbr, T("s"));
 
-	        (*buffer_char_nbr)++;
+            (*buffer_char_nbr)++;
           }
       }
 }
@@ -2096,8 +2094,8 @@ fb_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
       {
         if (tens_ones < 20)
           {
-		    append_name_to_group (group, group_char_nbr, FR_units [tens_ones]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, FR_units [tens_ones]);
+            (*group_char_nbr)++;
           }
         else
           {
@@ -2109,9 +2107,9 @@ fb_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
              || tens_ones == 61
              || tens_ones == 71)
               {
-    	        (*group_char_nbr)++;
-	            append_name_to_group (group, group_char_nbr, T("et"));
-            	(*group_char_nbr)++;
+                (*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, T("et"));
+                (*group_char_nbr)++;
               }
             else
             if (ones > 0)
@@ -2122,16 +2120,16 @@ fb_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
             else
             if (tens_ones == 80)
               {
-	            append_name_to_group (group, group_char_nbr, T("s"));
-            	(*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, T("s"));
+                (*group_char_nbr)++;
               }
             else
-		        (*group_char_nbr)++;
+                (*group_char_nbr)++;
 
             if (ones > 0)
               {
-	            append_name_to_group (group, group_char_nbr, FR_units [ones]);
-            	(*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, FR_units [ones]);
+                (*group_char_nbr)++;
               }
           }
       }
@@ -2198,17 +2196,17 @@ da_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
       {
         if (hundreds > 1)
           {
-		    append_name_to_group (group, group_char_nbr, DA_units [hundreds]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, DA_units [hundreds]);
+            (*group_char_nbr)++;
           }
 
-	    append_name_to_group (group, group_char_nbr, T("hundrede"));
-    	(*group_char_nbr)++;
+        append_name_to_group (group, group_char_nbr, T("hundrede"));
+        (*group_char_nbr)++;
 
         if (tens_ones > 0)
           {
-		    append_name_to_group (group, group_char_nbr, T("og"));
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("og"));
+            (*group_char_nbr)++;
           }
       }
 }
@@ -2231,19 +2229,19 @@ da_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
         if (tens_ones < 20)
           {
             append_name_to_group (group, group_char_nbr, DA_units [tens_ones]);
-        	(*group_char_nbr)++;
+            (*group_char_nbr)++;
           }
         else
           {
             if (ones > 0)
               {
                 append_name_to_group (group, group_char_nbr, DA_units [ones]);
-            	(*group_char_nbr)++;
+                (*group_char_nbr)++;
                 append_name_to_group (group, group_char_nbr, T("og"));
-    	        (*group_char_nbr)++;
+                (*group_char_nbr)++;
               }
             append_name_to_group (group, group_char_nbr, DA_tens [tens - 1]);
-        	(*group_char_nbr)++;
+            (*group_char_nbr)++;
           }
       }
 }
@@ -2286,7 +2284,6 @@ no_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             else
             if (i == 2)
                 append_name_to_string_delim (buffer, buffer_size, buffer_char_nbr, T("tusen"));
-
           }
       }
 }
@@ -2306,17 +2303,17 @@ no_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
       {
         if (hundreds > 1)
           {
-    	    append_name_to_group (group, group_char_nbr, NO_units [hundreds]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, NO_units [hundreds]);
+            (*group_char_nbr)++;
           }
 
         append_name_to_group (group, group_char_nbr, T("hundre"));
-    	(*group_char_nbr)++;
+        (*group_char_nbr)++;
 
         if (tens_ones > 0)
           {
             append_name_to_group (group, group_char_nbr, T("og"));
-        	(*group_char_nbr)++;
+            (*group_char_nbr)++;
           }
       }
 }
@@ -2339,19 +2336,19 @@ no_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
         if (tens_ones < 20)
           {
             append_name_to_group (group, group_char_nbr, NO_units [tens_ones]);
-        	(*group_char_nbr)++;
+            (*group_char_nbr)++;
           }
         else
           {
             if (ones > 0)
-	          {
+              {
                 append_name_to_group (group, group_char_nbr, NO_units [ones]);
-            	(*group_char_nbr)++;
+                (*group_char_nbr)++;
                 append_name_to_group (group, group_char_nbr, T("og"));
-    	        (*group_char_nbr)++;
-	          }
+                (*group_char_nbr)++;
+              }
             append_name_to_group (group, group_char_nbr, NO_tens [tens - 1]);
-        	(*group_char_nbr)++;
+            (*group_char_nbr)++;
           }
       }
 }
@@ -2381,8 +2378,8 @@ sv_number_to_text_conversion (uschar_t *buffer, int buffer_size,
             sv_output_group_hundreds (group, &group_char_nbr, group_value, i);
             sv_output_group_tens_ones (group, &group_char_nbr, group_value, i);
 
-	        if (i == 1)
-		        group_char_nbr++;
+            if (i == 1)
+                group_char_nbr++;
             else
             if (i == 2 && group_value == 1)
                 empty_group (group, &group_char_nbr);
@@ -2414,9 +2411,9 @@ sv_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
     if (hundreds > 0)
       {
         if (hundreds > 1)
-		    append_name_to_group (group, group_char_nbr, SV_units [hundreds]);
+            append_name_to_group (group, group_char_nbr, SV_units [hundreds]);
 
-	    append_name_to_group (group, group_char_nbr, T("hundra"));
+        append_name_to_group (group, group_char_nbr, T("hundra"));
       }
 }
 
@@ -2433,15 +2430,15 @@ sv_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
     tens      = GET_GROUP_TENS      (group_value);
     tens_ones = GET_GROUP_TENS_ONES (group_value);
 
-	if (tens_ones > 0)
+    if (tens_ones > 0)
       {
         if (tens_ones < 20)
-		    append_name_to_group (group, group_char_nbr, SV_units [tens_ones]);
+            append_name_to_group (group, group_char_nbr, SV_units [tens_ones]);
         else
           {
-		    append_name_to_group (group, group_char_nbr, SV_tens [tens - 1]);
+            append_name_to_group (group, group_char_nbr, SV_tens [tens - 1]);
             if (ones > 0)
-			    append_name_to_group (group, group_char_nbr, SV_units [ones]);
+                append_name_to_group (group, group_char_nbr, SV_units [ones]);
           }
       }
 }
@@ -2505,22 +2502,22 @@ is_output_group_hundreds (uschar_t *group, int *group_char_nbr, int group_value,
           {
             if (hundreds < 5)
               {
-        	    append_name_to_group (group, group_char_nbr, IS_neuters [hundreds]);
-            	(*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, IS_neuters [hundreds]);
+                (*group_char_nbr)++;
               }
             else
               {
-        	    append_name_to_group (group, group_char_nbr, IS_units [hundreds]);
-            	(*group_char_nbr)++;
+                append_name_to_group (group, group_char_nbr, IS_units [hundreds]);
+                (*group_char_nbr)++;
               }
 
-    	    append_name_to_group (group, group_char_nbr, T("hundrud"));
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("hundrud"));
+            (*group_char_nbr)++;
           }
         else
           {
-	        append_name_to_group (group, group_char_nbr, T("hundrad"));
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("hundrad"));
+            (*group_char_nbr)++;
           }
       }
 }
@@ -2536,12 +2533,12 @@ is_output_group_separator (uschar_t *group, int *group_char_nbr, int group_value
     tens_ones = GET_GROUP_TENS_ONES (group_value);
     hundreds  = GET_GROUP_HUNDREDS  (group_value);
 
-	if (tens_ones > 0 && tens_ones < 20)
+    if (tens_ones > 0 && tens_ones < 20)
       {
-		if (hundreds > 0 || (group_nbr == 3 && buffer_char_nbr > 0))
+        if (hundreds > 0 || (group_nbr == 3 && buffer_char_nbr > 0))
           {
-			append_name_to_group (group, group_char_nbr, T("og"));
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, T("og"));
+            (*group_char_nbr)++;
           }
       }
 }
@@ -2563,26 +2560,26 @@ is_output_group_tens_ones (uschar_t *group, int *group_char_nbr, int group_value
       {
         if (group_value < 5 && group_nbr < 3)
           {
-		    append_name_to_group (group, group_char_nbr, IS_neuters [group_value]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, IS_neuters [group_value]);
+            (*group_char_nbr)++;
           }
         else
         if (tens_ones < 20)
           {
-		    append_name_to_group (group, group_char_nbr, IS_units [tens_ones]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, IS_units [tens_ones]);
+            (*group_char_nbr)++;
           }
         else
           {
-		    append_name_to_group (group, group_char_nbr, IS_tens [tens - 1]);
-        	(*group_char_nbr)++;
+            append_name_to_group (group, group_char_nbr, IS_tens [tens - 1]);
+            (*group_char_nbr)++;
             if (ones > 0)
-	          {
+              {
                 append_name_to_group (group, group_char_nbr, T("og"));
-            	(*group_char_nbr)++;
+                (*group_char_nbr)++;
                 append_name_to_group (group, group_char_nbr, IS_units [ones]);
-            	(*group_char_nbr)++;
-	          }
+                (*group_char_nbr)++;
+              }
           }
       }
 }
