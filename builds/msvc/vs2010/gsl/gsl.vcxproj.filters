@@ -904,10 +904,10 @@
     <None Include="..\..\..\..\packaging\nuget\package.config">
       <Filter>packaging</Filter>
     </None>
-    <None Include="packages.config" />
     <None Include="..\..\..\..\packaging\nuget\package.nuspec">
       <Filter>packaging</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\..\..\..\src\ggcode.xml">
