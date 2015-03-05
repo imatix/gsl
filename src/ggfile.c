@@ -441,11 +441,13 @@ build_directory_entries(char *pathname, char **error_msg)
 
       if (errno)
         {
-            *error_msg = xstrcpy(NULL, pathname, "/", dirst->file_name, ": ",  strerror(errno), NULL);
+            *error_msg = xstrcpy(NULL, "'", clean_path(pathname),
+                dirst->file_name, "' ",  strerror(errno), NULL);
         }
       else
         {
-            *error_msg = xstrcpy(NULL, pathname, "/: is empty", NULL);        
+            *error_msg = xstrcpy(NULL, "'", clean_path(pathname), 
+                "' is empty", NULL);        
         }
 
       close_dir (dirst);
@@ -457,15 +459,14 @@ build_directory_entries(char *pathname, char **error_msg)
 
   /* The parent represents the original directory  */
   parent = memt_alloc (NULL, sizeof (DIRECTORY_ENTRY_ITEM));
-  curpath =  strip_file_name (pathname);
-  parent-> path      = xstrcpy (NULL, curpath, "/", NULL);
-  parent-> name      = memt_strdup (NULL, strip_file_path (pathname));
-  parent-> dirst     = NULL;
-  parent-> links     = 0;
-  parent-> parent    = NULL;
-  parent-> first_child  = NULL;
-  parent-> sibling   = NULL;
-  parent-> exists    = TRUE;
+  parent-> path        = xstrcpy (NULL, pathname, "/", NULL);
+  parent-> name        = memt_strdup (NULL, pathname);
+  parent-> dirst       = NULL;
+  parent-> links       = 0;
+  parent-> parent      = NULL;
+  parent-> first_child = NULL;
+  parent-> sibling     = NULL;
+  parent-> exists      = TRUE;
 
   /* build a list of the directory children now so any
      file access problems show up here and not during an iteration.    */
@@ -480,14 +481,14 @@ build_directory_entries(char *pathname, char **error_msg)
 #endif
         {
           directory = memt_alloc (NULL, sizeof (DIRECTORY_ENTRY_ITEM));
-          directory-> path      = xstrcpy (NULL, dirst-> dir_name, "/", NULL);
-          directory-> name      = memt_strdup (NULL, dirst-> file_name);
-          directory-> dirst     = NULL;
-          directory-> links     = 0;
-          directory-> parent    = parent;
-          directory-> first_child  = NULL;
-          directory-> sibling  = NULL;
-          directory-> exists    = TRUE;
+          directory-> path        = xstrcpy (NULL, dirst-> dir_name, "/", NULL);
+          directory-> name        = memt_strdup (NULL, dirst-> file_name);
+          directory-> dirst       = NULL;
+          directory-> links       = 0;
+          directory-> parent      = parent;
+          directory-> first_child = NULL;
+          directory-> sibling     = NULL;
+          directory-> exists      = TRUE;
                 
           last_value = link_directory_entry (parent, last_value,
                                             & directory_entry_class, directory);
@@ -507,7 +508,7 @@ build_directory_entries(char *pathname, char **error_msg)
           file-> dirst     = NULL;
           file-> links     = 0;
           file-> parent    = parent;
-          file-> sibling  = NULL;
+          file-> sibling   = NULL;
           file-> handle    = NULL;
           file-> error_msg = NULL;
 
@@ -658,7 +659,7 @@ open_the_file (FILE_ENTRY_ITEM *file, char mode,
              file-> path, "/", file-> name, NULL);
 
     errno = 0;
-    file-> handle = file_open (filename, mode);
+    file-> handle = file_open (clean_path(filename), mode);
     mem_free (filename);
 
     return store_file_error (file, gsl_thread, error,
@@ -1264,9 +1265,10 @@ directory_open (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, T
         *context = item;
     char
         *curpath,
-        *pathname,
+        *fullpath,
         *lastchar,
-        *error_msg;
+        *error_msg,
+        *relative;
 
     DIRECTORY_ENTRY_ITEM
         *directory;
@@ -1275,25 +1277,33 @@ directory_open (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, T
         rc;
 
     ASSERT (context);
+    
+    relative = path ? string_value (&path-> value) : ".";
+    
+    // normalize relative path
+#ifdef GATES_FILESYSTEM
+    strconvch (relative, PATHEND, '/');
+#endif
 
+    // make absolute path, with trailing slash
     curpath = get_curdir ();
-    pathname = locate_path (curpath,
-                            path ? string_value (&path-> value) : ".");
+    fullpath = locate_path (curpath, relative);
     mem_free (curpath);
-    lastchar = pathname + strlen (pathname) - 1;
+
+    // strip trailing slash
+    lastchar = fullpath + strlen (fullpath) - 1;
     if (*lastchar == '/')
         *lastchar = 0;
-    curpath = strip_file_name (pathname);
 
     error_msg = NULL;
-    directory = build_directory_entries (pathname, &error_msg);
+    directory = build_directory_entries (fullpath, &error_msg);
     
     if (directory)
       {
         assign_pointer (& result-> value, & directory_entry_class, directory);
       }
     
-    mem_free (pathname);
+    mem_free (fullpath);
 
     if (error_msg)
       {

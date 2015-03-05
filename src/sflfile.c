@@ -198,7 +198,7 @@ system_devicename (const char *supplied_filename)
         CloseHandle(fh);
       }
     else
-	is_devicefile = FALSE;          /* Doesn't exist                     */
+        is_devicefile = FALSE;          /* Doesn't exist                     */
 
     return (is_devicefile);
 #else
@@ -1680,11 +1680,11 @@ char
 /*  ---------------------------------------------------------------------[<]-
     Function: strip_file_name
 
-    Synopsis: Returns the path for a fully-qualified filename.  The path is
-    cleaned-up and resolved.  The returned string is held in a static area
-    that should be copied directly after calling this function.  The returned
-    path does not end in '/' unless that is the entire path.  If the supplied
-    name contains no path, the returned path is ".".
+    Synopsis: Returns the path for a fully-qualified filename. The returned 
+    string is held in a static area that should be copied directly after 
+    calling this function.  The returned path does not end in '/' unless 
+    that is the entire path.  If the supplied name contains no path, the 
+    returned path is ".".
     ---------------------------------------------------------------------[>]-*/
 
 char
@@ -1697,18 +1697,16 @@ char
     ASSERT (strlen (name) <= LINE_MAX);
 
     strcpy (work_name, name);
-    path_end = strrchr (work_name, PATHEND);
+    path_end = strrchr (work_name, PATHEND); /*  Find end of path, if any    */
 #if (defined (GATES_FILESYSTEM))
     if (path_end == NULL)
         path_end = strrchr (work_name, '/');
 #endif
     if (path_end == NULL)
         return (".");
-    else
-      {
-        path_end [1] = '\0';
-        return (clean_path (work_name));
-      }
+
+    path_end [1] = '\0';
+    return work_name;
 }
 
 

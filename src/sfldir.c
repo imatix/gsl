@@ -96,7 +96,7 @@ open_dir (
 
     ASSERT (dir != NULL);
     if (! dir)
-	return FALSE;
+        return FALSE;
 
     memset (dir, 0, sizeof (DIRST));
 
@@ -105,18 +105,10 @@ open_dir (
     if (dir_name == NULL || *dir_name == 0)
         strcpy (dir_spec, DEFAULT_DIR);
     else
-        strcpy (dir_spec, dir_name);
+        strcpy(dir_spec, clean_path(dir_name));
 
-#if (defined (GATES_FILESYSTEM))
-    strconvch (dir_spec, '/', '\\');
-#endif
-    /*  Remove a trailing slash from the directory name                      */
+    /*  Save the unmodified directory name for cleanup later                 */
     dir_spec_end = dir_spec + strlen (dir_spec);
-    if (dir_spec_end [-1] == PATHEND)
-      {
-        dir_spec_end [-1] = '\0';
-        dir_spec_end--;
-      }
 
     /*  Open directory stream or find first directory entry                  */
 #if (defined (__UNIX__) || defined (__VMS_XOPEN) || defined (__OS2__))
@@ -151,7 +143,14 @@ open_dir (
 #if (defined (__MSDOS__) || defined (__OS2__))
     *dir_spec_end = '\0';               /*  Kill the \*.* again              */
 #endif
+
     dir-> dir_name = dir_spec;          /*  Now owned by DIRST structure     */
+
+    // normalize the path and filename
+#ifdef GATES_FILESYSTEM
+    strconvch (dir-> dir_name, PATHEND, '/');
+    strconvch (dir-> file_name, PATHEND, '/');
+#endif
 
 #if (defined (__UNIX__) || defined (__VMS_XOPEN) || defined (__OS2__))
     /*  Under UNIX & VMS we still need to fetch the first file entry         */
@@ -208,6 +207,11 @@ populate_entry (DIRST *dir)
 
 #elif (defined (__TURBOC__))
     dir-> file_name = dir-> _dir_entry.ff_name;
+#endif
+
+    // normalize the filename
+#ifdef GATES_FILESYSTEM
+    strconvch (dir-> file_name, PATHEND, '/');
 #endif
 
 #if (defined (__UNIX__) || defined (GATES_FILESYSTEM))
@@ -1436,10 +1440,9 @@ remove_dir (
     if (!file_is_directory (path))
         return (-1);
 
-    copy_path = mem_strdup (path);
+    copy_path = mem_strdup (clean_path (path));
     if (copy_path)
       {
-        strconvch (copy_path, '/', '\\');
 #   if (defined (WIN32))
         if (RemoveDirectoryA (copy_path))
             rc = 0;
