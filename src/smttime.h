@@ -124,13 +124,13 @@ void smttime_term (void);
       {                                                                      \
         if (_accept)                                                         \
             event_send (_reply_to, NULL, _accept,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+                NULL, 0, NULL, NULL, NULL, 0);                               \
       }                                                                      \
     else                                                                     \
       {                                                                      \
         if (_reject)                                                         \
             event_send (_reply_to, NULL, _reject,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+                NULL, 0, NULL, NULL, NULL, 0);                               \
       }
 
 /*  Send event - wakeup                                                      */
@@ -172,13 +172,13 @@ void smttime_term (void);
       {                                                                      \
         if (_accept)                                                         \
             event_send (_reply_to, NULL, _accept,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+                NULL, 0, NULL, NULL, NULL, 0);                               \
       }                                                                      \
     else                                                                     \
       {                                                                      \
         if (_reject)                                                         \
             event_send (_reply_to, NULL, _reject,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+                NULL, 0, NULL, NULL, NULL, 0);                               \
       }
 
 /*  Send event - clock                                                       */
@@ -226,13 +226,13 @@ void smttime_term (void);
       {                                                                      \
         if (_accept)                                                         \
             event_send (_reply_to, NULL, _accept,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+                NULL, 0, NULL, NULL, NULL, 0);                               \
       }                                                                      \
     else                                                                     \
       {                                                                      \
         if (_reject)                                                         \
             event_send (_reply_to, NULL, _reject,                            \
-		        NULL, 0, NULL, NULL, NULL, 0);                       \
+                NULL, 0, NULL, NULL, NULL, 0);                               \
       }
 
 /*  Send event - flush                                                       */

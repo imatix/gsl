@@ -286,10 +286,10 @@ decode_base64 (const void *source, void *target, size_t source_size)
     byte
         value,                          /*  Value of Base64 byte             */
         *p_target,                      /*  Pointer in target buffer         */
-	*target_start;
+    *target_start;
     const byte
         *p_source,                      /*  Pointer in source buffer         */
-	*source_start;
+    *source_start;
 
     ASSERT (source);
     ASSERT (target);

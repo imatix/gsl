@@ -209,7 +209,7 @@ build_method_arguments (SCRIPT_NODE *fn_node,
 
     if (count)
       {
-	*arg = mem_alloc (sizeof (RESULT_NODE *) * count);
+        *arg = mem_alloc (sizeof (RESULT_NODE *) * count);
         for (n = 0; n < count; n++)
             (*arg) [n] = NULL;
       }
