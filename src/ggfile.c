@@ -441,13 +441,13 @@ build_directory_entries(char *pathname, char **error_msg)
 
       if (errno)
         {
-            *error_msg = xstrcpy(NULL, "'", clean_path(pathname),
-                dirst->file_name, "' ",  strerror(errno), NULL);
+          *error_msg = xstrcpy(NULL, "'", clean_path(pathname),
+                               dirst->file_name, "' ",  strerror(errno), NULL);
         }
       else
         {
-            *error_msg = xstrcpy(NULL, "'", clean_path(pathname), 
-                "' is empty", NULL);        
+          *error_msg = xstrcpy(NULL, "'", clean_path(pathname), "' is empty",
+                               NULL);
         }
 
       close_dir (dirst);
@@ -1307,8 +1307,8 @@ directory_open (int argc, RESULT_NODE **argv, void *item, RESULT_NODE *result, T
 
     if (error_msg)
       {
-      rc = store_module_error (gsl_thread, context, error, error_msg);
-      mem_free(error_msg);
+        rc = store_module_error (gsl_thread, context, error, error_msg);
+        mem_free(error_msg);
       }
     else
       {
