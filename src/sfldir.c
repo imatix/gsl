@@ -93,6 +93,8 @@ open_dir (
     char
         *dir_spec,                      /*  Directory to search through      */
         *dir_spec_end;                  /*  Points to NULL in dir_spec       */
+    
+    errno = 0;
 
     ASSERT (dir != NULL);
     if (! dir)

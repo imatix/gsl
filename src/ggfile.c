@@ -427,9 +427,6 @@ build_directory_entries(char *pathname, char **error_msg)
   int
      rc;
 
-  char
-      *curpath;
-
 
   dirst = memt_alloc (NULL, sizeof (DIRST));
   rc = open_dir (dirst, pathname);
@@ -441,8 +438,8 @@ build_directory_entries(char *pathname, char **error_msg)
 
       if (errno)
         {
-          *error_msg = xstrcpy(NULL, "'", clean_path(pathname),
-                               dirst->file_name, "' ",  strerror(errno), NULL);
+          *error_msg = xstrcpy(NULL, "'", clean_path(pathname), "' ",  
+                               strerror(errno), NULL);
         }
       else
         {

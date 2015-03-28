@@ -1653,8 +1653,8 @@ MODULE: GSL/fileio package
 
         Function: directory . create (path)
                     Creates directory `path`.
-        On success returns 0.
-        On error, returns -1 and sets `error`, if provided.
+        Returns 0 on success.
+        Returns -1 on error (does not accept an error parameter).
 
         Notes:
         Can create multiple levels of directories, similar to 'mkdir -p' on unix.
