@@ -427,9 +427,6 @@ build_directory_entries(char *pathname, char **error_msg)
   int
      rc;
 
-  char
-      *curpath;
-
 
   dirst = memt_alloc (NULL, sizeof (DIRST));
   rc = open_dir (dirst, pathname);
