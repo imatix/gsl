@@ -187,8 +187,8 @@ system_devicename (const char *supplied_filename)
 
     is_devicefile = TRUE;
 
-    fh = CreateFileA(supplied_filename, GENERIC_READ, FILE_SHARE_READ, NULL,
-                    OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    fh = CreateFileA (supplied_filename, GENERIC_READ, FILE_SHARE_READ, NULL,
+                      OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (fh != INVALID_HANDLE_VALUE)
       {
