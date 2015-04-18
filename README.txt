@@ -1302,8 +1302,18 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
     class (item)
         To be explained.
 
-    count (item, condition)
-        In condition, count. refers to item being counted
+    count  ([<scope> .] <child> [, <expr> [, [<alias>]]]):
+        counts the number of children of the supplied or most recently opened scope
+        of the given name.  If an expression is specified, it is treated as
+        a condition to determine which children are counted.  In this case,
+        a new stacked scope is implicitly defined while the condition is
+        evaluated.  The name of this scope is the name of the XML item, unless
+        an alias is specified.  For compatibility with earlier versions of GSL,
+        if no alias is specified then a second, unstacked scope called `count'
+        and referring to the same XML item is created.
+        For example: count (ITEM, ITEM.NAME = "ABC")
+        returns the number of children of the most recently opened scope whose
+        attribute NAME has the value `ABC'.
 
     defined (value)
         True if value is defined.
