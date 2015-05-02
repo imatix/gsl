@@ -1,0 +1,183 @@
+<class name = "zs_lex" script = "fsm_c">
+
+<state name = "expecting token" inherit = "defaults">
+    <event name = "letter" next = "reading function">
+        <action name = "start new token" />
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "hyphen" next = "reading number">
+        <action name = "start new token" />
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "plus" next = "reading number">
+        <action name = "start new token" />
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "period" next = "reading number">
+        <action name = "start new token" />
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "digit" next = "reading number">
+        <action name = "start new token" />
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "open quote" next = "reading string">
+        <action name = "start new token" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "whitespace">
+        <action name = "parse next character" />
+    </event>
+    <event name = "newline">
+        <action name = "parse next character" />
+    </event>
+    <event name = "open list" next = "expecting token">
+        <action name = "have open token" />
+    </event>
+    <event name = "close list" next = "expecting token">
+        <action name = "have close token" />
+    </event>
+    <event name = "finished">
+        <action name = "have null token" />
+    </event>
+</state>
+
+<state name = "reading function" inherit = "defaults">
+    <event name = "letter">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "digit">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "hyphen">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "period">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "slash">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "underscore">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "whitespace" next = "expecting token">
+        <action name = "have function token" />
+    </event>
+    <event name = "colon" next = "expecting token">
+        <action name = "have compose token" />
+    </event>
+    <event name = "open list" next = "expecting token">
+        <action name = "have function token" />
+        <action name = "push back to previous" />
+    </event>
+    <event name = "close list" next = "expecting token">
+        <action name = "have function token" />
+        <action name = "push back to previous" />
+    </event>
+    <event name = "newline" next = "expecting token">
+        <action name = "have function token" />
+    </event>
+    <event name = "finished" next = "expecting token">
+        <action name = "have function token" />
+    </event>
+</state>
+
+<state name = "reading number" inherit = "defaults">
+    <event name = "digit">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "letter">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "hyphen">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "plus">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "slash">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "period">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "comma">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "colon">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "asterisk">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "caret">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "percent">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "close list" next = "expecting token">
+        <action name = "have number token" />
+        <action name = "push back to previous" />
+    </event>
+    <event name = "whitespace" next = "expecting token">
+        <action name = "have number token" />
+    </event>
+    <event name = "newline" next = "expecting token">
+        <action name = "have number token" />
+    </event>
+    <event name = "finished" next = "expecting token">
+        <action name = "have number token" />
+    </event>
+</state>
+
+<state name = "reading string">
+    <event name = "close quote" next = "expecting token">
+        <action name = "have string token" />
+    </event>
+    <event name = "finished">
+        <action name = "store newline character" />
+    </event>
+    <event name = "newline">
+        <action name = "store newline character" />
+        <action name = "parse next character" />
+    </event>
+    <event name = "*">
+        <action name = "store the character" />
+        <action name = "parse next character" />
+    </event>
+</state>
+
+<state name = "defaults">
+    <event name = "other" next = "expecting token">
+        <action name = "have invalid token" />
+    </event>
+    <event name = "*" next = "expecting token">
+        <action name = "have invalid token" />
+    </event>
+</state>
+
+</class>

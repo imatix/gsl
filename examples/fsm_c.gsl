@@ -1,0 +1,464 @@
+.template 0
+#   fsm_c.gsl
+#
+#   Generates a finite state machine engine in C
+#
+#   This Source Code Form is subject to the terms of the Mozilla Public
+#   License, v. 2.0. If a copy of the MPL was not distributed with this
+#   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+#   This provides much of the function of the Libero state machine model
+#   written by Pieter Hintjens, which you can still see in GSL's source
+#   code. Just for comparison, Libero was 11K lines of code, and this is
+#   under 500.
+#
+#   For a worked example, see the zs_lex class in this directory.
+#
+class.title ?= "No title"
+
+#   Resolve includes
+
+for class.include
+    if defined (include.filename)
+        my.include_file = class.load_file (filename)
+        if defined (my.include_file)
+            move my.include_file after include
+        else
+            echo "E: error loading include file: $(filename): $(xml.error?)"
+        endif
+    else
+        echo "E: required attribute 'filename' not defined"
+    endif
+endfor
+
+#   Lowercase state/event/action names
+
+for class.state
+    state.name = "$(name:c)"
+    state.comma = last()?? ""? ","
+    for event
+        if name <> "*"
+            event.name = "$(name:c)"
+        endif
+        if defined (event.next)
+            event.next = "$(next:c)"
+            if count (class.state, next = "$(name:c)") = 0
+                abort "Next state $(next) is not defined"
+            endif
+        endif
+        for action
+            action.name = "$(name:c)"
+        endfor
+    endfor
+
+    #   Collect all events and actions at class level
+    for event where name <> "*"
+        #   Copy event to class if not yet defined there
+        if count (class.event, name = -1.name) = 0
+            copy event to class
+        endif
+    endfor
+    for event
+        for action where count (class.action, name = -1.name) = 0
+            copy action to class
+        endfor
+    endfor
+endfor
+
+#   Process super states
+
+function resolve_inheritance (state)
+    if defined (my.state.inherit)
+        my.state.inherit = "$(my.state.inherit:c)"
+        for class.state as superstate where name = my.state.inherit
+            resolve_inheritance (superstate)
+            for event where count (my.state.event, name = -1.name) = 0
+                copy event to my.state
+            endfor
+        else
+            echo "E: superstate $(inherit) isn't defined"
+        endfor
+    endif
+endfunction
+
+for class.state
+    resolve_inheritance (state)
+endfor
+
+#   Collect prototypes that we need
+for class.action
+    new class.prototype
+        prototype.name = "$(action.name)"
+        prototype.exists = 0
+        prototype.args = "$(class.name)_t *self"
+    endnew
+endfor
+
+.endtemplate
+.output "$(class.name)_fsm.h"
+/*  =========================================================================
+    $(class.name)_fsm - $(class.title:) state machine engine
+
+    ** WARNING *************************************************************
+    THIS SOURCE FILE IS 100% GENERATED. If you edit this file, you will lose
+    your changes at the next build cycle. This is great for temporary printf
+    statements. DO NOT MAKE ANY CHANGES YOU WISH TO KEEP. The correct places
+    for commits are:
+
+     * The XML model used for this code generation: $(filename), or
+     * The code generation script that built this file: $(script)
+    ************************************************************************
+.   for class.license
+    $(string.trim (license.):block                                         )
+.   endfor
+    =========================================================================
+*/
+
+
+//  ---------------------------------------------------------------------------
+//  State machine constants
+
+typedef enum {
+.for class.state
+.   state.comma = last()?? ""? ","
+    $(name)_state = $(index ())$(comma)
+.endfor
+} state_t;
+
+typedef enum {
+    NULL_event = 0,
+.for class.event
+.   event.comma = last()?? ""? ","
+    $(name)_event = $(index ())$(comma)
+.endfor
+} event_t;
+
+//  Names for state machine logging and error reporting
+static char *
+s_state_name [] = {
+    "(NONE)",
+.for class.state
+    "$(name)"$(comma)
+.endfor
+};
+
+static char *
+s_event_name [] = {
+    "(NONE)",
+.for class.event
+    "$(name)"$(comma)
+.endfor
+};
+
+//  Action prototypes
+.for class.prototype
+static void $(name) ($(args));
+.endfor
+
+//  This is the context block for a FSM thread; use the setter
+//  methods to set the FSM properties.
+
+typedef struct {
+    $(class.name)_t *parent;    //  Parent class
+    bool animate;               //  Animate state machine
+    state_t state;              //  Current state
+    event_t event;              //  Current event
+    event_t next_event;         //  The next event
+    event_t exception;          //  Exception event, if any
+    uint64_t cycles;            //  Track the work done
+} fsm_t;
+
+static fsm_t *
+fsm_new ($(class.name)_t *parent)
+{
+    fsm_t *self = (fsm_t *) zmalloc (sizeof (fsm_t));
+    if (self) {
+.for class.state where item () = 1
+        self->state = $(name)_state;
+.endfor
+        self->event = NULL_event;
+        self->parent = parent;
+    }
+    return self;
+}
+
+static void
+fsm_destroy (fsm_t **self_p)
+{
+    assert (self_p);
+    if (*self_p) {
+        fsm_t *self = *self_p;
+        free (self);
+        *self_p = NULL;
+    }
+}
+
+static void
+fsm_set_next_event (fsm_t *self, event_t next_event)
+{
+    self->next_event = next_event;
+}
+
+static void
+fsm_set_exception (fsm_t *self, event_t exception)
+{
+    self->exception = exception;
+}
+
+static void
+fsm_set_animate (fsm_t *self, bool animate)
+{
+    self->animate = animate;
+}
+
+static uint64_t
+fsm_cycles (fsm_t *self)
+{
+    return self->cycles;
+}
+
+.macro output_action_list ()
+.   for action
+                if (!self->exception) {
+                    //  $(name)
+                    if (self->animate)
+                        zsys_debug ("$(class.name):         $ $(name)");
+                    $(name) (self->parent);
+                }
+.   endfor
+.   if !count (action)
+                //  No action - just logging
+                if (self->animate)
+                    zsys_debug ("$(class.name):         $ $(name)");
+.   endif
+.   if defined (event.next)
+                if (!self->exception)
+                    self->state = $(next)_state;
+.       my.next_state = class->state ("$(name)" = "$(event.next)")
+.   endif
+.endmacro
+
+//  Execute state machine until it has no next event. Before calling this
+//  you must have set the next event using fsm_set_next_event(). Ends when
+//  there is no next event set.
+
+static void
+fsm_execute (fsm_t *self)
+{
+    while (self->next_event != NULL_event) {
+        self->cycles++;
+        self->event = self->next_event;
+        self->next_event = NULL_event;
+        self->exception = NULL_event;
+        if (self->animate) {
+            zsys_debug ("$(class.name): %s:", s_state_name [self->state]);
+            zsys_debug ("$(class.name):     %s", s_event_name [self->event]);
+        }
+.#  Nested if is slightly faster than switch, surprisingly perhaps
+.for class.state
+.   if index () > 1
+        else
+.   endif
+        if (self->state == $(name:c)_state) {
+.   for event where name <> "*"
+.       if index () > 1
+            else
+.       endif
+            if (self->event == $(name)_event) {
+.       output_action_list ()
+            }
+.   endfor
+.   for event where name = "*"
+.       if item () > 1
+            else {
+.       else
+            {
+.       endif
+                //  Handle all other events
+.       output_action_list ()
+            }
+.   else
+            else {
+                //  Handle unexpected internal events
+                zsys_warning ("$(class.name): unhandled event %s in %s",
+                    s_event_name [self->event], s_state_name [self->state]);
+                assert (false);
+            }
+.   endfor
+        }
+.endfor
+        //  If we had an exception event, interrupt normal programming
+        if (self->exception) {
+            if (self->animate)
+                zsys_debug ("$(class.name):         ! %s", s_event_name [self->exception]);
+            self->next_event = self->exception;
+        }
+        else
+        if (self->animate)
+            zsys_debug ("$(class.name):         > %s", s_state_name [self->state]);
+    }
+}
+.#
+.#  Generate source file first time only
+.source_file = "$(class.name).h"
+.if !file.exists (source_file)
+.   output source_file
+/*  =========================================================================
+    $(class.name) - $(class.title:)
+
+.   for class.license
+    $(string.trim (license.):block                                         )
+.   endfor
+    =========================================================================
+*/
+
+#ifndef $(CLASS.NAME)_H_INCLUDED
+#define $(CLASS.NAME)_H_INCLUDED
+
+#include <czmq.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+//  Opaque class structure
+typedef struct _$(class.name)_t $(class.name)_t;
+
+//  @interface
+//  Create a new $(class.name), return the reference if successful, or NULL
+//  if construction failed due to lack of available memory.
+$(class.name)_t *
+    $(class.name)_new (void);
+
+//  Destroy the $(class.name) and free all memory used by the object.
+void
+    $(class.name)_destroy ($(class.name)_t **self_p);
+
+//  Enable verbose tracing
+void
+    $(class.name)_verbose (zs_parser_t *self, bool verbose);
+
+//  Self test of this class
+void
+    $(class.name)_test (bool verbose);
+//  @end
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+.endif
+.#  Generate source file first time only
+.source_file = "$(class.name).c"
+.if !file.exists (source_file)
+.   output source_file
+/*  =========================================================================
+    $(class.name) - $(class.title:)
+
+.   for class.license
+    $(string.trim (license.):block                                         )
+.   endfor
+    =========================================================================
+*/
+
+/*
+@header
+    Description of class for man page.
+@discuss
+    Detailed discussion of the class, if any.
+@end
+*/
+
+//  Include the generated state machine engine
+#include "$(class.name)_fsm.h"
+
+//  Structure of our class
+
+struct _$(class.name)_t {
+    fsm_t *fsm;         //  Our finite state machine
+    int filler;         //  Add your own properties here
+};
+
+//  ---------------------------------------------------------------------------
+//  Create a new $(class.name), return the reference if successful, or NULL
+//  if construction failed due to lack of available memory.
+
+$(class.name)_t *
+$(class.name)_new (void)
+{
+    $(class.name)_t *self = ($(class.name)_t *) zmalloc (sizeof ($(class.name)_t));
+    if (self) {
+        self->fsm = fsm_new (self);
+        //  Initialize class properties here
+    }
+    return self;
+}
+
+
+//  ---------------------------------------------------------------------------
+//  Destroy the $(class.name) and free all memory used by the object.
+
+void
+$(class.name)_destroy ($(class.name)_t **self_p)
+{
+    assert (self_p);
+    if (*self_p) {
+        $(class.name)_t *self = *self_p;
+        fsm_destroy (&self->fsm);
+        free (self);
+        *self_p = NULL;
+    }
+}
+
+
+//  ---------------------------------------------------------------------------
+//  Selftest
+
+void
+$(class.name)_test (bool verbose)
+{
+    printf (" * $(class.name): ");
+    if (verbose)
+        printf ("\\n");
+
+    //  @selftest
+    $(class.name)_t *$(class.name) = $(class.name)_new ();
+
+    $(class.name)_destroy (&$(class.name));
+    //  @end
+    printf ("OK\\n");
+}
+.endif
+.close
+.template 0
+
+#   Append missing prototypes to source file
+input = file.open (source_file)
+xline = file.read (input)
+while defined (xline)
+    #   Look for function declarations
+    if regexp.match ("^(\\w+) \\(", xline, token)
+        for class.prototype where name = token
+            prototype.exists = 1
+        endfor
+    endif
+    xline = file.read (input)?
+endwhile
+file.close (input)
+
+append source_file
+for class.prototype where exists = 0
+    echo "Generating stub for $(name)..."
+    >
+    >
+    >//  ---------------------------------------------------------------------------
+    >//  $(name)
+    >//
+    >
+    >static void
+    >$(name) ($(args))
+    >{
+    >}
+endfor
+.endtemplate
