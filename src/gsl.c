@@ -254,12 +254,19 @@ static void display_command_line_syntax (void)
     printf ("syntax: gsl -<option> ... -<attr>[:<value>] ... <filename> ...\n");
     printf ("    or: gsl -a -<option> ... -<attr>[:<value>] <filename> <arg> ...\n");
     printf ("    Options:\n");
-    printf ("        -a   argument: Pass arguments following filename to GSL script\n");
-    printf ("        -q   quiet:    suppress routine messages\n");
-    printf ("        -p   parallel: process files in parallel\n");
-    printf ("        -s:n size:n    set script cache size - default is %lu\n", (long) DEFAULT_SIZE);
-    printf ("        -h   help:     show command-line summary\n");
-    printf ("        -v   version:  show full version information\n");
+    printf ("    -a          argument:  Pass arguments following filename to GSL script\n");
+    printf ("    -q          quiet:     suppress routine messages\n");
+    printf ("    -p          parallel:  process files in parallel\n");
+    printf ("    -c:m[:file] console:   set console mode (optionally capture output to file)\n");
+    printf ("                           (use capital case -C:... to disable the echo)\n");
+    printf ("                               mode:\n");
+    printf ("                                   p   - print as requested\n");
+    printf ("                                   d   - prefix with date and time\n");
+    printf ("                                   t   - prefix with time only\n");
+    printf ("                                   dbg - datetime, with full flush to disk\n");
+    printf ("    -s:n     size:n        set script cache size - default is %lu\n", (long) DEFAULT_SIZE);
+    printf ("    -h       help:         show command-line summary\n");
+    printf ("    -v       version:      show full version information\n");
 }
 
 
@@ -314,6 +321,46 @@ static void process_the_switch (void)
       {
         init_value (& val);
         max_size =  atol (value);
+      }
+    else
+    if ((lexcmp (name, "c") == 0 || lexcmp (name, "console") == 0) && value)
+      {
+        int   echo = name[0] == 'c';    /* -C option disables the echo */
+        char* mode = strtok (value, ":");
+        value      = strtok (NULL,  "");
+        if  (!mode)
+          {
+            mode  = value;
+            value = NULL;
+          }
+
+        if (lexcmp (mode, "p") == 0)
+            console_set_mode (CONSOLE_PLAIN);
+        else
+        if (lexcmp (mode, "d") == 0)
+            console_set_mode (CONSOLE_DATETIME);
+        else
+        if (lexcmp (mode, "t") == 0)
+            console_set_mode (CONSOLE_TIME);
+        else
+        if (lexcmp (mode, "dbg") == 0)
+            console_set_mode (CONSOLE_DEBUG);
+        else
+          {
+            printf ("Invalid console mode argument: %s\n\n", mode);
+            display_command_line_syntax ();
+            exit (1);
+          }
+
+        if (!echo)
+            console_send(NULL, 0);
+
+        if (value && console_capture(value, 'a') < 0)
+          {
+            printf ("Cannot capture console to file %s: %s\n\n",
+                    value, strerror(errno));
+            exit (1);
+          }
       }
     else
       {
