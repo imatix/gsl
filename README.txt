@@ -1045,7 +1045,10 @@ Neat
 :    Neat Case Modification
 
 Camel
-:    CamelCase
+:    camelCase
+
+Pascal
+:    PascalCase
 
 no
 :    No case modification
@@ -1300,7 +1303,7 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
         To be explained.
 
     class (item)
-        To be explained.
+        Returns the class name for the scope of item.
 
     count  ([<scope> .] <child> [, <expr> [, [<alias>]]]):
         counts the number of children of the supplied or most recently opened scope
@@ -1826,7 +1829,7 @@ Defines or undefines an XML attribute or item value.  There are several differen
 
 If the scope is omitted from the data specification, GSL searches stacked scopes, from inner to outer, for one in which an attribute of the specified name exists.  If none is found, it uses the outermost stacked scope, which effectively makes the identifier a global variable.
 
-If the expression is left empty then the symbol becomes undefined.  If the expression ends with a default operator `?` but no default expression then an undefined expression causes the symbol to becume undefined rather than producing a runtime error.
+If the expression is left empty then the symbol becomes undefined.  If the expression ends with a default operator `?` but no default expression then an undefined expression causes the symbol to become undefined rather than producing a runtime error.
 
 If an arithmetic or default operator is specified then the value assigned to the symbol is the result of that operator and the supplied expression to the former value of the operator.
 
@@ -1960,7 +1963,9 @@ Macros and functions are pieces of GSL which can be invoked with parameters. The
 
 Just like other data, macros and functions are attached to scopes, and can only be used within that scope.
 
-When a macro or function executes, an unstacked scope is opened with the same name as the macro or function.  An unstacked alias to this scope called `my` is also created.  This scope holds the parameter values, and can also be used for local variables.  Full recursion can thus be achieved.
+When a macro or function executes, an unstacked scope is opened with the same name as the macro or function.  An unstacked alias to this scope called `my` is also created.  Parameters accessed via the `my` alias are flattened and parameters accessed via the macro or function name scope are not.
+
+The macro or function-named scope and the `my alias` can also be used for local variables, thus enabling full recursion.
 
 **.macro**
 
@@ -1994,7 +1999,7 @@ Terminates a function definition.
 
     .[<scope> .] <function-name> [([<expr>] [, [<expr>]])] ...)]
 
-A macro or function can also be invoked as an expression.  In this case, the value of is that returned, or is undefined if there is no `.return` statement.
+A macro or function can also be invoked as an expression.  In this case, the expression value is that which is returned, or is undefined if there is no `return` statement.
 
 This creates a special scope with the name of the macro or function, and attributes corresponding to the parameters value of the parameters.  This scope does not count in numeric scope specifications and cannot have children.  It can be used to define local variables, but must in this case be specified by name.
 
@@ -2003,20 +2008,46 @@ The number of expressions (or empty expressions) must match exactly the number o
 Examples:
 
     .macro echotwice (text)
-    .    echo my.text
+    .    echo echotwice.text
     .    echo my.text
     .endmacro
-    ...
-    .echotwice ("Hello")
+    .
+    .echotwice ("Hello World!")
+    Hello World!
+    Hello World!
 
+    .function increment (value)
+    .    return my.value + 1
+    .endfunction
+    .
+    .increment (5)
+    6
+    
+    .function incrementbyref (n)
+    .    $(my.n) = $(my.n) + 1
+     .endfunction
+    .
+    .global.counter=5
+    .incrementbyref ("counter")
+    .echo global.counter
+    6
+ 
     .function recursive (N)
-        recursive.localvar = my.N - 1
-        recursive (localvar)
+    .    echo my.N
+    .    my.localvar = my.N - 1
+    .    if (my.localvar > 0)
+    .        recursive (my.localvar)
+    .    endif
+    .    echo my.localvar
     .endfunction
-
-    .function assign (dest, source)
-        .$(my.dest) = my.source
-    .endfunction
+    .
+    .recursive (3)
+    3
+    2
+    1
+    0
+    1
+    2
 
 #### Miscellaneous
 
