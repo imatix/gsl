@@ -30,23 +30,27 @@ Dependencies:
 
 * pcre package (e.g. libpcre3-dev)
 
-To build from git on a UNIX-like box, and install into /usr/local/bin:
+To build from git on a UNIX-like box, and install into `/usr/local/bin`:
 
     git clone git://github.com/imatix/gsl
     cd gsl/src
     make
     sudo make install
 
+To install it to another location, change the last command to:
+
+    sudo make install DESTDIR=/my/custom/prefix
+
 To show command-line help:
 
     ./gsl
-    
-#### Building on FreeBSD 10 
+
+#### Building on FreeBSD 10
 
 Install GNU Make and GNU Compiler. For example, with `pkg`, `pkg install gmake gcc`. Then edit `src/Makefile` and add "-lm" to `src/Makefile` where you see CCLIBS configured. It may look similar to:
 
     export CCLIBS = -lpcre
-    
+
 You want to add the math library:
 
     export CCLIBS = -lpcre -lm
@@ -108,14 +112,14 @@ Initially, GSL looks like any other scripting language. I can write little scrip
 
 Which calculates the value of my savings account if I were to leave it untouched for twenty years, and the interest rate were steady at five percent. Note these syntax aspects:
 
-* variable = expression - Assign a value to a variable
-* while condition... endwhile - Repeat a block while the condition is true
+* `variable = expression` - Assign a value to a variable
+* `while condition... endwhile` - Repeat a block while the condition is true
 
-To run the above program, assuming it was saved in a file called interest.gsl, I type this command:
+To run the above program, assuming it was saved in a file called `interest.gsl`, I type this command:
 
     gsl interest
 
-This executes the script and tells me that if I am really patient, I'll be rich one day. Now I'm going to change this little program to make the same kind of calculation for different amounts, rates, and years. Where do I put these different terms and rates? The answer is, in an XML file. The file is called deposits.xml:
+This executes the script and tells me that if I am really patient, I'll be rich one day. Now I'm going to change this little program to make the same kind of calculation for different amounts, rates, and years. Where do I put these different terms and rates? The answer is, in an XML file. The file is called `deposits.xml`:
 
     <?xml version="1.0"?>
     <deposits script = "interest.gsl" >
@@ -140,16 +144,16 @@ We change our script to give the result below.
 
 Note these syntax aspects:
 
-* .template 0 - Start script (non-template) block
-* for childname - Repeat block for all instances of child item called childname
+* `.template 0` - Start script (non-template) block
+* `for <childname>` - Repeat block for all instances of child item called `childname`
 
 We will run the new interest calculation script using this command:
 
     gsl deposits.xml
 
-Note the change of command syntax. We first ran the GSL script. Now we're running the XML file. This is one of GSL's features - you can run XML files as if they were scripts. It's the `script =` setting that does the trick, working much like the hash-bang #! command in Linux.
+Note the change of command syntax. We first ran the GSL script. Now we're running the XML file. This is one of GSL's features - you can run XML files as if they were scripts. It's the `script =` setting that does the trick, working much like the hash-bang `#!` command in Linux.
 
-Any GSL script, no matter how simple, works with an XML document loaded into GSL's memory as a data tree. In our first interest.gsl script, the data tree contains just this:
+Any GSL script, no matter how simple, works with an XML document loaded into GSL's memory as a data tree. In our first `interest.gsl` script, the data tree contains just this:
 
     <root script = "interest" />
 
@@ -163,9 +167,9 @@ All variables that we define and use are stored in the data tree, somewhere. Thi
 
 ### Templates and Scripts
 
-GSL uses the term "template" to describe text that is output as generated code. GSL works in two modes - script mode, and template mode. When you execute a GSL script directly, as we did in the first example, GSL starts in script mode. When you execute a GSL script indirectly, through an XML file, as we did in the second example, GSL starts in template mode. Try removing the .template 0 and .endtemplate lines and you'll see what I mean. The script just gets copied to the output stream, the console, by default.
+GSL uses the term "template" to describe text that is output as generated code. GSL works in two modes - script mode, and template mode. When you execute a GSL script directly, as we did in the first example, GSL starts in script mode. When you execute a GSL script indirectly, through an XML file, as we did in the second example, GSL starts in template mode. Try removing the `.template 0` and `.endtemplate` lines and you'll see what I mean. The script just gets copied to the output stream, the console, by default.
 
-In template mode, GSL commands start with a dot in the first column. In script mode, all lines are assumed to be GSL commands unless they start with ">" (output) in the first column, in which case they are handled as template lines.
+In template mode, GSL commands start with a dot in the first column. In script mode, all lines are assumed to be GSL commands unless they start with `>` (output) in the first column, in which case they are handled as template lines.
 
 Script mode is useful when you are doing a lot of GSL scripting work. Often you need to prepare data, check the XML tree, and so on, before you can start to generate code. Template mode is useful when you want to output a lot of data, or actually want to generate code.
 
@@ -177,7 +181,7 @@ lines with GSL commands. Like this:
     .   year = year + 1
     .endwhile
 
-I'm now going to generate a little HTML report of the different calculations. The listing below shows the third version of interest.gsl:
+I'm now going to generate a little HTML report of the different calculations. The listing below shows the third version of `interest.gsl`:
 
     .output "deposits.html"
     <html>
@@ -211,8 +215,8 @@ I'm now going to generate a little HTML report of the different calculations. Th
 
 Note these syntax aspects:
 
-* output expression - Start sending output to the filename specified
-* &#36;(name) - Insert value of attribute in output text
+* `output <expression>` - Start sending output to the filename specified
+* <tt>&#36;(name)</tt> - Insert value of attribute in output text
 
 To produce the HTML report run the same command as before:
 
@@ -292,7 +296,7 @@ Once we've defined a set of pages, how do we tie these together into a web site?
     </section>...
     </site>
 
-I've defined a &lt;section&gt; tag that breaks the pages into groups. Now let's jump right in and make ourselves a web site. There's no better way to test a model than to try using it. As an example, I'll make a new web site for my local grocer, who has decided, finally, to go on-line.
+I've defined a `<section>` tag that breaks the pages into groups. Now let's jump right in and make ourselves a web site. There's no better way to test a model than to try using it. As an example, I'll make a new web site for my local grocer, who has decided, finally, to go on-line.
 
 ### First Draft
 
@@ -368,7 +372,7 @@ and last the vegetable page:
     </content>
     </page>
 
-Finally, here is the first draft of the web generation script. It does not produce anything, it simply loads the web site data into an XML tree and then saves this (in a file called root.xml) that we can look at to see what live data the script is actually working with:
+Finally, here is the first draft of the web generation script. It does not produce anything, it simply loads the web site data into an XML tree and then saves this (in a file called `root.xml`) that we can look at to see what live data the script is actually working with:
 
     .###  Since we run the script off the XML file, it starts in
     .###  template mode.
@@ -386,33 +390,33 @@ Finally, here is the first draft of the web generation script. It does not produ
 
 Let's look at what this script does. First, it switches off template mode so we can write ordinary GSL without starting each line with a dot. GSL starts scripts in template mode if they are launched from the XML file. It's useful in many cases but not here. So, we wrap the whole script in `.template 0` and `.endtemplate`.
 
-Second, the script works through each section and page, and loads the XML data for that page. It does this using two commands, `xml` and `delete`. The first loads XML data from a file into the specified scope (&lt;section&gt;, in this case), and the second deletes the current page (since the loaded data also contains a &lt;page&gt; tag).
+Second, the script works through each section and page, and loads the XML data for that page. It does this using two commands, `xml` and `delete`. The first loads XML data from a file into the specified scope (`<section>`, in this case), and the second deletes the current page (since the loaded data also contains a `<page>` tag).
 
 Finally, the script saves the whole XML tree to a file. If you want to try the next steps you must have installed GSL, as I described in the last article. Run the script like this:
 
     gsl site
 
-GSL looks for the file called `site.xml`. When the script has run, take a look at root.xml. This shows you what we're going to work with to generate the real HTML.
+GSL looks for the file called `site.xml`. When the script has run, take a look at `root.xml`. This shows you what we're going to work with to generate the real HTML.
 
 ### Inserting Variables
 
 When we generate output, we insert variable values into the generated text. This is very much like using shell variables.
 
-GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the &#36;(name) form outputs a variable in lower case:
+GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the <tt>&#36;(name)</tt> form outputs a variable in lower case:
 
     output "$(filename).c"
 
-The &#36;(NAME) form outputs the same value in uppercase:
+The <tt>&#36;(NAME)</tt> form outputs the same value in uppercase:
 
     #if defined ($(FILENAME)_INCLUDED)
 
-And the &#36;(Name) form outputs the variable in title case, i.e. the first letter is capitalised:
+And the <tt>&#36;(Name)</tt> form outputs the variable in title case, i.e. the first letter is capitalised:
 
     ###################  $(Filename)   #################
 
-One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the &#36;(name) form. If we don't want a variable to be automatically case converted, we use this form: &#36;(name:). This is also called the 'empty modifier'.
+One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the <tt>&#36;(name)</tt> form. If we don't want a variable to be automatically case converted, we use this form: <tt>&#36;(name:)</tt>. This is also called the 'empty modifier'.
 
-A second side-effect of automatic case conversion is that variable names are not case sensitive. By default GSL ignores the case of variable names so that &#36;(me) and &#36;(ME) refer to the same variable.
+A second side-effect of automatic case conversion is that variable names are not case sensitive. By default GSL ignores the case of variable names so that <tt>&#36;(me)</tt> and <tt>&#36;(ME)</tt> refer to the same variable.
 
 But putting empty modifiers in every variable expansion gets tiresome, and GSL
 lets us switch off automatic case conversion, using this instruction:
@@ -432,7 +436,7 @@ In our first draft we loaded each page into the XML tree and deleted the origina
         endfor
     endfor
 
-To generate output for each page, we're going to iterate through the sections one more time. Since we're deleting old &lt;page&gt; entities and loading new ones from the XML definitions, we need to iterate through the sections and pages over again. This is the code that generates the output for each page:
+To generate output for each page, we're going to iterate through the sections one more time. Since we're deleting old `<page>` entities and loading new ones from the XML definitions, we need to iterate through the sections and pages over again. This is the code that generates the output for each page:
 
     for section
         for page
@@ -440,7 +444,7 @@ To generate output for each page, we're going to iterate through the sections on
         endfor
     endfor
 
-The include command executes GSL code in another file. We're going to do all the hard work in a separate file, which I've called template.gsl, so that it's easy to change the HTML generation independently from the top-level GSL code. This is good practice for several reasons:
+The include command executes GSL code in another file. We're going to do all the hard work in a separate file, which I've called `template.gsl`, so that it's easy to change the HTML generation independently from the top-level GSL code. This is good practice for several reasons:
 
 It's nice, in larger projects, that each big code generation task sits in its own file where it can be owned by a single person.
 
@@ -467,7 +471,7 @@ Most of it is fairly straight-forward, though you do need to understand how XHTM
 
 * The output command creates the HTML page.
 
-* The text &lt;!DOCTYPE...&gt; to &lt;/html&gt; is the body of the page, which I'll explain below.
+* The text `<!DOCTYPE...>` to `</html>` is the body of the page, which I'll explain below.
 
 The template starts by setting template mode on. This means that any GSL commands we want to use here must start with a dot. It makes the HTML easy to read and to maintain.
 
@@ -507,13 +511,13 @@ Near the end of the template you see this construction:
     $(content.string ())
     .endfor
 
-What is going on here? The answer is, we're grabbing the whole &lt;content> block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
+What is going on here? The answer is, we're grabbing the whole `<content>` block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
 
 The string() function returns a string that holds the XML value of the specified entity. For the index page, it returns this value (as a single string):
 
     <content><h3>Close to you</h3><p>We're just around the corner, if you live near by.</p><h3>Always open</h3><p>And if we're closed, just come back tomorrow.</p><h3>Cheap and convenient</h3><p>Much cheaper and easier than growing your own vegetables and fruit.</p></content>
 
-When we enclose this in &#36;( and ), it writes the string to the current output file. Thus we generate the body of the web page.
+When we enclose this in `$(` and `)`, it writes the string to the current output file. Thus we generate the body of the web page.
 
 ### Putting it All Together
 
@@ -591,7 +595,7 @@ Here is the template for the HTML output.
     </html>
     .endtemplate
 
-To build the final web site, make sure the site.xml specifies the correct script:
+To build the final web site, make sure the `site.xml` specifies the correct script:
 
     <site
         copyright = "Copyright &#169; Local Grocer"
@@ -624,7 +628,7 @@ But most of all, the point of this example is to teach you how to use GSL in you
 
 ## Model-Oriented Programming
 
-This is article is aimed at the professional programmer. I'm going to attack a complex subject, something that few people know about. It's a new way of programming called "model-oriented programming". I'm not going to ask you to throw out your programming languages or tools. MOP works as a layer on top of everything you know today. I am going to ask you to rethink what it means to "write a program", and to see that most of the code you write could be better written by robots, meaning other programs. And I'm going to teach you how to design and make such robots.
+This article is aimed at the professional programmer. I'm going to attack a complex subject, something that few people know about. It's a new way of programming called "model-oriented programming". I'm not going to ask you to throw out your programming languages or tools. MOP works as a layer on top of everything you know today. I am going to ask you to rethink what it means to "write a program", and to see that most of the code you write could be better written by robots, meaning other programs. And I'm going to teach you how to design and make such robots.
 
 MOP works for every kind of area you write code for. Whether you write games, Linux drivers, servers, applications, plug-ins, whether you use Java, C, Perl, Ruby, Python, Gnome or KDE... once you start to see the world as models you'll find yourself writing more code, faster, than you ever thought possible.
 
@@ -697,7 +701,7 @@ If you've ever studied how compilers work, it's much the same problem. What I'm 
 
 ### Case Study - OpenAMQ
 
-Modeling languages and programming languages can overlap. For example, objects are a type of model. The biggest problem with putting models into the programming language is that for real, large problems, we need many different types of model, and these cannot be expressed a single language. Languages that attempt this become too complex to work with. Imagine attempting to describe a hierarchical document using objects, and compare this to writing some HTML by hand.
+Modeling languages and programming languages can overlap. For example, objects are a type of model. The biggest problem with putting models into the programming language is that for real, large problems, we need many different types of model, and these cannot be expressed in a single language. Languages that attempt this become too complex to work with. Imagine attempting to describe a hierarchical document using objects, and compare this to writing some HTML by hand.
 
 I'll explain with a large case taken from a real project, [OpenAMQ](http://www.openamq.org). This is an AMQP messaging server. We used C as the target language for portability and performance, but we actually designed the software as lots of high-level models. Each modeling language was part of a code generation process that produced real code. We used modeling languages for:
 
@@ -816,7 +820,7 @@ To run GSL, use one of the following syntaxes:
     gsl -a -<option> ... -<attr>[:<value>] <filename> <arg> ...
 
 
-If the filename has no extension, GSL tries to find an XML file with that name, or with the extension `.xml` (recognised by the &lt;?xml... tag on the first line).  If it finds no XML file it tries to find a file with that name or the extension `.gsl`, which it interprets as a GSL file.
+If the filename has no extension, GSL tries to find an XML file with that name, or with the extension `.xml` (recognised by the `<?xml...>` tag on the first line).  If it finds no XML file it tries to find a file with that name or the extension `.gsl`, which it interprets as a GSL file.
 
 Options currently recognised by GSL are:
 
@@ -836,7 +840,7 @@ If GSL found an XML file, it loads it, then looks for an attribute named script 
 
 #### Scalar Data Types
 
-GSL recognises two scalar data types: numeric and string.  It generally makes no formal distinction between them; if a value looks numeric then it is treated as such, otherwise it is treated as a string.  If strict typing is required, the type conversion functions `conv.number` and `conv.string` can be used.
+GSL recognises two scalar data types: numeric and string.  It generally makes no formal distinction between them; if a value looks numeric, then it is treated as such, otherwise it is treated as a string.  If strict typing is required, the type conversion functions `conv.number` and `conv.string` can be used.
 
 #### Structured Data Types
 
@@ -902,7 +906,7 @@ assigns the XML structure referred to by the scope `root` to the attribute `foo`
 
 **Attributes**
 
-Attributes are referenced by the use of the period (`.`)  For instance to display the value of the attribute `name` of the XML structure referred to my the scope `root` you could use:
+Attributes are referenced by the use of the period (`.`)  For instance to display the value of the attribute `name` of the XML structure referred to by the scope `root` you could use:
 
     echo root.name
 
@@ -916,7 +920,7 @@ GSL would search stacked scopes, from the innermost to the outermost, for one th
 
 This form of GSL is useful for two reasons.  Firstly it makes for shorter and easier-to-read code, when the location of the attribute is not in question. Secondly it allows the value to be inherited from outer to inner scopes.
 
-Notice that the above example contains some ambiguity: does `name` refer to an attribute `name` or a scope `name'?  GSL searches first scopes then attributes within scopes to find a match.  If you wish to match only an attribute then use the alternative form:
+Notice that the above example contains some ambiguity: does `name` refer to an attribute `name` or a scope `name'?  GSL searches first scopes then attributes within scopes to find a match.  If you wish to match only an attribute, then use the alternative form:
 
     echo .name
 
@@ -999,9 +1003,9 @@ The default operator allows undefined expressions to be replaced by another expr
 
     <expr1> ? [<expr2>]
 
-is equal to the value of &lt;expr1>, if defined; otherwise it is equal to the value of &lt;expr2>, whether or not the latter is defined.  If the second operand &lt;expr2> is omitted then the evaluation of the expression is safe, that is, GSL does not object (when this is feasible) to the result of the expression being undefined.  This feature can be used in symbol definitions and substitutions to make GSL accept an undefined expression.  See the description of these instructions for details.
+is equal to the value of `<expr1>`, if defined; otherwise it is equal to the value of `<expr2>`, whether or not the latter is defined.  If the second operand `<expr2>` is omitted, then the evaluation of the expression is safe, that is, GSL does not object (when this is feasible) to the result of the expression being undefined.  This feature can be used in symbol definitions and substitutions to make GSL accept an undefined expression.  See the description of these instructions for details.
 
-The safe comparative operators return the same result as their equivalent comparative operators when both operands are defined.  If one or both operator is undefined, the safe operators return FALSE while the normal operators produce an error.  Notice that `a ?&lt;> b` returns TRUE if both a and b are defined and they are not equal and FALSE otherwise.
+The safe comparative operators return the same result as their equivalent comparative operators when both operands are defined.  If one or both operator is undefined, the safe operators return FALSE while the normal operators produce an error.  Notice that `a ?<> b` returns TRUE if both a and b are defined and they are not equal and FALSE otherwise.
 
 The if operator returns the second operand if the first operand evaluates to a non-zero number.  Otherwise the result is undefined.  Thus an expression such as
 
@@ -1011,7 +1015,7 @@ returns YES if test is 1 (or any other non-zero number); otherwise the result is
 
     test ?? "YES" ? "NO"
 
-If an operand is not a constant then its type depends its value; if it looks like a number then it is treated as a number, otherwise it is treated as a string.
+If an operand is not a constant, then its type depends its value; if it looks like a number, then it is treated as a number, otherwise it is treated as a string.
 
 Generally, additive, multiplicative and logical operators only apply to numeric operands.  There are two cases where an arithmetic operator can apply to string values:
 
@@ -1031,7 +1035,7 @@ The construct is replaced by the value of the expression, output according to th
 
 If the expression ends with a default operator that has no second operand, and the value of the expressions result is undefined then the substitution resolves to an empty string.
 
-If a format string is provided, it is used to format the result before continuing.  The format string is similar to that used by the printf function in C.  It must contain exactly one conversion specification, consisting of zero or more of the flags `#`, `0`, `-`, ` ` and `+`, an optional minimum field width, an optional precision consisting of a point (`.`) followed by an optional number, and a mandatory conversion specifier among the following: `d`, `i`, `o`, `u`, `x`, `X`, `e`, `E`, `f`, `g`, `c` and `s`.  The data are always converted to the appropriate type (one of long int, double, char or char *) for the conversion string. Note that not all legal C format strings are allowed in GSL.  See details of the C printf function for more details. :)
+If a format string is provided, it is used to format the result before continuing.  The format string is similar to that used by the printf function in C.  It must contain exactly one conversion specification, consisting of zero or more of the flags `#`, `0`, `-`, ` ` and `+`, an optional minimum field width, an optional precision consisting of a period (`.`) followed by an optional number, and a mandatory conversion specifier among the following: `d`, `i`, `o`, `u`, `x`, `X`, `e`, `E`, `f`, `g`, `c` and `s`.  The data are always converted to the appropriate type (one of long int, double, char or char *) for the conversion string. Note that not all legal C format strings are allowed in GSL.  See details of the C printf function for more details. :)
 
 The pretty-print modifier specifies how case modification and replacement of certain characters takes place.  The valid pretty-print modifiers (not case-sensitive) are:
 
@@ -1072,37 +1076,27 @@ More than one pretty-print modifier may be specified; they should be separated b
 
 If GSL is in ignore-case mode (see below), and a substition expression consists of a single identifier and no case-modifier is specified (c or cobol may still be specified), the case in which the identifier name is specified is used as an example to determine whether the case of the result should be modified to UPPER, lower or Neat.  To over-ride this, either disable ignore-case mode or provide an empty pretty-print string.
 
-Some examples:  Assume the identifier IDENT has the value `A few words from our sponsors` and identifer XXX is undefined.
+Some examples:  Assume the identifier `IDENT` has the value `A few words from our sponsors` and identifer `XXX` is undefined.
 
-&#36;(XXX)
-: produces a run-time GSL error: Undefined expression.
+<tt>&#36;(XXX)</tt>: produces a run-time GSL error: `Undefined expression: XXX`
 
-&#36;(XXX?"Undefined")
-: `Undefined'
+<tt>&#36;(XXX?"Undefined")</tt>: `Undefined`
 
-&#36;(XXX?)
-: `'
+<tt>&#36;(XXX?)</tt>: `` (empty string)
 
-&#36;(IDENT%30s)
-: ` A FEW WORDS FROM OUR SPONSORS'
+<tt>&#36;(IDENT%30s)</tt>: ` A FEW WORDS FROM OUR SPONSORS'
 
-&#36;(ident:upper)
-: `A FEW WORDS FROM OUR SPONSORS'
+<tt>&#36;(ident:upper)</tt>: `A FEW WORDS FROM OUR SPONSORS'
 
-&#36;(Ident)
-: `A Few Words From Our Sponsors'
+<tt>&#36;(Ident)</tt>: `A Few Words From Our Sponsors'
 
-&#36;(ident:c)
-: `a_few_words_from_our_sponsors'
+<tt>&#36;(ident:c)</tt>: `"a_few_words_from_our_sponsors'
 
-&#36;(IDENT:)
-: `A few words from our sponsors'
+<tt>&#36;(IDENT:)</tt>: `A few words from our sponsors'
 
-&#36;(1 + 1)
-: `2'
+<tt>&#36;(1 + 1)</tt>: `2`
 
-&#36;(ident:justify)
-: a few words from our sponsors
+<tt>&#36;(ident:justify)</tt>: `a few words from our sponsors`
 
 And:
 
@@ -1118,21 +1112,17 @@ Gives:
 
 **What You Can Substitute**
 
-A substitution can appear at any place in a literal string (template line or string constant) or as an operand in an expression.  It can also replace part or all of a single identifier in a data specification, but not a point (`.`) or member construct (`->`).
+A substitution can appear at any place in a literal string (template line or string constant) or as an operand in an expression.  It can also replace part or all of a single identifier in a data specification, but not a period (`.`) or member construct (`->`).
 
-Some examples:  Assume the identifier IDENT has the value `NUM` and identifer NUM has the value `1`.
+Some examples:  Assume the identifier `IDENT` has the value `NUM` and identifer `NUM` has the value `1`.
 
-&#36;(&#36;(ident))
-: `1'
+<tt>&#36;(&#36;(ident))</tt>: `1'
 
-&#36;(&#36;(ident)).NAME
-: `1.NAME`  This may used in another expression as an identifer.
+<tt>&#36;(&#36;(ident))</tt>.NAME: `1.NAME` (This may used in another expression as an identifer.)
 
-&#36;(ident)+1
-: `NUM1'
+<tt>&#36;(ident)</tt>+1: `NUM1`
 
-&#36;(&#36;(ident))+1
-: `2'
+<tt>&#36;(&#36;(ident))</tt>+1: `2`
 
 ### Internals
 
@@ -1158,13 +1148,13 @@ You can change between template and script mode with the `template` and `endtemp
 
 The simplest template line is just text, which is copied verbatim to the current output file.  If no output file has been opened, or if the last output file has been closed, the output is copied to the standard output.
 
-The backslash (`\`) serves several special functions in a template line.  Firstly, if the last character of an template line is a backslash then the line is output with no line terminator; otherwise a line terminator follows the template line.  Secondly, a backslash introduces one of three special character sequences: `\n`, `\r` and `\t` which are replaced by a line feed, carriage return and a tabulation character (TAB) respectively.  Thirdly, a backslash followed by and other character is replaced by that character; this allows characters which would normally be interpreted as script commands to be output literally.
+The backslash (`\`) serves several special functions in a template line.  Firstly, if the last character of an template line is a backslash, then the line is output with no line terminator; otherwise a line terminator follows the template line.  Secondly, a backslash introduces one of three special character sequences: `\n`, `\r` and `\t` which are replaced by a line feed, carriage return and a tabulation character (TAB) respectively.  Thirdly, a backslash followed by and other character is replaced by that character; this allows characters which would normally be interpreted as script commands to be output literally.
 
 #### Script Lines
 
 The script commands are described below.
 
-If a script command line ends with a backslash (`\`) then the following script line is treated as a continuation of the current line.
+If a script command line ends with a backslash (`\`), then the following script line is treated as a continuation of the current line.
 
 #### Comments
 
@@ -1179,7 +1169,7 @@ Examples:
     .output /* This is an embedded
     multi-line comment */ "file"
 
-    If this is a template line then /* this is not a comment */
+    If this is a template line, then /* this is not a comment */
 
     $("but "/* this is */)
 
@@ -1189,7 +1179,7 @@ GSL has two modes which influence case-sensitivity of identifier names. In the f
 
 #### Shuffle
 
-GSL can help to keep code neat by enlarging or shrinking white space so that column numbers match as far as possible between the script and the output file.  For instance, in the value of the identifier X is ABCDEF then:
+GSL can help to keep code neat by enlarging or shrinking white space so that column numbers match as far as possible between the script and the output file.  For instance, if the value of the identifier X is ABCDEF, then:
 
     $(X)   .
 
@@ -1233,11 +1223,11 @@ Note that this takes effect for the next script loaded, so you cannot use this i
 
 #### Substitute Symbol
 
-GSL uses the string "$(" to open a substitution sequence. You can use any string instead, by changing the [gsl].substitute attribute, or using the -substitute:X command-line switch.
+GSL uses the string `$(` to open a substitution sequence. You can use any string instead, by changing the [gsl].substitute attribute, or using the -substitute:X command-line switch.
 
 Note that this takes effect for the next script loaded, so you cannot use this in a script to modify how that script itself is processed. You can use it before e.g. including a script.
 
-Note also that the closing symbol is always ")" and you cannot override this.
+Note also that the closing symbol is always `)` and you cannot override this.
 
 #### Arguments
 
@@ -1283,7 +1273,7 @@ switches
 
 GSL provides many built-in functions and uses `modules` to group related functions.
 
-Functions are listed under their module name. Each function listing shows the arguments it accepts. Optional arguments are shown with square brackets '[]'. 
+Functions are listed under their module name. Each function listing shows the arguments it accepts. Optional arguments are shown with square brackets '[]'.
 
 If an optional argument is provided, then previous arguments must also be provided. For example, the function `directory.open([name], [error])` accepts two optional arguments. If the `error` argument is provided, then the `name` argument must also be provided.
 
@@ -1312,7 +1302,7 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
         a new stacked scope is implicitly defined while the condition is
         evaluated.  The name of this scope is the name of the XML item, unless
         an alias is specified.  For compatibility with earlier versions of GSL,
-        if no alias is specified then a second, unstacked scope called `count'
+        if no alias is specified, then a second, unstacked scope called `count'
         and referring to the same XML item is created.
         For example: count (ITEM, ITEM.NAME = "ABC")
         returns the number of children of the most recently opened scope whose
@@ -1370,7 +1360,7 @@ In the first category, directories have the `create` and `delete` functions whic
 
 The second set of functions deal with the "contents" of directories and files.
 
-A directory's purpose is too contain other files (directories are also files of a particular type). The only content operation is `open`, which returns a 'directory entry' object that can be used to iterate through the directory contents.
+A directory's purpose is to contain other files (directories are also files of a particular type). The only content operation is `open`, which returns a 'directory entry' object that can be used to iterate through the directory contents.
 
 Files are a little richer and have operations to open them and to read from or write to them and to control where in the file to read or write.
 
@@ -1708,11 +1698,11 @@ Opens a scope and introduces a loop.  The following block of code is processed o
 
 The alias allows you to give the new scope a name other than the specified item name; use this when you nest scopes which would otherwise have the same name or to supply a scope name when using the second form.
 
-The where clause allows you to specify a condition which must be satisfied for the code to be processed; the expression is evaluated before any processing occurs.
+The `where` clause allows you to specify a condition which must be satisfied for the code to be processed; the expression is evaluated before any processing occurs.
 
-The by clause allows you to sort the items according to the result of evaluating the expression for each item.  If no by clause is specified the items are processed from the oldest to the youngest, the same order in which they are described in the XML file.
+The `by` clause allows you to sort the items according to the result of evaluating the expression for each item.  If no by clause is specified the items are processed from the oldest to the youngest, the same order in which they are described in the XML file.
 
-The expressions in the where and by clauses are evaluated within the new scope.  This means that they can access attributes of the iterating item.
+The expressions in the `where` and `by` clauses are evaluated within the new scope.  This means that they can access attributes of the iterating item.
 
 During the evaluation of the `by` and `where` expressions, as well as during the processing of the code, the function `item (name)` returns the number of the child (1, 2, ...) of the current item.  This number is associated with the XML item itself and is not affected by a `by` or `where` clause.
 
@@ -1793,19 +1783,20 @@ Examples:
     .define I = 0
     .while I < 5
     loop iteration number $(I)
+    .I += 1
     .endwhile
 
 **.next**
 
     .next [<scope>]
 
-Inside a `for` or `while` loop causes immediate iteration, skipping execution of any code between the `next` command and the `endfor` or `endwhile` statement.  If the scope is specified then the `for` loop corresponding to that scope is iterated.
+Inside a `for` or `while` loop, causes immediate iteration, skipping execution of any code between the `next` command and the `endfor` or `endwhile` statement.  If the scope is specified, then the `for` loop corresponding to that scope is iterated.
 
 **.last**
 
     .last [<scope>]
 
-Inside a `for` or `while` loop causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor` or `endwhile` statement.  If the scope is specified then the `for` loop corresponding to that scope is terminated.
+Inside a `for` or `while` loop, causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor` or `endwhile` statement.  If the scope is specified, then the `for` loop corresponding to that scope is terminated.
 
 #### Scope Manipulation
 
@@ -1819,7 +1810,7 @@ Opens a new scope corresponding to the specified data.
 
     .endscope [<scope>]
 
-Terminates a block opened with a .scope command, closing the scope. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested .scope blocks for you.
+Terminates a block opened with a `.scope` command, closing the scope. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested `.scope` blocks for you.
 
 #### Symbol Definition
 
@@ -1829,9 +1820,9 @@ Defines or undefines an XML attribute or item value.  There are several differen
 
 If the scope is omitted from the data specification, GSL searches stacked scopes, from inner to outer, for one in which an attribute of the specified name exists.  If none is found, it uses the outermost stacked scope, which effectively makes the identifier a global variable.
 
-If the expression is left empty then the symbol becomes undefined.  If the expression ends with a default operator `?` but no default expression then an undefined expression causes the symbol to become undefined rather than producing a runtime error.
+If the expression is left empty, then the symbol becomes undefined.  If the expression ends with a default operator `?` but no default expression, then an undefined expression causes the symbol to become undefined rather than producing a runtime error.
 
-If an arithmetic or default operator is specified then the value assigned to the symbol is the result of that operator and the supplied expression to the former value of the operator.
+If an arithmetic or default operator is specified, then the value assigned to the symbol is the result of that operator and the supplied expression to the former value of the operator.
 
 Examples:
 
@@ -1849,7 +1840,7 @@ Multiplies the value of the identifier x by 2.
 
     .x ?= y ? z ?
 
-Does nothing if x is already defined; otherwise assigns it the value of y, or if y is undefined then the value of z, or if z is undefined, x remains undefined.
+Does nothing if `x` is already defined; otherwise assigns it the value of `y`, or if `y` is undefined, then the value of `z`, or if `z` is undefined, `x` remains undefined.
 
 #### Structured Data Manipulation
 
@@ -1858,7 +1849,7 @@ Does nothing if x is already defined; otherwise assigns it the value of y, or if
     .new [[<data-specifier>] . <name>] [before <before-scope> | after <after-scope>] [as <alias> | noalias] [nostack]
     .new <name> [to <data-specifier> | before <before-scope> | after <after-scope>] [as <alias> | noalias] [nostack]
 
-Creates a new XML item.  This allows you to build new items in the data tree.  The new item has the specified name and is a child of the XML item corresponding to th specified scope, or the most recently opened scope if none is specified.  If a `before-scope` or `after-scope` is specified, then then it must be the name of an open scope corresponding to a child of &lt;data-specifier>, and the new item is inserted just before &lt;before-scope> or just after &lt;after-scope>; otherwise the  new item is inserted after any existing children.  The construct creates a new scope with the name specified by the alias or the item name if there is no alias.  The following block of code is processed exactly once within this new scope.  It would typically done some attributes of the new XML item.  These values can then be retrieved during a future iteration of a `for` construct through the new item.
+Creates a new XML item.  This allows you to build new items in the data tree.  The new item has the specified name and is a child of the XML item corresponding to th specified scope, or the most recently opened scope if none is specified.  If a `before-scope` or `after-scope` is specified, then it must be the name of an open scope corresponding to a child of `<data-specifier>`, and the new item is inserted just before `<before-scope>` or just after `<after-scope>`; otherwise the new item is inserted after any existing children.  The construct creates a new scope with the name specified by the alias or the item name if there is no alias.  The following block of code is processed exactly once within this new scope.  It would typically set some attributes of the new XML item.  These values can then be retrieved during a future iteration of a `for` construct through the new item.
 
 **.endnew**
 
@@ -1934,7 +1925,7 @@ Sorts the specified items.  A scope is created with each item in turn and is use
 
     .include <filename>
 
-Includes another script file.  Deprecated - see `gsl'
+Includes another script file.  Deprecated - see `gsl`
 
 **.gsl**
 
@@ -2001,11 +1992,13 @@ Terminates a function definition.
 
 A macro or function can also be invoked as an expression.  In this case, the expression value is that which is returned, or is undefined if there is no `return` statement.
 
-This creates a special scope with the name of the macro or function, and attributes corresponding to the parameters value of the parameters.  This scope does not count in numeric scope specifications and cannot have children.  It can be used to define local variables, but must in this case be specified by name.
+This creates a special scope with the name of the macro or function, and attributes corresponding to the values of the parameters.  This scope does not count in numeric scope specifications and cannot have children.  It can be used to define local variables, but must in this case be specified by name.
 
 The number of expressions (or empty expressions) must match exactly the number of parameters in the definition.  An empty expression or an expression whose value is undefined causes the corresponding parameter to be undefined during processing of the macro code.
 
 Examples:
+
+The script
 
     .macro echotwice (text)
     .    echo echotwice.text
@@ -2013,16 +2006,26 @@ Examples:
     .endmacro
     .
     .echotwice ("Hello World!")
+
+produces
+
     Hello World!
     Hello World!
+
+The script
 
     .function increment (value)
     .    return my.value + 1
     .endfunction
     .
     .increment (5)
+
+produces
+
     6
-    
+
+The script
+
     .function incrementbyref (n)
     .    $(my.n) = $(my.n) + 1
      .endfunction
@@ -2030,8 +2033,13 @@ Examples:
     .global.counter=5
     .incrementbyref ("counter")
     .echo global.counter
+
+produces
+
     6
- 
+
+The script
+
     .function recursive (N)
     .    echo my.N
     .    my.localvar = my.N - 1
@@ -2042,6 +2050,9 @@ Examples:
     .endfunction
     .
     .recursive (3)
+
+produces
+
     3
     2
     1
