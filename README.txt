@@ -203,10 +203,10 @@ I'm now going to generate a little HTML report of the different calculations. Th
     .       accumulated = accumulated * (rate / 100 + 1)
     .       year = year + 1
     .   endwhile
-    <tr><td>&#36;(amount)</td>
-    <td>&#36;(rate)%</td>
-    <td>&#36;(years)</td>
-    <td>&#36;(accumulated)</td>
+    <tr><td>$(amount)</td>
+    <td>$(rate)%</td>
+    <td>$(years)</td>
+    <td>$(accumulated)</td>
     </tr>
     .endfor
     </table>
