@@ -37,6 +37,10 @@ To build from git on a UNIX-like box, and install into `/usr/local/bin`:
     make
     sudo make install
 
+To install it to another location, change the last command to:
+
+    sudo make install DESTDIR=/my/custom/prefix
+
 To show command-line help:
 
     ./gsl
