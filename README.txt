@@ -1840,7 +1840,7 @@ Multiplies the value of the identifier x by 2.
 
     .x ?= y ? z ?
 
-Does nothing if x is already defined; otherwise assigns it the value of y, or if y is undefined, then the value of z, or if z is undefined, x remains undefined.
+Does nothing if `x` is already defined; otherwise assigns it the value of `y`, or if `y` is undefined, then the value of `z`, or if `z` is undefined, `x` remains undefined.
 
 #### Structured Data Manipulation
 
@@ -1925,7 +1925,7 @@ Sorts the specified items.  A scope is created with each item in turn and is use
 
     .include <filename>
 
-Includes another script file.  Deprecated - see `gsl'
+Includes another script file.  Deprecated - see `gsl`
 
 **.gsl**
 
@@ -1992,11 +1992,13 @@ Terminates a function definition.
 
 A macro or function can also be invoked as an expression.  In this case, the expression value is that which is returned, or is undefined if there is no `return` statement.
 
-This creates a special scope with the name of the macro or function, and attributes corresponding to the parameters value of the parameters.  This scope does not count in numeric scope specifications and cannot have children.  It can be used to define local variables, but must in this case be specified by name.
+This creates a special scope with the name of the macro or function, and attributes corresponding to the values of the parameters.  This scope does not count in numeric scope specifications and cannot have children.  It can be used to define local variables, but must in this case be specified by name.
 
 The number of expressions (or empty expressions) must match exactly the number of parameters in the definition.  An empty expression or an expression whose value is undefined causes the corresponding parameter to be undefined during processing of the macro code.
 
 Examples:
+
+The script
 
     .macro echotwice (text)
     .    echo echotwice.text
@@ -2004,16 +2006,26 @@ Examples:
     .endmacro
     .
     .echotwice ("Hello World!")
+
+produces
+
     Hello World!
     Hello World!
+
+The script
 
     .function increment (value)
     .    return my.value + 1
     .endfunction
     .
     .increment (5)
+
+produces
+
     6
-    
+
+The script
+
     .function incrementbyref (n)
     .    $(my.n) = $(my.n) + 1
      .endfunction
@@ -2021,8 +2033,13 @@ Examples:
     .global.counter=5
     .incrementbyref ("counter")
     .echo global.counter
+
+produces
+
     6
- 
+
+The script
+
     .function recursive (N)
     .    echo my.N
     .    my.localvar = my.N - 1
@@ -2033,6 +2050,9 @@ Examples:
     .endfunction
     .
     .recursive (3)
+
+produces
+
     3
     2
     1
