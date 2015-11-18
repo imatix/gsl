@@ -115,11 +115,11 @@ Which calculates the value of my savings account if I were to leave it untouched
 * `variable = expression` - Assign a value to a variable
 * `while condition... endwhile` - Repeat a block while the condition is true
 
-To run the above program, assuming it was saved in a file called interest.gsl, I type this command:
+To run the above program, assuming it was saved in a file called `interest.gsl`, I type this command:
 
     gsl interest
 
-This executes the script and tells me that if I am really patient, I'll be rich one day. Now I'm going to change this little program to make the same kind of calculation for different amounts, rates, and years. Where do I put these different terms and rates? The answer is, in an XML file. The file is called deposits.xml:
+This executes the script and tells me that if I am really patient, I'll be rich one day. Now I'm going to change this little program to make the same kind of calculation for different amounts, rates, and years. Where do I put these different terms and rates? The answer is, in an XML file. The file is called `deposits.xml`:
 
     <?xml version="1.0"?>
     <deposits script = "interest.gsl" >
@@ -153,7 +153,7 @@ We will run the new interest calculation script using this command:
 
 Note the change of command syntax. We first ran the GSL script. Now we're running the XML file. This is one of GSL's features - you can run XML files as if they were scripts. It's the `script =` setting that does the trick, working much like the hash-bang `#!` command in Linux.
 
-Any GSL script, no matter how simple, works with an XML document loaded into GSL's memory as a data tree. In our first interest.gsl script, the data tree contains just this:
+Any GSL script, no matter how simple, works with an XML document loaded into GSL's memory as a data tree. In our first `interest.gsl` script, the data tree contains just this:
 
     <root script = "interest" />
 
@@ -167,7 +167,7 @@ All variables that we define and use are stored in the data tree, somewhere. Thi
 
 ### Templates and Scripts
 
-GSL uses the term "template" to describe text that is output as generated code. GSL works in two modes - script mode, and template mode. When you execute a GSL script directly, as we did in the first example, GSL starts in script mode. When you execute a GSL script indirectly, through an XML file, as we did in the second example, GSL starts in template mode. Try removing the .template 0 and .endtemplate lines and you'll see what I mean. The script just gets copied to the output stream, the console, by default.
+GSL uses the term "template" to describe text that is output as generated code. GSL works in two modes - script mode, and template mode. When you execute a GSL script directly, as we did in the first example, GSL starts in script mode. When you execute a GSL script indirectly, through an XML file, as we did in the second example, GSL starts in template mode. Try removing the `.template 0` and `.endtemplate` lines and you'll see what I mean. The script just gets copied to the output stream, the console, by default.
 
 In template mode, GSL commands start with a dot in the first column. In script mode, all lines are assumed to be GSL commands unless they start with `>` (output) in the first column, in which case they are handled as template lines.
 
@@ -181,7 +181,7 @@ lines with GSL commands. Like this:
     .   year = year + 1
     .endwhile
 
-I'm now going to generate a little HTML report of the different calculations. The listing below shows the third version of interest.gsl:
+I'm now going to generate a little HTML report of the different calculations. The listing below shows the third version of `interest.gsl`:
 
     .output "deposits.html"
     <html>
@@ -215,8 +215,8 @@ I'm now going to generate a little HTML report of the different calculations. Th
 
 Note these syntax aspects:
 
-* output expression - Start sending output to the filename specified
-* &#36;(name) - Insert value of attribute in output text
+* `output expression` - Start sending output to the filename specified
+* `$(name)` - Insert value of attribute in output text
 
 To produce the HTML report run the same command as before:
 
@@ -372,7 +372,7 @@ and last the vegetable page:
     </content>
     </page>
 
-Finally, here is the first draft of the web generation script. It does not produce anything, it simply loads the web site data into an XML tree and then saves this (in a file called root.xml) that we can look at to see what live data the script is actually working with:
+Finally, here is the first draft of the web generation script. It does not produce anything, it simply loads the web site data into an XML tree and then saves this (in a file called `root.xml`) that we can look at to see what live data the script is actually working with:
 
     .###  Since we run the script off the XML file, it starts in
     .###  template mode.
@@ -396,27 +396,27 @@ Finally, the script saves the whole XML tree to a file. If you want to try the n
 
     gsl site
 
-GSL looks for the file called `site.xml`. When the script has run, take a look at root.xml. This shows you what we're going to work with to generate the real HTML.
+GSL looks for the file called `site.xml`. When the script has run, take a look at `root.xml`. This shows you what we're going to work with to generate the real HTML.
 
 ### Inserting Variables
 
 When we generate output, we insert variable values into the generated text. This is very much like using shell variables.
 
-GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the &#36;(name) form outputs a variable in lower case:
+GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the `$(name)` form outputs a variable in lower case:
 
     output "$(filename).c"
 
-The &#36;(NAME) form outputs the same value in uppercase:
+The `$(NAME)` form outputs the same value in uppercase:
 
     #if defined ($(FILENAME)_INCLUDED)
 
-And the &#36;(Name) form outputs the variable in title case, i.e. the first letter is capitalised:
+And the `$(Name)` form outputs the variable in title case, i.e. the first letter is capitalised:
 
     ###################  $(Filename)   #################
 
-One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the &#36;(name) form. If we don't want a variable to be automatically case converted, we use this form: &#36;(name:). This is also called the 'empty modifier'.
+One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the `$(name)` form. If we don't want a variable to be automatically case converted, we use this form: `$(name:)`. This is also called the 'empty modifier'.
 
-A second side-effect of automatic case conversion is that variable names are not case sensitive. By default GSL ignores the case of variable names so that &#36;(me) and &#36;(ME) refer to the same variable.
+A second side-effect of automatic case conversion is that variable names are not case sensitive. By default GSL ignores the case of variable names so that `$(me)` and `$(ME)` refer to the same variable.
 
 But putting empty modifiers in every variable expansion gets tiresome, and GSL
 lets us switch off automatic case conversion, using this instruction:
@@ -444,7 +444,7 @@ To generate output for each page, we're going to iterate through the sections on
         endfor
     endfor
 
-The include command executes GSL code in another file. We're going to do all the hard work in a separate file, which I've called template.gsl, so that it's easy to change the HTML generation independently from the top-level GSL code. This is good practice for several reasons:
+The include command executes GSL code in another file. We're going to do all the hard work in a separate file, which I've called `template.gsl`, so that it's easy to change the HTML generation independently from the top-level GSL code. This is good practice for several reasons:
 
 It's nice, in larger projects, that each big code generation task sits in its own file where it can be owned by a single person.
 
@@ -517,7 +517,7 @@ The string() function returns a string that holds the XML value of the specified
 
     <content><h3>Close to you</h3><p>We're just around the corner, if you live near by.</p><h3>Always open</h3><p>And if we're closed, just come back tomorrow.</p><h3>Cheap and convenient</h3><p>Much cheaper and easier than growing your own vegetables and fruit.</p></content>
 
-When we enclose this in &#36;( and ), it writes the string to the current output file. Thus we generate the body of the web page.
+When we enclose this in `$(` and `)`, it writes the string to the current output file. Thus we generate the body of the web page.
 
 ### Putting it All Together
 
@@ -595,7 +595,7 @@ Here is the template for the HTML output.
     </html>
     .endtemplate
 
-To build the final web site, make sure the site.xml specifies the correct script:
+To build the final web site, make sure the `site.xml` specifies the correct script:
 
     <site
         copyright = "Copyright &#169; Local Grocer"
@@ -1076,37 +1076,27 @@ More than one pretty-print modifier may be specified; they should be separated b
 
 If GSL is in ignore-case mode (see below), and a substition expression consists of a single identifier and no case-modifier is specified (c or cobol may still be specified), the case in which the identifier name is specified is used as an example to determine whether the case of the result should be modified to UPPER, lower or Neat.  To over-ride this, either disable ignore-case mode or provide an empty pretty-print string.
 
-Some examples:  Assume the identifier IDENT has the value `A few words from our sponsors` and identifer XXX is undefined.
+Some examples:  Assume the identifier `IDENT` has the value `A few words from our sponsors` and identifer `XXX` is undefined.
 
-&#36;(XXX)
-: produces a run-time GSL error: Undefined expression.
+`$(XXX)`: produces a run-time GSL error: `Undefined expression: XXX`
 
-&#36;(XXX?"Undefined")
-: `Undefined'
+`$(XXX?"Undefined")`: `Undefined`
 
-&#36;(XXX?)
-: `'
+`$(XXX?)`: `` (empty string)
 
-&#36;(IDENT%30s)
-: ` A FEW WORDS FROM OUR SPONSORS'
+`$(IDENT%30s)`: ` A FEW WORDS FROM OUR SPONSORS'
 
-&#36;(ident:upper)
-: `A FEW WORDS FROM OUR SPONSORS'
+`$(ident:upper)`: `A FEW WORDS FROM OUR SPONSORS'
 
-&#36;(Ident)
-: `A Few Words From Our Sponsors'
+`$(Ident)`: `A Few Words From Our Sponsors'
 
-&#36;(ident:c)
-: `a_few_words_from_our_sponsors'
+`$(ident:c)`: `"a_few_words_from_our_sponsors'
 
-&#36;(IDENT:)
-: `A few words from our sponsors'
+`$(IDENT:)`: `A few words from our sponsors'
 
-&#36;(1 + 1)
-: `2'
+`$(1 + 1)`: `2`
 
-&#36;(ident:justify)
-: a few words from our sponsors
+`$(ident:justify)`: `a few words from our sponsors`
 
 And:
 
@@ -1124,19 +1114,15 @@ Gives:
 
 A substitution can appear at any place in a literal string (template line or string constant) or as an operand in an expression.  It can also replace part or all of a single identifier in a data specification, but not a point (`.`) or member construct (`->`).
 
-Some examples:  Assume the identifier IDENT has the value `NUM` and identifer NUM has the value `1`.
+Some examples:  Assume the identifier `IDENT` has the value `NUM` and identifer `NUM` has the value `1`.
 
-&#36;(&#36;(ident))
-: `1'
+`$($(ident))`: `1'
 
-&#36;(&#36;(ident)).NAME
-: `1.NAME`  This may used in another expression as an identifer.
+`$($(ident)).NAME`: `1.NAME` (This may used in another expression as an identifer.)
 
-&#36;(ident)+1
-: `NUM1'
+`$(ident)+1`: `NUM1`
 
-&#36;(&#36;(ident))+1
-: `2'
+`$($(ident))+1`: `2`
 
 ### Internals
 
