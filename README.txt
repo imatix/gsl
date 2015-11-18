@@ -216,7 +216,7 @@ I'm now going to generate a little HTML report of the different calculations. Th
 Note these syntax aspects:
 
 * `output <expression>` - Start sending output to the filename specified
-* $(name) - Insert value of attribute in output text
+* <tt>&#36;(name)</tt> - Insert value of attribute in output text
 
 To produce the HTML report run the same command as before:
 
@@ -402,21 +402,21 @@ GSL looks for the file called `site.xml`. When the script has run, take a look a
 
 When we generate output, we insert variable values into the generated text. This is very much like using shell variables.
 
-GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the &#36;(name) form outputs a variable in lower case:
+GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the <tt>&#36;(name)</tt> form outputs a variable in lower case:
 
     output "$(filename).c"
 
-The &#36;(NAME) form outputs the same value in uppercase:
+The <tt>&#36;(NAME)</tt> form outputs the same value in uppercase:
 
     #if defined ($(FILENAME)_INCLUDED)
 
-And the &#36;(Name) form outputs the variable in title case, i.e. the first letter is capitalised:
+And the <tt>&#36;(Name)</tt> form outputs the variable in title case, i.e. the first letter is capitalised:
 
     ###################  $(Filename)   #################
 
-One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the &#36;(name) form. If we don't want a variable to be automatically case converted, we use this form: &#36;(name:). This is also called the 'empty modifier'.
+One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the <tt>&#36;(name)</tt> form. If we don't want a variable to be automatically case converted, we use this form: <tt>&#36;(name:)</tt>. This is also called the 'empty modifier'.
 
-A second side-effect of automatic case conversion is that variable names are not case sensitive. By default GSL ignores the case of variable names so that &#36;(me) and &#36;(ME) refer to the same variable.
+A second side-effect of automatic case conversion is that variable names are not case sensitive. By default GSL ignores the case of variable names so that <tt>&#36;(me)</tt> and <tt>&#36;(ME)</tt> refer to the same variable.
 
 But putting empty modifiers in every variable expansion gets tiresome, and GSL
 lets us switch off automatic case conversion, using this instruction:
@@ -1078,30 +1078,30 @@ If GSL is in ignore-case mode (see below), and a substition expression consists 
 
 Some examples:  Assume the identifier `IDENT` has the value `A few words from our sponsors` and identifer `XXX` is undefined.
 
-&#36;(XXX): produces a run-time GSL error: `Undefined expression: XXX`
+<tt>&#36;(XXX)</tt>: produces a run-time GSL error: `Undefined expression: XXX`
 
-&#36;(XXX?"Undefined"): `Undefined`
+<tt>&#36;(XXX?"Undefined")</tt>: `Undefined`
 
-&#36;(XXX?): `` (empty string)
+<tt>&#36;(XXX?)</tt>: `` (empty string)
 
-&#36;(IDENT%30s): ` A FEW WORDS FROM OUR SPONSORS'
+<tt>&#36;(IDENT%30s)</tt>: ` A FEW WORDS FROM OUR SPONSORS'
 
-&#36;(ident:upper): `A FEW WORDS FROM OUR SPONSORS'
+<tt>&#36;(ident:upper)</tt>: `A FEW WORDS FROM OUR SPONSORS'
 
-&#36;(Ident): `A Few Words From Our Sponsors'
+<tt>&#36;(Ident)</tt>: `A Few Words From Our Sponsors'
 
-&#36;(ident:c): `"a_few_words_from_our_sponsors'
+<tt>&#36;(ident:c)</tt>: `"a_few_words_from_our_sponsors'
 
-&#36;(IDENT:): `A few words from our sponsors'
+<tt>&#36;(IDENT:)</tt>: `A few words from our sponsors'
 
-&#36;(1 + 1): `2`
+<tt>&#36;(1 + 1)</tt>: `2`
 
-&#36;(ident:justify): `a few words from our sponsors`
+<tt>&#36;(ident:justify)</tt>: `a few words from our sponsors`
 
 And:
 
-    /*  &#36;("Description:":block)\
-                      &#36;(ident:justify,block%-8s)  */
+    /*  $("Description:":block)\
+                      $(ident:justify,block%-8s)  */
 
 Gives:
 
@@ -1116,13 +1116,13 @@ A substitution can appear at any place in a literal string (template line or str
 
 Some examples:  Assume the identifier `IDENT` has the value `NUM` and identifer `NUM` has the value `1`.
 
-`&#36;(&#36;(ident))`: `1'
+<tt>&#36;(&#36;(ident))</tt>: `1'
 
-`&#36;(&#36;(ident)).NAME`: `1.NAME` (This may used in another expression as an identifer.)
+<tt>&#36;(&#36;(ident))</tt>.NAME: `1.NAME` (This may used in another expression as an identifer.)
 
-`&#36;(ident)+1`: `NUM1`
+<tt>&#36;(ident)</tt>+1: `NUM1`
 
-`&#36;(&#36;(ident))+1`: `2`
+<tt>&#36;(&#36;(ident))</tt>+1: `2`
 
 ### Internals
 
