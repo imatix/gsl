@@ -203,10 +203,10 @@ I'm now going to generate a little HTML report of the different calculations. Th
     .       accumulated = accumulated * (rate / 100 + 1)
     .       year = year + 1
     .   endwhile
-    <tr><td>$(amount)</td>
-    <td>$(rate)%</td>
-    <td>$(years)</td>
-    <td>$(accumulated)</td>
+    <tr><td>&#36;(amount)</td>
+    <td>&#36;(rate)%</td>
+    <td>&#36;(years)</td>
+    <td>&#36;(accumulated)</td>
     </tr>
     .endfor
     </table>
@@ -216,7 +216,7 @@ I'm now going to generate a little HTML report of the different calculations. Th
 Note these syntax aspects:
 
 * `output expression` - Start sending output to the filename specified
-* `$(name)` - Insert value of attribute in output text
+* `&#36;(name)` - Insert value of attribute in output text
 
 To produce the HTML report run the same command as before:
 
@@ -380,7 +380,7 @@ Finally, here is the first draft of the web generation script. It does not produ
      for section
         for page
             ###  Load XML <page> data
-            xml to section from "$(page.name).xml"
+            xml to section from "&#36;(page.name).xml"
             ###  Delete old <page> tag
             delete page
         endfor
@@ -402,21 +402,21 @@ GSL looks for the file called `site.xml`. When the script has run, take a look a
 
 When we generate output, we insert variable values into the generated text. This is very much like using shell variables.
 
-GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the `$(name)` form outputs a variable in lower case:
+GSL does automatic case conversion on output variable. This is very useful when we generate programming languages. For example, the `&#36;(name)` form outputs a variable in lower case:
 
-    output "$(filename).c"
+    output "&#36;(filename).c"
 
-The `$(NAME)` form outputs the same value in uppercase:
+The `&#36;(NAME)` form outputs the same value in uppercase:
 
-    #if defined ($(FILENAME)_INCLUDED)
+    #if defined (&#36;(FILENAME)_INCLUDED)
 
-And the `$(Name)` form outputs the variable in title case, i.e. the first letter is capitalised:
+And the `&#36;(Name)` form outputs the variable in title case, i.e. the first letter is capitalised:
 
-    ###################  $(Filename)   #################
+    ###################  &#36;(Filename)   #################
 
-One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the `$(name)` form. If we don't want a variable to be automatically case converted, we use this form: `$(name:)`. This is also called the 'empty modifier'.
+One side-effect of automatic case conversion is that we'll often get variables converted to lower case simply because we used the `&#36;(name)` form. If we don't want a variable to be automatically case converted, we use this form: `&#36;(name:)`. This is also called the 'empty modifier'.
 
-A second side-effect of automatic case conversion is that variable names are not case sensitive. By default GSL ignores the case of variable names so that `$(me)` and `$(ME)` refer to the same variable.
+A second side-effect of automatic case conversion is that variable names are not case sensitive. By default GSL ignores the case of variable names so that `&#36;(me)` and `&#36;(ME)` refer to the same variable.
 
 But putting empty modifiers in every variable expansion gets tiresome, and GSL
 lets us switch off automatic case conversion, using this instruction:
@@ -431,7 +431,7 @@ In our first draft we loaded each page into the XML tree and deleted the origina
 
     for section
         for page
-            xml to section from "$(page.name).xml"
+            xml to section from "&#36;(page.name).xml"
             delete page
         endfor
     endfor
@@ -457,8 +457,8 @@ And you'll see in later examples that we tend to write a single GSL file for eac
 The HTML template looks like this:
 
     .template 1
-    .echo "Generating $(page.name) page..."
-    .output "$(page.name).html"
+    .echo "Generating &#36;(page.name) page..."
+    .output "&#36;(page.name).html"
     <!DOCTYPE...>
     <html>
        ...
@@ -478,11 +478,11 @@ The template starts by setting template mode on. This means that any GSL command
 Let's look at the chunk of code that produces the site index. This is - in our version of the web site generator - a menu that is embedded into each page. The CSS stylesheet can place this menu anywhere on the page. Here is the GSL code that generates it:
 
     .for site.section
-    <h3 class="menu_heading">$(section.name)</h3>
+    <h3 class="menu_heading">&#36;(section.name)</h3>
     <ul class="menu_item">
     .   for page
     <li><a class="menu_item"
-        href="$(page.name).html">$(page.title)</a></li>
+        href="&#36;(page.name).html">&#36;(page.title)</a></li>
     .   endfor
     </ul>
     .endfor
@@ -508,7 +508,7 @@ But the first form is simpler and I recommend you drop explicit parent scope nam
 Near the end of the template you see this construction:
 
     .for content
-    $(content.string ())
+    &#36;(content.string ())
     .endfor
 
 What is going on here? The answer is, we're grabbing the whole `<content>` block, including all the XML it contains, as a single string. Conveniently, XHTML is also XML, so we can read the XHTML content block as part of our XML data file. As a bonus, GSL will also validate it and tell you if there are errors, such as missing or malformed tags.
@@ -517,7 +517,7 @@ The string() function returns a string that holds the XML value of the specified
 
     <content><h3>Close to you</h3><p>We're just around the corner, if you live near by.</p><h3>Always open</h3><p>And if we're closed, just come back tomorrow.</p><h3>Cheap and convenient</h3><p>Much cheaper and easier than growing your own vegetables and fruit.</p></content>
 
-When we enclose this in `$(` and `)`, it writes the string to the current output file. Thus we generate the body of the web page.
+When we enclose this in `&#36;(` and `)`, it writes the string to the current output file. Thus we generate the body of the web page.
 
 ### Putting it All Together
 
@@ -534,7 +534,7 @@ The final web site generator consists of three pieces. Here is the revised web s
      ignorecase = 0
      for section
         for page
-            xml to section from "$(page.name).xml"
+            xml to section from "&#36;(page.name).xml"
             delete page
         endfor
      endfor
@@ -554,39 +554,39 @@ Here is the template for the HTML output.
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
     <html>
     <head>
-      <title>$(page.title)</title>
+      <title>&#36;(page.title)</title>
       <link rel="stylesheet" href="default.css" type="text/css"/>
     </head>
     <body>
       <div id="left_container">
         <div id="logo_container">
-          <a href="index.html"><img id="logo" src="$(page.name).jpg"/></a>
+          <a href="index.html"><img id="logo" src="&#36;(page.name).jpg"/></a>
         </div>
         <div id="menu_container">
     .for site.section
-          <h3 class="menu_heading">$(section.name)</h3>
+          <h3 class="menu_heading">&#36;(section.name)</h3>
           <ul class="menu_item">
     .   for page
-            <li><a class="menu_item" href="$(page.name).html">$(page.title)</a></li>
+            <li><a class="menu_item" href="&#36;(page.name).html">&#36;(page.title)</a></li>
     .   endfor
           </ul>
     .endfor
           <h3 class="menu_heading">Copyright</h3>
         </div>
         <div id="copyright">
-          <p>$(copyright)</p>
+          <p>&#36;(copyright)</p>
         </div>
         <h3 class="menu_heading"> </h3>
       </div>
       <div id="right_container">
         <div id="title_container">
-          <h1 id="title">$(page.title)</h1>
-          <h2 id="title">$(page.subtitle)</h2>
+          <h1 id="title">&#36;(page.title)</h1>
+          <h2 id="title">&#36;(page.subtitle)</h2>
         </div>
         <div id="content_container">
         <!-- Page content -->
     .for content
-        $(content.string ())
+        &#36;(content.string ())
     .endfor
         <!-- End page content -->
         </div>
@@ -1029,7 +1029,7 @@ Generally, additive, multiplicative and logical operators only apply to numeric 
 
 At almost any place in a GSL script, you may use a substitute construct in the place of literal text.  The format of a substitute construct is:
 
-    $( <expression> [% format] [: pretty-print] )
+    &#36;( <expression> [% format] [: pretty-print] )
 
 The construct is replaced by the value of the expression, output according to the format and pretty-print modifiers, if they exist.  The order of the format and pretty-print modifiers is not important.
 
@@ -1078,30 +1078,30 @@ If GSL is in ignore-case mode (see below), and a substition expression consists 
 
 Some examples:  Assume the identifier `IDENT` has the value `A few words from our sponsors` and identifer `XXX` is undefined.
 
-`$(XXX)`: produces a run-time GSL error: `Undefined expression: XXX`
+`&#36;(XXX)`: produces a run-time GSL error: `Undefined expression: XXX`
 
-`$(XXX?"Undefined")`: `Undefined`
+`&#36;(XXX?"Undefined")`: `Undefined`
 
-`$(XXX?)`: `` (empty string)
+`&#36;(XXX?)`: `` (empty string)
 
-`$(IDENT%30s)`: ` A FEW WORDS FROM OUR SPONSORS'
+`&#36;(IDENT%30s)`: ` A FEW WORDS FROM OUR SPONSORS'
 
-`$(ident:upper)`: `A FEW WORDS FROM OUR SPONSORS'
+`&#36;(ident:upper)`: `A FEW WORDS FROM OUR SPONSORS'
 
-`$(Ident)`: `A Few Words From Our Sponsors'
+`&#36;(Ident)`: `A Few Words From Our Sponsors'
 
-`$(ident:c)`: `"a_few_words_from_our_sponsors'
+`&#36;(ident:c)`: `"a_few_words_from_our_sponsors'
 
-`$(IDENT:)`: `A few words from our sponsors'
+`&#36;(IDENT:)`: `A few words from our sponsors'
 
-`$(1 + 1)`: `2`
+`&#36;(1 + 1)`: `2`
 
-`$(ident:justify)`: `a few words from our sponsors`
+`&#36;(ident:justify)`: `a few words from our sponsors`
 
 And:
 
-    /*  $("Description:":block)\
-                      $(ident:justify,block%-8s)  */
+    /*  &#36;("Description:":block)\
+                      &#36;(ident:justify,block%-8s)  */
 
 Gives:
 
@@ -1116,13 +1116,13 @@ A substitution can appear at any place in a literal string (template line or str
 
 Some examples:  Assume the identifier `IDENT` has the value `NUM` and identifer `NUM` has the value `1`.
 
-`$($(ident))`: `1'
+`&#36;(&#36;(ident))`: `1'
 
-`$($(ident)).NAME`: `1.NAME` (This may used in another expression as an identifer.)
+`&#36;(&#36;(ident)).NAME`: `1.NAME` (This may used in another expression as an identifer.)
 
-`$(ident)+1`: `NUM1`
+`&#36;(ident)+1`: `NUM1`
 
-`$($(ident))+1`: `2`
+`&#36;(&#36;(ident))+1`: `2`
 
 ### Internals
 
@@ -1171,7 +1171,7 @@ Examples:
 
     If this is a template line, then /* this is not a comment */
 
-    $("but "/* this is */)
+    &#36;("but "/* this is */)
 
 #### Ignorecase
 
@@ -1181,7 +1181,7 @@ GSL has two modes which influence case-sensitivity of identifier names. In the f
 
 GSL can help to keep code neat by enlarging or shrinking white space so that column numbers match as far as possible between the script and the output file.  For instance, if the value of the identifier X is ABCDEF, then:
 
-    $(X)   .
+    &#36;(X)   .
 
 evaluates to
 
@@ -1189,7 +1189,7 @@ evaluates to
 
 but
 
-    $(X?"Undefined") .
+    &#36;(X?"Undefined") .
 
 evaluates to
 
@@ -1199,7 +1199,7 @@ The shuffle algorithm uses the value of the attribute `shuffle` of the gsl scope
 
 If the current output ends with a backslash, then the shuffle continues on the following line.  Thus
 
-    $(X?"Undefined")\\
+    &#36;(X?"Undefined")\\
              .
 evaluates to
 
@@ -1223,7 +1223,7 @@ Note that this takes effect for the next script loaded, so you cannot use this i
 
 #### Substitute Symbol
 
-GSL uses the string "$(" to open a substitution sequence. You can use any string instead, by changing the [gsl].substitute attribute, or using the -substitute:X command-line switch.
+GSL uses the string "&#36;(" to open a substitution sequence. You can use any string instead, by changing the [gsl].substitute attribute, or using the -substitute:X command-line switch.
 
 Note that this takes effect for the next script loaded, so you cannot use this in a script to modify how that script itself is processed. You can use it before e.g. including a script.
 
@@ -1242,7 +1242,7 @@ GSL defines attributes `arg1` in the symbol table `switches` in scope `gsl` with
 or in a loop:
 
     n = 1
-    echo switches.arg$(n)
+    echo switches.arg&#36;(n)
 
 #### Predefined Identifiers
 
@@ -1684,7 +1684,7 @@ Examples:
 
     .literal << .endliteral
     Lines are now copied without substitution of
-    things like $(abc).
+    things like &#36;(abc).
     .endliteral
 
 #### Control Structures
@@ -1719,7 +1719,7 @@ Terminates a .for loop, closing the scope.  The scope name is optional and does 
 Examples:
 
     .for RECORD.FIELD by NAME
-    $(FIELD.NAME)
+    &#36;(FIELD.NAME)
     .endfor
 
 Outputs the names of the fields of the current record, sorted in alphabetical order.
@@ -1782,7 +1782,7 @@ Examples:
 
     .define I = 0
     .while I < 5
-    loop iteration number $(I)
+    loop iteration number &#36;(I)
     .I += 1
     .endwhile
 
@@ -2027,7 +2027,7 @@ produces
 The script
 
     .function incrementbyref (n)
-    .    $(my.n) = $(my.n) + 1
+    .    &#36;(my.n) = &#36;(my.n) + 1
      .endfunction
     .
     .global.counter=5
