@@ -850,7 +850,7 @@ Structured data types are used to represent underlying data, and the attributes 
 
 #### Constants
 
-Constants express a constant value of one of the two scalar types. A string constant is specified with either single- or double-quotes as delimiters, for example: "ABC".   String constants may continue over several source lines.  The line break is considered part of the string constant, unless the last character in the line is a single backslash (`\`) in which case neither the backslash nor the line break is part of the string.  A numeric constant is a simple number with an optional sign and optional decimal characters, for example 123 and -0.3.
+Constants express a constant value of one of the two scalar types. A string constant is specified with either single- or double-quotes as delimiters, for example: `"ABC"`.   String constants may continue over several source lines.  The line break is considered part of the string constant, unless the last character in the line is a single backslash (`\`) in which case neither the backslash nor the line break is part of the string.  A numeric constant is a simple number with an optional sign and optional decimal characters, for example 123 and -0.3.
 
 #### Scopes
 
@@ -920,7 +920,7 @@ GSL would search stacked scopes, from the innermost to the outermost, for one th
 
 This form of GSL is useful for two reasons.  Firstly it makes for shorter and easier-to-read code, when the location of the attribute is not in question. Secondly it allows the value to be inherited from outer to inner scopes.
 
-Notice that the above example contains some ambiguity: does `name` refer to an attribute `name` or a scope `name'?  GSL searches first scopes then attributes within scopes to find a match.  If you wish to match only an attribute, then use the alternative form:
+Notice that the above example contains some ambiguity: does `name` refer to an attribute `name` or a scope `name`?  GSL searches first scopes then attributes within scopes to find a match.  If you wish to match only an attribute, then use the alternative form:
 
     echo .name
 
@@ -1019,11 +1019,9 @@ If an operand is not a constant, then its type depends its value; if it looks li
 
 Generally, additive, multiplicative and logical operators only apply to numeric operands.  There are two cases where an arithmetic operator can apply to string values:
 
-+
-: "ABC" + "DEF" evaluates to "ABCDEF"
+`+`: `"ABC" + "DEF"` evaluates to `"ABCDEF"`
 
-*
-: "AB" * 3 evaluates to "ABABAB"
+`*`: `"AB" * 3` evaluates to `"ABABAB"`
 
 **Substituting Symbols and Expressions**
 
@@ -1039,38 +1037,17 @@ If a format string is provided, it is used to format the result before continuin
 
 The pretty-print modifier specifies how case modification and replacement of certain characters takes place.  The valid pretty-print modifiers (not case-sensitive) are:
 
-UPPER
-:   UPPER CASE
-
-lower
-:    lower case
-
-Neat
-:    Neat Case Modification
-
-Camel
-:    camelCase
-
-Pascal
-:    PascalCase
-
-no
-:    No case modification
-
-c
-:    substitute_non_alpha_to_make_c_identifier
-
-cobol
-:    SUBSTITUTE-NON-ALPHA-TO-MAKE-COBOL-IDENTIFIER
-
-justify
-:    Text is left justified within available space
-
-left
-:    Entire block is shifted left as far as possible by removing the same number of spaces from each line.
-
-block
-:    Text over multiple lines is formatted into a block
+* `UPPER`:   UPPER CASE
+* `lower`:    lower case
+* `Neat`:    Neat Case Modification
+* `Camel`:    camelCase
+* `Pascal`:    PascalCase
+* `no`:    No case modification
+* `c`:    substitute_non_alpha_to_make_c_identifier
+* `cobol`:    SUBSTITUTE-NON-ALPHA-TO-MAKE-COBOL-IDENTIFIER
+`justify`:    Text is left justified within available space
+* `left`:    Entire block is shifted left as far as possible by removing the same number of spaces from each line.
+* `block`:    Text over multiple lines is formatted into a block
 
 More than one pretty-print modifier may be specified; they should be separated by commas.
 
@@ -1078,25 +1055,16 @@ If GSL is in ignore-case mode (see below), and a substition expression consists 
 
 Some examples:  Assume the identifier `IDENT` has the value `A few words from our sponsors` and identifer `XXX` is undefined.
 
-<tt>&#36;(XXX)</tt>: produces a run-time GSL error: `Undefined expression: XXX`
-
-<tt>&#36;(XXX?"Undefined")</tt>: `Undefined`
-
-<tt>&#36;(XXX?)</tt>: `` (empty string)
-
-<tt>&#36;(IDENT%30s)</tt>: ` A FEW WORDS FROM OUR SPONSORS'
-
-<tt>&#36;(ident:upper)</tt>: `A FEW WORDS FROM OUR SPONSORS'
-
-<tt>&#36;(Ident)</tt>: `A Few Words From Our Sponsors'
-
-<tt>&#36;(ident:c)</tt>: `"a_few_words_from_our_sponsors'
-
-<tt>&#36;(IDENT:)</tt>: `A few words from our sponsors'
-
-<tt>&#36;(1 + 1)</tt>: `2`
-
-<tt>&#36;(ident:justify)</tt>: `a few words from our sponsors`
+* <tt>&#36;(XXX)</tt>: produces a run-time GSL error: `Undefined expression: XXX`
+* <tt>&#36;(XXX?"Undefined")</tt>: `Undefined`
+* <tt>&#36;(XXX?)</tt>: `` (empty string)
+* <tt>&#36;(IDENT%30s)</tt>: ` A FEW WORDS FROM OUR SPONSORS'
+* <tt>&#36;(ident:upper)</tt>: `A FEW WORDS FROM OUR SPONSORS'
+* <tt>&#36;(Ident)</tt>: `A Few Words From Our Sponsors'
+* <tt>&#36;(ident:c)</tt>: `"a_few_words_from_our_sponsors'
+* <tt>&#36;(IDENT:)</tt>: `A few words from our sponsors'
+* <tt>&#36;(1 + 1)</tt>: `2`
+* <tt>&#36;(ident:justify)</tt>: `a few words from our sponsors`
 
 And:
 
@@ -1116,7 +1084,7 @@ A substitution can appear at any place in a literal string (template line or str
 
 Some examples:  Assume the identifier `IDENT` has the value `NUM` and identifer `NUM` has the value `1`.
 
-<tt>&#36;(&#36;(ident))</tt>: `1'
+<tt>&#36;(&#36;(ident))</tt>: `1`
 
 <tt>&#36;(&#36;(ident))</tt>.NAME: `1.NAME` (This may used in another expression as an identifer.)
 
