@@ -1216,26 +1216,13 @@ or in a loop:
 
 There are some identifiers whose value is maintained by GSL in the global space referred to by the predefined scopes `gsl` and `global`.  They are defined as attributes of the global item.
 
-script
-: The name of the GSL script file currently being processed.
-
-filename
-: The name of the XML file being processed.
-
-outfile
-: The name of the current output file; undefined if there is none.
-
-line
-: The line number of the line currently being output to the output file.
-
-me
-: The name of the current application: GSL.
-
-version
-: The version of the current application.
-
-switches
-: A symbol table holding all the command-line switches present when GSL was invoked.
+* `script`: The name of the GSL script file currently being processed.
+* `filename`: The name of the XML file being processed.
+* `outfile`: The name of the current output file; undefined if there is none.
+* `line`: The line number of the line currently being output to the output file.
+* `me`: The name of the current application: GSL.
+* `version`: The version of the current application.
+* `switches`: A symbol table holding all the command-line switches present when GSL was invoked.
 
 ### Built-In Functions
 
@@ -1853,7 +1840,7 @@ Examples:
 
     .copy [<from-scope>] [ to <parent-data> | after <after-scope> | before <before-scope> ] [as <name>]
 
-Makes a copy the XML item associated with <from-scope> (or the most recently opened scope if not specified) at the point specified by either the new parent (`to`) or new sibling (`after` or `before`), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as` clause allows you to the new item to have a different name from the old item.
+Makes a copy the of XML item associated with `<from-scope>` (or the most recently opened scope if not specified) at the point specified by either the new parent (`to`) or new sibling (`after` or `before`), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as` clause allows you to the new item to have a different name from the old item.
 
 Examples:
 
