@@ -1362,8 +1362,6 @@ but do not take a `handle` parameter. Note that the `open` function reads all di
 system until the next open call. Also, iteration is only defined over files and directories; non file or directory entries are ignored.
 The open call will fail if the target is not a directory or it cannot find any valid files or directories in the target directory.
 
-Direction iteration will only return #FIXME
-
 The directory entry has the attributes:
 
 - `path`
