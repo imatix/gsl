@@ -1340,7 +1340,7 @@ The 'directory object' represents a tree structure with child elements correspon
 iterated with a for/endfor loop. A child element is either a 'directory entry' or a 'file entry', depending on the file type.
 Both file and directory entries have a name() function, which returns 'file' or 'directory', as appropriate.
 
-The loop 
+The loop
 
     for dir. as elt
 
@@ -1366,16 +1366,16 @@ Direction iteration will only return
 
 The directory entry has the attributes:
 
-- path
-- name
+- `path`
+- `name`
 
 and the file entry has the following attributes:
 
-- path
-- name
-- size
-- time
-- date
+- `path`
+- `name`
+- `size`
+- `time`
+- `date`
 
 Which return the appropriate values from the file (or directory, which is, of course, a file).
 
@@ -1385,7 +1385,6 @@ The following example shows some of the attributes in use:
 
 Note that:
 
-
 If the directory entry `name` attribute is changed, the actual directory name is also changed.
 However, this operation does not return an error and cannot be recommended.
 
@@ -1393,7 +1392,7 @@ The file entry's default attribute is `name` so `f.` is the same as `f.name`. Di
 have this default attribute so it's only useful when working with file entries.
 
 File.open returns a File Entry object, so some of the file operations can be shortened a bit.
-For instance, file.read(handle) could also be written as handle.read(). 
+For instance, file.read(handle) could also be written as `handle.read()`.
 
 .pull doc/modules/ggfile.txt
 
