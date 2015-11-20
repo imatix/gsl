@@ -850,7 +850,7 @@ Structured data types are used to represent underlying data, and the attributes 
 
 #### Constants
 
-Constants express a constant value of one of the two scalar types. A string constant is specified with either single- or double-quotes as delimiters, for example: "ABC".   String constants may continue over several source lines.  The line break is considered part of the string constant, unless the last character in the line is a single backslash (`\`) in which case neither the backslash nor the line break is part of the string.  A numeric constant is a simple number with an optional sign and optional decimal characters, for example 123 and -0.3.
+Constants express a constant value of one of the two scalar types. A string constant is specified with either single- or double-quotes as delimiters, for example: `"ABC"`.   String constants may continue over several source lines.  The line break is considered part of the string constant, unless the last character in the line is a single backslash (`\`) in which case neither the backslash nor the line break is part of the string.  A numeric constant is a simple number with an optional sign and optional decimal characters, for example 123 and -0.3.
 
 #### Scopes
 
@@ -920,7 +920,7 @@ GSL would search stacked scopes, from the innermost to the outermost, for one th
 
 This form of GSL is useful for two reasons.  Firstly it makes for shorter and easier-to-read code, when the location of the attribute is not in question. Secondly it allows the value to be inherited from outer to inner scopes.
 
-Notice that the above example contains some ambiguity: does `name` refer to an attribute `name` or a scope `name'?  GSL searches first scopes then attributes within scopes to find a match.  If you wish to match only an attribute, then use the alternative form:
+Notice that the above example contains some ambiguity: does `name` refer to an attribute `name` or a scope `name`?  GSL searches first scopes then attributes within scopes to find a match.  If you wish to match only an attribute, then use the alternative form:
 
     echo .name
 
@@ -1019,11 +1019,9 @@ If an operand is not a constant, then its type depends its value; if it looks li
 
 Generally, additive, multiplicative and logical operators only apply to numeric operands.  There are two cases where an arithmetic operator can apply to string values:
 
-+
-: "ABC" + "DEF" evaluates to "ABCDEF"
+`+`: `"ABC" + "DEF"` evaluates to `"ABCDEF"`
 
-*
-: "AB" * 3 evaluates to "ABABAB"
+`*`: `"AB" * 3` evaluates to `"ABABAB"`
 
 **Substituting Symbols and Expressions**
 
@@ -1039,38 +1037,17 @@ If a format string is provided, it is used to format the result before continuin
 
 The pretty-print modifier specifies how case modification and replacement of certain characters takes place.  The valid pretty-print modifiers (not case-sensitive) are:
 
-UPPER
-:   UPPER CASE
-
-lower
-:    lower case
-
-Neat
-:    Neat Case Modification
-
-Camel
-:    camelCase
-
-Pascal
-:    PascalCase
-
-no
-:    No case modification
-
-c
-:    substitute_non_alpha_to_make_c_identifier
-
-cobol
-:    SUBSTITUTE-NON-ALPHA-TO-MAKE-COBOL-IDENTIFIER
-
-justify
-:    Text is left justified within available space
-
-left
-:    Entire block is shifted left as far as possible by removing the same number of spaces from each line.
-
-block
-:    Text over multiple lines is formatted into a block
+* `UPPER`:   UPPER CASE
+* `lower`:    lower case
+* `Neat`:    Neat Case Modification
+* `Camel`:    camelCase
+* `Pascal`:    PascalCase
+* `no`:    No case modification
+* `c`:    substitute_non_alpha_to_make_c_identifier
+* `cobol`:    SUBSTITUTE-NON-ALPHA-TO-MAKE-COBOL-IDENTIFIER
+`justify`:    Text is left justified within available space
+* `left`:    Entire block is shifted left as far as possible by removing the same number of spaces from each line.
+* `block`:    Text over multiple lines is formatted into a block
 
 More than one pretty-print modifier may be specified; they should be separated by commas.
 
@@ -1078,25 +1055,16 @@ If GSL is in ignore-case mode (see below), and a substition expression consists 
 
 Some examples:  Assume the identifier `IDENT` has the value `A few words from our sponsors` and identifer `XXX` is undefined.
 
-<tt>&#36;(XXX)</tt>: produces a run-time GSL error: `Undefined expression: XXX`
-
-<tt>&#36;(XXX?"Undefined")</tt>: `Undefined`
-
-<tt>&#36;(XXX?)</tt>: `` (empty string)
-
-<tt>&#36;(IDENT%30s)</tt>: ` A FEW WORDS FROM OUR SPONSORS'
-
-<tt>&#36;(ident:upper)</tt>: `A FEW WORDS FROM OUR SPONSORS'
-
-<tt>&#36;(Ident)</tt>: `A Few Words From Our Sponsors'
-
-<tt>&#36;(ident:c)</tt>: `"a_few_words_from_our_sponsors'
-
-<tt>&#36;(IDENT:)</tt>: `A few words from our sponsors'
-
-<tt>&#36;(1 + 1)</tt>: `2`
-
-<tt>&#36;(ident:justify)</tt>: `a few words from our sponsors`
+* <tt>&#36;(XXX)</tt>: produces a run-time GSL error: `Undefined expression: XXX`
+* <tt>&#36;(XXX?"Undefined")</tt>: `Undefined`
+* <tt>&#36;(XXX?)</tt>: `` (empty string)
+* <tt>&#36;(IDENT%30s)</tt>: ` A FEW WORDS FROM OUR SPONSORS'
+* <tt>&#36;(ident:upper)</tt>: `A FEW WORDS FROM OUR SPONSORS'
+* <tt>&#36;(Ident)</tt>: `A Few Words From Our Sponsors'
+* <tt>&#36;(ident:c)</tt>: `"a_few_words_from_our_sponsors'
+* <tt>&#36;(IDENT:)</tt>: `A few words from our sponsors'
+* <tt>&#36;(1 + 1)</tt>: `2`
+* <tt>&#36;(ident:justify)</tt>: `a few words from our sponsors`
 
 And:
 
@@ -1116,7 +1084,7 @@ A substitution can appear at any place in a literal string (template line or str
 
 Some examples:  Assume the identifier `IDENT` has the value `NUM` and identifer `NUM` has the value `1`.
 
-<tt>&#36;(&#36;(ident))</tt>: `1'
+<tt>&#36;(&#36;(ident))</tt>: `1`
 
 <tt>&#36;(&#36;(ident))</tt>.NAME: `1.NAME` (This may used in another expression as an identifer.)
 
@@ -1248,26 +1216,13 @@ or in a loop:
 
 There are some identifiers whose value is maintained by GSL in the global space referred to by the predefined scopes `gsl` and `global`.  They are defined as attributes of the global item.
 
-script
-: The name of the GSL script file currently being processed.
-
-filename
-: The name of the XML file being processed.
-
-outfile
-: The name of the current output file; undefined if there is none.
-
-line
-: The line number of the line currently being output to the output file.
-
-me
-: The name of the current application: GSL.
-
-version
-: The version of the current application.
-
-switches
-: A symbol table holding all the command-line switches present when GSL was invoked.
+* `script`: The name of the GSL script file currently being processed.
+* `filename`: The name of the XML file being processed.
+* `outfile`: The name of the current output file; undefined if there is none.
+* `line`: The line number of the line currently being output to the output file.
+* `me`: The name of the current application: GSL.
+* `version`: The version of the current application.
+* `switches`: A symbol table holding all the command-line switches present when GSL was invoked.
 
 ### Built-In Functions
 
@@ -1385,7 +1340,7 @@ The 'directory object' represents a tree structure with child elements correspon
 iterated with a for/endfor loop. A child element is either a 'directory entry' or a 'file entry', depending on the file type.
 Both file and directory entries have a name() function, which returns 'file' or 'directory', as appropriate.
 
-The loop 
+The loop
 
     for dir. as elt
 
@@ -1407,20 +1362,18 @@ but do not take a `handle` parameter. Note that the `open` function reads all di
 system until the next open call. Also, iteration is only defined over files and directories; non file or directory entries are ignored.
 The open call will fail if the target is not a directory or it cannot find any valid files or directories in the target directory.
 
-Direction iteration will only return
-
 The directory entry has the attributes:
 
-- path
-- name
+- `path`
+- `name`
 
 and the file entry has the following attributes:
 
-- path
-- name
-- size
-- time
-- date
+- `path`
+- `name`
+- `size`
+- `time`
+- `date`
 
 Which return the appropriate values from the file (or directory, which is, of course, a file).
 
@@ -1430,7 +1383,6 @@ The following example shows some of the attributes in use:
 
 Note that:
 
-
 If the directory entry `name` attribute is changed, the actual directory name is also changed.
 However, this operation does not return an error and cannot be recommended.
 
@@ -1438,7 +1390,7 @@ The file entry's default attribute is `name` so `f.` is the same as `f.name`. Di
 have this default attribute so it's only useful when working with file entries.
 
 File.open returns a File Entry object, so some of the file operations can be shortened a bit.
-For instance, file.read(handle) could also be written as handle.read(). 
+For instance, file.read(handle) could also be written as `handle.read()`.
 
 .pull doc/modules/ggfile.txt
 
@@ -1885,7 +1837,7 @@ Examples:
 
     .copy [<from-scope>] [ to <parent-data> | after <after-scope> | before <before-scope> ] [as <name>]
 
-Makes a copy the XML item associated with <from-scope> (or the most recently opened scope if not specified) at the point specified by either the new parent (`to`) or new sibling (`after` or `before`), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as` clause allows you to the new item to have a different name from the old item.
+Makes a copy the of XML item associated with `<from-scope>` (or the most recently opened scope if not specified) at the point specified by either the new parent (`to`) or new sibling (`after` or `before`), or as a child of the XML item of the most recently opened scope if no parent of sibling is specified.  The `as` clause allows you to the new item to have a different name from the old item.
 
 Examples:
 
