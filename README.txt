@@ -1108,7 +1108,7 @@ You can also set the initial value of these variables when starting GSL by using
 
 Lines of GSL may be either script lines or template lines.  GSL has two different modes for distinguishing script from template lines.  In template mode, lines are assumed to be template lines unless they begin with a period (`.`).  In script mode, lines are assumed to be script lines unless they begin with a greater-than symbol (`>`).
 
-GSL starts in one of these modes, depending on the manner in which is was invoked.  If it was invoked using an XML file as an argument, it begins in template mode as it is assumed that the XML file is to be used as data for creating an output file.  If GSL was invoked using a GSL gile as an argument, it begins in script mode.
+GSL starts in one of these modes, depending on the manner in which is was invoked.  If it was invoked using an XML file as an argument, it begins in template mode as it is assumed that the XML file is to be used as data for creating an output file.  If GSL was invoked using a GSL file as an argument, it begins in script mode.
 
 You can change between template and script mode with the `template` and `endtemplate` commands.  See the description of these commands below for details.
 
