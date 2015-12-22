@@ -1045,7 +1045,7 @@ The pretty-print modifier specifies how case modification and replacement of cer
 * `no`:    No case modification
 * `c`:    substitute_non_alpha_to_make_c_identifier
 * `cobol`:    SUBSTITUTE-NON-ALPHA-TO-MAKE-COBOL-IDENTIFIER
-`justify`:    Text is left justified within available space
+* `justify`:    Text is left justified within available space
 * `left`:    Entire block is shifted left as far as possible by removing the same number of spaces from each line.
 * `block`:    Text over multiple lines is formatted into a block
 
