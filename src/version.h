@@ -44,14 +44,10 @@
 #undef  BUILDDATE
 #undef  BUILDMODEL
 #define VERSION         "4.1"
-#define PRODUCT         "GSL/4.1a/github"
-#define COPYRIGHT       "Copyright (c) 1996-2011 iMatix Corporation"
+#define PRODUCT         "GSL/4.1c"
+#define COPYRIGHT       "Copyright (c) 1996-2016 iMatix Corporation"
 #define BUILDDATE       ""
-#if defined (DEBUG)
-#   define BUILDMODEL   "Debug release for internal use only"
-#else
-#   define BUILDMODEL   "Production release"
-#endif
+#define BUILDMODEL      "Built from http://github.com/imatix/gsl.git master"
 #if defined (VERSION_EMBED)
 /*  Embed the version information in the resulting binary   */
 char *gsl_version_start = "VeRsIoNsTaRt:gsl";
