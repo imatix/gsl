@@ -169,6 +169,9 @@ main (int _argc, char *_argv [])
         exit (1);
       }
 
+    /*  Default echo mode is without date/time                               */
+    console_set_mode (CONSOLE_PLAIN);
+
     define_standard_values ();
 
     next_arg = 1;
