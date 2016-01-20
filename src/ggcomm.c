@@ -960,7 +960,7 @@ pretty_print (VALUE *result,
             else
             if (streq (token, "c")) {
                 c = result-> s;
-                if (!isalpha (*c))
+                if (*c && !isalpha (*c))
                     *c = '_';
 
                 while (*c) {
@@ -972,7 +972,7 @@ pretty_print (VALUE *result,
             else
             if (streq (token, "cobol")) {
                 c = result-> s;
-                if (!isalpha (*c))
+                if (*c && !isalpha (*c))
                     *c = '-';
 
                 while (*c) {
