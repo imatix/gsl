@@ -2488,3 +2488,5 @@ Outputs the given expression to the standard output and halts GSL operation.
 #### Examples
 
 See examples in Examples directory
+
+_This documentation was generated using [Gitdown](https://github.com/zeromq/gitdown)_
