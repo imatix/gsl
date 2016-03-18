@@ -12,6 +12,7 @@
 *  <a href="#toc3-25">Ownership and License</a>
 *  <a href="#toc3-32">Building and installing</a>
 &emsp;<a href="#toc4-54">Building on FreeBSD 10</a>
+<<<<<<< HEAD
 &emsp;<a href="#toc4-70">Building on Cygwin</a>
 *  <a href="#toc3-102">This Document</a>
 
@@ -90,6 +91,85 @@
 &emsp;<a href="#toc4-2326">Macros and Functions</a>
 &emsp;<a href="#toc4-2439">Miscellaneous</a>
 &emsp;<a href="#toc4-2454">Examples</a>
+=======
+*  <a href="#toc3-70">This Document</a>
+
+**<a href="#toc2-75">Starting with GSL</a>**
+*  <a href="#toc3-100">Hello World</a>
+*  <a href="#toc3-178">Templates and Scripts</a>
+*  <a href="#toc3-255">Modeling a Web Site</a>
+*  <a href="#toc3-313">First Draft</a>
+*  <a href="#toc3-414">Inserting Variables</a>
+*  <a href="#toc3-442">Looping through Trees</a>
+*  <a href="#toc3-470">Building the Output</a>
+*  <a href="#toc3-538">Putting it All Together</a>
+*  <a href="#toc3-632">Exercise for the Reader</a>
+*  <a href="#toc3-637">Extending the Model</a>
+
+**<a href="#toc2-648">Model-Oriented Programming</a>**
+*  <a href="#toc3-659">Becoming a Very Good Programmer</a>
+*  <a href="#toc3-673">Tools that Write Software</a>
+*  <a href="#toc3-688">Abstractions and Modeling Languages</a>
+*  <a href="#toc3-707">Leverage to Move Mountains</a>
+*  <a href="#toc3-726">Case Study - OpenAMQ</a>
+*  <a href="#toc3-756">Other Model-Driven Architectures</a>
+*  <a href="#toc3-769">Why use MOP?</a>
+*  <a href="#toc3-794">A Short History of Code Generation</a>
+*  <a href="#toc3-809">Myths about Code Generation</a>
+*  <a href="#toc3-826">The Correctness of Generated Code</a>
+
+**<a href="#toc2-843">GSL/4.1 Reference Manual</a>**
+*  <a href="#toc3-846">Command-line Syntax</a>
+*  <a href="#toc3-871">Concepts</a>
+&emsp;<a href="#toc4-874">Scalar Data Types</a>
+&emsp;<a href="#toc4-879">Structured Data Types</a>
+&emsp;<a href="#toc4-886">Constants</a>
+&emsp;<a href="#toc4-891">Scopes</a>
+&emsp;<a href="#toc4-932">Data Specifiers</a>
+&emsp;<a href="#toc4-1019">Expressions</a>
+*  <a href="#toc3-1134">Internals</a>
+&emsp;<a href="#toc4-1137">Internal Variables</a>
+&emsp;<a href="#toc4-1148">Template and Script Modes</a>
+&emsp;<a href="#toc4-1157">Template Lines</a>
+&emsp;<a href="#toc4-1164">Script Lines</a>
+&emsp;<a href="#toc4-1171">Comments</a>
+&emsp;<a href="#toc4-1189">Ignorecase</a>
+&emsp;<a href="#toc4-1194">Shuffle</a>
+&emsp;<a href="#toc4-1225">COBOL</a>
+&emsp;<a href="#toc4-1230">Line Terminators</a>
+&emsp;<a href="#toc4-1235">Escape Symbol</a>
+&emsp;<a href="#toc4-1242">Substitute Symbol</a>
+&emsp;<a href="#toc4-1251">Arguments</a>
+&emsp;<a href="#toc4-1267">Predefined Identifiers</a>
+*  <a href="#toc3-1280">Built-In Functions</a>
+&emsp;<a href="#toc4-1303">Global Functions</a>
+&emsp;<a href="#toc4-1355">conv</a>
+&emsp;<a href="#toc4-1384">diag</a>
+&emsp;<a href="#toc4-1425">environment</a>
+&emsp;<a href="#toc4-1441">fileio</a>
+&emsp;<a href="#toc4-1470">Directory Iteration</a>
+&emsp;<a href="#toc4-1733">gsl control</a>
+&emsp;<a href="#toc4-1747">math</a>
+&emsp;<a href="#toc4-1776">regexp</a>
+&emsp;<a href="#toc4-1782">process management</a>
+&emsp;<a href="#toc4-1825">script</a>
+&emsp;<a href="#toc4-1830">socket</a>
+&emsp;<a href="#toc4-1843">string</a>
+&emsp;<a href="#toc4-1875">symb</a>
+&emsp;<a href="#toc4-1880">thread</a>
+&emsp;<a href="#toc4-1917">time</a>
+&emsp;<a href="#toc4-1932">XML</a>
+*  <a href="#toc3-1980">Script Commands</a>
+&emsp;<a href="#toc4-1983">Output File Manipulation</a>
+&emsp;<a href="#toc4-2028">Control Structures</a>
+&emsp;<a href="#toc4-2140">Scope Manipulation</a>
+&emsp;<a href="#toc4-2155">Symbol Definition</a>
+&emsp;<a href="#toc4-2186">Structured Data Manipulation</a>
+&emsp;<a href="#toc4-2264">Script Manipulation</a>
+&emsp;<a href="#toc4-2294">Macros and Functions</a>
+&emsp;<a href="#toc4-2407">Miscellaneous</a>
+&emsp;<a href="#toc4-2422">Examples</a>
+>>>>>>> upstream/master
 
 <A name="toc2-10" title="Overview" />
 ## Overview
