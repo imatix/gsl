@@ -62,17 +62,17 @@ Cd to `src` and run:
 
 #### Building on Cygwin
 
-Install apt-cyg, a cygwin package manager
+Install apt-cyg, a cygwin package manager:
     lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg
     install apt-cyg /bin
 
-Install git
+Install git:
     apt-cyg install git
 
-Install gcc's dependencies
+Install gcc's dependencies:
     apt-cyg install wget gcc-g++ make diffutils libmpfr-devel libgmp-devel libmpc-devel libpcre-devel libcrypt-devel
 
-Download, Build and Install gcc
+Download, Build and Install gcc:
     wget http://ftpmirror.gnu.org/gcc/gcc-4.9.2/gcc-4.9.2.tar.gz
     tar xf gcc-4.9.2.tar.gz
     mkdir build-gcc && cd build-gcc
@@ -80,7 +80,7 @@ Download, Build and Install gcc
     make -j4
     make install
 
-Finally build gsl
+Finally build gsl:
     git clone git://github.com/imatix/gsl
     cd gsl/src
     make
