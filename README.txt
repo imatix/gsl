@@ -60,6 +60,32 @@ Cd to `src` and run:
     CCNAME=gcc47 gmake
     gmake install
 
+#### Building on Cygwin
+
+Install apt-cyg, a cygwin package manager
+    lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg
+    install apt-cyg /bin
+
+Install git
+    apt-cyg install git
+
+Install gcc's dependencies
+    apt-cyg install wget gcc-g++ make diffutils libmpfr-devel libgmp-devel libmpc-devel libpcre-devel libcrypt-devel
+
+Download, Build and Install gcc
+    wget http://ftpmirror.gnu.org/gcc/gcc-4.9.2/gcc-4.9.2.tar.gz
+    tar xf gcc-4.9.2.tar.gz
+    mkdir build-gcc && cd build-gcc
+    ../gcc-4.9.2/configure --program-suffix=-4.9.2 --enable-languages=c,c++ --disable-bootstrap --disable-shared
+    make -j4
+    make install
+
+Finally build gsl
+    git clone git://github.com/imatix/gsl
+    cd gsl/src
+    make
+    make install
+
 ### This Document
 
 This document was written by Pieter Hintjens in October 2010 based on two 2005 articles on 'model oriented programming', and the GSL reference manual.  This text is originally at README.txt and is built using [gitdown](http://github.com/imatix/gitdown). The text was updated by Gyepi Sam in January 2013 to port documentation from earlier versions and to include more examples.
