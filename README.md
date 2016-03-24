@@ -58,38 +58,38 @@
 &emsp;<a href="#toc4-1226">Shuffle</a>
 &emsp;<a href="#toc4-1257">COBOL</a>
 &emsp;<a href="#toc4-1262">Line Terminators</a>
-&emsp;<a href="#toc4-1267">Escape Symbol</a>
-&emsp;<a href="#toc4-1274">Substitute Symbol</a>
-&emsp;<a href="#toc4-1283">Arguments</a>
-&emsp;<a href="#toc4-1299">Predefined Identifiers</a>
-*  <a href="#toc3-1312">Built-In Functions</a>
-&emsp;<a href="#toc4-1335">Global Functions</a>
-&emsp;<a href="#toc4-1387">conv</a>
-&emsp;<a href="#toc4-1416">diag</a>
-&emsp;<a href="#toc4-1457">environment</a>
-&emsp;<a href="#toc4-1473">fileio</a>
-&emsp;<a href="#toc4-1502">Directory Iteration</a>
-&emsp;<a href="#toc4-1765">gsl control</a>
-&emsp;<a href="#toc4-1779">math</a>
-&emsp;<a href="#toc4-1808">regexp</a>
-&emsp;<a href="#toc4-1814">process management</a>
-&emsp;<a href="#toc4-1857">script</a>
-&emsp;<a href="#toc4-1862">socket</a>
-&emsp;<a href="#toc4-1875">string</a>
-&emsp;<a href="#toc4-1907">symb</a>
-&emsp;<a href="#toc4-1912">thread</a>
-&emsp;<a href="#toc4-1949">time</a>
-&emsp;<a href="#toc4-1964">XML</a>
-*  <a href="#toc3-2012">Script Commands</a>
-&emsp;<a href="#toc4-2015">Output File Manipulation</a>
-&emsp;<a href="#toc4-2060">Control Structures</a>
-&emsp;<a href="#toc4-2172">Scope Manipulation</a>
-&emsp;<a href="#toc4-2187">Symbol Definition</a>
-&emsp;<a href="#toc4-2218">Structured Data Manipulation</a>
-&emsp;<a href="#toc4-2296">Script Manipulation</a>
-&emsp;<a href="#toc4-2326">Macros and Functions</a>
-&emsp;<a href="#toc4-2439">Miscellaneous</a>
-&emsp;<a href="#toc4-2454">Examples</a>
+&emsp;<a href="#toc4-1270">Escape Symbol</a>
+&emsp;<a href="#toc4-1277">Substitute Symbol</a>
+&emsp;<a href="#toc4-1286">Arguments</a>
+&emsp;<a href="#toc4-1302">Predefined Identifiers</a>
+*  <a href="#toc3-1315">Built-In Functions</a>
+&emsp;<a href="#toc4-1338">Global Functions</a>
+&emsp;<a href="#toc4-1390">conv</a>
+&emsp;<a href="#toc4-1419">diag</a>
+&emsp;<a href="#toc4-1460">environment</a>
+&emsp;<a href="#toc4-1476">fileio</a>
+&emsp;<a href="#toc4-1505">Directory Iteration</a>
+&emsp;<a href="#toc4-1768">gsl control</a>
+&emsp;<a href="#toc4-1782">math</a>
+&emsp;<a href="#toc4-1811">regexp</a>
+&emsp;<a href="#toc4-1817">process management</a>
+&emsp;<a href="#toc4-1860">script</a>
+&emsp;<a href="#toc4-1865">socket</a>
+&emsp;<a href="#toc4-1878">string</a>
+&emsp;<a href="#toc4-1910">symb</a>
+&emsp;<a href="#toc4-1915">thread</a>
+&emsp;<a href="#toc4-1952">time</a>
+&emsp;<a href="#toc4-1967">XML</a>
+*  <a href="#toc3-2015">Script Commands</a>
+&emsp;<a href="#toc4-2018">Output File Manipulation</a>
+&emsp;<a href="#toc4-2063">Control Structures</a>
+&emsp;<a href="#toc4-2175">Scope Manipulation</a>
+&emsp;<a href="#toc4-2190">Symbol Definition</a>
+&emsp;<a href="#toc4-2221">Structured Data Manipulation</a>
+&emsp;<a href="#toc4-2299">Script Manipulation</a>
+&emsp;<a href="#toc4-2329">Macros and Functions</a>
+&emsp;<a href="#toc4-2442">Miscellaneous</a>
+&emsp;<a href="#toc4-2457">Examples</a>
 
 <A name="toc2-10" title="Overview" />
 ## Overview
@@ -1330,14 +1330,17 @@ GSL helps you make neat COBOL code by automatically filling the first six charac
 
 GSL uses as its line terminator the value of of the attribute `terminator` of the gsl scope.  The default value is "\n" but it could also be set to "\r\n", for example.
 
-<A name="toc4-1267" title="Escape Symbol" />
+    \# for Windows batch scripts
+    \.terminator="\n\r"
+
+<A name="toc4-1270" title="Escape Symbol" />
 #### Escape Symbol
 
 GSL uses the backslash "\" as its default escape symbol, mainly due to its POSIX / C roots. This can be very annoying in templates that have a lot of backslashes. You can override the escape symbol by changing the [gsl].escape attribute, or using the -escape:X command-line switch.
 
 Note that this takes effect for the next script loaded, so you cannot use this in a script to modify how that script itself is processed. You can use it before e.g. including a script.
 
-<A name="toc4-1274" title="Substitute Symbol" />
+<A name="toc4-1277" title="Substitute Symbol" />
 #### Substitute Symbol
 
 GSL uses the string `$(` to open a substitution sequence. You can use any string instead, by changing the [gsl].substitute attribute, or using the -substitute:X command-line switch.
@@ -1346,7 +1349,7 @@ Note that this takes effect for the next script loaded, so you cannot use this i
 
 Note also that the closing symbol is always `)` and you cannot override this.
 
-<A name="toc4-1283" title="Arguments" />
+<A name="toc4-1286" title="Arguments" />
 #### Arguments
 
 If GSL is invoked with a `-a` switch, all arguments following the first are treated as arguments to the first script, rather than as further arguments to GSL, as would otherwise be the case.  So if you type:
@@ -1362,7 +1365,7 @@ or in a loop:
     n = 1
     echo switches.arg$(n)
 
-<A name="toc4-1299" title="Predefined Identifiers" />
+<A name="toc4-1302" title="Predefined Identifiers" />
 #### Predefined Identifiers
 
 There are some identifiers whose value is maintained by GSL in the global space referred to by the predefined scopes `gsl` and `global`.  They are defined as attributes of the global item.
@@ -1375,7 +1378,7 @@ There are some identifiers whose value is maintained by GSL in the global space 
 * `version`: The version of the current application.
 * `switches`: A symbol table holding all the command-line switches present when GSL was invoked.
 
-<A name="toc3-1312" title="Built-In Functions" />
+<A name="toc3-1315" title="Built-In Functions" />
 ### Built-In Functions
 
 GSL provides many built-in functions and uses `modules` to group related functions.
@@ -1398,7 +1401,7 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
        abort "E: cannot open directory: " + error_text
     endif
 
-<A name="toc4-1335" title="Global Functions" />
+<A name="toc4-1338" title="Global Functions" />
 #### Global Functions
 
     alias (item)
@@ -1450,7 +1453,7 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
     which ()
         To be explained.
         
-<A name="toc4-1387" title="conv" />
+<A name="toc4-1390" title="conv" />
 #### conv
 
 MODULE: GSL/conv package
@@ -1479,7 +1482,7 @@ MODULE: GSL/conv package
 
 
 
-<A name="toc4-1416" title="diag" />
+<A name="toc4-1419" title="diag" />
 #### diag
 
 MODULE: GSL/diag package
@@ -1520,7 +1523,7 @@ MODULE: GSL/diag package
 
 
 
-<A name="toc4-1457" title="environment" />
+<A name="toc4-1460" title="environment" />
 #### environment
 
 MODULE: GSL/environment package
@@ -1536,7 +1539,7 @@ MODULE: GSL/environment package
 
 
 
-<A name="toc4-1473" title="fileio" />
+<A name="toc4-1476" title="fileio" />
 #### fileio
 
 GSL provides three modules for dealing with directories and files; one directory module and two file modules, one for working with independent files and the second for working with files during a directory traversal. We will discuss the second set after the first because it will make more sense that way.
@@ -1565,7 +1568,7 @@ The offset changes to reflect any read or write operations on the file. This is 
 
 The final set of file functions manipulate files, file names and file metadata.
 
-<A name="toc4-1502" title="Directory Iteration" />
+<A name="toc4-1505" title="Directory Iteration" />
 #### Directory Iteration
 
 As mentioned, previously, directories can be opened with the `directory.open` function, which returns a 'directory entry' object.
@@ -1828,7 +1831,7 @@ MODULE: GSL/fileio package
 
 
 
-<A name="toc4-1765" title="gsl control" />
+<A name="toc4-1768" title="gsl control" />
 #### gsl control
 
     Class: GSL Control Class
@@ -1842,7 +1845,7 @@ MODULE: GSL/fileio package
             its output is returned as the result of this function. Uses the
             current template mode unless over-ridden by the optional argument.
 
-<A name="toc4-1779" title="math" />
+<A name="toc4-1782" title="math" />
 #### math
 
     Class: Math Functions
@@ -1871,13 +1874,13 @@ MODULE: GSL/fileio package
         Function: math . acosh (parm)
         Function: math . atanh (parm)
 
-<A name="toc4-1808" title="regexp" />
+<A name="toc4-1811" title="regexp" />
 #### regexp
 
     Class: Regular Expression Functions
         Function: regexp . match (pattern,subject,[match])
 
-<A name="toc4-1814" title="process management" />
+<A name="toc4-1817" title="process management" />
 #### process management
 
 MODULE: GSL/process management
@@ -1920,12 +1923,12 @@ package
 
 
 
-<A name="toc4-1857" title="script" />
+<A name="toc4-1860" title="script" />
 #### script
 
     Class: GSL Script Line
 
-<A name="toc4-1862" title="socket" />
+<A name="toc4-1865" title="socket" />
 #### socket
 
     Class: Socket
@@ -1938,7 +1941,7 @@ package
         Function: <sock handle> . read (buffer,[minimum],[timeout],[error])
         Function: <sock handle> . write (buffer,[timeout],[error])
 
-<A name="toc4-1875" title="string" />
+<A name="toc4-1878" title="string" />
 #### string
 
     Class: String Functions
@@ -1970,12 +1973,12 @@ package
         Function: string . soundex (string)
         Function: string . cntch (string,value)
 
-<A name="toc4-1907" title="symb" />
+<A name="toc4-1910" title="symb" />
 #### symb
 
     Class: Symbol
 
-<A name="toc4-1912" title="thread" />
+<A name="toc4-1915" title="thread" />
 #### thread
 
     Class: Thread
@@ -2012,7 +2015,7 @@ package
     Class: Thread
         Function: <parsed item> . run ([error])
 
-<A name="toc4-1949" title="time" />
+<A name="toc4-1952" title="time" />
 #### time
 
     Class: Time Functions
@@ -2027,7 +2030,7 @@ package
         Function: date . picture ([date],[picture])
         Function: date . number (date)
 
-<A name="toc4-1964" title="XML" />
+<A name="toc4-1967" title="XML" />
 #### XML
 
     Class: XML
@@ -2075,10 +2078,10 @@ package
 
     Class: XML value
 
-<A name="toc3-2012" title="Script Commands" />
+<A name="toc3-2015" title="Script Commands" />
 ### Script Commands
 
-<A name="toc4-2015" title="Output File Manipulation" />
+<A name="toc4-2018" title="Output File Manipulation" />
 #### Output File Manipulation
 
 **.output**
@@ -2123,7 +2126,7 @@ Examples:
     things like $(abc).
     .endliteral
 
-<A name="toc4-2060" title="Control Structures" />
+<A name="toc4-2063" title="Control Structures" />
 #### Control Structures
 
 **.for**
@@ -2235,7 +2238,7 @@ Inside a `for` or `while` loop, causes immediate iteration, skipping execution o
 
 Inside a `for` or `while` loop, causes the loop to terminate iteration immediately.  Control passes to the line following the `endfor` or `endwhile` statement.  If the scope is specified, then the `for` loop corresponding to that scope is terminated.
 
-<A name="toc4-2172" title="Scope Manipulation" />
+<A name="toc4-2175" title="Scope Manipulation" />
 #### Scope Manipulation
 
 **.scope**
@@ -2250,7 +2253,7 @@ Opens a new scope corresponding to the specified data.
 
 Terminates a block opened with a `.scope` command, closing the scope. The scope name is optional and does not affect the operation.  GSL confirms that its value is the name of the scope to be closed and reports an error if this is not the case.  In this way, GSL can be made to validate nested `.scope` blocks for you.
 
-<A name="toc4-2187" title="Symbol Definition" />
+<A name="toc4-2190" title="Symbol Definition" />
 #### Symbol Definition
 
     .<data-specifier> [<operator>]= [ <expr> ]
@@ -2281,7 +2284,7 @@ Multiplies the value of the identifier x by 2.
 
 Does nothing if `x` is already defined; otherwise assigns it the value of `y`, or if `y` is undefined, then the value of `z`, or if `z` is undefined, `x` remains undefined.
 
-<A name="toc4-2218" title="Structured Data Manipulation" />
+<A name="toc4-2221" title="Structured Data Manipulation" />
 #### Structured Data Manipulation
 
 **.new**
@@ -2359,7 +2362,7 @@ Examples:
 
 Sorts the specified items.  A scope is created with each item in turn and is used to evaluate the expression.  The result is then used to sort the items.  The `as` clause allows you to give the created scope a different name.  After execution, the specified items are in order and after any other children of the same parent.
 
-<A name="toc4-2296" title="Script Manipulation" />
+<A name="toc4-2299" title="Script Manipulation" />
 #### Script Manipulation
 
 **.include**
@@ -2389,7 +2392,7 @@ Turns template mode on or off.
 
 Terminates the block introduced by a `template` instruction.
 
-<A name="toc4-2326" title="Macros and Functions" />
+<A name="toc4-2329" title="Macros and Functions" />
 #### Macros and Functions
 
 Macros and functions are pieces of GSL which can be invoked with parameters. The only difference between a macro and as function is that macros are interpreted in template mode and functions in script mode.
@@ -2502,7 +2505,7 @@ produces
     1
     2
 
-<A name="toc4-2439" title="Miscellaneous" />
+<A name="toc4-2442" title="Miscellaneous" />
 #### Miscellaneous
 
 **.echo**
@@ -2517,7 +2520,7 @@ Outputs the given expression to the standard output.
 
 Outputs the given expression to the standard output and halts GSL operation.
 
-<A name="toc4-2454" title="Examples" />
+<A name="toc4-2457" title="Examples" />
 #### Examples
 
 See examples in Examples directory
