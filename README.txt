@@ -97,6 +97,10 @@ This document was written by Pieter Hintjens in October 2010 based on two 2005 a
 
 ## Starting with GSL
 
+GSL is an acronym for Generator Scripting Language. And that is what it does. You write scripts in gsl, feed it some data from some XML files and it generates nicely formatted text files for you. These files can be source code, a web site, a recipe book or whatever you like.
+
+Read on to get you started with code generation!
+
 [diagram]
 
     +-------------+
@@ -1302,31 +1306,31 @@ Some functions accept an optional parameter, listed as `error`. If the parameter
 
     first ()
         True if current item is first in list.
-        
+
     index (item)
         Return index in current selection.
-        
+
     item (item)
         Return item number in original list.
-        
+
     last ()
         True if current item is last in list.
-        
+
     macro (name)
         True if name is a defined macro / function.
-        
+
     name ()
         To be explained.
-        
+
     scope ()
         To be explained.
-        
+
     total ()
         To be explained.
 
     which ()
         To be explained.
-        
+
 #### conv
 
 .pull doc/modules/ggconv.txt
