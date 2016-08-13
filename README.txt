@@ -1940,7 +1940,7 @@ Terminates the block introduced by a `template` instruction.
 
 #### Macros and Functions
 
-Macros and functions are pieces of GSL which can be invoked with parameters. The only difference between a macro and as function is that macros are interpreted in template mode and functions in script mode.
+Macros and functions are pieces of GSL which can be invoked with parameters. The only difference between a macro and a function is that macros are interpreted in template mode and functions in script mode.
 
 Just like other data, macros and functions are attached to scopes, and can only be used within that scope.
 
