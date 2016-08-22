@@ -1,0 +1,4 @@
+files
+*.substvars
+generator-scripting-language-dbg/*
+generator-scripting-language/*

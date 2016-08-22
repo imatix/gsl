@@ -1,0 +1,31 @@
+Source: generator-scripting-language
+Section: devel
+Priority: optional
+Maintainer: iMatix Corporation <info@imatix.com>
+Standards-Version: 3.9.8
+Build-Depends: debhelper (>= 9),
+ libpcre3-dev,
+
+Package: generator-scripting-language
+Architecture: any
+Depends: ${misc:Depends},
+ ${shlibs:Depends},
+Description: Generator Scripting Language code generator
+ GSL/4.1 is a code construction tool.  It will generate code in all
+ languages and for all purposes.  If this sounds too good to be true,
+ welcome to 1996, when we invented these techniques.  Magic is simply
+ technology that is twenty years ahead of its time. In addition to
+ code construction, GSL has been used to generate database schema
+ definitions, user interfaces, reports, system administration tools
+ and much more.
+
+Package: generator-scripting-language-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends:
+ generator-scripting-language (= ${binary:Version}),
+ ${misc:Depends},
+Description: debugging symbols for generator-scripting-language
+ This package contains the debugging symbols for generator-scripting-language.
+
