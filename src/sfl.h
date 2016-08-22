@@ -12,7 +12,7 @@
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -22,8 +22,7 @@
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -52,7 +51,7 @@
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -62,8 +61,7 @@
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -731,7 +729,7 @@ typedef struct {                        /*  Variable-size descriptor         */
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -741,8 +739,7 @@ typedef struct {                        /*  Variable-size descriptor         */
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -840,7 +837,7 @@ BITS *bits_invert     (const BITS *bits);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -850,8 +847,7 @@ BITS *bits_invert     (const BITS *bits);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -910,7 +906,7 @@ word expand_bits    (const byte *source, byte *dest, word source_size);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -920,8 +916,7 @@ word expand_bits    (const byte *source, byte *dest, word source_size);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -991,7 +986,7 @@ enum {
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1001,8 +996,7 @@ enum {
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -1207,7 +1201,7 @@ extern char *conv_reason_text [];       /*  Array of error messages 1..n     */
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1217,8 +1211,7 @@ extern char *conv_reason_text [];       /*  Array of error messages 1..n     */
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -1281,7 +1274,7 @@ Bool  crypt_decode  (byte *buffer, word buffer_size, int algorithm,
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1291,8 +1284,7 @@ Bool  crypt_decode  (byte *buffer, word buffer_size, int algorithm,
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -1434,7 +1426,7 @@ int    local_dst          (void);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1444,8 +1436,7 @@ int    local_dst          (void);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -1489,7 +1480,7 @@ Bool  descr_streq (const DESCR *descr, const char *string);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1499,8 +1490,7 @@ Bool  descr_streq (const DESCR *descr, const char *string);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -1554,7 +1544,7 @@ int    exdr_read    (const byte *buffer, const char *format, ...);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1564,8 +1554,7 @@ int    exdr_read    (const byte *buffer, const char *format, ...);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -1720,7 +1709,7 @@ void   ftmp_close          (FILE *tempstream);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1730,8 +1719,7 @@ void   ftmp_close          (FILE *tempstream);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -1808,7 +1796,7 @@ char *txtfind    (const char *string, const char *pattern);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1818,8 +1806,7 @@ char *txtfind    (const char *string, const char *pattern);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -1867,7 +1854,7 @@ char *fortune_read  (const char *fortune_file);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1877,8 +1864,7 @@ char *fortune_read  (const char *fortune_file);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -1955,7 +1941,7 @@ int   heap_rename (const char *src_name, const char *src_key,
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -1965,8 +1951,7 @@ int   heap_rename (const char *src_name, const char *src_key,
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -2048,7 +2033,7 @@ enum {
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -2058,8 +2043,7 @@ enum {
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -2125,7 +2109,7 @@ char    *linebuf_prev    (LINEBUF *buffer, DESCR *line, const char *cur);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -2135,8 +2119,7 @@ char    *linebuf_prev    (LINEBUF *buffer, DESCR *line, const char *cur);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -2273,7 +2256,7 @@ void  list_sort   (void *list, NODE_COMPARE comp);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -2283,8 +2266,7 @@ void  list_sort   (void *list, NODE_COMPARE comp);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -2360,7 +2342,7 @@ void *node_relink_before (void *node, void *before);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -2370,8 +2352,7 @@ void *node_relink_before (void *node, void *before);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -2444,7 +2425,7 @@ void    calculate_continuing_crc (byte *block, size_t length,
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -2454,8 +2435,7 @@ void    calculate_continuing_crc (byte *block, size_t length,
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -2645,7 +2625,7 @@ int    mem_scavenger   (scavenger scav_fct, void *scav_arg);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -2655,8 +2635,7 @@ int    mem_scavenger   (scavenger scav_fct, void *scav_arg);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -2712,7 +2691,7 @@ char  *message_text        (int msgid);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -2722,8 +2701,7 @@ char  *message_text        (int msgid);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -2891,7 +2869,7 @@ char   *encode_mimeb_string  (char *target, size_t target_size, const byte *sour
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -2901,8 +2879,7 @@ char   *encode_mimeb_string  (char *target, size_t target_size, const byte *sour
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -2978,7 +2955,7 @@ void *node_relink_before (void *node, void *before);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -2988,8 +2965,7 @@ void *node_relink_before (void *node, void *before);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -3195,7 +3171,7 @@ qbyte     dir_files     (const char *path, Bool recurse);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -3205,8 +3181,7 @@ qbyte     dir_files     (const char *path, Bool recurse);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -3273,7 +3248,7 @@ int   time_to_min           (long time);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -3283,8 +3258,7 @@ int   time_to_min           (long time);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -3785,7 +3759,7 @@ void  set_email_debug        (Bool mode);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -3795,8 +3769,7 @@ void  set_email_debug        (Bool mode);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -3893,7 +3866,7 @@ byte *sha        (const byte *input, const qbyte input_length, byte *digest);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -3903,8 +3876,7 @@ byte *sha        (const byte *input, const qbyte input_length, byte *digest);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -4030,7 +4002,7 @@ Bool    is_text            (const byte characters);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -4040,8 +4012,7 @@ Bool    is_text            (const byte characters);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -4198,7 +4169,7 @@ SYMTAB *descr2symb_        (const DESCR *descr,
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -4208,8 +4179,7 @@ SYMTAB *descr2symb_        (const DESCR *descr,
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -4432,7 +4402,7 @@ int     process_priority    (int priority);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -4442,8 +4412,7 @@ int     process_priority    (int priority);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -4496,7 +4465,7 @@ char *strprintf  (const char *format, ...);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -4506,8 +4475,7 @@ char *strprintf  (const char *format, ...);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -4552,7 +4520,7 @@ char *sys_name (Bool full);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -4562,8 +4530,7 @@ char *sys_name (Bool full);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -4680,7 +4647,7 @@ void    search_close            (SEARCH *search);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -4690,8 +4657,7 @@ void    search_close            (SEARCH *search);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -4815,7 +4781,7 @@ char       *url_to_string         (const URL *url);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -4825,8 +4791,7 @@ char       *url_to_string         (const URL *url);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -4882,7 +4847,7 @@ char   *ini_dyn_assume    (SYMTAB *symtab, const char *section,
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -4892,8 +4857,7 @@ char   *ini_dyn_assume    (SYMTAB *symtab, const char *section,
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -4950,7 +4914,7 @@ void     env_clear       (const char *name);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -4960,8 +4924,7 @@ void     env_clear       (const char *name);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -5014,7 +4977,7 @@ char  *tok_subst      (const char *string, SYMTAB *symbols);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -5024,8 +4987,7 @@ char  *tok_subst      (const char *string, SYMTAB *symbols);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -5131,7 +5093,7 @@ void *tree_last     (void *tree);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -5141,8 +5103,7 @@ void *tree_last     (void *tree);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -5200,7 +5161,7 @@ extern FILE *TraceFile;                 /*  Current trace output file        */
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -5210,8 +5171,7 @@ extern FILE *TraceFile;                 /*  Current trace output file        */
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -5270,7 +5230,7 @@ char *get_login     (void);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -5280,8 +5240,7 @@ char *get_login     (void);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -5465,7 +5424,7 @@ Bool      link_xml_attr       (XML_ITEM *item, XML_ATTR *attr);
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -5475,8 +5434,7 @@ Bool      link_xml_attr       (XML_ITEM *item, XML_ATTR *attr);
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
@@ -5553,7 +5511,7 @@ SYMTAB *xml_load_symtab_file (SYMTAB *load_symtab, const char *filename, const c
  *                                                                           *
  *  This program is free software; you can redistribute it and/or            *
  *  modify it under the terms of the GNU General Public License as           *
- *  published by the Free Software Foundation; either version 2 of           *
+ *  published by the Free Software Foundation; either version 3 of           *
  *  the License, or (at your option) any later version.                      *
  *                                                                           *
  *  This program is distributed in the hope that it will be useful,          *
@@ -5563,8 +5521,7 @@ SYMTAB *xml_load_symtab_file (SYMTAB *load_symtab, const char *filename, const c
  *                                                                           *
  *  You should have received a copy of the GNU General Public                *
  *  License along with this program in the file 'license.gpl'; if            *
- *  not, write to the Free Software Foundation, Inc., 59 Temple              *
- *  Place - Suite 330, Boston, MA 02111-1307, USA.                           *
+ *  not, see <http://www.gnu.org/licenses/>.                                 *
  *                                                                           *
  *  You can also license this software under iMatix's General Terms          *
  *  of Business (GTB) for commercial projects.  If you have not              *
