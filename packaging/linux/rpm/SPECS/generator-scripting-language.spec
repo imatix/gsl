@@ -1,12 +1,12 @@
 %define revision 0
 
 Summary:	imatix GSL is a code construction tool
-Name:		imatix-gsl
+Name:		generator-scripting-language
 Version:	4.1.0
 Release:	%{revision}%{?dist}
 License:	LGPL v3+
 Group:		Libraries
-Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
+Source0:	http://download.zeromq.org/gsl-%{version}.tar.gz
 URL:		http://zeromq.org/
 BuildRequires:	pcre-devel
 
@@ -21,7 +21,7 @@ to generate database schema definitions, user interfaces, reports, system
 administration tools and much more.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n gsl-%{version}
 %build
 cd src
 make 
