@@ -7,7 +7,6 @@ Release:	%{revision}%{?dist}
 License:	LGPL v3+
 Group:		Libraries
 Source0:	http://download.zeromq.org/%{name}-%{version}.tar.gz
-Patch0:     imatix-gsl.patch
 URL:		http://zeromq.org/
 BuildRequires:	pcre-devel
 
@@ -23,9 +22,6 @@ administration tools and much more.
 
 %prep
 %setup -q -n %{name}-%{version}
-cd src
-%patch0 -p1
-cd ..
 %build
 cd src
 make 
@@ -34,7 +30,7 @@ cd ../
 %{__rm} -rf $RPM_BUILD_ROOT
 cd src
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT/usr
 cd ..
 %post -p /sbin/ldconfig
 
