@@ -196,4 +196,4 @@ install:
 	$(INSTALL) -m 755 gsl $(bindir)
 
 clean:
-	rm *.o *.a gsl
+	rm -f *.o *.a gsl
