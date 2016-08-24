@@ -29,3 +29,17 @@ Depends:
 Description: debugging symbols for generator-scripting-language
  This package contains the debugging symbols for generator-scripting-language.
 
+Package: generator-scripting-language-examples
+Architecture: all
+Depends: ${misc:Depends},
+ generator-scripting-language (= ${source:Version}),
+Description: Examples for the Generator Scripting Language code generator
+ GSL/4.1 is a code construction tool.  It will generate code in all
+ languages and for all purposes.  If this sounds too good to be true,
+ welcome to 1996, when we invented these techniques.  Magic is simply
+ technology that is twenty years ahead of its time. In addition to
+ code construction, GSL has been used to generate database schema
+ definitions, user interfaces, reports, system administration tools
+ and much more.
+ .
+ This package contains examples to get started with gsl.
