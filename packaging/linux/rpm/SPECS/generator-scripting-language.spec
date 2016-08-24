@@ -41,6 +41,11 @@ cd ..
 
 %files
 %defattr(644,root,root,755)
+%doc doc/denormalizing.md
+%doc doc/denormalizing.txt
+%doc doc/modules/*
+%doc README.md
+%doc README.txt
 #%attr(755,root,root) %{_bindir}/gsl
 %attr(755,root,root) %{_bindir}/gsl
 
