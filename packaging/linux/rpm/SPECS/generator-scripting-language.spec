@@ -41,7 +41,24 @@ cd ..
 
 %files
 %defattr(644,root,root,755)
+%doc doc/denormalizing.md
+%doc doc/denormalizing.txt
+%doc doc/modules/*
+%doc README.md
+%doc README.txt
 #%attr(755,root,root) %{_bindir}/gsl
 %attr(755,root,root) %{_bindir}/gsl
+
+%package -n %{name}-examples
+Summary:        imatix GSL is a code construction tool
+Requires:       %{name} = %{version}
+
+%description -n %{name}-examples
+This package contains examples to get started with gsl.
+
+%files -n %{name}-examples
+%defattr(-,root,root)
+%doc examples/*
+%doc doc/examples/*
 
 %changelog

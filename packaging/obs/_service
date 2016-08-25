@@ -48,6 +48,15 @@
   </service>
   <service name="extract_file">
     <param name="archive">*.tar</param>
+    <param name="files">*/packaging/debian/generator-scripting-language.docs</param>
+    <param name="outfilename">debian.generator-scripting-language.docs</param>
+  </service>
+  <service name="extract_file">
+    <param name="archive">*.tar</param>
+    <param name="files">*/packaging/debian/generator-scripting-language-examples.install</param>
+    <param name="outfilename">debian.generator-scripting-language-examples.install</param>
+  <service name="extract_file">
+    <param name="archive">*.tar</param>
     <param name="files">*/packaging/debian/source/format</param>
     <param name="outfilename">debian.format</param>
   </service>
