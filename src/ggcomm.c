@@ -1058,8 +1058,8 @@ strneat (char *text)
         while ((!isalpha (*c)) && (*c))
             c++;
 
-    if (! *c)
-        break;
+        if (! *c)
+            break;
 
         *c = toupper (*c);
         c++;
