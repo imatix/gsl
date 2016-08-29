@@ -89,7 +89,8 @@
  *  __VMS_XOPEN         Supports XOPEN functions
  */
 
-#if (defined (__64BIT__) || defined (__x86_64__))
+#if (defined (__64BIT__) || defined (__x86_64__) || defined (__AARCH64EL__) \
+    || defined (__PPC64__) || defined (__powerpc64__) || defined (__ppc64__))
 #    define __IS_64BIT__                /*  May have 64-bit OS/compiler      */
 #else
 #    define __IS_32BIT__                /*  Else assume 32-bit OS/compiler   */

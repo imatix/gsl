@@ -55,6 +55,7 @@
     <param name="archive">*.tar</param>
     <param name="files">*/packaging/debian/generator-scripting-language-examples.install</param>
     <param name="outfilename">debian.generator-scripting-language-examples.install</param>
+  </service>
   <service name="extract_file">
     <param name="archive">*.tar</param>
     <param name="files">*/packaging/debian/source/format</param>
