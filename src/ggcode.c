@@ -4049,14 +4049,14 @@ op2-> value. n;                    else
 
                 case OP_OR:
                     tcb-> result_node-> value. n
-                        = (double) ((Bool) tcb-> result_node-> op1-> value. n
-                        ||          (Bool) tcb-> result_node-> op2-> value. n);
+                        = (double) (tcb-> result_node-> op1-> value. n
+                        ||          tcb-> result_node-> op2-> value. n);
                     break;
 
                 case OP_AND:
                     tcb-> result_node-> value. n
-                        = (double) ((Bool) tcb-> result_node-> op1-> value. n
-                        &&          (Bool) tcb-> result_node-> op2-> value. n);
+                        = (double) (tcb-> result_node-> op1-> value. n
+                        &&          tcb-> result_node-> op2-> value. n);
                     break;
 
                 default:
@@ -4079,7 +4079,7 @@ op2-> value. n;                    else
           {
             case OP_NOT:
                 tcb-> result_node-> value. n
-                    = (double) ! (Bool) tcb-> result_node-> op2-> value. n;
+                    = (double) ! tcb-> result_node-> op2-> value. n;
                 break;
 
             case OP_PLUS:
