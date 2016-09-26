@@ -1418,6 +1418,35 @@ xml_load_item (XML_ITEM  *item, XML_BUFFER *buf)
                   }
                 buf_next (buf);
               }
+            else if (c == '[')
+                        {
+               item_name = buf_get_name (buf);
+               if (!item_name || !strcmp (item_name, "CDATA"))
+                 {
+                   set_error (buf, "'--' or [CDATA[ declaration expected");
+                   return XML_LOADERROR;
+                 }
+               mem_free (item_name);
+               /*  It is a CDATA element. Skip everything until the next occurence
+                *  of ']]>'
+                */
+               found = FALSE;
+               while (!found)
+                  {
+                    buf_next(buf);
+                    CHECK_BUF_STATE_AND_BREAK_ON_ERROR(3); /* ']]>' expected */
+                    comment = buf_get_until_gt(buf);
+                    CHECK_BUF_STATE_AND_BREAK_ON_ERROR(3);
+                    ASSERT (comment);
+                    size = strlen(comment);
+                    found = ((size >= 2)
+                        && (comment[size-1] == ']')
+                        && (comment[size-2] == ']')) ? TRUE : FALSE;
+                    mem_free (comment);
+                  }
+                if (found)
+                    buf_next(buf);
+             }
             else
 			  {
                 set_error (buf, "'--' or DOCTYPE declaration expected");
