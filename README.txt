@@ -24,6 +24,10 @@ GSL was actively developed by [iMatix Corporation](http://www.imatix.com) from 1
 
 The authors grant you free use of this software under the terms of the GNU General Public License version 3 or, at your choice, any later version. (GPLv3+). For details see the files `COPYING` in this directory.
 
+#### Ownership and License of generated sources
+
+The copyright of the output of GSL is by default the property of the user or whomever writes the template(s).
+
 ### Building and installing
 
 Dependencies:
