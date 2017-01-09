@@ -196,7 +196,20 @@ if [ "$CCNAME" = "gcc" ]; then
             fi
         fi
         #  Workaround for FOR-24
-        STDLIBS="-lapr $STDLIBS"
+        if [ -d /usr/apr/lib ]; then
+            # In newer distributions, such as OpenIndiana, there may be
+            # a preferred version of APR (such as 1.3 as of now)
+            STDLIBS="-L/usr/apr/lib -R/usr/apr/lib $STDLIBS"
+            CCOPTS="-I/usr/apr/include $CCOPTS"
+            export LDFLAGS CFLAGS
+            if [ -x "/usr/apr/lib/libapr-1.so" ]; then
+                STDLIBS="-lapr-1 $STDLIBS"
+            else
+                STDLIBS="-lapr $STDLIBS"
+            fi
+        else
+            STDLIBS="-lapr $STDLIBS"
+        fi
     fi
 #
 #  AIX with xlc
