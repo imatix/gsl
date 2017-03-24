@@ -63,6 +63,8 @@
     <Import Project="$(ProjectDir)..\..\properties\$(Configuration).props" />
     <Import Project="$(ProjectDir)..\..\properties\Output.props" />
     <Import Project="$(ProjectDir)$(ProjectName).props" />
+    <Import Project="..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets" Condition="Exists('..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets')" />
+    <Import Project="..\packages\pcre.8.33.0.1\build\native\pcre.targets" Condition="Exists('..\packages\pcre.8.33.0.1\build\native\pcre.targets')" />
   </ImportGroup>
   <ItemGroup>
     <None Include="..\..\..\..\packaging\nuget\package.bat" />
@@ -375,6 +377,4 @@
     <Error Condition="!Exists('..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets'))" />
     <Error Condition="!Exists('..\packages\pcre.8.33.0.1\build\native\pcre.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\pcre.8.33.0.1\build\native\pcre.targets'))" />
   </Target>
-  <Import Project="..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets" Condition="Exists('..\packages\pcre.redist.8.33.0.1\build\native\pcre.redist.targets')" />
-  <Import Project="..\packages\pcre.8.33.0.1\build\native\pcre.targets" Condition="Exists('..\packages\pcre.8.33.0.1\build\native\pcre.targets')" />
 </Project>
