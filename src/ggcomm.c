@@ -1212,6 +1212,8 @@ concatenate_results (RESULT_NODE *r,
     char
       **blk,
        *txt,
+       *line_end,
+       *last_line,
        *rc;
 
     if (error_text)
@@ -1343,6 +1345,26 @@ concatenate_results (RESULT_NODE *r,
       }
 
     rc [totlines * totlinelength] = 0;
+
+    /*  Trim whitespace from all lines  */
+    txt = rc;
+    while (txt)
+      {
+         line_end = strchr(txt, '\n');
+         if (!line_end)
+           break;
+         if (*(line_end - 1) == '\r')
+           line_end = line_end - 1;
+         last_line = line_end;
+         while (last_line > txt)
+           {
+             if (!isspace (*(last_line - 1)))
+                 break;
+             last_line--;
+           }
+         memmove(last_line, line_end, strlen(line_end) + 1);
+         txt = last_line + (*last_line == '\r' ? 2 : 1);
+      }
 
     /*  JS Blunder check  */
     ASSERT (runlength == totlinelength);
