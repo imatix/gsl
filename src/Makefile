@@ -41,6 +41,8 @@ prefix = ${DESTDIR}
 mandir = ${prefix}/share/man/man8
 bindir = ${prefix}/bin
 
+RM ?= rm -f
+
 # Default values for object, library, and executable extensions.
 #
 OBJ = .o
@@ -192,8 +194,17 @@ headers:
 	cat gghead.h ggcomm.h ggpars.h ggparsm.h ggscrp.h ggscop.h ggobjt.h ggsymb.h gggsl.h ggcode.h ggcodem.h ggfile.h ggstrn.h ggenvt.h ggconv.h ggmath.h ggsock.h ggthrd.h ggxml.h ggtime.h ggpcre.h ggdiag.h ggproc.h > gsl.h
 
 install:
-	$(INSTALL) -m 755 -d $(bindir)
-	$(INSTALL) -m 755 gsl $(bindir)
+	$(INSTALL) -m 755 -d "$(bindir)"
+	$(INSTALL) -m 755 gsl "$(bindir)"
+
+uninstall:
+	$(RM) "$(bindir)/gsl"
+	@if test -d "$(bindir)" ; then \
+	    if test `find "$(bindir)" | wc -l` -le 1 ; then \
+	        echo "$(RM) -r $(bindir)" >&2 ; \
+	        $(RM) -r "$(bindir)" ; \
+	    else true; fi ; \
+	else true ; fi
 
 clean:
 	rm -f *.o *.a gsl
