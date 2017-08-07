@@ -1223,7 +1223,7 @@ GSL helps you make neat COBOL code by automatically filling the first six charac
 GSL uses as its line terminator the value of of the attribute `terminator` of the gsl scope.  The default value is "\n" but it could also be set to "\r\n", for example.
 
     \# for Windows batch scripts
-    \.terminator="\n\r"
+    \.terminator="\r\n"
 
 #### Escape Symbol
 
