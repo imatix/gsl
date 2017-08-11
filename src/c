@@ -154,7 +154,8 @@ fi
 #
 #  Generic modern GCC system
 #
-if [ "$CCNAME" = "gcc" ]; then
+case "$CCNAME" in
+*gcc*)
     [ -z "$BOOM_MODEL_NOOPT" ] && CCDEBUG="-O2"
     [ -z "$BOOM_MODEL_NOOPT" ] && CCNODEBUG="$CCNODEBUG -O2"
     CCOPTS="-D_REENTRANT -D_GNU_SOURCE -Wall -Wno-unused -fno-strict-aliasing"
@@ -211,16 +212,20 @@ if [ "$CCNAME" = "gcc" ]; then
             STDLIBS="-lapr $STDLIBS"
         fi
     fi
+    ;;
+*)
 #
 #  AIX with xlc
 #
-elif [ "$UTYPE" = "AIX" -a "$CCNAME" = "xlc_r" ]; then
+if [ "$UTYPE" = "AIX" -a "$CCNAME" = "xlc_r" ]; then
     [ -z "$BOOM_MODEL_NOOPT" ] && CCNODEBUG="-O"
     CCNAME="xlc_r"            #  Use VAC Threaded Mode
     CCPLUS="xlC_r"            #  Use VAC Threaded Mode
     CCOPTS="$CCOPTS -D_REENTRANT"
     STDLIBS="-lpthread"
 fi
+;;
+esac
 
 #   Patch together the CC options and defines into one variable
 CCOPTS="$CCOPTS $CCDEFINES"
