@@ -155,7 +155,8 @@ fi
 #
 #  Generic modern GCC system
 #
-if [ "$CCNAME" = "gcc" ]; then
+case "$CCNAME" in
+*gcc*)
     [ -z "$BOOM_MODEL_NOOPT" ] && CCDEBUG="-O2"
     [ -z "$BOOM_MODEL_NOOPT" ] && CCNODEBUG="$CCNODEBUG -O2"
     CCOPTS="-D_REENTRANT -D_GNU_SOURCE -Wall -Wno-unused -fno-strict-aliasing"
@@ -163,7 +164,11 @@ if [ "$CCNAME" = "gcc" ]; then
     #  If your build is failing because of missing libraries then
     #  either you are missing development packages, or are on a non-standard/old
     #  system and should add a special case.
-    STDLIBS="-lrt -lcrypt -lpthread -lm"
+    if [ "$UTYPE" = "Darwin" ]; then
+        STDLIBS="-lcrypto -lpthread -lm"
+    else
+        STDLIBS="-lrt -lcrypt -lpthread -lm"
+    fi
 
     #
     #  Linux-specific subsection
@@ -193,18 +198,35 @@ if [ "$CCNAME" = "gcc" ]; then
             fi
         fi
         #  Workaround for FOR-24
-        STDLIBS="-lapr $STDLIBS"
+        if [ -d /usr/apr/lib ]; then
+            # In newer distributions, such as OpenIndiana, there may be
+            # a preferred version of APR (such as 1.3 as of now)
+            STDLIBS="-L/usr/apr/lib -R/usr/apr/lib $STDLIBS"
+            CCOPTS="-I/usr/apr/include $CCOPTS"
+            export LDFLAGS CFLAGS
+            if [ -x "/usr/apr/lib/libapr-1.so" ]; then
+                STDLIBS="-lapr-1 $STDLIBS"
+            else
+                STDLIBS="-lapr $STDLIBS"
+            fi
+        else
+            STDLIBS="-lapr $STDLIBS"
+        fi
     fi
+    ;;
+*)
 #
 #  AIX with xlc
 #
-elif [ "$UTYPE" = "AIX" -a "$CCNAME" = "xlc_r" ]; then
+if [ "$UTYPE" = "AIX" -a "$CCNAME" = "xlc_r" ]; then
     [ -z "$BOOM_MODEL_NOOPT" ] && CCNODEBUG="-O"
     CCNAME="xlc_r"            #  Use VAC Threaded Mode
     CCPLUS="xlC_r"            #  Use VAC Threaded Mode
     CCOPTS="$CCOPTS -D_REENTRANT"
     STDLIBS="-lpthread"
 fi
+;;
+esac
 
 #   Patch together the CC options and defines into one variable
 CCOPTS="$CCOPTS $CCDEFINES"
@@ -243,6 +265,13 @@ if [ -n "$IBASE" ]; then
         if [ "$LIBDIR" != "$IBASE/lib" ]; then
             echo "W: LIBDIR=$LIBDIR is in conflict with IBASE=$IBASE" 1>&2
         fi
+    fi
+else
+    if [ -z "$INCDIR" ]; then
+        INCDIR=.
+    fi
+    if [ -z "$LIBDIR" ]; then
+        LIBDIR=.
     fi
 fi
 
@@ -409,8 +438,10 @@ for i in $*; do
     #   Compile, if required
     if [ "$USECPP" = "no" ]; then
         OBJEXT=o
+        SRCEXT=c
     else
         OBJEXT=opp
+        SRCEXT=cpp
     fi
     if [ "$COMPILE" = "yes" -o ! -f $FILENAME.$OBJEXT ]; then
         if [ -f $FILENAME.$OBJEXT ]; then
@@ -419,9 +450,12 @@ for i in $*; do
 
         TRACE="Compiling $FILENAME"
         if [ "$USECPP" = "no" ]; then
-            COMMAND="$CCNAME -c $CCOPTS -I$INCDIR $FILENAME.c"
+            COMMAND="$CCNAME -c $FILENAME.$SRCEXT -o $FILENAME.$OBJEXT $CCOPTS"
         else
-            COMMAND="$CCPLUS -c $CCOPTS -I$INCDIR -o $FILENAME.opp $FILENAME.cpp"
+            COMMAND="$CCPLUS -c $FILENAME.$SRCEXT -o $FILENAME.$OBJEXT $CCOPTS"
+        fi
+        if [ -n "$INCDIR" ]; then
+            COMMAND="$COMMAND -I$INCDIR"
         fi
         if [ "$QUIET" = "no" ]; then
             if [ "$VERBOSE" = "no" ]; then

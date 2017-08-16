@@ -436,8 +436,10 @@ for i in $*; do
     #   Compile, if required
     if [ "$USECPP" = "no" ]; then
         OBJEXT=o
+        SRCEXT=c
     else
         OBJEXT=opp
+        SRCEXT=cpp
     fi
     if [ "$COMPILE" = "yes" -o ! -f $FILENAME.$OBJEXT ]; then
         if [ -f $FILENAME.$OBJEXT ]; then
@@ -446,9 +448,12 @@ for i in $*; do
 
         TRACE="Compiling $FILENAME"
         if [ "$USECPP" = "no" ]; then
-            COMMAND="$CCNAME -c $CCOPTS -I$INCDIR $FILENAME.c"
+            COMMAND="$CCNAME -c $FILENAME.$SRCEXT -o $FILENAME.$OBJEXT $CCOPTS"
         else
-            COMMAND="$CCPLUS -c $CCOPTS -I$INCDIR -o $FILENAME.opp $FILENAME.cpp"
+            COMMAND="$CCPLUS -c $FILENAME.$SRCEXT -o $FILENAME.$OBJEXT $CCOPTS"
+        fi
+        if [ -n "$INCDIR" ]; then
+            COMMAND="$COMMAND -I$INCDIR"
         fi
         if [ "$QUIET" = "no" ]; then
             if [ "$VERBOSE" = "no" ]; then
