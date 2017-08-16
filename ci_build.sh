@@ -42,7 +42,7 @@ case "$BUILD_TYPE" in
         ( cd ./pcre && \
           CCACHE_BASEDIR=${PWD} && \
           export CCACHE_BASEDIR && \
-          yes | DESTDIR="${BUILD_PREFIX}" $CI_TIME ./build.sh && \
+          yes | DESTDIR="${BUILD_PREFIX}" $CI_TIME ./build.sh \
         ) || exit 1
     fi
 
