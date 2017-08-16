@@ -44,6 +44,7 @@ libdir = ${prefix}/lib
 incdir = ${prefix}/include
 
 RM ?= rm -f
+CP ?= cp -f
 
 # Default values for object, library, and executable extensions.
 #
@@ -52,7 +53,7 @@ LIB = .a
 EXE =
 DBG =
 CC = ./c -q
-CXX = ./c -q
+CXX = ./c -q -p
 CCLIBS =
 
 # Reset the suffixes that will be considered to just our own list.
@@ -60,7 +61,7 @@ CCLIBS =
 # Make programs use the .SUFFIXES psuedo rule for this
 
 .SUFFIXES:
-.SUFFIXES: $(EXE) $(LIB) $(OBJ) .c .cc .d .i
+.SUFFIXES: $(EXE) $(LIB) $(OBJ) .c .cc .cpp .d .i
 
 # Objects depend on source files with the same name; and are compiled
 # with the iMatix c script without any arguments.
@@ -68,8 +69,12 @@ CCLIBS =
 .c$(OBJ):
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(DBG) $<
 
-.cc$(OBJ):
+.cpp$(OBJ):
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DBG) $<
+
+# Original project has .cc files but the ./c script handles .cpp files
+.cc.cpp:
+	$(CP) "$<" "$@"
 
 #
 # Default rule -- all depends on everything.
@@ -115,17 +120,28 @@ pcreposix$(OBJ): pcreposix.c
 pcretest$(OBJ): pcretest.c
 ucptable$(OBJ): ucptable.c
 
-pcre_scanner_unittest$(OBJ): pcre_scanner_unittest.cc
-pcre_scanner$(OBJ): pcre_scanner.cc
-pcre_stringpiece_unittest$(OBJ): pcre_stringpiece_unittest.cc
-pcre_stringpiece$(OBJ): pcre_stringpiece.cc
-pcrecpp_unittest$(OBJ): pcrecpp_unittest.cc
-pcrecpp$(OBJ): pcrecpp.cc
+pcre_scanner_unittest$(OBJ): pcre_scanner_unittest.cpp
+pcre_scanner$(OBJ): pcre_scanner.cpp
+pcre_stringpiece_unittest$(OBJ): pcre_stringpiece_unittest.cpp
+pcre_stringpiece$(OBJ): pcre_stringpiece.cpp
+pcrecpp_unittest$(OBJ): pcrecpp_unittest.cpp
+pcrecpp$(OBJ): pcrecpp.cpp
+
+pcre_scanner_unittest.cpp: pcre_scanner_unittest.cc
+pcre_scanner.cpp: pcre_scanner.cc
+pcre_stringpiece_unittest.cpp: pcre_stringpiece_unittest.cc
+pcre_stringpiece.cpp: pcre_stringpiece.cc
+pcrecpp_unittest.cpp: pcrecpp_unittest.cc
+pcrecpp.cpp: pcrecpp.cc
 
 BUILD_TOOLS = dftables$(EXE)
 BUILD_PROGS = pcredemo$(EXE) pcregrep$(EXE) pcretest$(EXE)
-#BUILD_TESTS = pcrecpp_unittest$(EXE) pcrecpp$(EXE) pcre_stringpiece_unittest$(EXE) pcre_scanner_unittest$(EXE)
 BUILD_LIBS = libpcre$(LIB)
+
+# These require to be `configure`'d and are not required for GSL usage.
+# So there is basic support for build if someone wants to extend it
+# later, but not worth the effort for GSL bundling use-case.
+BUILD_CXX_TESTS = pcrecpp_unittest$(EXE) pcre_stringpiece_unittest$(EXE) pcre_scanner_unittest$(EXE)
 
 everything: $(BUILD_TOOLS) $(BUILD_LIBS) $(BUILD_PROGS)
 	@echo "Build products ($^) are up to date now"
@@ -133,8 +149,17 @@ everything: $(BUILD_TOOLS) $(BUILD_LIBS) $(BUILD_PROGS)
 dftables$(EXE): dftables$(OBJ)
 	$(CC) -l $@
 
+pcrecpp_unittest$(EXE): pcrecpp_unittest$(OBJ) pcrecpp$(OBJ)
+
+pcre_stringpiece_unittest$(EXE): pcre_stringpiece_unittest$(OBJ) pcre_stringpiece$(OBJ)
+
+pcre_scanner_unittest$(EXE): pcre_scanner_unittest$(OBJ) pcre_scanner$(OBJ)
+
 $(BUILD_PROGS): $(BUILD_LIBS)
 	$(CC) -l "`basename "$@" "$(EXE)"`"
+
+$(BUILD_CXX_TESTS): $(BUILD_LIBS)
+	$(CXX) -l "`basename "$@" "$(EXE)"`"
 
 pcre_chartables.c: dftables$(EXE)
 	./dftables$(EXE) pcre_chartables.c
@@ -171,10 +196,12 @@ install:
 	$(INSTALL) -m 755 -d "$(libdir)"
 	$(INSTALL) -m 755 -d "$(incdir)"
 	$(INSTALL) -m 755 pcre.h "$(incdir)"
+	$(INSTALL) -m 755 pcrecpp.h "$(incdir)"
 	$(INSTALL) -m 755 libpcre.a "$(libdir)"
 
 uninstall:
 	$(RM) "$(incdir)/pcre.h"
+	$(RM) "$(incdir)/pcrecpp.h"
 	$(RM) "$(libdir)/libpcre.a"
 	@for D in $(bindir) $(incdir) $(libdir) ; \ do
 	    if test -d "$$D" ; then \
@@ -186,4 +213,4 @@ uninstall:
 	 done
 
 clean:
-	$(RM) *.$(OBJ) *.$(LIB) *.o *.a *.so $(BUILD_PROGS) $(BUILD_LIBS) $(BUILD_TOOLS) $(BUILD_TESTS)
+	$(RM) *.$(OBJ) *.$(LIB) *.o *.a *.so *.cpp $(BUILD_PROGS) $(BUILD_LIBS) $(BUILD_TOOLS) $(BUILD_CXX_TESTS)
