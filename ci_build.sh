@@ -48,14 +48,16 @@ case "$BUILD_TYPE" in
     fi
 
     [ -z "$CI_TIME" ] || echo "`date`: Starting build of gsl..."
-        ( [ "$BUILD_TYPE" = with-pcre ] \
-            && export CCLIBS="../pcre/libpcre.a" \
+        ( EXTRA_MAKE_OPTS=""
+          [ "$BUILD_TYPE" = with-pcre ] \
+            && { EXTRA_MAKE_OPTS=CCLIBS="../pcre/libpcre.a" && \
+                 echo "Using bundled PCRE libs as a static built-in"; } \
             || echo "Using system-provided PCRE libs"
           cd ./src && \
           CCACHE_BASEDIR=${PWD} && \
           export CCACHE_BASEDIR && \
-          $CI_TIME make -j4 && \
-          DESTDIR="${BUILD_PREFIX}" $CI_TIME make install \
+          $CI_TIME make $EXTRA_MAKE_OPTS -j4 && \
+          DESTDIR="${BUILD_PREFIX}" $CI_TIME make $EXTRA_MAKE_OPTS install \
         ) || exit 1
 
     [ -z "$CI_TIME" ] || echo "`date`: Builds completed without fatal errors!"
