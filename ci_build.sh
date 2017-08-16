@@ -42,12 +42,16 @@ case "$BUILD_TYPE" in
         ( cd ./pcre && \
           CCACHE_BASEDIR=${PWD} && \
           export CCACHE_BASEDIR && \
-          yes | DESTDIR="${BUILD_PREFIX}" $CI_TIME ./build.sh \
+          $CI_TIME make -j4 && \
+          DESTDIR="${BUILD_PREFIX}" $CI_TIME make install \
         ) || exit 1
     fi
 
     [ -z "$CI_TIME" ] || echo "`date`: Starting build of gsl..."
-        ( cd ./src && \
+        ( [ "$BUILD_TYPE" = with-pcre ] \
+            && export CCLIBS="../pcre/libpcre.a" \
+            || echo "Using system-provided PCRE libs"
+          cd ./src && \
           CCACHE_BASEDIR=${PWD} && \
           export CCACHE_BASEDIR && \
           $CI_TIME make -j4 && \
