@@ -56,6 +56,8 @@ case "$BUILD_TYPE" in
 
     [ -z "$CI_TIME" ] || echo "`date`: Builds completed without fatal errors!"
 
+    ldd src/gsl || true
+
     echo "=== How well did ccache help on this platform?"
     ccache -s 2>/dev/null || true
     echo "==="
