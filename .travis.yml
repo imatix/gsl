@@ -1,0 +1,21 @@
+# Travis CI script
+language: c
+
+cache: ccache
+
+sudo: true
+
+# Set CI_TIME=true to enable build-step profiling in Travis
+# Set CI_TRACE=true to enable shell script tracing in Travis
+# Set CI_CONFIG_QUIET=true to enable "configure --quiet" (only report stderr)
+env:
+  global:
+    - CI_TIME=true
+    - CI_TRACE=false
+    - CI_CONFIG_QUIET=true
+  matrix:
+    - BUILD_TYPE=default
+    - BUILD_TYPE=with-pcre
+
+script:
+- ./ci_build.sh
