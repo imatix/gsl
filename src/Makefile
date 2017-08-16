@@ -185,13 +185,16 @@ smttst3$(OBJ): smttst3.c
 smtxlog$(OBJ): smtxlog.c
 
 everything: libgsl$(LIB) gsl$(EXE)
-	./gsl -v
+	./gsl$(EXE) -v
 
 code:
-	gsl -q ggconv.gxl ggdiag.gxl ggenvt.gxl ggfile.gxl gggsl.gxl ggmath.gxl ggpcre.gxl ggproc.gxl ggscrp.gxl ggsock.gxl ggstrn.gxl ggsymb.gxl ggthrd.gxl ggtime.gxl ggxml.gxl
+	./gsl$(EXE) -q ggconv.gxl ggdiag.gxl ggenvt.gxl ggfile.gxl gggsl.gxl ggmath.gxl ggpcre.gxl ggproc.gxl ggscrp.gxl ggsock.gxl ggstrn.gxl ggsymb.gxl ggthrd.gxl ggtime.gxl ggxml.gxl
 
 headers:
 	cat gghead.h ggcomm.h ggpars.h ggparsm.h ggscrp.h ggscop.h ggobjt.h ggsymb.h gggsl.h ggcode.h ggcodem.h ggfile.h ggstrn.h ggenvt.h ggconv.h ggmath.h ggsock.h ggthrd.h ggxml.h ggtime.h ggpcre.h ggdiag.h ggproc.h > gsl.h
+
+check: gsl$(EXE)
+	./gsl$(EXE) testall
 
 install:
 	$(INSTALL) -m 755 -d "$(bindir)"

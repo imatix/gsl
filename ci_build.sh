@@ -67,7 +67,7 @@ case "$BUILD_TYPE" in
     ldd src/gsl || true
 
     echo "=== Self-test GSL parser"
-    (cd src && $CI_TIME ./gsl testall) || exit $?
+    (cd src && $CI_TIME make check) || exit $?
 
     echo "=== How well did ccache help on this platform?"
     ccache -s 2>/dev/null || true
