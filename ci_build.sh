@@ -62,7 +62,12 @@ case "$BUILD_TYPE" in
 
     [ -z "$CI_TIME" ] || echo "`date`: Builds completed without fatal errors!"
 
+
+    echo "=== What is the GSL binary linked against (note libpcre in particular)?"
     ldd src/gsl || true
+
+    echo "=== Self-test GSL parser"
+    (cd src && $CI_TIME ./gsl testall) || exit $?
 
     echo "=== How well did ccache help on this platform?"
     ccache -s 2>/dev/null || true
