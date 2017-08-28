@@ -1,0 +1,9 @@
+*.o
+*.a
+*.lst
+*.cpp
+pcre_chartables.c
+pcretest
+pcredemo
+pcregrep
+dftables
