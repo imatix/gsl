@@ -7,6 +7,7 @@ Architecture: any
 Standards-Version: 3.9.8
 Build-Depends: debhelper (>= 9),
  libpcre3-dev,
+Homepage: https://github.com/imatix/gsl
 
 Files:
  7697688bf65a35bc33ae2db51ebb0e3b 818110 generator-scripting-language.tar.gz
