@@ -4,7 +4,7 @@ Summary:	imatix GSL is a code construction tool
 Name:		generator-scripting-language
 Version:	4.1.3
 Release:	%{revision}%{?dist}
-License:	LGPL v3+
+License:	GPL v3+
 Group:		Libraries
 Source0:	http://download.zeromq.org/gsl-%{version}.tar.gz
 URL:		http://zeromq.org/
