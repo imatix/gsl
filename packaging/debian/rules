@@ -2,10 +2,9 @@
 #export DH_VERBOSE=1
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
-ifeq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-	NUMJOBS ?= 1
-else
-	NUMJOBS ?= $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+    PAR := $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+    MAKEFLAGS += -j$(PAR)
 endif
 
 %:
@@ -15,7 +14,7 @@ override_dh_strip:
 	dh_strip --dbg-package=generator-scripting-language-dbg
 
 override_dh_auto_build:
-	$(MAKE) -j$(NUMJOBS) -C src CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)"
+	$(MAKE) -C src CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)"
 
 override_dh_auto_install:
 	$(MAKE) -C src install DESTDIR=$(CURDIR)/debian/generator-scripting-language/usr
