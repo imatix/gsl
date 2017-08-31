@@ -16,9 +16,6 @@ override_dh_strip:
 override_dh_auto_build:
 	$(MAKE) -C src CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)"
 
-override_dh_auto_install:
-	$(MAKE) -C src install DESTDIR=$(CURDIR)/debian/generator-scripting-language/usr
-
 override_dh_auto_clean:
 	test ! -d src || $(MAKE) -C src clean
 	dh_auto_clean
