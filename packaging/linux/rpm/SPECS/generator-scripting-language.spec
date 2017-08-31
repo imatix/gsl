@@ -1,4 +1,5 @@
 %define revision 0
+%undefine _debugsource_packages
 
 Summary:	imatix GSL is a code construction tool
 Name:		generator-scripting-language
