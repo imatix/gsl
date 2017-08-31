@@ -23,7 +23,6 @@ Description: Generator Scripting Language code generator
 Package: generator-scripting-language-dbg
 Architecture: any
 Section: debug
-Priority: extra
 Depends:
  generator-scripting-language (= ${binary:Version}),
  ${misc:Depends},
