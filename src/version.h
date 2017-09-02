@@ -43,8 +43,8 @@
 #undef  COPYRIGHT
 #undef  BUILDDATE
 #undef  BUILDMODEL
-#define VERSION         "4.1.3"
-#define PRODUCT         "GSL/4.1.3"
+#define VERSION         "4.1.4"
+#define PRODUCT         "GSL/4.1.4"
 #define COPYRIGHT       "Copyright (c) 1996-2016 iMatix Corporation"
 #define BUILDDATE       ""
 #define BUILDMODEL      "Built from http://github.com/imatix/gsl.git master"
