@@ -1,12 +1,13 @@
-Format: 3.0 (quilt)
+Format: 3.0 (native)
 Binary: generator-scripting-language
 Source: generator-scripting-language
-Version: 4.1
-Maintainer: iMatix Corporation <info@imatix.com>
+Version: 4.1.3
+Maintainer: GSL Developers <zeromq-dev@lists.zeromq.org>
 Architecture: any
-Standards-Version: 3.9.8
+Standards-Version: 4.1.0
 Build-Depends: debhelper (>= 9),
  libpcre3-dev,
+Homepage: https://github.com/imatix/gsl
 
 Files:
  7697688bf65a35bc33ae2db51ebb0e3b 818110 generator-scripting-language.tar.gz

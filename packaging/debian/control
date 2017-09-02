@@ -1,10 +1,11 @@
 Source: generator-scripting-language
 Section: devel
 Priority: optional
-Maintainer: iMatix Corporation <info@imatix.com>
-Standards-Version: 3.9.8
+Maintainer: GSL Developers <zeromq-dev@lists.zeromq.org>
+Standards-Version: 4.1.0
 Build-Depends: debhelper (>= 9),
  libpcre3-dev,
+Homepage: https://github.com/imatix/gsl
 
 Package: generator-scripting-language
 Architecture: any
@@ -22,7 +23,6 @@ Description: Generator Scripting Language code generator
 Package: generator-scripting-language-dbg
 Architecture: any
 Section: debug
-Priority: extra
 Depends:
  generator-scripting-language (= ${binary:Version}),
  ${misc:Depends},
