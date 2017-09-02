@@ -2,7 +2,7 @@
 
 PACKAGE_TMP="/tmp"
 PACKAGE_NAME="imatix-gsl"
-PACKAGE_VERSION="4.1.0"
+PACKAGE_VERSION="4.1.4"
 
 SCRIPTS_DIR=$(dirname $(cd ${0%/*} 2>>/dev/null ; echo `pwd`/${0##*/}))
 PROJECT_DIR="$(realpath ${SCRIPTS_DIR}/../../)"
