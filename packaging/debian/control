@@ -1,7 +1,7 @@
 Source: generator-scripting-language
 Section: devel
 Priority: optional
-Maintainer: iMatix Corporation <info@imatix.com>
+Maintainer: GSL Developers <zeromq-dev@lists.zeromq.org>
 Standards-Version: 4.1.0
 Build-Depends: debhelper (>= 9),
  libpcre3-dev,

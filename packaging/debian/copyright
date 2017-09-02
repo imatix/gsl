@@ -4,6 +4,7 @@ Upstream-Name: gsl
 
 Files: *
 Copyright: 1991-2016 iMatix Corporation <info@imatix.com>
+           2016-2017 GSL Developers <zeromq-dev@lists.zeromq.org>
 License: GPL-3+
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public
